@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partnership>
+	<ebms>
+		<id>42-to-25</id>
+		<cpaId>cpaid</cpaId>
+		<service>http://147.8.177.42:8080/corvus/httpd/ebms/inbound</service>
+		<action>action</action>
+		<disabled>false</disabled>
+		<syncReplyMode>none</syncReplyMode>
+		<transportEndpoint>http://147.8.177.25:8080/corvus/httpd/ebms/inbound</transportEndpoint>
+		<transportProtocol>http</transportProtocol>
+		<ackRequested>never</ackRequested>
+		<ackSignRequested>never</ackSignRequested>
+		<dupElimination>never</dupElimination>
+		<actor></actor>
+		<messageOrder>NotGuaranteed</messageOrder>
+		<persistDuration></persistDuration>
+		<retries>1</retries>
+		<retryInterval>30000</retryInterval>
+		<signRequested>false</signRequested>
+		<dsAlgorithm></dsAlgorithm>
+		<mdAlgorithm></mdAlgorithm>
+		<encryptRequested></encryptRequested>
+		<encryptAlgorithm></encryptAlgorithm>
+		<signCert></signCert>
+		<encryptCert></encryptCert>
+		<isHostnameVerified></isHostnameVerified>
+	</ebms>
+</partnership>

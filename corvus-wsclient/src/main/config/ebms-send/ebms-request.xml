@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-request>
+	<config>		
+		<sendEndpoint>http://localhost:8080/corvus/httpd/ebms/sender</sendEndpoint>
+	</config>
+	<param>
+		<!-- parameters required for sending ebMS message -->
+		<conversationId>convId</conversationId>
+		<fromPartyId>fromPartyId</fromPartyId>
+		<fromPartyType>fromPartyType</fromPartyType>
+		<toPartyId>toPartyId</toPartyId>
+		<toPartyType>toPartyType</toPartyType>				
+		
+		<!-- OPTIONAL -->
+		<refToMessageId></refToMessageId>
+		<serviceType></serviceType>
+	</param>
+</ebms-request>
+
+
+

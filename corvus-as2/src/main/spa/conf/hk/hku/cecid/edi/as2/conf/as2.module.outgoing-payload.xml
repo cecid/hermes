@@ -1,0 +1,12 @@
+<module id="as2.core.outgoing.payload" name="Outgoing Payload Module">
+
+	<parameters>
+		<parameter name="execution-interval" value="50" />
+	</parameters>
+
+	<component id="task-list" name="Outgoing Payload Task List">
+		<class>hk.hku.cecid.edi.as2.module.OutgoingPayloadList</class>
+		<parameter name="max-thread-count" value="10" />
+	</component>
+
+</module>

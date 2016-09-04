@@ -1,0 +1,29 @@
+<module-group name="SFRM Module Group">
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<!-- 
+		<descriptor>res/hk.hku.cecid.edi.sfrm.handler.IncomingMessageHandlerTest/sfrm.module.core.xml</descriptor>
+		-->
+		<descriptor>sfrm.module.core.xml</descriptor>
+	</module>
+	<!-- 
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>sfrm.outgoing.payloads.collector.xml</descriptor>
+	</module>	
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>sfrm.outgoing.segment.collector.xml</descriptor>
+	</module>
+	
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>sfrm.incoming.payloads.collector.xml</descriptor>
+	</module>
+	
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>sfrm.acknowledgement.collector.xml</descriptor>
+	</module>
+	-->
+</module-group>

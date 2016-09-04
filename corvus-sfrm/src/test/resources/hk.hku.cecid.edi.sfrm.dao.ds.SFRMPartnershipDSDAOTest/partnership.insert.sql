@@ -1,0 +1,3 @@
+INSERT INTO sfrm_partnership VALUES (8, 'test1', 'This is test 1', 'test1', '0A51EE7101B535ABC9F39414A93C76E7DC768C7B', false, 'sha1', '3des', 3, 60000, false, '2008-09-18 15:14:35.794198', '2008-09-18 15:14:35.794198');
+INSERT INTO sfrm_partnership VALUES (9, 'test2', 'This is test 2', 'test2', '3D0483C7D74BC9894B7667ECB5A121A108E01629', false, 'sha1', '3des', 3, 60000, false, '2008-09-18 15:15:15.32806', '2008-09-18 15:15:15.32806');
+INSERT INTO sfrm_partnership VALUES (10, 'test3', 'This is test 3', 'test3', '402C3589A2C4D69F2510CB85C4C5E1C21A29151C', false, 'sha1', '3des', 3, 60000, false, '2008-09-18 15:18:11.054102', '2008-09-18 15:18:11.054102');

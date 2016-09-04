@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<module id="sfrm.outgoing.segment.collector" name="SFRM Plugin" version="1.0">
+	
+	<parameters>
+		<parameter name="execution-interval" value="8000" />
+	</parameters>
+
+	<component id="task-list" name="Outgoing Segment Collector Module">
+		<class>hk.hku.cecid.edi.sfrm.task.OutgoingSegmentCollector</class>
+		<parameter name="max-task-per-list" value="100" />
+		<parameter name="max-thread-count" value="10" />
+		
+		<parameter name="max-round" value="20"/>
+		<parameter name="ei-delta" value="500"/>
+		<parameter name="max-ei" value="8000"/>
+		<parameter name="min-ei" value="500"/>
+		<parameter name="speed-gradient-tolerance" value="100"/>
+		<parameter name="ei-speed-gradient-tolerance" value="50"/>
+		<parameter name="active-duration" value="120000"/>		
+	</component>
+
+</module>

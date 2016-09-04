@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module id="main" seqno="1">
+  <name>Corvus Main System</name>
+  <description>The Main System Module</description>
+  <link>/admin/main/httpd</link>
+  <tabs>
+    <tab id="httpd">
+      <name>HTTP Dispatcher</name>
+      <description>HTTP Dispatcher Information</description>
+      <link>/admin/main/httpd</link>
+    </tab>
+    <tab id="plugins">
+      <name>Plugin Registry</name>
+      <description>The Plugin Registry Information</description>
+      <link>/admin/main/plugins</link>
+    </tab>
+    <tab id="modules">
+      <name>Module Information</name>
+      <description>The Module Information</description>
+      <link>/admin/main/modules</link>
+    </tab>
+    <tab id="coreprops">
+      <name>Core Properties</name>
+      <description>The Core System Properties</description>
+      <link>/admin/main/coreprops</link>
+    </tab>
+    <tab id="jvmprops">
+      <name>JVM Properties</name>
+      <description>The JVM Properties</description>
+      <link>/admin/main/jvmprops</link>
+    </tab>
+  </tabs>
+</module>

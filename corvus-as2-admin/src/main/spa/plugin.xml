@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="hk.hku.cecid.edi.as2.admin"
+   name="Corvus AS2 Admin Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid">
+
+	<runtime>
+		<library name="commons-fileupload.jar"/>
+		<library name="corvus-as2-admin.jar"/>
+		<library name="conf/"/>
+		<library name="graphics/"/>
+	</runtime>
+
+	<requires>
+		<import plugin="hk.hku.cecid.edi.as2" />
+		<import plugin="hk.hku.cecid.piazza.corvus.admin" />
+	</requires>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Repository Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.admin.listener.RepositoryAdaptor" />
+	  <parameter name="context" value="/as2/repository" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Message History Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor" />
+	  <parameter name="context" value="/as2/message_history" />
+	  <parameter name="module" value="as2" />
+	  <parameter name="tab" value="message_history" />
+	  <parameter name="center" value="as2.message_history" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Partnership Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.admin.listener.PartnershipPageletAdaptor" />
+	  <parameter name="context" value="/as2/partnership" />
+	  <parameter name="module" value="as2" />
+	  <parameter name="tab" value="partnership" />
+	  <parameter name="center" value="as2.partnership" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Change Message Status Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.admin.listener.ChangeMessageStatusPageletAdaptor" />
+	  <parameter name="context" value="/as2/change_message_status" />
+	  <parameter name="module" value="as2" />
+	  <parameter name="tab" value="message_history" />
+	  <parameter name="center" value="as2.message_history" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Message History Page Icon">
+	  <parameter name="id" value="as2.left_arrow, as2.right_arrow, as2.download_arrow" />
+	  <parameter name="pagelet" value="left_arrow.jpg, right_arrow.jpg, download_arrow.gif" />
+	  <parameter name="base" value="hk/hku/cecid/edi/as2/admin/ui/" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Message History Pagelet">
+	  <parameter name="id" value="as2.message_history" />
+	  <parameter name="pagelet" value="hk/hku/cecid/edi/as2/admin/ui/message_history.xsl" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Partnership Pagelet">
+	  <parameter name="id" value="as2.partnership" />
+	  <parameter name="pagelet" value="hk/hku/cecid/edi/as2/admin/ui/partnership.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.module" name="Piazza Corvus AS2 Admin ">
+	  <parameter name="module" value="hk/hku/cecid/edi/as2/admin/conf/admin-module.xml" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Message Status Query Listener">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2MessageStatusQueryService" />
+	  <parameter name="context" value="/as2/status" />
+	</extension>
+	
+</plugin>

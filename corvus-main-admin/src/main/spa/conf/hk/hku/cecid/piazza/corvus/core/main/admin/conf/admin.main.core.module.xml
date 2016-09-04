@@ -1,0 +1,14 @@
+<module id="admin.core" name="Corvus Main System Module" version="1.0">
+
+	<component id="logger" name="Corvus Main Loggger">
+		<class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>
+		<parameter name="config" value="hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.logger.xml" />		
+		<parameter name="category" value="hk.hku.cecid.piazza.corvus.core.main.admin" />
+	</component>
+
+	<component id="properties" name="Corvus Main Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.properties.xml" />
+	</component>
+
+</module>

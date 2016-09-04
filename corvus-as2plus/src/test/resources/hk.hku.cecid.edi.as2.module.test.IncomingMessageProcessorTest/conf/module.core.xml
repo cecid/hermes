@@ -1,0 +1,42 @@
+<module id="as2.core" name="Corvus AS2 Plus" version="1.0">
+
+	<component id="logger" name="AS2 Core Logger">
+		<class>hk.hku.cecid.piazza.commons.util.ConsoleLogger</class>
+	</component>
+
+	<component id="properties" name="AS2 Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="properties.xml" />
+	</component>
+
+	<component id="daofactory" name="AS2 DAO Factory">
+        <class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<!-- 
+		<parameter name="driver" value="org.postgresql.Driver" />
+		<parameter name="url" value="jdbc:postgresql://localhost:5432/as2" />
+		 -->
+		<parameter name="driver" value="org.hsqldb.jdbcDriver" /> 
+		<parameter name="url" value="jdbc:hsqldb:mem:swallow" /> 
+		<parameter name="username" value="sa" />
+		<parameter name="password" value="" />
+        <parameter name="pooling" value="true" />
+        <parameter name="maxActive" value="30" />
+        <parameter name="maxIdle" value="10" />
+        <parameter name="maxWait" value="-1" />
+		<parameter name="config" value="dao.xml" />
+	</component>
+	
+	<component id="keystore-manager" name="AS2 Key Store Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="corvus.p12" />
+		<parameter name="keystore-password" value="password" />
+		<parameter name="key-alias" value="corvus" />
+		<parameter name="key-password" value="password" />
+		<parameter name="keystore-type" value="PKCS12" />
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+	</component>
+
+	<component id="incoming-message-processor" name="AS2 Incoming Message Processor">
+		<class>hk.hku.cecid.edi.as2.module.IncomingMessageProcessor</class>
+	</component>
+</module>

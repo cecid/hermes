@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="hk.hku.cecid.ebms.admin"
+   name="Piazza Corvus EbMS Admin Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid">
+
+	<runtime>
+		<library name="commons-fileupload.jar"/>
+		<library name="corvus-ebms-admin.jar"/>
+		<library name="conf/"/>
+		<library name="graphics/"/>
+	</runtime>
+
+	<requires>
+		<import plugin="hk.hku.cecid.ebms" />
+		<import plugin="hk.hku.cecid.piazza.corvus.admin" />
+	</requires>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Repository Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.RepositoryAdaptor" />
+	  <parameter name="context" value="/ebms/repository" />
+	</extension>
+	
+	<!--extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Ebms Properties Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.EbmsPropertiesPageletAdaptor" />
+	  <parameter name="context" value="/ebms/ebms_properties" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="ebms_properties" />
+	  <parameter name="center" value="ebms.ebms_properties" />
+	</extension-->
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Message History Pagelet Adaptor">
+	  <parameter name="class" value="@ebmsPageletAdaptor@" />
+	  <parameter name="context" value="/ebms/message_history" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="message_history" />
+	  <parameter name="center" value="ebms.message_history" />
+	</extension>
+	
+	<!--extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Agreement Upload Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.AgreementUploadPageletAdaptor" />
+	  <parameter name="context" value="/ebms/agreement_upload" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="agreement_upload" />
+	  <parameter name="center" value="ebms.agreement_upload" />
+	</extension-->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Partnership Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.PartnershipPageletAdaptor" />
+	  <parameter name="context" value="/ebms/partnership" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="partnership" />
+	  <parameter name="center" value="ebms.partnership" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Change Message Status Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.ChangeMessageStatusPageletAdaptor" />
+	  <parameter name="context" value="/ebms/change_message_status" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="message_history" />
+	  <parameter name="center" value="ebms.message_history" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Resend as New Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.ebms.admin.listener.ResendAsNewAdapter" />
+	  <parameter name="context" value="/ebms/resend_as_new" />
+	  <parameter name="module" value="ebms" />
+	  <parameter name="tab" value="message_history" />
+	  <parameter name="center" value="ebms.message_history" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Message History Page Icon">
+	  <parameter name="id" value="ebms.left_arrow, ebms.right_arrow, ebms.download_arrow" />
+	  <parameter name="pagelet" value="left_arrow.jpg, right_arrow.jpg, download_arrow.gif" />
+	  <parameter name="base" value="hk/hku/cecid/ebms/admin/ui/" />
+	</extension>
+	
+	<!--extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Ebms Properties Pagelet">
+	  <parameter name="id" value="ebms.ebms_properties" />
+	  <parameter name="pagelet" value="hk/hku/cecid/ebms/admin/ui/ebms_properties.xsl" />
+	</extension-->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Message History Pagelet">
+	  <parameter name="id" value="ebms.message_history" />
+	  <parameter name="pagelet" value="hk/hku/cecid/ebms/admin/ui/message_history.xsl" />
+	</extension>
+
+	<!--extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Agreement Upload Pagelet">
+	  <parameter name="id" value="ebms.agreement_upload" />
+	  <parameter name="pagelet" value="hk/hku/cecid/ebms/admin/ui/agreement_upload.xsl" />
+	</extension-->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Partnership Pagelet">
+	  <parameter name="id" value="ebms.partnership" />
+	  <parameter name="pagelet" value="hk/hku/cecid/ebms/admin/ui/partnership.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.module" name="Piazza Corvus EbMS Admin ">
+	  <parameter name="module" value="hk/hku/cecid/ebms/admin/conf/module.xml" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Message Status Query Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.service.EbmsMessageStatusQueryService" />
+	  <parameter name="context" value="/ebms/status" />
+	</extension>
+</plugin>

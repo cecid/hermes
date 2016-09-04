@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+	xmlns:p="http://service.ebms.edi.cecid.hku.hk/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="SFRMMessageResumeService" 
+	targetNamespace="http://service.ebms.edi.cecid.hku.hk/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://service.ebms.edi.cecid.hku.hk/">
+       <xsd:element name="SFRMResumeInfo">
+       	<xsd:complexType>
+       		<xsd:sequence>
+       			<xsd:element name="isSuccess" type="xsd:boolean"/>
+       			<xsd:element name="totalSegmentNum" type="xsd:integer"/>
+       			<xsd:element name="processedSegmentNum" type="xsd:integer"/>
+       			<xsd:element name="message" type="xsd:string"/>
+       		</xsd:sequence>
+       	</xsd:complexType>
+       </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SFRMRequestMessage">
+    <wsdl:part type="xsd:string" name="messageId"/>
+  </wsdl:message>
+  <wsdl:message name="SFRMResponseMessage">
+    <wsdl:part name="messageInfo" type="p:SFRMResumeInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="SFRMMessageResumeService">
+    <wsdl:operation name="Request">
+      <wsdl:input message="p:SFRMRequestMessage"/>
+      <wsdl:output message="p:SFRMResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SFRMMessageResumeServiceSOAP" type="p:SFRMMessageResumeService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Request">
+      <soap:operation soapAction="http://service.ebms.edi.cecid.hku.hk/NewOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SFRMMessageResumeService">
+    <wsdl:port binding="p:SFRMMessageResumeServiceSOAP" name="SFRMMessageResumeServiceSOAP">
+      <soap:address location="http://127.0.0.1:8080/corvus/httpd/sfrm/resume"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

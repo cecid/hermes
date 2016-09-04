@@ -1,0 +1,10 @@
+<module-group name="Corvus Main Admin Module Group">
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.main.core.module.xml</descriptor>
+	</module>
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.main.scheduler.module.xml</descriptor>
+	</module>
+</module-group>

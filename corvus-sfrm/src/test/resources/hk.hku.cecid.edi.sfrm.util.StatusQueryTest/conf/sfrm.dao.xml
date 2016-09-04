@@ -1,0 +1,162 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.edi.sfrm.dao.SFRMPartnershipDAO">
+		<class>hk.hku.cecid.edi.sfrm.dao.ds.SFRMPartnershipDSDAO</class>
+		<parameter name="table" value="sfrm_partnership" />
+		<parameter name="key" value="partnership_id" />		
+		<parameter type="column" name="partnership_seq" value="partnershipSeq" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="description" value="description" />
+		<parameter type="column" name="partner_endpoint" value="partnerEndpoint" />
+		<parameter type="column" name="partner_cert_fingerprint" value="partnerCertFingerprint" />
+		<parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+		<parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+        <parameter type="column" name="retry_max" value="retryMax" />
+        <parameter type="column" name="retry_interval" value="retryInterval" />
+        <parameter type="column" name="is_disabled" value="isDisabled" />
+		<parameter type="column" name="created_timestamp" value="createdTimestamp" />
+		<parameter type="column" name="modified_timestamp" value="modifiedTimestamp" />				
+		<parameter type="selective" name="insert" value="true" />
+		<parameter type="selective" name="update" value="true" />
+		<parameter type="finder" name="key" value="SELECT * FROM sfrm_partnership WHERE partnership_seq = ?"/>
+		<parameter type="finder" name="find_partnership_by_id" value="SELECT * FROM sfrm_partnership WHERE partnership_id = ?"/>
+		<parameter type="finder" name="find_all_partnerships" value="SELECT * FROM sfrm_partnership order by partnership_id;"/>
+		
+	</dao>	
+
+	<dao name="hk.hku.cecid.edi.sfrm.dao.SFRMMessageDAO">
+		<class>hk.hku.cecid.edi.sfrm.dao.ds.SFRMMessageDSDAO</class>
+		<parameter name="table" value="sfrm_message" />
+		<parameter name="key" value="message_id,message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="partner_endpoint" value="partnerEndpoint" />
+		<parameter type="column" name="total_segment" value="totalSegment" />
+		<parameter type="column" name="total_size" value="totalSize" />
+		<parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+		<parameter type="column" name="partner_cert_content" value="partnerCertContent" />	
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+		<parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+		<parameter type="column" name="status" value="status" />
+		<parameter type="column" name="status_desc" value="statusDescription" />
+		<parameter type="column" name="created_timestamp" value="createdTimestamp" />
+		<parameter type="column" name="proceed_timestamp" value="proceedTimestamp" />
+		<parameter type="column" name="completed_timestamp" value="completedTimestamp" />
+		<parameter type="column" name="filename" value="filename"/>
+		<parameter type="selective" name="insert" value="true" />
+		<parameter type="selective" name="update" value="true" />
+		<parameter type="finder" name="key" value="SELECT * FROM sfrm_message WHERE message_id = ? AND message_box = ?"/>
+		<parameter type="finder" name="find_message_by_message_box_and_status" value="SELECT * FROM sfrm_message WHERE message_box = ? and status = ?"/>	
+		<parameter type="finder" name="find_message_by_message_box_and_partnership_id_status" value="SELECT * FROM sfrm_message WHERE message_box = ? and partnership_id =? and status = ?" />
+		
+		<!-- Find number of message by history -->
+		<parameter type="finder" name="find_number_of_message_by_history" value="SELECT COUNT(message_id) from sfrm_message"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_status" value="status = ?"/>
+		 
+		<parameter type="filter" name="find_number_of_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>
+		 
+		<!-- Find message from message history -->
+		<parameter type="finder" name="find_message_by_history" value="SELECT *FROM sfrm_message"/>
+		<parameter type="filter" name="find_message_by_history_filter_before_date" value="created_timestamp > ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_status" value="status = ?"/>
+		 
+		<parameter type="filter" name="find_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>
+		
+		<parameter type="order" name="find_message_by_history_order" value="ORDER BY created_timestamp DESC, message_box ASC LIMIT ? OFFSET ?"/>
+		
+		<!-- Find message that is collecting for sending the acknowledgement -->
+		<parameter type="finder" name="find_message_for_acknowledgement" value="select *from sfrm_message WHERE message_box='OUTBOX' AND status in ('PR', 'PPS', 'PSD', 'PDF', 'PRS','ST')"/>
+		<parameter type="order" name="find_message_for_acknowledgement_order" value="ORDER BY created_timestamp ASC LIMIT ? OFFSET ?"/>
+		
+	</dao>
+
+	<dao name="hk.hku.cecid.edi.sfrm.dao.SFRMMessageSegmentDAO">
+		<class>hk.hku.cecid.edi.sfrm.dao.ds.SFRMMessageSegmentDSDAO</class>
+		<parameter name="table" value="sfrm_message_segment" />
+		<parameter name="key"   value="message_id,message_box,segment_no,segment_type" />
+		<parameter type="column" name="message_id"  	value="messageId" />
+		<parameter type="column" name="message_box" 	value="messageBox" />
+		<parameter type="column" name="segment_no"  	value="segmentNo" />
+		<parameter type="column" name="segment_type"  	value="segmentType" />
+		<parameter type="column" name="segment_start"	value="segmentStart" />
+		<parameter type="column" name="segment_end" 	value="segmentEnd" />
+		<parameter type="column" name="retried"		    value="retried" />
+		<parameter type="column" name="md5_value"  	    value="MD5Value" />
+		<parameter type="column" name="status"		    value="status" />
+		<parameter type="column" name="created_timestamp"   value="createdTimestamp" />
+		<parameter type="column" name="proceed_timestamp"   value="proceedTimestamp" />
+		<parameter type="column" name="completed_timestamp" value="completedTimestamp" />		
+		
+		<parameter type="selective" name="insert" value="true" />
+		<parameter type="selective" name="update" value="true" />
+		
+		<!-- Single record finder -->
+		<parameter type="finder" name="key" 
+			value="SELECT * FROM sfrm_message_segment 
+				   WHERE message_id = ? AND message_box = ? AND segment_no = ? AND segment_type = ?"/>				   
+				   
+		<parameter type="finder" name="find_last_updated_message_segment"
+			value="SELECT * FROM sfrm_message_segment
+				   WHERE message_id = ? AND message_box = ? AND segment_type = ? ORDER BY completed_timestamp DESC LIMIT 1"/>
+
+		<!-- Multiple Finder -->
+		<parameter type="finder" name="find_message_segment_by_message_box_and_status" 
+			value="SELECT * FROM sfrm_message_segment 
+				   WHERE message_box = ? and status = ? order by message_id, segment_no LIMIT ?"/>		
+				   		
+		<!-- Multiple * Inner Join Finder -->
+		<parameter type="finder" name="find_message_segment_by_message_box_and_status_with_message_status_not_equal" 
+			value="SELECT DISTINCT seg.* FROM sfrm_message_segment as seg INNER JOIN sfrm_message as msg ON seg.message_id=msg.message_id 
+				   WHERE seg.message_box = ? and seg.status = ? and msg.status &lt;&gt; ? ORDER BY segment_type DESC, message_id, segment_no LIMIT ?"/>
+
+		<parameter type="finder" name="find_message_segment_by_message_box_and_type_status_and_with_message_status_not_equal" 
+			value="SELECT DISTINCT seg.* FROM sfrm_message_segment as seg INNER JOIN sfrm_message as msg ON seg.message_id=msg.message_id 
+				   WHERE seg.message_box = ? and seg.status = ? and seg.segment_type = ? and msg.status &lt;&gt; ? ORDER BY segment_type DESC, message_id, segment_no LIMIT ?"/>		
+
+		<!-- Find all segments which are required to send (again)-->
+		<parameter type="finder" name="find_incomplete_segments" 
+			value="SELECT DISTINCT sgt.* FROM sfrm_message_segment AS sgt INNER JOIN sfrm_message AS msg ON sgt.message_id=msg.message_id 
+				   WHERE sgt.message_box = ? and sgt.status = ? AND sgt.segment_type LIKE ? AND msg.status NOT IN ('PS','PPS','DF','PDF','SD','PSD','PRS') ORDER BY segment_type DESC, created_timestamp, message_id LIMIT ?"/>
+
+		<!-- Counter Finder -->
+		<parameter type="finder" name="find_num_of_segment_by_msgid_msgbox_type_status" 
+			value="SELECT count(*) FROM sfrm_message_segment 
+				   WHERE message_id = ? AND message_box = ? AND segment_type LIKE ? AND status LIKE ?" />
+		
+		<!--  Multiple Finder for finding the message segment for acknowledgement (outgoing) -->
+		<parameter type="finder" name="find_messsage_segment_by_msgid_msgbox_type_status" 
+			value="SELECT * FROM sfrm_message_segment 
+				   WHERE message_id = ? AND message_box = ? AND segment_type LIKE ? AND status LIKE ?" />
+		
+		<!-- Max Finder -->
+		<parameter type="finder" name="find_max_segment_no_by_message_id_and_box_and_type" 
+			value="SELECT MAX(segment_no) FROM sfrm_message_segment 
+				   WHERE message_id = ? AND message_box = ? AND segment_type = ?" />
+
+		<!-- Segment finder based on a set of segment number -->
+		<parameter type="finder" name="find_message_segment_by_msgid_msg_box_type" 
+		value="SELECT * FROM sfrm_message_segment where message_id = ? and message_box = ? and segment_type = ?"/>
+		
+		<parameter type="filter" name="find_message_segment_by_msgid_msg_box_type_filter" value="segment_no in (?)"/>
+		
+		<!-- Update number of segement status to certain value -->
+		<parameter type="sql" name="update_batch_segments_status" 
+			value="UPDATE sfrm_message_segment SET status=?, retried=retried + 1 WHERE message_id=? AND message_box=? AND segment_type=?"/>
+		
+		<parameter type="filter" name="update_batch_segments_status_filter" value="segment_no IN (?)"/>
+		
+		<parameter type="sql" name="update_batch_segments_status_complete_time" 
+			value="UPDATE sfrm_message_segment SET status=?, completed_timestamp=? WHERE message_id=? AND message_box=? AND segment_type=?"/>
+		
+		<parameter type="finder" name="find_num_of_bytes_by_msgid_msgbox_type_statues"
+			value="SELECT SUM(segment_end - segment_start + 1) FROM sfrm_message_segment WHERE message_id = ? AND message_box = ? AND segment_type LIKE ? AND proceed_timestamp IS NOT NULL AND proceed_timestamp >= ?"/>
+		
+		<parameter type="filter" name="find_num_of_bytes_by_msgid_msgbox_type_statues_filter"
+			value="status IN(?)"/>
+	</dao>				
+</dao-config>

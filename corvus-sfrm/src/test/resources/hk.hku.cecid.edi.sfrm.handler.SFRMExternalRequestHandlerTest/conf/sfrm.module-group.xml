@@ -1,0 +1,6 @@
+<module-group name="SFRM Module Group">
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>sfrm.module.core.xml</descriptor>
+	</module>
+</module-group>

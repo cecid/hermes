@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2>
+
+	<mailcaps>
+	    <cap>application/deflate;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>message/disposition-notification;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>application/EDI-X12;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>application/EDIFACT;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>application/edi-consent;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>application/XML;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+        <cap>application/octet-stream;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+	</mailcaps>
+	
+	<content_type>
+		<type>edi;application/EDIFACT</type>
+		<type>x12;application/EDI-X12</type>
+		<type>eco;application/edi-consent</type>
+		<type>xml;application/XML</type>
+	</content_type>
+
+</as2>

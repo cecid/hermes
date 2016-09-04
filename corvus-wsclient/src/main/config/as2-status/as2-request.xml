@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-status-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/as2/status</endpoint>
+	</config>
+	<param>
+		<messageId></messageId>
+	</param>
+</as2-status-request>
+
+
+

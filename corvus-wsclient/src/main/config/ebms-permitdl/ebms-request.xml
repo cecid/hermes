@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-request>
+	<config>		
+		<permitDlEndpoint>http://localhost:8080/corvus/httpd/ebms/permitdl</permitDlEndpoint>
+	</config>
+	<param>
+		<messageId></messageId>
+	</param>
+</ebms-request>
+
+
+

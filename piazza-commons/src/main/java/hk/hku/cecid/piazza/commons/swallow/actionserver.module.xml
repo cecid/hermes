@@ -1,0 +1,13 @@
+<module id="actionserver.module" name="JSW Action Server module" version="1.0.0">
+	<parameters>
+		<parameter name="listenPort" value="9998"/>
+		<parameter name="localConnectionOnly" value="true"/>
+		<parameter name="shutdownEnabled" value="true"/>
+		<parameter name="forceHaltEnabled" value="true"/>
+		<parameter name="restartEnabled" value="true"/>
+		<parameter name="threadDumpEnabled" value="true"/>
+		<parameter name="stimulateAccessViolationEnabled" value="false"/>
+		<parameter name="stimulateJVMHangEnabled" value="false"/>
+		<parameter name="stimulateUnexpectedHaltEnabled" value="false"/>
+	</parameters>
+</module>

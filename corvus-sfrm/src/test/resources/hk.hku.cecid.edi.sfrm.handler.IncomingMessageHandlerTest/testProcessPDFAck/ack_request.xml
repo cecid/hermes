@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<message id="testProcessPDFAck" status="PDF">
+		<segments>
+			<segment num="1" status="DL"/>
+			<segment num="2" status="DL"/>
+			<segment num="3" status="DL"/>
+		</segments>
+	</message>
+</messages>

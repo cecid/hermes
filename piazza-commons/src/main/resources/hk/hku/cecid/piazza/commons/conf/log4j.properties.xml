@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+        
+  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%c{3}&gt; &lt;%m&gt;%n"/>
+     </layout>
+  </appender>
+
+  <category name="hk.hku.cecid.piazza.commons">
+    <priority value ="debug" />
+    <appender-ref ref="stdout"/>
+  </category>
+
+  <!--root>
+    <priority value ="info" />
+    <appender-ref ref="stdout"/>
+  </root-->
+  
+</log4j:configuration>

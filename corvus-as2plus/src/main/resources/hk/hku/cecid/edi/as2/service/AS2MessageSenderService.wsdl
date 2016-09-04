@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions targetNamespace="http://service.as2.edi.cecid.hku.hk/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.as2.edi.cecid.hku.hk/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://service.as2.edi.cecid.hku.hk/"
+			elementFormDefault="qualified">
+			<element name="RequestElement">
+				<complexType>
+					<sequence>
+						<element name="as2_from" type="string" minOccurs="1"/>
+						<element name="as2_to" type="string" minOccurs="1"/>
+						<element name="type" type="string" minOccurs="1"/>
+						<element name="payload" type="base64Binary" minOccurs="1" maxOccurs="1"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="ResponseElement">
+				<complexType>
+					<sequence>
+						<element name="message_id" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+
+	<message name="AS2RequestMsg">
+		<part name="AS2RequestMsg" element="tns:RequestElement" />
+	</message>
+	<message name="AS2ResponseMsg">
+		<part name="AS2ResponseMsg" element="tns:ResponseElement" />
+	</message>
+
+	<portType name="AS2SendPortType">
+		<operation name="Request">
+			<input message="tns:AS2RequestMsg" />
+			<output message="tns:AS2ResponseMsg" />
+		</operation>
+	</portType>
+
+	<binding name="AS2SoapHttpSend" type="tns:AS2SendPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<operation name="Request">
+			<soap:operation soapAction="as2send" style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+
+	<service name="AS2Outbound">
+		<documentation>Documentation not available.</documentation>
+		<port name="AS2Send" binding="tns:AS2SoapHttpSend">
+			<soap:address location="http://127.0.0.1:8080/corvus/httpd/as2/sender" />
+		</port>
+	</service>
+</definitions>

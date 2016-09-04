@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<as2-request>
+  <config>
+    <sendEndpoint>http://localhost:8080/corvus/httpd/as2/sender</sendEndpoint>
+    <recvEndpoint>http://localhost:8080/corvus/httpd/as2/receiver</recvEndpoint>
+    <recvListEndpoint>http://localhost:8080/corvus/httpd/as2/receiver_list</recvListEndpoint>
+  </config>
+  <param>
+    <type>xml</type>
+    <messageId></messageId>
+  </param>
+</as2-request>

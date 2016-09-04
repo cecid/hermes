@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partnership xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="data/as2.xsd"
+ id="Loop back test ID receiver"
+ protocol="as2">
+    <parameters>
+        <as2From>Receiver</as2From>
+        <as2To>Sender</as2To>
+        <subject>Loop back test</subject>
+        <recipientAddress>http://127.0.0.1:8080/corvus/httpd/as2/inbound</recipientAddress>
+        <hostnameVerifiedInSsl>false</hostnameVerifiedInSsl>   
+        <requestMdn>false</requestMdn>
+        <signedReceipt>false</signedReceipt>
+        <asynchronousReceipt>false</asynchronousReceipt>
+        <mdnReturnUrl></mdnReturnUrl>
+        <messageCompressionRequired>false</messageCompressionRequired>
+        <messageSigningRequired>false</messageSigningRequired>
+        <signingAlgorithm>sha1</signingAlgorithm>
+        <messageEncryptionRequired>false</messageEncryptionRequired>
+        <encryptionAlgorithm>3des</encryptionAlgorithm>
+        <certificateForEncryption></certificateForEncryption>
+        <micAlgorithm>md5</micAlgorithm>
+        <maximumRetries>1</maximumRetries>
+        <retryInterval>60000</retryInterval>
+        <messageSignatureEnforced>1</messageSignatureEnforced>
+        <messageEncryptionEnforced>1</messageEncryptionEnforced>
+        <certificateForVerification></certificateForVerification>      
+    </parameters>
+</partnership>

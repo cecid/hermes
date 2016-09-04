@@ -1,0 +1,12 @@
+<module id="as2.core.incoming.message" name="Incoming Message Module">
+
+	<parameters>
+		<parameter name="execution-interval" value="50" />
+	</parameters>
+
+	<component id="task-list" name="Incoming Message Task List">
+		<class>hk.hku.cecid.edi.as2.module.IncomingMessageList</class>
+		<parameter name="max-thread-count" value="10" />
+	</component>
+
+</module>

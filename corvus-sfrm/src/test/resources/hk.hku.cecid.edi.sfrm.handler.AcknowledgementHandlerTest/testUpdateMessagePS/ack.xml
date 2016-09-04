@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<message id="testUpdateMessagePS" status="PS">
+	<!--
+		<segments>
+			<segment num="8" status="DL"/>
+			<segment num="6" status="DL"/>
+			<segment num="4" status="DF"/>
+			<segment num="1" status="PR"/>
+		</segments>
+	-->
+	</message>
+</messages>

@@ -1,0 +1,7 @@
+<module id="shutdown.email.module" name="Email shutdown hook module" version="1.0.0">
+	<parameters>
+		<parameter name="host" value="smtpout.cs.hku.hk"/>
+		<parameter name="to" value="tester@cecid.hku.hk" />
+		<parameter name="cc" value=""/>				
+	</parameters>
+</module>

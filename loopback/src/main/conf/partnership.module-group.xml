@@ -1,0 +1,6 @@
+<module-group name="Partnership Module Group">
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>partnership.module.core.xml</descriptor>
+	</module>
+</module-group>

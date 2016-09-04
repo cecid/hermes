@@ -1,0 +1,14 @@
+<module id="inbox.module.mock" name="Inbox Mock Module" version="1.0">
+	<component id="daofactory" name="Inbox DAO Factory">	        
+	<class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<parameter name="driver" value="org.hsqldb.jdbcDriver" /> 
+		<parameter name="url" value="jdbc:hsqldb:mem:swallow" /> 
+		<parameter name="username" value="sa" />
+		<parameter name="password" value="" />
+   		<parameter name="pooling" value="true" />
+    	<parameter name="maxActive" value="20" />
+      	<parameter name="maxIdle" value="2" />
+      	<parameter name="maxWait" value="5000" />
+		<parameter name="config" value="inbox.dao.xml" />
+	</component>
+</module>

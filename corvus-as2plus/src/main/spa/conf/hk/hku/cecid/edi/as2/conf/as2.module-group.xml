@@ -1,0 +1,23 @@
+<module-group name="AS2 Module Group">
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>hk/hku/cecid/edi/as2/conf/as2.module.core.xml</descriptor>
+	</module>
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>hk/hku/cecid/edi/as2/conf/as2.module.incoming-message.xml</descriptor>
+	</module>
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+		<descriptor>hk/hku/cecid/edi/as2/conf/as2.module.outgoing-message.xml</descriptor>
+	</module>
+	
+	<module>
+		<class>hk.hku.cecid.edi.as2.module.AS2EventModule</class>
+		<descriptor>hk/hku/cecid/edi/as2/conf/as2.module.event.xml</descriptor>
+	</module>
+
+</module-group>

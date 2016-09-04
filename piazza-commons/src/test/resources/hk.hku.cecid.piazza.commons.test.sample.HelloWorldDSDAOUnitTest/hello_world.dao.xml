@@ -1,0 +1,9 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.piazza.commons.test.sample.HelloWorldDSDAO">
+		<class>hk.hku.cecid.piazza.commons.test.sample.HelloWorldDSDAO</class>
+		<parameter name="table" value="hello_world" />
+		<parameter name="column" value="id"/>
+		<parameter name="column" value="description"/>
+		<parameter type="finder" name="find_all" value="select * from hello_world" />
+	</dao>	
+</dao-config>

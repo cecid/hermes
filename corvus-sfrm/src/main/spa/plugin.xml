@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+   id="hk.hku.cecid.edi.sfrm"
+   name="Piazza Corvus SFRM Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.edi.sfrm.spa.SFRMProcessor"
+>
+	<parameters>
+		<parameter name="module-group-descriptor" value="sfrm.module-group.xml"/>
+	</parameters>
+	
+	<runtime>
+		<library name="corvus-sfrm.jar"/>
+		<library name="ant.jar"/>		
+		<library name="conf/"/>
+		<library name="security/"/>
+	</runtime>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="SFRM Inbound Listener">
+	  <parameter name="class" value="hk.hku.cecid.edi.sfrm.listener.SFRMInboundListener" />
+	  <parameter name="context" value="/sfrm/inbound" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="SFRM Plugin Message Status Query Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.sfrm.service.SFRMMessageStatusQueryService" />
+	  <parameter name="context" value="/sfrm/status" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="SFRM Plugin Message Suspend Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.sfrm.service.SFRMMessageSuspendService" />
+	  <parameter name="context" value="/sfrm/suspend" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="SFRM Plugin Message Resume Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.sfrm.service.SFRMMessageResumeService" />
+	  <parameter name="context" value="/sfrm/resume" />
+	</extension>
+
+</plugin>

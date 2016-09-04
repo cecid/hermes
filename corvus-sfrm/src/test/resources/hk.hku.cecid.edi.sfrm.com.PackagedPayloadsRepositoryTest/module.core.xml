@@ -1,0 +1,12 @@
+<module id="sfrm.core" name="Corvus SFRM" version="1.0">
+
+	<component id="logger" name="SFRM Core Logger">
+		<class>hk.hku.cecid.piazza.commons.util.ConsoleLogger</class>
+	</component>	
+	 
+	<component id="outgoing-payload-repository" name="SFRM Outgoing Packaged Payload Repository">
+		<class>hk.hku.cecid.edi.sfrm.com.PackagedPayloadsRepository</class>
+		<parameter name="location" value="src/test/resources/hk.hku.cecid.edi.sfrm.com.PackagedPayloadsRepositoryTest/tmp/sfrm-outgoing-repository" />
+	</component>
+
+</module>

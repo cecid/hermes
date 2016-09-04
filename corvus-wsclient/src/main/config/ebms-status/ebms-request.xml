@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-status-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/ebms/status</endpoint>
+	</config>
+	<param>
+		<messageId></messageId>
+	</param>
+</ebms-status-request>
+
+
+

@@ -1,0 +1,58 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.edi.sfrm.dao.ds.SFRMMessageDSDAO">
+		<class>hk.hku.cecid.edi.sfrm.dao.ds.SFRMMessageDSDAO</class>
+		<parameter name="table" value="sfrm_message" />
+		<parameter name="key" value="message_id,message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<!--
+		<parameter type="column" name="conv_id" value="conversationId" />
+		-->
+		<parameter type="column" name="partner_endpoint" value="partnerEndpoint" />
+		<parameter type="column" name="total_segment" value="totalSegment" />
+		<parameter type="column" name="total_size" value="totalSize" />
+		<!--
+		<parameter type="column" name="is_signed" value="isSigned" />
+		<parameter type="column" name="is_encrypted" value="isEncrypted" />
+		-->
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+		<parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+		
+		<parameter type="column" name="status" value="status" />
+		<parameter type="column" name="status_desc" value="statusDescription" />
+		<parameter type="column" name="created_timestamp" value="createdTimestamp" />
+		<parameter type="column" name="proceed_timestamp" value="proceedTimestamp" />
+		<parameter type="column" name="completed_timestamp" value="completedTimestamp" />
+		<parameter type="column" name="filename" value="filename"/>
+		<parameter type="selective" name="insert" value="true" />
+		<parameter type="selective" name="update" value="true" />
+		<parameter type="finder" name="key" value="SELECT * FROM sfrm_message WHERE message_id = ? AND message_box = ?"/>
+		<parameter type="finder" name="find_message_by_message_box_and_status" value="SELECT * FROM sfrm_message WHERE message_box = ? and status = ?"/>	
+		<parameter type="finder" name="find_message_by_message_box_and_partnership_id_status" value="SELECT * FROM sfrm_message WHERE message_box = ? and partnership_id =? and status = ?" />
+		
+		<!-- Find number of message by history -->
+		<parameter type="finder" name="find_number_of_message_by_history" value="SELECT COUNT(message_id) from sfrm_message"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_status" value="status = ?"/>
+		 
+		<parameter type="filter" name="find_number_of_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>
+		 
+		<!-- Find message from message history -->
+		<parameter type="finder" name="find_message_by_history" value="SELECT *FROM sfrm_message"/>
+		<parameter type="filter" name="find_message_by_history_filter_before_date" value="created_timestamp > ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_status" value="status = ?"/>
+		 
+		<parameter type="filter" name="find_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>
+		
+		<parameter type="order" name="find_message_by_history_order" value="ORDER BY created_timestamp DESC, message_box ASC LIMIT ? OFFSET ?"/>
+		
+		<!-- Find message that is collecting for sending the acknowledgement -->
+		<parameter type="finder" name="find_message_for_acknowledgement" value="select *from sfrm_message WHERE message_box='OUTBOX' AND status in ('PR', 'PPS', 'PSD', 'PDF', 'PRS','ST')"/>
+		<parameter type="order" name="find_message_for_acknowledgement_order" value="ORDER BY created_timestamp ASC LIMIT ? OFFSET ?"/>
+		
+	</dao>
+</dao-config>

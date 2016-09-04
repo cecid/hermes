@@ -1,0 +1,12 @@
+<module id="admin.scheduler" name="Housecleaning Scheduler Module">
+
+	<parameters>
+		<parameter name="execution-interval" value="10000" />
+	</parameters>
+
+	<component id="task-list" name="Housecleaning Scheduler Task List">
+		<class>hk.hku.cecid.piazza.corvus.core.main.admin.hc.module.SchedulerTaskList</class>
+		<parameter name="max-thread-count" value="0" />
+	</component>
+
+</module>

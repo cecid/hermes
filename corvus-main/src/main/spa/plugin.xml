@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="hk.hku.cecid.piazza.corvus.core.main"
+   name="Corvus Main System Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+>
+
+	<runtime>
+		<library name="corvus-main.jar"/>
+	</runtime>
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.core.httpd.filter" name="Http Request Filter Registrar" class="hk.hku.cecid.piazza.corvus.core.main.handler.HttpdRequestFilterRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Http Request Listener Registrar" class="hk.hku.cecid.piazza.corvus.core.main.handler.HttpdRequestListenerRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.core.httpd.context.listener" name="Http Dispatcher Context Listener Registrar" class="hk.hku.cecid.piazza.corvus.core.main.handler.HttpdRequestListenerRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.core.remote.command" name="Remote Command Registrar" class="hk.hku.cecid.piazza.corvus.core.main.handler.RemoteCommandRegistrar" />
+
+	<!--
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Http Proxy Listener">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.listener.HttpProxyListener" />
+	  <parameter name="context" value="/proxy" />
+  	</extension>
+  	-->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="WS Ping Service">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.listener.WSPingService" />
+	  <parameter name="context" value="/wsping" />
+	</extension>
+	
+	<!--extension point="hk.hku.cecid.piazza.corvus.core.remote.command" name="Sample Command">
+	  <parameter name="command" value="command-id" />
+	  <parameter name="url" value="jnp://127.0.0.1:1099@org.jnp.interfaces.NamingContextFactory" />
+	  <parameter name="username" value="" />
+	  <parameter name="password" value="" />
+	  <parameter name="class" value="full-class-name" />
+	  <parameter name="method" value="method-name" />
+	  <parameter name="parameters" value="comma-separated-parameter-types" />
+	</extension-->
+	
+</plugin>

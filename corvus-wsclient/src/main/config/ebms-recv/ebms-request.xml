@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-request>
+	<config>		
+		<recvEndpoint>http://localhost:8080/corvus/httpd/ebms/receiver</recvEndpoint>
+		<recvListEndpoint>http://localhost:8080/corvus/httpd/ebms/receiver_list</recvListEndpoint>
+	</config>
+	<param>
+		<!-- OPTIONAL parameters, they should match with specified during send time. -->		
+		<conversationId>convId</conversationId>
+		<fromPartyId>fromPartyId</fromPartyId>
+		<fromPartyType>fromPartyType</fromPartyType>
+		<toPartyId>toPartyId</toPartyId>
+		<toPartyType>toPartyType</toPartyType>				
+		<refToMessageId></refToMessageId>
+		<serviceType></serviceType>
+	</param>
+</ebms-request>

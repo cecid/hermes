@@ -1,0 +1,8 @@
+<module-group name="Piazza">
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>hk/hku/cecid/piazza/commons/conf/sys.module.xml</descriptor>
+	</module>
+	
+</module-group>

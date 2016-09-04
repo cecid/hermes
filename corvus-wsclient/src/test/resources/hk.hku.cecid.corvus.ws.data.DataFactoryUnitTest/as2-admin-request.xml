@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-admin-request>
+	<config>
+		<username>as2Testname</username>
+		<password>as2Testpassword</password>		
+		<managePartnershipEndpoint>http://as2Test:8080/corvus/admin/as2/partnership</managePartnershipEndpoint>
+		<envelopQueryEndpoint>http://as2Test:8080/corvus/admin/as2/repository</envelopQueryEndpoint>
+	</config>
+</as2-admin-request>

@@ -1,0 +1,115 @@
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="partnership_id"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+ebms
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="cpa_id"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+ebmscpaid
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="service"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+http://127.0.0.1:8080/corvus/httpd/ebms/inbound
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="action_id"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+action
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="disabled"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+false
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="sync_reply_mode"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+none
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="transport_endpoint"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+http://127.0.0.1:8080/corvus/httpd/ebms/inbound
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="ack_requested"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+never
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="ack_sign_requested"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+never
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="dup_elimination"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+never
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="message_order"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+NotGuaranteed
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="retries"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+1
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="retry_interval"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+30000
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="sign_requested"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+false
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="encrypt_requested"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+false
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="verify_cert"; filename="signCert"
+Content-Type: application/octet-stream; charset=ISO-8859-1
+Content-Transfer-Encoding: binary
+
+
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="encrypt_cert"; filename="encryptCert"
+Content-Type: application/octet-stream; charset=ISO-8859-1
+Content-Transfer-Encoding: binary
+
+
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="is_hostname_verified"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+false
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K
+Content-Disposition: form-data; name="request_action"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+add
+--vARX2-0T9H-pIjoTI91ysxiyg-B3UHVTy4K--

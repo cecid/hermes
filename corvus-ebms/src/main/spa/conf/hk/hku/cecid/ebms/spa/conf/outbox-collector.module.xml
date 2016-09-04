@@ -1,0 +1,12 @@
+<module id="ebms.outbox-collector" name="Ebms Plugin" version="1.0">
+
+	<parameters>
+        <parameter name="execution-interval" value="50" />
+    </parameters>
+
+	<component id="task-list" name="Outbox Collector">
+        <class>hk.hku.cecid.ebms.spa.task.OutboxCollector</class>
+		<parameter name="max-thread-count" value="10" />		
+	</component>
+
+</module>

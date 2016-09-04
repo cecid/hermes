@@ -1,0 +1,6 @@
+<sfrm>		
+	<trusted-certificates>@h2.home@/plugins/corvus-sfrm/public_certs</trusted-certificates>
+	<segment-size>1024000</segment-size>			
+	<max-payload-size>5046586573</max-payload-size>
+	<speed-tick-interval>1000</speed-tick-interval>
+</sfrm>

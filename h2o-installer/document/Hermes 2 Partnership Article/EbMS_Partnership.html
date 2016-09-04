@@ -1,0 +1,606 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>Product And Solution from CECID</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel='stylesheet' type='text/css' media='all' href='http://community.cecid.hku.hk/index.php?css=product/product_css.v.1180404469' />
+<style type='text/css' media='screen'>@import "http://community.cecid.hku.hk/index.php?css=product/product_css.v.1180404469";</style>
+
+<link rel='stylesheet' type='text/css' media='all' href='http://community.cecid.hku.hk/index.php?css=product/html_css.v.1180485745' />
+<style type='text/css' media='screen'>@import "http://community.cecid.hku.hk/index.php?css=product/html_css.v.1180485745";</style>
+
+<link rel='stylesheet' type='text/css' media='all' href='http://community.cecid.hku.hk/index.php?css=product/layout_css.v.1184284302' />
+<style type='text/css' media='screen'>@import "http://community.cecid.hku.hk/index.php?css=product/layout_css.v.1184284302";</style>
+
+<script type="text/javascript">
+</script>
+
+</head>
+
+<body>
+
+<!-- #content: holds all except site footer - causes footer to stick to bottom -->
+<div id="content">
+
+  <!-- #header: holds the logo and top links -->
+
+  <div id="header" class="width">
+
+    <img src="/images/css/logo.gif" alt="Your logo goes here"/>
+
+    <ul>
+     <!-- <li><a href="index.html">Back to Main page</a></li> -->
+      <li><a href="http://community.cecid.hku.hk/index.php">Home</a></li>
+      <li><a href="http://community.cecid.hku.hk/index.php/product/download/download_h2o/" class="last">Download</a></li>
+      <!-- <li><a href="" class="last">RSS Feeds</a></li> -->
+
+    </ul>
+
+  </div>
+  <!-- #header end -->
+
+  <!-- #headerImg: holds the main header image or flash -->
+  <div id="headerImg" class="width"></div>
+
+  <!-- #page: holds the page content -->
+  <div id="page">
+
+  <!-- #columns: holds the columns of the page -->
+  <div id="columns" class="widthPad">
+
+  <!-- Single column -->
+  <div class="floatLeft width100">
+
+<!-- Determine if it is requesting the detail page or the index page -->
+<!-- Requesting the detail page -->
+	<!-- Show the entries -->
+	
+
+	      <!-- Post Content -->
+
+	      <p>
+	     <h1>Reference of ebMS 2.0 Partnership configuration</h1>
+<br/><hr/>	
+<a id="summary"></a>
+<h2>1. ebMS 2.0 Partnership parameter</h2>
+Here is the summary of the ebMS 2.0 Partnership parameter.
+<ol>
+	<li><a href="#partnership-id"        style="text-decoration: underline"><span>Partnership ID</span></a></li>		
+	<li><a href="#cpa-id"                style="text-decoration: underline"><span>CPA ID</span></a></li>
+	<li><a href="#service"               style="text-decoration: underline"><span>Service</span></a></li>
+	<li><a href="#action"                style="text-decoration: underline"><span>Action</span></a></li>
+	<li><a href="#disabled"              style="text-decoration: underline"><span>Disabled</span></a></li>
+	<li><a href="#transport-endpoint"    style="text-decoration: underline"><span>Transport Endpoint</span></a></li>
+	<li><a href="#ssl-hostname-verified" style="text-decoration: underline"><span>Hostname Verified in SSL?</span></a></li>
+	<li><a href="#sync-reply-mode"       style="text-decoration: underline"><span>Sync Reply Mode</span></a></li>
+	<li><a href="#ack-requested"         style="text-decoration: underline"><span>Acknowledgement Requested</span></a></li>
+	<li><a href="#ack-sign-requested"    style="text-decoration: underline"><span>Acknowledgement Signed Requested</span></a></li>
+	<li><a href="#dup-elimination"       style="text-decoration: underline"><span>Duplicate Elimination</span></a></li>
+	<li><a href="#message-order"         style="text-decoration: underline"><span>Message Order</span></a></li>
+	<li><a href="#signing-required"      style="text-decoration: underline"><span>Signing Required?</span></a></li>
+	<li><a href="#encryption-required"   style="text-decoration: underline"><span>Encryption Required? (Mail Only)</span></a></li>
+	<li><a href="#encryption-cert"       style="text-decoration: underline"><span>Certificate For Encryption</span></a></li>
+	<li><a href="#maximum-retries"       style="text-decoration: underline"><span>Maximum Retries</span></a></li>
+	<li><a href="#retry-interval"        style="text-decoration: underline"><span>Retry Interval (ms)</span></a></li>
+	<li><a href="#verification-cert"     style="text-decoration: underline"><span>Certificate For Verification</span></a></li>	
+</ol>			
+<br/><hr/>
+<a id="partnership-id"></a>
+<h2>1.1 Partnership ID</h2>
+<table id="reference_table_pid" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The unique identifier of the ebMS 2.0 partnership in local Hermes 2 machine.<br>
+		    The value of this field has no restriction but <b>RECOMMENDED</b> to be an identifiers between the sending party and 
+		    receiving party.<br/><br/>
+		    
+		    It is <b>mandatory</b> and it's maximum length of this field is 255.
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="cpa-id"></a>
+<h2>1.2 CPA ID</h2>
+<table id="reference_table_cpaid" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The CPA (Collaboration Protocol Agreement) id. It is a string that identifies the parameters governing the exchange of
+		    messages between the parties. The recipient of a message <b>MUST</b> be able to resolve the CPAId to an individual set of 
+		    parameters, taking into account the sender of the message.<br/><br/>
+		    
+		    Simply said, it is just an arbitary and mandatory string that can be used to identify sender and receiver.
+		</td>    
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="service"></a>
+<h2>1.3 Service</h2>
+<table id="reference_table_service" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>In Hermes 2, the Service parameter for Sending Partnership and Receiving Partnership has to be HTTP URL (Universal Resource Locator) 
+		    even though ebMS specification allows a Service value that is not HTTP URL. 
+		    The Service has different meanings in Send Partnership and Receive Partnership:
+		    <ol>
+		    	<li><span>For Sending Partnership, the Service acts as the endpoint URL of the sending Hermes to which the 
+		    	    acknowledgement is sent by the receiver. That is, this should be the endpoint URL of the sending Hermes for 
+		    	    receiving ebMS messages.
+		    	</span></li>
+		    	<li><span>For Receiving Partnership, since the Service is a filtering criterion for the incoming messages, it should be the 
+		    	    endpoint URL of the sending Hermes.
+		    	</span></li>
+		    </ol>
+		</td>    
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="action"></a>
+<h2>1.4 Action</h2>
+<table id="reference_table_action" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>It identifies a process within a <a href="#service" style="text-decoration: underline">Service</a> that processes the 		    Message. Action SHALL be unique within the Service in which it is defined. The value of the Action element is 
+		    specified by the designer of the service.
+		    
+		    It is mandatory and it's maximum length of this field is 255.
+		</td>    
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="disabled"></a>
+<h2>1.5 Disabled</h2>
+<table id="reference_table_disabled" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The boolean options indicates whether the partnership is disabled or not.<br/>
+		    Disabled partnership does not deliver / receive any outgoing message / incoming respectively.<br/><br/>
+		    
+		    It is <b>RECOMMENDED</b>to set it to false.	    
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>true</b> = disabled ], [ <b>false</b> = enabled ]</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="transport-endpoint"></a>
+<h2>1.6 Transport Endpoint</h2>
+<table id="reference_table_transport_endpoint" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The endpoint URL of the receiving message gateway.<br/><br/>
+		    If the receiving message gateway is Hermes 2, the endpoint URL is formatted as
+		    <i>http://&lt;RECEIVER HOST&gt;:&lt;PORT&gt;/corvus/httpd/ebms/inbound</i>.<br/><br/>
+		    Otherwise, if the receiving message gateway is SMTP gateway, the endpoint URL is formatted as 
+		    <i>mailto:EMAIL_ADDRESS</i>.<br/><br/>
+		    
+		    It is <b>mandatory</b> and the format MUST be a <b>HTTP/HTTPS URL/EMAIL ADDRESS</b>.
+		</td>    
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="ssl-hostname-verified"></a>
+<h2>1.7 Hostname Verified in SSL?</h2>
+<table id="reference_table_ssl_hostname_verified" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The boolean flag indicates whether HTTP SSL/TLS protocol is used and required verifying the receipient hostname.<br/><br/>
+		    It is relevant if <b>HTTPS</b> transport protocol is used under the <a href="#transport-endpoint">Transport Endpoint</a>
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>true</b> = hostname verified using SSL , <b>false</b> = none ]</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/>
+<a id="sync-reply-mode"></a>
+<h2>1.8 Sync Reply Mode</h2>
+<table id="reference_table_sync_reply_mode" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the receiver should reply it's ebMS message in same HTTP/HTTPS connection the sender
+		    uses for delivery.
+		    <br/><br/>
+		    This parameter is only applied to <b>HTTP/HTTPS</b> protocol and applicable for <b>sending partnership<b/>.
+		    <br/> 
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>mshSignalsOnly</b> = synchronous reply ], [ <b>none</b> = asynchronous reply ]</td>
+	</tr>	
+</table>
+
+<br/>
+An example of synchronous reply from the receipient:<br/>
+The reply ebMS message is included in the HTTP/SOAP Response when synchronous reply is applied.
+<div align="center">
+<img src="{filedir_1}ebms-send-sync.png" style="border: 0;" alt="image" width="353" height="79" />
+</div>
+<br/><br/>
+An example of asynchronous reply from the receipient:<br/>
+The reply ebMS message will be delivered through another HTTP/SOAP connection from the receipient to the sender.
+<div align="center">
+<img src="{filedir_1}ebms-send-async.png" style="border: 0;" alt="image" width="356" height="138" />
+</div>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="ack-requested"></a>
+<h2>1.9 Acknowledgment Requested</h2>
+<table id="reference_table_ack_requested" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the receiver is requested to send an ebMS acknowledgment back to the sender.<br/><br/>
+		    Both sender and receiver MUST enable this (by setting to <b>always</b>) for interoperability of this features,
+		    otherwise the receiver returns the negative acknowledgment.<br/><br/>		    
+		    
+		    An acknowledgment is a kind of ebMS Message which has &lt;acknowledgment&gt; element. It is an receipt
+		    that reciever party sends back acknowledgment to the sender party after receiving ordinary ebMS message w
+		    ith/with-out payload.<br/><br/>
+		   
+		    The mode of acknowledgment sending back depends on the value <a href="#sync-reply-mode" style="text-decoration: underline">
+		    Sync Reply Mode</a>, if Sync Reply Mode is enabled, the acknowledgment will send back immediately in the same 
+		    HTTP  connection. otherwise, the acknolwedgment will be put in outgoing buffer queue and wait indefinitely before
+		    send back to sender if the receiver is using Hermes 2.<br/><br/> 
+		    
+		    It is <b>RECOMMENDED</b> to set this parameter to <b>always</b> for reliable messaging.		    
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>always</b> = acknowledgment requested ], [ <b>none</b> = acknowledgment does not request ]</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="ack-sign-requested"></a>
+<h2>1.10 Acknowledgment Signing Requested</h2>
+<table id="reference_table_ack_sign_requested" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the receiver <b>MUST</b> sign the ebMS acknowledgment digitally using it's private key 
+		    before delivering back to the sender.<br/><br/>
+		    
+		    Both sender and receiver MUST enable this (by setting to <b>true</b>) for interoperability of this features,
+		    otherwise the receiver returns the negative acknowledgment.<br/><br/>
+		    
+		    The format of the private key <b>SHOULD BE</b> in PKCS12 and the signatures created is conformed to W3C 
+		    XML Signatures Specification [XMLDsig].<br/><br/>
+		    
+		    The sender partnerships MUST request acknowledgment from receiver for running this features properly. Also,
+		    It is required to provide the public certificates for verifying the signatures in the acknowledgment.		    		    
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Param(s) dependencies</b></span></td>
+		<td>[ <b><a href="#ack-requested">Acknowledgment Requested</a></b> = always ], <br>
+		    [ <b><a href="#verification-cert">Certificate For Verification<a/></b> <b>REQUIRED</b> ]
+		</td>
+	</tr>	
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>true</b> = acknowledgment MUST be digitally signed ],<br>
+		    [ <b>false</b> = acknolwedgment MUST not be digitally signed ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="dup-elimination"></a>
+<h2>1.11 Duplicate Elimination</h2>
+<table id="reference_table_dup_elimination" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the receiver eliminate/ignore duplicate received message.<br/><br/>
+		    Both sender and receiver MUST enable this (by setting to <b>always</b>) for interoperability of this features,
+		    otherwise the receiver returns the negative acknowledgment.<br/><br/>	    		    		    	   
+		</td>    
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>alawys</b> = ignores / eliminates duplicate message. ],<br>
+		    [ <b>never</b> = delivers duplicate message. ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="message-order"></a>
+<h2>1.12 Message Order</h2>
+<table id="reference_table_message_order" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the receiver <b>MUST</b> RECEIVES the ebMS messages in the order of time requesting Hermes 2		 
+		    through web service in sender system.<br/><br/>
+		
+		    Both sender and receiver MUST enable this (by setting to <b>Guaranteed</b>) for interoperability of this features,
+		    otherwise the receiver returns the negative acknowledgment.<br/><br/>			
+		    
+		    For example, if the external application / client has requested sender Hermes 2 to deliver ten ebMS message with each
+		    request is later than the previous one by a second. The expected result in receiver system using <b>Message Order</b>
+		    SHOULD be the order of received message SHOULD be the same in the application / client requested to Hermes 2. 	
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Param(s) dependencies</b></span></td>
+		<td>[ <b><a href="#sync-reply-mode">Sync Reply Mode</a></b> = none ], <br/>
+		    [ <b><a href="#ack-requested">Acknowledgment Requested</a></b> = always ], <br/>
+		    [ <b><a href="#duplicate-elimination">Duplicate Elimination</a></b> = always ]
+		</td>
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>Guaranteed</b> = The receiver receives ebMS messages in the order of sending. ],<br/>
+		    [ <b>NotGuaranteed</b> = The receiver receives in best effort behavior. ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br>
+<a id="signing-required"></a>
+<h2>1.13 Signing Required</h2>
+<table id="reference_table_signing_required" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the sender <b>MUST</b> sign the normal/payload ebMS Message digitally using it's private 
+		    key.<br><br> 		    
+		    
+		    Both sender and receiver MUST enable this (by setting to <b>true</b>) for interoperability of this features,
+		    otherwise the receiver returns the negative acknowledgment.<br/><br/>
+		    
+		    The format of the private key <b>SHOULD BE</b> in PKCS12 and the signatures created is conformed to W3C 
+		    XML Signatures Specification [XMLDsig].<br/>		    		    		    
+		</td>    
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>true</b> = The outgoing normal/payload ebMS message MUST be digitally signed. ],<br/>
+		    [ <b>false</b> = The outgoing ebMS message does not require to sign digitally. ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="encryption-required"></a>
+<h2>1.14 Encryption Required</h2>
+<table id="reference_table_encyption_required" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>Indicates whether the sender <b>MUST</b> encrypt the normal/payload ebMS Message using the corresponding
+		    public certifcates defined in <a href="encryption-cert">Cert for Encryption</a>.<br/><br/>
+
+		    It is applicable only when using <b>SMTP</b> protocol.<br/><br/>
+		    
+		    The encryption method is based on S/MIME standard.  
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Param(s) dependencies</b></span></td>
+		<td>[ <b><a href="#transport-endpoint">Transport Endpoint</a></b> = started with <i>mailto:</i> ], <br/>
+		    [ <b><a href="#sync-reply-mode">Sync Reply Mode</a></b> = none ], <br/>
+		    [ <b><a href="#encryption-cert">Certificate For Encryption</a></b> <b>REQUIRED</b> ] 
+		</td>
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ <b>true</b> = The outgoing normal/payload ebMS message MUST be encrypted. ],<br/>
+		    [ <b>false</b> = The outgoing ebMS message does not require to encrypt. ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="encryption-cert"></a>
+<h2>1.15 Encryption Cert</h2>
+<table id="reference_table_encyption_cert" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The certificates file for encrypting the outgoing ebMS message through SMTP protocol 
+			by using the public key generated by the receiving party.
+                        Hence, the certificate should contains the public key generated by receiving party. 
+                        <br/><br/>
+			<i><small>(For Recevier Side)</small>In order to generate certificate for sending party, 
+			you should generate the certificate by using the keystore in EbMS plugin. <br />
+			Keystore path: <b>hermes2_path/plugins/hk.hku.cecid.ebms/security</b>
+			</i>
+			<br/><br/>
+		
+		    The format of the certificates <b>MUST</b> be PKCS12.
+		
+		    See <a href="#encryption-required">Encryption Required</a> for details.
+		</td>    
+	</tr>
+
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="maximum-retries"></a>
+<h2>1.16 Maximum Retries</h2>
+<table id="reference_table_maximum_retries" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The maximum number of retry that the <b>Sender</b> can attempt to deliver the ebMS Message.<br/><br/>
+		
+	            Hermes 2 tries to deliver the ebMS Message again under the features of reliable messaging until 
+	            meeting the maximum number of retries.<br/><br/>
+	            
+	            Each retry will be executed after a interval defined in <a href="retry-interval">retry interval</a>
+	            from the last delivery attempt.	            	                        
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Param(s) dependencies</b></span></td>
+		<td>
+		    [ <b><a href="#ack-requested">Acknowledgment Requested</a></b> = always ]
+		</td>
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ recommended range = 1-10 ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="retry-interval"></a>
+<h2>1.17 Retry Interval</h2>
+<table id="reference_table_retry_interval" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The interval in millesecond between consecutive retry in delivery.                       
+		</td>    
+	</tr>
+	<tr>
+		<td><span><b>Param(s) dependencies</b></span></td>
+		<td>
+		    [ <b><a href="#ack-requested">Acknowledgment Requested</a></b> = always ]
+		</td>
+	</tr>
+	<tr>	
+		<td><span><b>Options</b></span></td>
+		<td>[ recommended range = 30000 - 300000 ]
+		</td>
+	</tr>
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/>
+<a id="verification-cert"></a>
+<h2>1.18 Verification Cert</h2>
+<table id="reference_table_encyption_cert" border="1" cellspacing="0" width="100%">
+	<tr>
+		<td width="15%"><span><b>Description</b></span></td>
+		<td>The certificates file for verifying the received ebMS message with digital signatures.
+			The certificate should containing a public key generated by the sending party. 
+			<br/><br/>
+		    The format of the certificates <b>MUST</b> be PKCS12 and it should be the certificate for the subject, 
+		    not the certificate of its certificate of its certificate authority.
+			<br/><br/>
+			<i><small>(For Sender Side)</small>In order to generate certificate for receiving party to perform verification, 
+			the certificate should be generated by using the keystore in EbMS plugin. <br />
+			Keystore path: <b>hermes2_path/plugins/hk.hku.cecid.ebms/security</b></i>
+			<br/><br/>		
+		    See <a href="#signing-required">Signing Required</a> for details.			    
+		</td>    
+	</tr>
+
+</table>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+     
+             <br/><br/>
+             	     </p>
+
+	     <p class="tools">Posted by <a href="http://community.cecid.hku.hk/index.php/member/3/">Twinsen</a>  on 06/08 at 03:16 PM
+	     <br />
+
+	     	     <!-- &#40;0&#41; <a href="http://community.cecid.hku.hk/index.php/product/comments/reference_of_ebms_2_0_partnership_configuration/">Comments</a> &#8226; -->
+	     
+	     	     <!-- &#40;476&#41; <a href="http://community.cecid.hku.hk/index.php/product/trackbacks/7/">Trackbacks</a> -->
+	     	     </p>
+	     <!-- End Post Content -->
+
+	<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description
+    rdf:about="http://community.cecid.hku.hk/index.php/7/"
+    trackback:ping="http://community.cecid.hku.hk/index.php/trackback/7/"
+    dc:title="Reference of ebMS 2.0 Partnership configuration"
+    dc:identifier="http://community.cecid.hku.hk/index.php/7/" 
+    dc:subject="Information,Article"
+    dc:description="This article is a summary to elaborate the relationship of the ebMS partnership parameters."
+    dc:creator="Twinsen"
+    dc:date="2007-06-08 07:16:01 AM GMT" />
+</rdf:RDF>
+-->
+
+</div>
+<!-- Single column end -->
+
+</div>
+
+<!-- #columns end -->
+
+</div>
+<!-- #page end -->
+
+</div>
+<!-- #content end -->
+
+<!-- #footer: holds the site footer (logo and links) -->
+<div id="footer">
+
+  <!-- #bg: applies the site width and footer background -->
+  <div id="bg" class="width">
+  
+  <!-- <img src="images/css/logo.gif" alt="Your logo goes here"/>-->
+
+  <br />
+  Copyright 2004 - 2008 Center for E-commerce Infrastructure Development, The University of Hong Kong
+  </div>
+  <!-- #bg end -->
+
+</div>
+<!-- #footer end -->
+
+</body>
+</html>

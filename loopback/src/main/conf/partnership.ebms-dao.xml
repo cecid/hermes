@@ -1,0 +1,34 @@
+<dao-config>
+	<dao name="hk.hku.cecid.ebms.spa.dao.PartnershipDAO">
+			<class>hk.hku.cecid.ebms.spa.dao.PartnershipDataSourceDAO</class>
+            <parameter name="table" value="partnership" />
+			<parameter name="key" value="partnership_id" />
+			<parameter type="column" name="partnership_id" value="partnershipId" />            
+			<parameter type="column" name="cpa_id" value="cpaId" />
+			<parameter type="column" name="service" value="service" />
+            <parameter type="column" name="action" value="action" />
+			<parameter type="column" name="transport_protocol" value="transportProtocol" />
+			<parameter type="column" name="transport_endpoint" value="transportEndpoint" />
+			<parameter type="column" name="sync_reply_mode" value="syncReplyMode" />
+			<parameter type="column" name="ack_requested" value="ackRequested" />
+			<parameter type="column" name="ack_sign_requested" value="ackSignRequested" />
+			<parameter type="column" name="dup_elimination" value="dupElimination" />
+			<parameter type="column" name="actor" value="actor" />
+			<parameter type="column" name="disabled" value="disabled" />
+            <parameter type="column" name="retries" value="retries" />
+			<parameter type="column" name="retry_interval" value="retryInterval" />
+			<parameter type="column" name="persist_duration" value="persistDuration" />
+			<parameter type="column" name="message_order" value="messageOrder" />
+			<parameter type="column" name="sign_requested" value="signRequested" />
+            <parameter type="column" name="sign_cert" value="signCert" />
+			<parameter type="column" name="ds_algorithm" value="dsAlgorithm" />
+			<parameter type="column" name="md_algorithm" value="mdAlgorithm" />
+            <parameter type="column" name="encrypt_requested" value="encryptRequested" />
+            <parameter type="column" name="encrypt_cert" value="encryptCert" />
+            <parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+            <!-- <parameter type="column" name="principal_id" value="principalId" /> -->
+            <parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+			<parameter type="finder" name="find_all_partnerships" value="select * from partnership order by partnership_id" />			
+            <parameter type="finder" name="find_partnerships_by_cpa" value="select * from partnership where cpa_id = ? and service = ? and action = ?  and disabled = 'false'" />
+	</dao>
+</dao-config>

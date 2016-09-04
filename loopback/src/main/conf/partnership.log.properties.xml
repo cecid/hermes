@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+  
+  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+     </layout>
+  </appender>
+
+  <appender name="corvus" class="org.apache.log4j.RollingFileAppender">
+     <param name="File" value="/corvus/logs/loopback.log"/>
+     <param name="Encoding" value="UTF-8"/>
+     <param name="MaxFileSize" value="100KB"/>
+     <param name="MaxBackupIndex" value="1"/>
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+     </layout>
+  </appender>
+  
+  <category name="hk.hku.cecid.corvus">
+    <priority value ="debug" />
+    <appender-ref ref="corvus"/>
+  </category>
+  
+  <!--root>
+    <priority value ="debug" />
+    <appender-ref ref="stdout"/>
+  </root-->
+  
+</log4j:configuration>

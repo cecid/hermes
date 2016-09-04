@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        
+  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+     </layout>
+  </appender>
+
+  <appender name="ebms" class="org.apache.log4j.RollingFileAppender">
+     <param name="File" value="@h2.home@/logs/ebms.log"/>
+     <param name="Encoding" value="UTF-8"/>
+     <param name="MaxFileSize" value="5MB"/>
+     <param name="MaxBackupIndex" value="1"/>
+     <layout class="org.apache.log4j.PatternLayout">
+       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%c{3}&gt; &lt;%m&gt;%n"/>
+     </layout>
+  </appender>
+  
+  <appender name="chainsaw" class="org.apache.log4j.net.SocketAppender">
+     <param name="remoteHost" value="localhost"/>
+     <param name="port" value="4445"/>
+     <!--param name="LocationInfo" value="true"/-->
+  </appender>
+
+  <category name="hk.hku.cecid.ebms">
+    <priority value ="debug" />
+	<!--<appender-ref ref="stdout"/-->
+    <!--appender-ref ref="chainsaw"/-->
+	<appender-ref ref="ebms"/>
+  </category>
+  
+  <!--root>
+    <priority value ="debug" />
+    <appender-ref ref="stdout"/>
+  </root-->
+
+</log4j:configuration>

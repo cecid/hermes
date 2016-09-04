@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hk.hku.cecid</groupId>
+		<artifactId>h2o</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>h2o-maven</artifactId>
+	<name>H2O Maven</name>
+	<properties>
+		<as2plus>true</as2plus>
+		<sfrm>true</sfrm>		
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-webapp</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/embedded/webapps/corvus</outputDirectory>
+							<resources>
+								<resource>
+ 									<directory>${project.parent.basedir}/corvus-webapp/src/main/webapp</directory>												
+								</resource>							
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-hsqldb</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/embedded/data</outputDirectory>
+							<resources>
+								<resource>
+ 									<directory>${project.parent.basedir}/h2o-embedded/resources/data</directory>								
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-realm</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/embedded/etc</outputDirectory>
+							<resources>
+								<resource>
+ 									<directory>${project.parent.basedir}/h2o-embedded/resources/etc</directory>								
+									<includes>
+										<include>path.xml</include>										
+										<include>realm.properties</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>					
+					<execution>
+						<id>copy-lib</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/embedded/lib</outputDirectory>
+							<resources>
+								<resource>
+ 									<directory>${project.parent.basedir}/h2o-embedded/resources/lib</directory>								
+								</resource>
+							</resources>
+						</configuration>
+					</execution>										
+				</executions>
+			</plugin>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-bin</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/embedded/plugins</outputDirectory>														
+							<artifactItems>
+<!--								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-webapp</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>								
+									<outputDirectory>${project.build.directory}/embedded/webapps/corvus</outputDirectory>
+								</artifactItem>
+-->								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-as2</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-as2-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>																								
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-as2plus</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-as2plus-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-ebms</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-ebms-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-main</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-main-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-sfrm</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-sfrm-admin</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>			
+<!--								
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-wsclient</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+									<outputDirectory>${project.build.directory}/embedded/sample</outputDirectory>
+								</artifactItem>	
+-->																									
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>hsqldb</groupId>
+									<artifactId>hsqldb</artifactId>
+									<version>1.8.0.10</version>
+									<outputDirectory>${project.build.directory}/embedded/webapps/corvus/WEB-INF/lib</outputDirectory> 																
+								</artifactItem>						
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>h2o-embedded</artifactId>
+									<version>${project.version}</version>
+									<outputDirectory>${project.build.directory}/embedded/lib/ext</outputDirectory> 																
+								</artifactItem>								
+								<artifactItem>
+									<groupId>log4j</groupId>
+									<artifactId>log4j</artifactId>
+									<version>1.2.15</version>
+									<outputDirectory>${project.build.directory}/embedded/lib/ext</outputDirectory> 																
+								</artifactItem>																
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>							
+
+								<!-- @h2.home@ will be replaced in runtime by JettyAntRunner -->							
+<!--								
+								<replace
+									file="${project.build.directory}/embedded/webapps/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf/corvus.properties.xml"
+									token="@h2.home@" value="${project.build.directory}/embedded" />
+								<replace
+									file="${project.build.directory}/embedded/webapps/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf/corvus.log.properties.xml"
+									token="@h2.home@" value="${project.build.directory}/embedded" />									
+-->
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-main-admin/conf/hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.logger.xml"
+									token="@h2.home@" value="${project.build.directory}/embedded" />									
+
+								<replace 
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/log4j.properties.xml"
+									token="@h2.home@" value="${project.build.directory}/embedded" />
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@h2.home@" value="${project.build.directory}/embedded" />																	
+
+								<replace 
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmsDriverClass@" value="org.hsqldb.jdbcDriver" />
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmsConnStr@" value="jdbc:hsqldb:file:@h2.home@/data/ebms" />									
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmsuser@" value="corvus" />
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmspw@" value="corvus" />
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmsValidationQuery@" value="select 1 from INFORMATION_SCHEMA.SYSTEM_USERS" />
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+									token="@ebmsDAOFile@" value="hk/hku/cecid/ebms/spa/conf/ebms.dao.xml" />
+
+								<replace
+									file="${project.build.directory}/embedded/plugins/corvus-ebms-admin/plugin.xml"
+									token="@ebmsPageletAdaptor@" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor" />									
+
+								<if>
+									<equals arg1="${as2plus}" arg2="true" />
+									<then>
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-as2" />
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-as2-admin" />
+
+										<replace 
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@as2.path@" value="corvus-as2plus" />																		
+
+										<replace 
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.log.properties.xml"
+											token="@h2.home@" value="${project.build.directory}/embedded" />																		
+
+										<replace file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2DriverClass@" value="org.hsqldb.jdbcDriver" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2ConnStr@" value="jdbc:hsqldb:file:@h2.home@/data/as2" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2user@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2pw@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2ValidationQuery@" value="select 1 from INFORMATION_SCHEMA.SYSTEM_USERS" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2DAOFile@" value="hk/hku/cecid/edi/as2/conf/as2.hsql.dao.xml" />											
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2plus-admin/plugin.xml"
+											token="@as2PageletAdaptor@" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor" />
+
+									</then>								
+									<else>
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-as2plus" />
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-as2plus-admin" />
+
+										<replace 
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@as2.path@" value="corvus-as2" />																		
+
+										<replace 
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.log.properties.xml"
+											token="@h2.home@" value="${project.build.directory}/embedded" />																		
+
+										<replace file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2DriverClass@" value="org.hsqldb.jdbcDriver" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2ConnStr@" value="jdbc:hsqldb:file:@h2.home@/data/as2" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2user@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2pw@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2ValidationQuery@" value="select 1 from INFORMATION_SCHEMA.SYSTEM_USERS" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+											token="@as2DAOFile@" value="hk/hku/cecid/edi/as2/conf/as2.hsql.dao.xml" />
+
+									</else>
+								</if>
+								<if>
+									<equals arg1="${sfrm}" arg2="true" />
+									<then>
+										<replace
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@sfrm.comment.start@" value="" />
+										<replace
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@sfrm.comment.end@" value="" />										
+
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.log.properties.xml"
+											token="@h2.home@" value="${project.build.directory}/embedded" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.properties.xml"
+											token="@h2.home@"
+											value="${project.build.directory}/embedded"
+										/>											
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@h2.home@" value="${project.build.directory}/embedded"
+										/>											
+
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmDriverClass@" value="org.hsqldb.jdbcDriver" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmConnStr@" value="jdbc:hsqldb:file:@h2.home@/data/sfrm" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmuser@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmpw@" value="corvus" />
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmValidationQuery@" value="select 1 from INFORMATION_SCHEMA.SYSTEM_USERS"
+										/>
+										<replace
+											file="${project.build.directory}/embedded/plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+											token="@sfrmDAOFile@" value="sfrm.dao.xml"
+										/>
+
+									</then>
+									<else>
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-sfrm" />
+										<delete dir="${project.build.directory}/embedded/plugins/corvus-sfrm-admin" />
+
+										<replace
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@sfrm.comment.start@" value="&lt;!--" />
+										<replace
+											file="${project.build.directory}/embedded/etc/path.xml"
+											token="@sfrm.comment.end@" value="--&gt;" />
+
+									</else>
+								</if>
+								
+								<ant dir="${project.build.directory}/embedded" antfile="etc/path.xml" target="replace-path"/>
+									
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>				
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.24</version>									
+				<configuration>
+					<contextPath>/corvus</contextPath>	
+					<webAppSourceDirectory>${project.build.directory}/embedded/webapps/corvus</webAppSourceDirectory>
+					<classesDirectory>${project.parent.basedir}/corvus-webapp/target/classes</classesDirectory>					
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>30000</maxIdleTime>
+						</connector>
+					</connectors>				
+					<userRealms>
+						<userRealm implementation="org.mortbay.jetty.security.HashUserRealm">
+							<name>Corvus Restricted Area</name>
+							<config>${project.build.directory}/embedded/etc/realm.properties</config>
+						</userRealm>
+					</userRealms>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>piazza-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>		
+	</dependencies>
+</project>

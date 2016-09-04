@@ -1,0 +1,12 @@
+<module id="as2.core.outgoing.message" name="Outgoing Message Module">
+
+	<parameters>
+		<parameter name="execution-interval" value="50" />
+	</parameters>
+
+	<component id="task-list" name="Outgoing Message Task List">
+		<class>hk.hku.cecid.edi.as2.module.OutgoingMessageList</class>
+		<parameter name="max-thread-count" value="10" />
+	</component>
+
+</module>

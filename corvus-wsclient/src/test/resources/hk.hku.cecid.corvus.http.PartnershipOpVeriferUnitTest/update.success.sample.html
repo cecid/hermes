@@ -1,0 +1,419 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Corvus Administration System</title>
+<style>
+<!--
+th                    { font-weight: bold; color: #000000; background-color: #ECE9D8 }
+td,th                 { font-family: Verdana,Arial; font-size: 10pt; }
+td a, 
+th a                  { color: #0000FF; text-decoration: none; }
+td a:hover,
+th a:hover            { color: #FF0000; text-decoration: none; }
+.module               { background-color: #ECE9D8; }
+.module_sel           { background-color: #6699FF; }
+.tab, 
+.tab_sel,
+.module,
+.module_sel           { font-family: Verdana,Arial; font-size: 10pt; padding-left: 5; padding-right: 5; }
+.tab a, 
+.tab_sel a,
+.module a,
+.module_sel a         { text-decoration: none }
+.tab, 
+.tab a, 
+.module, 
+.module a             { color: #000000 }
+.tab_sel, 
+.tab_sel a, 
+.module_sel, 
+.module_sel a         { color: #FFFFFF }
+.tab a:hover, 
+.module a:hover       { color: #FF0000 }
+.tab_sel a:hover,
+.module_sel a:hover   { color: #0000FF }
+.module_frame         { border: 2px solid #3A92FE; }
+.content_frame        { border: 2px solid #3A92FE; padding: 6; }
+.message_frame        { border: 2px solid #3A92FE; padding: 6; }
+-->
+</style>
+</head>
+
+<body>
+
+<table border="0" cellpadding="0" cellspacing="6" width="100%" height="100%">
+
+<tr>
+<td height="1" colspan="2">
+
+   <!-- The header -->
+
+   <p>
+   <b>
+       <a href="/corvus/admin/home"><img border=0 src="?mode=raw&amp;pagelet=logo"></a>
+       <center><font color="#808080" size="2" face="Arial">[Administration Console]</font></center>
+   </b>
+   <hr width="100%" noshade="" color="#C0C0C0" size="1"/>
+   <font color="#808080" face="Arial">The Universal Messaging Gateway</font>
+   </p>
+
+   <br/>
+
+</td>
+</tr>
+
+<tr>
+<td width="25%">
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" height="100%">
+    <tr>
+	<td height="24">
+	
+	    <!-- The module tab -->
+	    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+	    <tr>
+	        <td width="1"><img border="0" src="?mode=raw&amp;pagelet=tab_sel_open"/></td>
+	        <td background="?mode=raw&amp;pagelet=tab_sel_bg" class="tab_sel" nowrap="">
+	            <img border="0" src="?mode=raw&amp;pagelet=logo_icon" align="absmiddle"/>
+	            &nbsp; Module
+	        </td>
+	        <td width="1"><img border="0" src="?mode=raw&amp;pagelet=tab_sel_right"/></td>
+	        <td width="1"><img border="0" src="?mode=raw&amp;pagelet=tab_right"/></td>
+	    </tr>
+
+	    </table>
+	    
+	</td>
+	</tr>
+	
+	<tr>
+	<td>
+        
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" height="100%">
+	    <tr>
+	        <td width="100%" class="module_frame" valign="top">
+            <!-- The module list -->
+
+            <table height="100%" width="100%" cellpadding="3" cellspacing="3" border="0">
+<tr>
+<td valign="top" align="center" class="module" height="32" width="32"><img height="32" width="32" align="middle" src="?mode=raw&pagelet=module" border="0"></td><td class="module" width="100%"><a href="/corvus/admin/main/httpd" title="The Main System Module">Corvus Main System</a></td>
+</tr>
+<tr>
+<td valign="top" align="center" class="module_sel" height="32" width="32"><img height="32" width="32" align="middle" src="?mode=raw&pagelet=module_sel" border="0"></td><td class="module_sel" width="100%"><a href="/corvus/admin/ebms/message_history" title="The Ebms Plugin SubSystem Module">Ebms Plugin</a></td>
+</tr>
+<tr>
+<td valign="top" align="center" class="module" height="32" width="32"><img height="32" width="32" align="middle" src="?mode=raw&pagelet=module" border="0"></td><td class="module" width="100%"><a href="/corvus/admin/as2/message_history" title="The AS2 Plugin SubSystem Module">AS2 Plugin</a></td>
+</tr>
+<tr>
+<td class="module"></td><td width="100%" class="module"></td>
+</tr>
+
+</table>
+
+            </td>
+	    </tr>
+	    </table>
+        
+	</td>
+	</tr>
+	</table>
+
+</td>
+
+<td width="75%">
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" height="100%">
+    <tr>
+	<td height="24">
+            <!-- The module tabs -->
+            <table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td width="1"><img src="?mode=raw&pagelet=tab_left" border="0"></td><td nowrap class="tab" background="?mode=raw&amp;pagelet=tab_bg"><img align="absmiddle" src="?mode=raw&pagelet=logo_icon" border="0">&nbsp;<a href="/corvus/admin/ebms/ebms_properties" title="The Ebms Plugin Properties">Ebms Prop...</a></td><td width="1"><img src="?mode=raw&pagelet=tab_separator" border="0"></td><td nowrap class="tab" background="?mode=raw&amp;pagelet=tab_bg"><img align="absmiddle" src="?mode=raw&pagelet=logo_icon" border="0">&nbsp;<a href="/corvus/admin/ebms/message_history" title="The Message History">Message H...</a></td><td width="1"><img src="?mode=raw&pagelet=tab_sel_left" border="0"></td><td nowrap class="tab_sel" background="?mode=raw&amp;pagelet=tab_sel_bg"><img align="absmiddle" src="?mode=raw&pagelet=logo_icon" border="0">&nbsp;<a href="/corvus/admin/ebms/partnership" title="The Partnership">Partnership</a></td><td width="1"><img src="?mode=raw&pagelet=tab_sel_right" border="0"></td><td nowrap class="tab" background="?mode=raw&amp;pagelet=tab_bg"><img align="absmiddle" src="?mode=raw&pagelet=logo_icon" border="0">&nbsp;<a href="/corvus/admin/ebms/agreement_upload" title="The Agreement Upload Page">Upload Ag...</a></td><td width="1"><img src="?mode=raw&pagelet=tab_right" border="0"></td>
+
+</tr>
+</table>
+
+	</td>
+	</tr>
+	
+	<tr>
+	<td>
+	    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" height="100%">
+	    <tr>
+	        <td width="100%" class="content_frame" valign="top">
+
+            <!-- The module content -->
+            <br><table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td bgcolor="#6699ff" align="center"><font color="white"><b>Registered Partnerships</b></font></td>
+</tr>
+<tr>
+<td bgcolor="#6699ff"></td>
+</tr>
+</table><form action="partnership" method="post" name="partnershipForm" enctype="multipart/form-data">
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td width="40%">Number of Partnerships</td><td width="60%">21</td>
+
+</tr>
+<tr>
+<td width="40%">Partnership</td><td width="60%"><select name="selected_partnership_id"><option value="Patchiya-partnerships" SELECTED>Patchiya-partnerships (CPA ID: me-to-me2) (Service: http://localhost:8081/test2) (Action: test)
+	                </option><option value="ebIOT-CPAT1-4.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT1-4.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT1-4.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT1.ARGO21.CECID,Party-Buyer-chan001">ebIOT-CPAT1.ARGO21.CECID,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT1.ARGO21.CECID) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT2-2-1.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT2-2-1.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT2-2-1.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT2-2-2.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT2-2-2.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT2-2-2.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Request)
+	                </option><option value="ebIOT-CPAT2.CECID.NEC,Party-Buyer-chan001">ebIOT-CPAT2.CECID.NEC,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT2.CECID.NEC) (Service: urn:ebIOT-TestService:order) (Action: Request)
+	                </option><option value="ebIOT-CPAT3-2.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT3-2.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT3-2.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT3-3.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT3-3.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT3-3.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT4-2.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT4-2.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT4-2.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT4-4.CECID.KTNET,Party-Buyer-chan001">ebIOT-CPAT4-4.CECID.KTNET,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT4-4.CECID.KTNET) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT5-1-4.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT5-1-4.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT5-1-4.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Request)
+	                </option><option value="ebIOT-CPAT5-1-4.I3T.CECID,Party-Buyer-chan001">ebIOT-CPAT5-1-4.I3T.CECID,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT5-1-4.I3T.CECID) (Service: urn:ebIOT-TestService:order) (Action: Request)
+	                </option><option value="ebIOT-CPAT5-4.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT5-4.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT5-4.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="ebIOT-CPAT5.CECID.I3T,Party-Buyer-chan001">ebIOT-CPAT5.CECID.I3T,Party-Buyer-chan001 (CPA ID: ebIOT-CPAT5.CECID.I3T) (Service: urn:ebIOT-TestService:order) (Action: Order)
+	                </option><option value="test-msgOrder">test-msgOrder (CPA ID: test-msgOrder) (Service: service:service) (Action: action)
+	                </option><option value="testEbms-Swallow">testEbms-Swallow (CPA ID: cecid) (Service: cecid:cecid) (Action: order)
+	                </option><option value="testcase-ackrequested">testcase-ackrequested (CPA ID: testcase-ackrequested) (Service: http://localhost:8080/corvus/httpd/ebms/inbound) (Action: testcase-action)
+	                </option><option value="testcase-ackrequested-and-sign">testcase-ackrequested-and-sign (CPA ID: testcase-ackrequested-and-sign) (Service: http://localhost:8080/corvus/httpd/ebms/inbound) (Action: testcase-action)
+	                </option><option value="testcase-common">testcase-common (CPA ID: testcase-common) (Service: http://localhost:8080/corvus/httpd/ebms/inbound) (Action: testcase-action)
+	                </option><option value="testcase-ssl">testcase-ssl (CPA ID: testcase-ssl) (Service: http://localhost:8080/corvus/httpd/ebms/inbound) (Action: testcase-action)
+	                </option><option value="testcase-syncreply">testcase-syncreply (CPA ID: testcase-syncreply) (Service: http://localhost:8080/corvus/httpd/ebms/inbound) (Action: testcase-action)
+	                </option></select></td>
+
+</tr>
+<tr>
+<td width="40%"></td><td width="60%"><input value="change" name="request_action" type="Submit"></td>
+</tr>
+</table>
+</form><br><table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td bgcolor="#6699ff" align="center"><font color="white"><b>Selected Partnership - Patchiya-partnerships</b></font></td>
+</tr>
+<tr>
+<td bgcolor="#6699ff"></td>
+</tr>
+</table><form action="partnership" method="post" enctype="multipart/form-data" name="partnershipUpdateForm">
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td></td><td></td>
+
+</tr>
+<tr>
+<th align="left" colspan="2">General</th>
+</tr>
+<tr>
+<td width="40%"><b>Partnership ID</b></td><td width="60%"><b>Patchiya-partnerships</b><input name="partnership_id" type="hidden" value="Patchiya-partnerships"></td>
+</tr>
+<tr>
+<td width="40%"><b>CPA ID</b></td><td width="60%"><input name="cpa_id" type="text" value="me-to-me2"></td>
+</tr>
+<tr>
+<td width="40%"><b>Service</b></td><td width="60%"><input name="service" type="text" value="http://localhost:8081/test2"></td>
+
+</tr>
+<tr>
+<td width="40%"><b>Action</b></td><td width="60%"><input name="action_id" type="text" value="test"></td>
+</tr>
+<tr>
+<td width="40%">Disabled</td><td width="60%"><select name="disabled"><option value="false" SELECTED>No</option><option value="true">Yes</option></select></td>
+</tr>
+<tr>
+<td width="40%">Transport Endpoint</td><td width="60%"><input size="50" type="text" name="transport_endpoint" value="http://127.0.0.1:8080/corvus/httpd/ebms/inbound"></td>
+</tr>
+<tr>
+<td width="40%">Hostname Verified in SSL?</td><td width="60%"><select name="is_hostname_verified"><option value="false" SELECTED>No</option><option value="true">Yes</option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Sync Reply Mode</td><td width="60%"><select name="sync_reply_mode"><option SELECTED>none 
+                        </option><option>mshSignalsOnly </option></select></td>
+</tr>
+<tr>
+<td width="40%">Acknowledgement Requested</td><td width="60%"><select name="ack_requested"><option SELECTED>never 
+                        </option><option>always 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Acknowledgement Signed Requested</td><td width="60%"><select name="ack_sign_requested"><option SELECTED>never 
+                        </option><option>always 
+                        </option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Duplicate Elimination</td><td width="60%"><select name="dup_elimination"><option SELECTED>never 
+                        </option><option>always 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Message Order</td><td width="60%"><select name="message_order"><option SELECTED>NotGuaranteed 
+                        </option><option>Guaranteed 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Signing Required?</td><td width="60%"><select name="sign_requested"><option value="false" SELECTED>No</option><option value="true">Yes</option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Encryption Required? (Mail Only)</td><td width="60%"><select name="encrypt_requested"><option value="false" SELECTED>No</option><option value="true">Yes</option></select></td>
+</tr>
+<tr>
+<td width="40%">Certificate For Encryption</td><td width="60%"><input type="file" name="encrypt_cert" value=""></td>
+</tr>
+<tr>
+<td width="40%">Maximum Retries</td><td width="60%"><input type="text" name="retries" value="3"></td>
+</tr>
+<tr>
+<td width="40%">Retry Interval (ms)</td><td width="60%"><input type="text" name="retry_interval" value="30000"></td>
+
+</tr>
+<tr>
+<td width="40%">Certificate For Verification</td><td width="60%"><input type="file" name="verify_cert" value=""></td>
+</tr>
+<tr>
+<td width="40%"></td><td width="60%">
+<br>
+<input onClick="return confirm('Are you sure to update the partnership?');" value="update" name="request_action" type="Submit"><input onClick="return confirm('Are you sure to delete the partnership?');" value="delete" name="request_action" type="Submit">
+<br>
+</td>
+</tr>
+</table>
+</form><br><table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td bgcolor="#6699ff" align="center"><font color="white"><b><a href="javascript: showAddForm()">Add New Partnership</a></b></font></td>
+
+</tr>
+<tr>
+<td bgcolor="#6699ff"></td>
+</tr>
+</table><span id="addFormArea">
+<form action="partnership" method="post" enctype="multipart/form-data" name="partnershipAddForm">
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<tr>
+<td></td><td></td>
+</tr>
+<tr>
+<th align="left" colspan="2">General</th>
+</tr>
+<tr>
+<td width="40%"><b>Partnership ID</b></td><td width="60%"><input name="partnership_id" type="text" value=""></td>
+
+</tr>
+<tr>
+<td width="40%"><b>CPA ID</b></td><td width="60%"><input name="cpa_id" type="text" value=""></td>
+</tr>
+<tr>
+<td width="40%"><b>Service</b></td><td width="60%"><input name="service" type="text" value=""></td>
+</tr>
+<tr>
+<td width="40%"><b>Action</b></td><td width="60%"><input name="action_id" type="text" value=""></td>
+</tr>
+<tr>
+<td width="40%">Disabled</td><td width="60%"><select name="disabled"><option value="false">No</option><option value="true">Yes</option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Transport Endpoint</td><td width="60%"><input size="50" type="text" name="transport_endpoint" value=""></td>
+</tr>
+<tr>
+<td width="40%">Hostname Verified in SSL?</td><td width="60%"><select name="is_hostname_verified"><option value="false">No</option><option value="true">Yes</option></select></td>
+</tr>
+<tr>
+<td width="40%">Sync Reply Mode</td><td width="60%"><select name="sync_reply_mode"><option>none 
+                        </option><option>mshSignalsOnly </option></select></td>
+</tr>
+
+<tr>
+<td width="40%">Acknowledgement Requested</td><td width="60%"><select name="ack_requested"><option>never 
+                        </option><option>always 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Acknowledgement Signed Requested</td><td width="60%"><select name="ack_sign_requested"><option>never 
+                        </option><option>always 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Duplicate Elimination</td><td width="60%"><select name="dup_elimination"><option>never 
+                        </option><option>always 
+                        </option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Message Order</td><td width="60%"><select name="message_order"><option>NotGuaranteed 
+                        </option><option>Guaranteed 
+                        </option></select></td>
+</tr>
+<tr>
+<td width="40%">Signing Required?</td><td width="60%"><select name="sign_requested"><option value="false">No</option><option value="true">Yes</option></select></td>
+</tr>
+<tr>
+<td width="40%">Encryption Required? (Mail Only)</td><td width="60%"><select name="encrypt_requested"><option value="false">No</option><option value="true">Yes</option></select></td>
+
+</tr>
+<tr>
+<td width="40%">Certificate For Encryption</td><td width="60%"><input type="file" name="encrypt_cert" value=""></td>
+</tr>
+<tr>
+<td width="40%">Maximum Retries</td><td width="60%"><input type="text" name="retries" value=""></td>
+</tr>
+<tr>
+<td width="40%">Retry Interval (ms)</td><td width="60%"><input type="text" name="retry_interval" value=""></td>
+</tr>
+<tr>
+<td width="40%">Certificate For Verification</td><td width="60%"><input type="file" name="verify_cert" value=""></td>
+</tr>
+
+<tr>
+<td width="40%"></td><td width="60%">
+<br>
+<input onClick="return confirm('Are you sure to add the partnership?');" value="add" name="request_action" type="Submit">
+<br>
+</td>
+</tr>
+</table>
+</form>
+<br>
+</span><script>
+	var hiddenText = '';
+	
+	function showAddForm() {
+		if (navigator.appName == 'Microsoft Internet Explorer') {
+			swapText(document.getElementById('addFormArea'));
+		}
+	}
+	
+	function swapText(elem) {
+			var tmpText = elem.innerHTML; 
+			elem.innerHTML = hiddenText;
+			hiddenText=tmpText;
+	}
+	
+	
+		showAddForm();
+	</script>
+
+	        </td>
+	    </tr>
+
+	    </table>
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+
+<tr>
+	<td colspan="2" height="1" class="message_frame">
+        <table height="100%" width="100%" style="border-collapse: collapse" cellspacing="0" cellpadding="0" border="0">
+<tr>
+
+<td><a name="message"></a><b>Message: </b><font color="blue">Partnership updated successfully</font></td><td align="right"><a href="#">Top</a></td>
+</tr>
+</table><script>document.location='#message';</script>
+
+	</td>
+</tr>
+
+</table>
+
+</body>
+</html>

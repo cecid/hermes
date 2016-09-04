@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+
+<!-- CPAT1-4I: Oneway, Reliable with DuplicateElimination - Invalid CPA used by Sender -->
+
+<!-- CPA root element -->
+<tp:CollaborationProtocolAgreement 
+	xmlns:tp="http://www.oasis-open.org/committees/ebxml-cppa/schema/cpp-cpa-2_0.xsd" 
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	tp:cpaid="ebIOT-CPAT1-4.CECID.I3T"
+	tp:version="2_0">
+
+	<!-- CPA negotiation state (agreed or signed) -->
+	<tp:Status tp:value="agreed"/>
+
+	<!-- CPA start time -->
+	<tp:Start>2002-01-01T00:00:00Z</tp:Start>
+
+	<!-- CPA end time -->
+	<tp:End>2010-01-01T00:00:00Z</tp:End>
+
+
+	<!-- Party-Buyer PartyInfo -->
+	<tp:PartyInfo 
+		tp:partyName="CECID"
+		tp:defaultMshChannelId="Party-Buyer-chan001" 
+		tp:defaultMshPackageId="Party-Buyer-pack001">
+
+		<!-- Party-Buyer PartyId -->
+		<tp:PartyId tp:type="ebIOT">CECID</tp:PartyId>
+
+		<!-- Party-Buyer Information Reference -->
+		<tp:PartyRef
+			xlink:type="simple"
+			xlink:href="http://www.cecid.hku.hk"/>
+
+		<!-- CollaborationRole -->
+		<tp:CollaborationRole>
+			<!-- tp:ProcessSpecification tp:name="ebIOT0822" -->
+			<tp:ProcessSpecification
+				tp:version="2.0"
+				tp:name="ebIOT0822"
+				xlink:type="simple"
+				xlink:href="http://www.ecom.or.jp/ebIOT"/>
+
+			<!-- tp:Role tp:name="Buyer" -->
+			<tp:Role
+				tp:name="Buyer"
+				xlink:type="simple"
+				xlink:href="http://www.ecom.or.jp/ebIOT#buyer"/>
+
+			<!-- ServiceBinding (urn:ebIOT-TestService:order) -->
+			<tp:ServiceBinding>
+
+				<!-- Service (urn:ebIOT-TestService:order) -->
+				<tp:Service tp:type="anyURI">urn:ebIOT-TestService:order</tp:Service>
+
+				<!-- CanSend (urn:ebIOT-TestService:order,Order) -->
+				<tp:CanSend>
+
+					<!-- ThisPartyActionBinding (Order) -->
+					<tp:ThisPartyActionBinding 
+						tp:id="BuyerActionBinding" 
+						tp:action="Order" 
+						tp:packageId="Party-Buyer-pack001">
+
+						<!-- (urn:ebIOT-TestService:order,Order) usage of signature -->
+						<tp:BusinessTransactionCharacteristics tp:isNonRepudiationRequired="false"/>
+
+						<!-- (urn:ebIOT-TestService:order,Order) DeliveryChannel -->
+						<tp:ChannelId>Party-Buyer-chan001</tp:ChannelId>
+
+					</tp:ThisPartyActionBinding>
+
+					<tp:OtherPartyActionBinding>SellerActionBinding</tp:OtherPartyActionBinding>
+
+				</tp:CanSend>
+
+			</tp:ServiceBinding>
+
+		</tp:CollaborationRole>
+
+		<!-- Certificate: IT IS A DUMMY ELEMNET -->
+		<tp:Certificate tp:certId="Cert-Buyer">
+			<ds:KeyInfo>
+				<ds:KeyName>Cert-Buyer-Key</ds:KeyName>
+			</ds:KeyInfo>
+		</tp:Certificate>
+
+		<!-- SecurityDetails: IT IS A DUMMY ELEMNET -->
+		<tp:SecurityDetails tp:securityId="Security-Buyer">
+			<tp:TrustAnchors>
+				<tp:AnchorCertificateRef tp:certId="Cert-Buyer"/>
+			</tp:TrustAnchors>
+		</tp:SecurityDetails>
+
+		<!-- DeliveryChannel (Party-Buyer-chan001) -->
+		<tp:DeliveryChannel 
+			tp:channelId="Party-Buyer-chan001" 
+			tp:transportId="Party-Buyer-port001" 
+			tp:docExchangeId="Party-Buyer-doc001">
+
+			<!-- Party-Buyer-chan001 messaging characteristics -->
+			<!-- syncReplyMode: (none) -->
+			<!-- ackRequested: (always or never) -->
+			<!-- ackSignatureRequested: (always or never) -->
+			<!-- duplicateElimination: (always,never) -->
+			<!-- actor: (urn:oasis:names:tc:ebxml-msg:actor:toPartyMSH) -->
+			<tp:MessagingCharacteristics 
+				tp:syncReplyMode="none" 
+				tp:ackRequested="always" 
+				tp:ackSignatureRequested="never" 
+				tp:duplicateElimination="always" 
+				tp:actor="urn:oasis:names:tc:ebxml-msg:actor:toPartyMSH"/>
+
+		</tp:DeliveryChannel>
+
+
+		<!-- Transport (Party-Buyer-port001) -->
+		<tp:Transport tp:transportId="Party-Buyer-port001">
+
+			<!-- Party-Buyer-port001 transport for sender -->
+			<tp:TransportSender>
+
+				<!-- protocol for sender -->
+				<tp:TransportProtocol tp:version="1.1">HTTP</tp:TransportProtocol>
+
+			</tp:TransportSender>
+
+			<!-- Party-Buyer-port001 transport for receiver -->
+			<tp:TransportReceiver>
+
+				<!-- protocol for receiver -->
+				<tp:TransportProtocol tp:version="1.1">HTTP</tp:TransportProtocol>
+
+				<!-- receiver's Endpoint -->
+				<tp:Endpoint 
+					tp:uri="http://147.8.178.159:8080/msh/" 
+					tp:type="allPurpose"/>
+
+			</tp:TransportReceiver>
+
+		</tp:Transport>
+
+
+		<!-- DocExchange (Party-Buyer-doc001) -->
+		<tp:DocExchange tp:docExchangeId="Party-Buyer-doc001">
+
+			<!-- sender binding of ebXML -->
+			<tp:ebXMLSenderBinding tp:version="2.0">
+				<tp:ReliableMessaging>
+					<tp:Retries>1</tp:Retries>
+					<tp:RetryInterval>P10D</tp:RetryInterval>
+					<tp:MessageOrderSemantics>NotGuaranteed</tp:MessageOrderSemantics>
+				</tp:ReliableMessaging>
+				<tp:PersistDuration>PT10M</tp:PersistDuration>
+			</tp:ebXMLSenderBinding>
+
+			<!-- receiver binding of ebXML -->
+			<tp:ebXMLReceiverBinding tp:version="2.0">
+				<tp:ReliableMessaging>
+					<tp:Retries>1</tp:Retries>
+					<tp:RetryInterval>P10D</tp:RetryInterval>
+					<tp:MessageOrderSemantics>NotGuaranteed</tp:MessageOrderSemantics>
+				</tp:ReliableMessaging>
+				<tp:PersistDuration>PT10M</tp:PersistDuration>
+			</tp:ebXMLReceiverBinding>
+
+		</tp:DocExchange>
+
+
+	</tp:PartyInfo>
+
+
+	<!-- Party-Seller PartyInfo -->
+	<tp:PartyInfo 
+		tp:partyName="I3T"
+		tp:defaultMshChannelId="Party-Seller-chan001" 
+		tp:defaultMshPackageId="Party-Seller-pack001">
+
+		<!-- Party-Seller PartyId -->
+		<tp:PartyId tp:type="ebIOT">I3T</tp:PartyId>
+
+		<!-- Party-Seller Informatin Reference -->
+		<tp:PartyRef
+			xlink:type="simple"
+			xlink:href="http://i3t.eng.ku.ac.th"/>
+
+		<!-- CollaborationRole -->
+		<tp:CollaborationRole>
+			<!-- tp:ProcessSpecification tp:name="ebIOT0822" -->
+			<tp:ProcessSpecification
+				tp:version="2.0"
+				tp:name="ebIOT0822"
+				xlink:type="simple"
+				xlink:href="http://www.ecom.or.jp/ebIOT"/>
+
+			<!-- tp:Role tp:name="Seller" -->
+			<tp:Role
+				tp:name="Seller"
+				xlink:type="simple"
+				xlink:href="http://www.ecom.or.jp/ebIOT#seller"/>
+
+			<!-- ServiceBinding (urn:ebIOT-TestService:order) -->
+			<tp:ServiceBinding>
+
+				<!-- Service (urn:ebIOT-TestService:order) -->
+				<tp:Service tp:type="anyURI">urn:ebIOT-TestService:order</tp:Service>
+
+				<!-- CanReceive (urn:ebIOT-TestService:order,Order) -->
+				<tp:CanReceive>
+
+					<!-- ThisPartyActionBinding (Order) -->
+					<tp:ThisPartyActionBinding 
+						tp:id="SellerActionBinding"
+						tp:action="Order" 
+						tp:packageId="Party-Seller-pack001">
+
+						<!-- (urn:ebIOT-TestService:order,Order) usage of signature -->
+						<tp:BusinessTransactionCharacteristics tp:isNonRepudiationRequired="false"/>
+
+						<!-- (urn:ebIOT-TestService:order,Order) DeliveryChannel -->
+						<tp:ChannelId>Party-Seller-chan001</tp:ChannelId>
+
+					</tp:ThisPartyActionBinding>
+
+					<tp:OtherPartyActionBinding>BuyerActionBinding</tp:OtherPartyActionBinding>
+
+				</tp:CanReceive>
+
+			</tp:ServiceBinding>
+
+		</tp:CollaborationRole>
+
+		<!-- Certificate: IT IS A DUMMY ELEMNET -->
+		<tp:Certificate tp:certId="Cert-Seller">
+			<ds:KeyInfo>
+				<ds:KeyName>Cert-Seller-Key</ds:KeyName>
+			</ds:KeyInfo>
+		</tp:Certificate>
+
+		<!-- SecurityDetails: IT IS A DUMMY ELEMNET -->
+		<tp:SecurityDetails tp:securityId="Security-Seller">
+			<tp:TrustAnchors>
+				<tp:AnchorCertificateRef tp:certId="Cert-Seller"/>
+			</tp:TrustAnchors>
+		</tp:SecurityDetails>
+
+		<!-- DeliveryChannel (Party-Seller-chan001) -->
+		<tp:DeliveryChannel 
+			tp:channelId="Party-Seller-chan001" 
+			tp:transportId="Party-Seller-port001" 
+			tp:docExchangeId="Party-Seller-doc001">
+
+			<!-- Party-Seller-chan001 messaging characteristics -->
+			<!-- syncReplyMode: (none) -->
+			<!-- ackRequested: (always or never) -->
+			<!-- ackSignatureRequested: (always or never) -->
+			<!-- duplicateElimination: (always,never) -->
+			<!-- actor: (urn:oasis:names:tc:ebxml-msg:actor:toPartyMSH) -->
+			<tp:MessagingCharacteristics 
+				tp:syncReplyMode="none" 
+				tp:ackRequested="always" 
+				tp:ackSignatureRequested="never" 
+				tp:duplicateElimination="always" 
+				tp:actor="urn:oasis:names:tc:ebxml-msg:actor:toPartyMSH"/>
+
+		</tp:DeliveryChannel>
+
+
+		<!-- Transport (Party-Seller-port001) -->
+		<tp:Transport tp:transportId="Party-Seller-port001">
+
+			<!-- Party-Seller-port001 transport for sender -->
+			<tp:TransportSender>
+
+				<!-- protocol for sender -->
+				<tp:TransportProtocol tp:version="1.1">HTTP</tp:TransportProtocol>
+
+			</tp:TransportSender>
+
+			<!-- Party-Seller-port001 transport for receiver -->
+			<tp:TransportReceiver>
+
+				<!-- protocol for receiver -->
+				<tp:TransportProtocol tp:version="1.1">HTTP</tp:TransportProtocol>
+
+				<!-- receiver's Endpoint -->
+				<tp:Endpoint 
+					tp:uri="http://147.8.177.35:8080/msh"
+					tp:type="allPurpose"/>
+
+			</tp:TransportReceiver>
+
+		</tp:Transport>
+
+
+		<!-- DocExchange (Party-Seller-doc001) -->
+		<tp:DocExchange tp:docExchangeId="Party-Seller-doc001">
+
+			<!-- sender binding of ebXML -->
+			<tp:ebXMLSenderBinding tp:version="2.0">
+				<tp:ReliableMessaging>
+					<tp:Retries>1</tp:Retries>
+					<tp:RetryInterval>P10D</tp:RetryInterval>
+					<tp:MessageOrderSemantics>NotGuaranteed</tp:MessageOrderSemantics>
+				</tp:ReliableMessaging>
+				<tp:PersistDuration>PT10M</tp:PersistDuration>
+			</tp:ebXMLSenderBinding>
+
+			<!-- receiver binding of ebXML -->
+			<tp:ebXMLReceiverBinding tp:version="2.0">
+				<tp:ReliableMessaging>
+					<tp:Retries>1</tp:Retries>
+					<tp:RetryInterval>P10D</tp:RetryInterval>
+					<tp:MessageOrderSemantics>NotGuaranteed</tp:MessageOrderSemantics>
+				</tp:ReliableMessaging>
+				<tp:PersistDuration>PT10M</tp:PersistDuration>
+			</tp:ebXMLReceiverBinding>
+
+		</tp:DocExchange>
+
+
+	</tp:PartyInfo>
+
+
+	<!-- Party-Buyer MessageHeader SimplePart -->
+	<tp:SimplePart tp:id="MessageHeader-Buyer" tp:mimetype="text/xml">
+
+		<tp:NamespaceSupported tp:location="http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd" tp:version="2.0">http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd</tp:NamespaceSupported>
+
+	</tp:SimplePart>
+
+
+	<!-- Party-Buyer Payload SimplePart -->
+	<tp:SimplePart tp:id="Payload-Buyer" tp:mimetype="application/octet-stream">
+
+		<!-- no namespace -->
+<!--		<tp:NamespaceSupported/>  -->
+
+	</tp:SimplePart>
+
+
+	<!-- Party-Seller MessageHeader SimplePart -->
+	<tp:SimplePart tp:id="MessageHeader-Seller" tp:mimetype="text/xml">
+
+		<tp:NamespaceSupported tp:location="http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd" tp:version="2.0">http://www.oasis-open.org/committees/ebxml-msg/schema/msg-header-2_0.xsd</tp:NamespaceSupported>
+
+	</tp:SimplePart>
+
+
+	<!-- Party-Seller Payload SimplePart -->
+	<tp:SimplePart tp:id="Payload-Seller" tp:mimetype="application/octet-stream">
+
+		<!-- no namespace -->
+<!--		<tp:NamespaceSupported/>  -->
+
+	</tp:SimplePart>
+
+
+	<!-- Party-Buyer Packaging -->
+	<tp:Packaging tp:id="Party-Buyer-pack001">
+
+		<tp:ProcessingCapabilities tp:parse="true" tp:generate="true"/>
+
+		<tp:CompositeList>
+
+			<tp:Composite tp:id="Party-Buyer-Composite" tp:mimetype="multipart/related" tp:mimeparameters="type=&quot;text/xml&quot;">
+
+				<!-- MessageHeader -->
+				<tp:Constituent tp:idref="MessageHeader-Buyer"/>
+
+				<!-- Payload (the maximum number is 99) -->
+				<tp:Constituent tp:idref="Payload-Buyer" tp:minOccurs="0" tp:maxOccurs="99"/>
+
+			</tp:Composite>
+
+		</tp:CompositeList>
+
+	</tp:Packaging>
+
+
+	<!-- Party-Seller Packaging -->
+	<tp:Packaging tp:id="Party-Seller-pack001">
+
+		<tp:ProcessingCapabilities tp:parse="true" tp:generate="true"/>
+
+		<tp:CompositeList>
+
+			<tp:Composite tp:id="Party-Seller-Composite" tp:mimetype="multipart/related" tp:mimeparameters="type=&quot;text/xml&quot;">
+
+				<!-- MessageHeader -->
+				<tp:Constituent tp:idref="MessageHeader-Seller"/>
+
+				<!-- Payload (the maximum number is 99) -->
+				<tp:Constituent tp:idref="Payload-Seller" tp:minOccurs="0" tp:maxOccurs="99"/>
+
+			</tp:Composite>
+
+		</tp:CompositeList>
+
+	</tp:Packaging>
+
+
+</tp:CollaborationProtocolAgreement>

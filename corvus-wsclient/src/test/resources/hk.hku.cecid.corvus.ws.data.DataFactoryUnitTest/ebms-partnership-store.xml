@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<partnership>
+  <ebms>
+    <id>ebms</id>
+    <cpaId>ebmscpaid</cpaId>
+    <service>http://127.0.0.1:8080/corvus/httpd/ebms/inbound</service>
+    <action>action</action>
+    <disabled>false</disabled>
+    <syncReplyMode>none</syncReplyMode>
+    <transportEndpoint>http://127.0.0.1:8080/corvus/httpd/ebms/inbound</transportEndpoint>
+    <transportProtocol>http</transportProtocol>
+    <ackRequested>never</ackRequested>
+    <ackSignRequested>never</ackSignRequested>
+    <dupElimination>never</dupElimination>
+    <actor></actor>
+    <messageOrder>NotGuaranteed</messageOrder>
+    <retries>1</retries>
+    <retryInterval>30000</retryInterval>
+    <signRequested>false</signRequested>
+    <dsAlgorithm></dsAlgorithm>
+    <mdAlgorithm></mdAlgorithm>
+    <encryptRequested>false</encryptRequested>
+    <encryptAlgorithm>sha1</encryptAlgorithm>
+    <signCert></signCert>
+    <encryptCert>I am testing cert</encryptCert>
+    <isHostnameVerified>false</isHostnameVerified>
+  </ebms>
+</partnership>

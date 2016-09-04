@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partnership>
+	<ebms>
+		<id>ebms-loopback</id>
+		
+		<!-- MANADATORY, this is shared by different samples for sending, querying and receiving ebMS message-->
+		<cpaId>cpaid</cpaId>
+		<!-- MANADATORY, this is shared by different samples for sending, querying and receiving ebMS message-->
+		<service>http://localhost:8080/corvus/httpd/ebms/inbound</service>
+		<!-- MANADATORY, this is shared by different samples for sending, querying and receiving ebMS message-->
+		<action>action</action>
+		
+		<!-- partnership only -->
+		<disabled>false</disabled>
+		<syncReplyMode>none</syncReplyMode>
+		<transportEndpoint>http://localhost:8080/corvus/httpd/ebms/inbound</transportEndpoint>
+		<transportProtocol>http</transportProtocol>
+		<ackRequested>never</ackRequested>
+		<ackSignRequested>never</ackSignRequested>
+		<dupElimination>never</dupElimination>
+		<actor></actor>
+		<messageOrder>NotGuaranteed</messageOrder>
+		<persistDuration></persistDuration>
+		<retries>1</retries>
+		<retryInterval>30000</retryInterval>
+		<signRequested>false</signRequested>
+		<dsAlgorithm></dsAlgorithm>
+		<mdAlgorithm></mdAlgorithm>
+		<encryptRequested></encryptRequested>
+		<encryptAlgorithm></encryptAlgorithm>
+		<signCert></signCert>
+		<encryptCert></encryptCert>
+		<isHostnameVerified></isHostnameVerified>
+	</ebms>
+</partnership>

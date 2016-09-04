@@ -1,0 +1,23 @@
+READ THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT CAREFULLY BEFORE YOU OPEN THE PACKAGE CONTAINING THE MEDIA, THE COMPUTER SOFTWARE THEREON AND THE ACCOMPANYING DOCUMENTATION IS COPYRIGHTED AND LICENSED (NOT SOLD).  BY BREAKING THE SEAL ON THE PACKAGE CONTAINING THE MEDIA OR BY INSTALLING THE COMPUTER SOFTWARE, YOU AGREE TO THE PROVISION SET FORTH IN THIS LICENSE AGREEMENT.  IF YOU ARE NOT WILLING TO BE BOUND BY THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT, YOU SHOULD NOT INSTALL THE COMPUTER SOFTWARE AND SHOULD IMMEDIATELY RETURN THE UNOPENED PACKAGE TO IASPEC.  
+ 
+License Agreement. iASPEC Software Limited (iASPEC) hereby grants to you and you accept a non-transferable and non-exclusive license to use the media and the proprietary computer software product contained thereon in machine-readable form ("Software") under the following terms and conditions.
+
+The term of this license commences upon your opening this package or installing of the computer software and shall continue until terminated. The license fees paid by you are paid in consideration of the licenses granted under this License Agreement and correspond to the system configuration the Software is designed for.
+
+Notwithstanding the foregoing, if the Software is being provided for demonstration or evaluation purposes only, then your license to use the Software shall automatically terminate at the time designated by iASPEC.
+
+In addition to automatic termination, iASPEC may terminate this License Agreement upon breach by you of any term hereof.  In the event of termination for any reason, you will immediately cease using the Software and all copies and portions thereof shall be returned or destroyed. Your obligation to pay accrued charges and fee shall survive any termination of this Agreement.
+
+You agree that you will not assign, sublicense, transfer, pledge, lease, rent or share your rights under this License Agreement. Also, you will not reverse assemble, reverse compile or otherwise translate the Software. You may make one copy of the Software for the purpose of backup in the event the Software media is damaged or destroyed. Any copies of the Software shall include iASPEC's copyright or other proprietary notices. Except as authorized by this paragraph, no copies of the Software or any portion thereof may be made by you or any person under your authority to control.
+
+The acceptance of a purchase order from you for the Software is conditional on your agreeing to the provision of this License Agreement and iASPEC will furnish the Software only on terms and conditions set forth herein and those additional terms as stipulated in separate agreements entered into between you and iASPEC, if those separate agreements exist.  
+ 
+Limited Warranty.  iASPEC warrants for your sole benefit for a period of ninety (90) days from the data of commencement of this License Agreement (the "Warranty Period") that the Software will substantially achieve the functionality described in the Documentation, provided it is used on the computer and network hardware and with the operating system for which it was designed, and that the media containing the Software, if provided by iASPEC, is free from defects in material and workmanship.  If, during the Warranty Period, a defect in the Software or the media appears, you may return the media containing the Software to iASPEC for replacement. The foregoing constitutes your sole and exclusive remedy for breach by iASPEC of any warranties made under this Agreement.
+
+Except as specifically provided above, iASPEC makes no warranty or representation, either express or implied, with respect to the Software, including its quality, performance, merchantability or fitness for a particular purpose. No iASPEC dealer, distributor, agent or employee is authorized to make any modifications, extensions or additions to this warranty.  
+ 
+Limited Liability.  In no event will iASPEC be liable for indirect, incidental, consequential, special or exemplary damages or lost profits arising out of the use or the inability to use the Software even if advised of the possibility of such damages. In no cases shall iASPEC's liability exceed the amount of the license fee paid by you.
+ 
+General.  This License Agreement shall be construed and governed by in accordance with the laws of Hong Kong Special Administrative Region.  
+ 
+Costs of Litigation.  If any action is brought by either party to this License Agreement against the other party regarding the subject matter hereof, the prevailing party shall be entitled to recover, in addition to any other relief granted reasonable attorney fees and expenses of litigation.   

@@ -1,0 +1,13 @@
+<module id="ebms.mail-collector" name="Ebms Plugin" version="1.0">
+
+	<parameters>
+        <parameter name="execution-interval" value="300000" />
+        <parameter name="group-execution" value="stop" />        
+    </parameters>
+
+	<component id="task-list" name="Mail Collector">
+        <class>hk.hku.cecid.ebms.spa.task.MailCollector</class>
+		<parameter name="max-thread-count" value="1" />		
+	</component>
+
+</module>

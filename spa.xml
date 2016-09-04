@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<baseDirectory>${project.artifactId}</baseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/spa</directory>			
+			<outputDirectory>/</outputDirectory>	
+			<excludes>
+				<exclude>plugin.xml</exclude>
+			</excludes>		
+		</fileSet>
+	</fileSets>
+	<!-- for replace ${build-date} in plugin.xml -->
+	<files>
+		<file>
+			<source>src/main/spa/plugin.xml</source>			
+			<outputDirectory>/</outputDirectory>			
+			<filtered>true</filtered> 
+		</file>
+	</files>			
+	<dependencySets>
+		<dependencySet>
+			<outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+			<outputDirectory>/</outputDirectory>			
+			<useTransitiveDependencies>true</useTransitiveDependencies> 
+		</dependencySet>
+	</dependencySets>
+</assembly>

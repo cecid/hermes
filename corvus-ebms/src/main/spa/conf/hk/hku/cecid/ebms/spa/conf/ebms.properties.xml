@@ -1,0 +1,30 @@
+<ebms>
+	<!-- Change enable properties to "true" for ebMS over SMTP.
+		 Also remove group-execution parameter in mail-collector.module.xml -->
+    <mail>
+        <smtp>
+            <enable>false</enable>
+            <host>smtpout.cs.hku.hk</host>
+            <protocol>smtp</protocol>
+            <port></port>
+            <from_mail_address></from_mail_address>
+            <username></username>
+            <password></password>
+        </smtp>
+        <pop>
+            <enable>false</enable>            
+            <host>mail.cecid.hku.hk</host>
+            <protocol>pop3</protocol>
+            <port></port>
+            <folder>INBOX</folder>
+            <username></username>
+            <password></password>
+        </pop>
+    </mail>
+    <!-- Outbound agreement checking is used for client self-generated Ebxml Message -->
+    <outbound_agreement_check>false</outbound_agreement_check>
+    <!-- Inbound agreement checking is optional for interop test -->
+    <inbound_agreement_check>true</inbound_agreement_check>
+    <!-- Sign header only is optional for interop test -->
+    <sign_header_only>false</sign_header_only>    
+</ebms>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-config-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/as2/config</endpoint>		
+	</config>
+	<param>
+ 		<active-module-status>true</active-module-status>
+		<inmessage-interval>30000</inmessage-interval>
+		<inmessage-maxthread>4</inmessage-maxthread>
+		<outmessage-interval>30000</outmessage-interval>
+		<outmessage-maxthread>3</outmessage-maxthread>
+		<outpayload-interval>30000</outpayload-interval>
+		<outpayload-maxthread>2</outpayload-maxthread>	
+	</param>
+</as2-config-request>
+
+
+

@@ -1,0 +1,5 @@
+<!-- Fixture, load all parameter with default parameters -->
+<module id="actionserver.module" name="JSW Action Server module" version="1.0.0">
+	<parameters>				
+	</parameters>
+</module>

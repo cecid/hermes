@@ -1,0 +1,26 @@
+<module-group name="Ebms">
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>hk/hku/cecid/ebms/spa/conf/ebms.module.xml</descriptor>
+	</module>
+    <module>
+        <class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+        <descriptor>hk/hku/cecid/ebms/spa/conf/outbox-collector.module.xml</descriptor>
+    </module>
+    <module>
+        <class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+        <descriptor>hk/hku/cecid/ebms/spa/conf/inbox-collector.module.xml</descriptor>
+    </module>
+    <module>
+        <class>hk.hku.cecid.piazza.commons.module.ActiveTaskModule</class>
+        <descriptor>hk/hku/cecid/ebms/spa/conf/mail-collector.module.xml</descriptor>
+    </module>
+    <module>
+   	  <class>hk.hku.cecid.ebms.spa.task.MessageMonitor</class>
+   	  <descriptor>hk/hku/cecid/ebms/spa/conf/message-monitor.module.xml</descriptor>
+    </module>
+	<module>
+		<class>hk.hku.cecid.ebms.spa.task.EbmsEventModule</class>
+		<descriptor>hk/hku/cecid/ebms/spa/conf/ebms.module.event.xml</descriptor>
+	</module>
+</module-group>

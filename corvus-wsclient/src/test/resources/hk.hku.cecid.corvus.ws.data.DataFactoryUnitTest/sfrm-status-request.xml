@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sfrm-status-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/sfrm/status</endpoint>
+		<nsURI>http://service.sfrm.edi.cecid.hku.hk/</nsURI>		
+	</config>
+	<param>
+		<messageId></messageId>
+	</param>
+</sfrm-status-request>
+
+
+

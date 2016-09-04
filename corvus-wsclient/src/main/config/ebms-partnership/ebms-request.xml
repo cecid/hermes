@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-admin-request>
+	<config>
+		<!-- The user name for logging H2O administrative area -->
+		<username>corvus</username>
+		<!-- The password for logging H2O administrative area -->
+		<password>corvus</password>				
+		
+		<managePartnershipEndpoint>http://localhost:8080/corvus/admin/ebms/partnership</managePartnershipEndpoint>
+	</config>
+	<param>
+		<!-- 
+		The partnership operation you want to execute, only used by EBMSPartnershipSender.
+		The allowed enumeration of this tag are listed below:
+		 0 - Adding partnership
+		 1 - Deleting partnership
+		 2 - Updating partnership	
+		-->
+		<partnershipOperation>0</partnershipOperation>	
+	</param>		
+</ebms-admin-request>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="..">
+
+	<property name="last.program.dir" value="@h2.home@"/>
+	
+	<target name="replace-path">
+		<path id="droid.classpath">
+	      	<fileset dir="lib/ext">
+	        	<include name="*.*"/>
+	      	</fileset>
+		 </path>
+
+		<taskdef classname="droid.UpdateToken" classpathref="droid.classpath" name="UpdateToken"/>
+		
+		<path id="the_path" path="${basedir}"/>
+		<pathconvert dirsep="/" property="convert" refid="the_path"/>
+		
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="webapps/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf/corvus.properties.xml"
+			string="${last.program.dir}"
+			xpath="//home~//plugin/registry"
+		/>
+		<UpdateToken
+			log="true"
+			replace="${convert}"
+			src="webapps/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf/corvus.log.properties.xml"
+			string="${last.program.dir}"
+			xpath="//appender[attribute::name=&quot;corvus&quot;]/param[attribute::name=&quot;File&quot;]/@value"
+		/>		
+		<UpdateToken
+			log="true"
+			replace="${convert}"
+			src="plugins/corvus-main-admin/conf/hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.logger.xml"
+			string="${last.program.dir}"
+			xpath="//appender[attribute::name=&quot;admin.main&quot;]/param[attribute::name=&quot;File&quot;]/@value"
+		/>
+		
+		<UpdateToken
+			log="false"
+			replace="jdbc:hsqldb:file:${convert}/data/ebms"
+			src="plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+			string="jdbc:hsqldb:file:${last.program.dir}/data/ebms"
+			xpath="//component[attribute::id=&quot;daofactory&quot;]/parameter[attribute::name=&quot;url&quot;]/@value"
+		/>
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;keystore-manager-for-signature&quot;]/parameter[attribute::name=&quot;keystore-location&quot;]/@value"
+		/>
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;keystore-manager-for-decryption&quot;]/parameter[attribute::name=&quot;keystore-location&quot;]/@value"
+		/>
+		<UpdateToken
+			log="true"
+			replace="${convert}"
+			src="plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/log4j.properties.xml"
+			string="${last.program.dir}"
+			xpath="//appender[attribute::name=&quot;ebms&quot;]/param[attribute::name=&quot;File&quot;]/@value"
+		/>
+
+		<UpdateToken
+			log="false"
+			replace="jdbc:hsqldb:file:${convert}/data/as2"
+			src="plugins/@as2.path@/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+			string="jdbc:hsqldb:file:${last.program.dir}/data/as2"
+			xpath="//component[attribute::id=&quot;daofactory&quot;]/parameter[attribute::name=&quot;url&quot;]/@value"
+		/>		
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/@as2.path@/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;outgoing-payload-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/@as2.path@/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;incoming-payload-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/@as2.path@/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;original-message-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		<UpdateToken
+			log="true"
+			replace="${convert}"
+			src="plugins/@as2.path@/conf/hk/hku/cecid/edi/as2/conf/as2.log.properties.xml"
+			string="${last.program.dir}"
+			xpath="//appender[attribute::name=&quot;as2&quot;]/param[attribute::name=&quot;File&quot;]/@value"
+		/>
+		
+		@sfrm.comment.start@
+		<UpdateToken
+			log="false"
+			replace="jdbc:hsqldb:file:${convert}/data/sfrm"
+			src="plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+			string="jdbc:hsqldb:file:${last.program.dir}/data/sfrm"
+			xpath="//component[attribute::id=&quot;daofactory&quot;]/parameter[attribute::name=&quot;url&quot;]/@value"
+		/>
+		@sfrm.comment.end@		
+		@sfrm.comment.start@
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;outgoing-payload-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		@sfrm.comment.end@		
+		@sfrm.comment.start@
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;incoming-payload-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		@sfrm.comment.end@
+		@sfrm.comment.start@
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-sfrm/conf/sfrm.module.core.xml"
+			string="${last.program.dir}"
+			xpath="//component[attribute::id=&quot;outgoing-packaged-payload-repository&quot;]/parameter[attribute::name=&quot;location&quot;]/@value"
+		/>
+		@sfrm.comment.end@
+		@sfrm.comment.start@
+		<UpdateToken
+			log="true"
+			replace="${convert}"
+			src="plugins/corvus-sfrm/conf/sfrm.log.properties.xml"
+			string="${last.program.dir}"
+			xpath="//appender[attribute::name=&quot;sfrm&quot;]/param[attribute::name=&quot;File&quot;]/@value"
+		/>
+		@sfrm.comment.end@
+		@sfrm.comment.start@
+		<UpdateToken
+			log="false"
+			replace="${convert}"
+			src="plugins/corvus-sfrm/conf/sfrm.properties.xml"
+			string="${last.program.dir}"
+			xpath="//trusted-certificates"
+		/>	
+		@sfrm.comment.end@
+
+		<UpdateToken
+			replace="${convert}"
+			src="etc/path.xml"
+			string="${last.program.dir}"
+			xpath="//project/property[attribute::name=&quot;last.program.dir&quot;]/@value"
+		/>
+	</target>
+</project>

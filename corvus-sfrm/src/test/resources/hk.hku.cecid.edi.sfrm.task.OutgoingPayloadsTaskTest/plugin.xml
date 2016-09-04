@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+   id="hk.hku.cecid.edi.sfrm"
+   name="Piazza Corvus SFRM Plugin"
+   version="@version@"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.edi.sfrm.spa.SFRMProcessor"
+>
+	<parameters>
+		<parameter name="module-group-descriptor" value="sfrm.module-group.xml"/>
+	</parameters>
+	
+	<runtime>
+		<library name="corvus-sfrm-core.jar"/>
+		<library name="piazza-commons-ext.jar"/>
+		<library name="httpcore-4.0-beta3.jar"/>
+		<library name="tar.jar"/>
+		<library name="conf/"/>
+		<library name="security/"/>
+		<library name="ant.jar"/>
+	</runtime>
+</plugin>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- Test Payload -->
+<TestRoot>
+	<TestElement>
+		<Test0 SequenceNumber="2" Conversation="B"/>
+		<Test1 test="1"/>
+		<Test2 test="2"/>
+		<Test3 test="3">
+			<TestChild child="child3"/>
+		</Test3>
+		<Test4 test="4"/>
+	</TestElement>
+</TestRoot>
+

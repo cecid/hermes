@@ -1,0 +1,25 @@
+<messages>
+	<message id="abc$localhost" status="PR">
+		<segments>
+			<segment num="1" status="PD"/>
+			<segment num="2" status="RCY"/>
+		</segments>
+	</message>
+</messages>
+
+<messages>
+	<message>
+		<id>abc$msg1</id>
+		<status>PS</status>
+		<segments>
+			<segment>
+				<num>1</num>
+				<status>PS</status>
+			</segment>
+			<segment>
+				<num>2</num>
+				<status>PR</status>
+			</segment>
+		</segments>
+	</message>
+</messages>

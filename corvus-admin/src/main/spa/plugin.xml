@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="hk.hku.cecid.piazza.corvus.admin"
+   name="Corvus Admin System Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.piazza.corvus.admin.handler.AdminPluginHandler"
+>
+
+	<runtime>
+		<library name="corvus-admin.jar"/>
+		<library name="template/"/>
+		<library name="graphics/"/>
+		<library name="conf/"/>
+	</runtime>
+	
+	<requires>
+		<import plugin="hk.hku.cecid.piazza.corvus.core.main" />
+	</requires>
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.admin.httpd.filter" name="Admin Request Filter Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminRequestFilterRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Admin Request Listener Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminRequestListenerRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Page Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminPageletRegistrar" />
+
+	<extension-point id="hk.hku.cecid.piazza.corvus.admin.module" name="Admin Module Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminModuleRegistrar" />
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Admin Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.admin.listener.AdminPageletAdaptor" />
+	  <parameter name="context" value="/home" />
+	  <parameter name="module" value="admin" />
+	  <parameter name="tab" value="home" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Default Admin Template">
+	  <parameter name="id" value="pagelet-template, pagelet-error" />
+	  <parameter name="pagelet" value="admin_template.htm, admin_error.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Default Admin Pagelets">
+	  <parameter name="id" value="center, west, north, south" />
+	  <parameter name="pagelet" value="admin_home.xsl, admin_module_list.xsl, admin_module_tabs.xsl, admin_message_box.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Page Logo">
+	  <parameter name="id" value="logo, logo_icon" />
+	  <parameter name="pagelet" value="logo.gif, logo_icon.gif" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Tab Graphics">
+	  <parameter name="id" value="tab_bg, tab_left, tab_right, tab_separator" />
+	  <parameter name="pagelet" value="tab_bg.gif, tab_left.gif, tab_right.gif, tab_separator.gif" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Selected Tab Graphics">
+	  <parameter name="id" value="tab_sel_bg, tab_sel_open, tab_sel_left, tab_sel_right" />
+	  <parameter name="pagelet" value="tab_sel_bg.gif, tab_sel_open.gif, tab_sel_left.gif, tab_sel_right.gif" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Module Graphics">
+	  <parameter name="id" value="module, module_sel" />
+	  <parameter name="pagelet" value="module.gif, module_sel.gif" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.module" name="Default Admin Module">
+	  <parameter name="module" value="hk/hku/cecid/piazza/corvus/admin/conf/admin-module.xml" />
+	</extension>
+	
+</plugin>

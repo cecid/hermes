@@ -1,0 +1,15 @@
+<dao-config>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.RepositoryDataSourceDAO">
+		<class>hk.hku.cecid.edi.as2.dao.RepositoryDataSourceDAO</class>
+		<parameter name="table" value="repository" />
+		<parameter name="key" value="message_id, message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="content" value="content" />
+		
+		<parameter type="sql" name="update_repository_content"
+				 value="update repository set content = ? where message_id = ? and message_box = ?" />
+	</dao>
+	
+</dao-config>

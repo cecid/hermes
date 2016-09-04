@@ -1,0 +1,13 @@
+<module id="shutdown.email.module" name="Email shutdown hook module" version="1.0.0">
+	<parameters>
+		<parameter name="host" value="tester.cs.hku.hk"/>
+		<parameter name="protocol" value="smtp"/>
+		<parameter name="username" value="testUsername"/>
+		<parameter name="password" value="testPassword"/>
+		<parameter name="from" value="tester@cecid.hku.hk"/>
+		<parameter name="to" value="tester@cecid.hku.hk" />
+		<parameter name="cc" value=""/>
+		<parameter name="subject" value="unit test-case subject"/>
+		<parameter name="verbose" value="true"/>
+	</parameters>
+</module>

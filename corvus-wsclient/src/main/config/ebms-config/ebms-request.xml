@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-config-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/ebms/config</endpoint>
+	</config>
+	<param>
+ 		<active-module-status>true</active-module-status>
+		<incollector-interval>15000</incollector-interval>
+		<incollector-maxthread>0</incollector-maxthread>
+		<outcollector-interval>15000</outcollector-interval>
+		<outcollector-maxthread>0</outcollector-maxthread>
+		<mailcollector-interval>15000</mailcollector-interval>
+		<mailcollector-maxthread>0</mailcollector-maxthread>
+	</param>
+</ebms-config-request>
+
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module id="as2" seqno="3">
+  <name>AS2Plus Plugin</name>
+  <description>The AS2Plus Plugin SubSystem Module</description>
+  <link>/admin/as2/message_history</link>
+  <tabs>
+    <tab id="message_history">
+      <name>Message History</name>
+      <description>The Message History</description>
+      <link>/admin/as2/message_history</link>
+    </tab>
+    <tab id="partnership">
+      <name>Partnership</name>
+      <description>The Partnership</description>
+      <link>/admin/as2/partnership</link>
+    </tab>
+  </tabs>
+</module>

@@ -1,0 +1,20 @@
+<module id="message.module.mock" name="Message Mock Module" version="1.0">
+	<component id="daofactory" name="Message DAO Factory">	        
+	<class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<!--  Test for Postgres
+		<parameter name="driver" value="org.postgresql.Driver" /> 
+		<parameter name="url" value="jdbc:postgresql://localhost:5432/as2" /> 
+		<parameter name="username" value="corvus" />
+		<parameter name="password" value="corvus" />
+		-->
+		<parameter name="driver" value="org.hsqldb.jdbcDriver" /> 
+		<parameter name="url" value="jdbc:hsqldb:mem:swallow" /> 
+		<parameter name="username" value="sa" />
+		<parameter name="password" value="" />
+   		<parameter name="pooling" value="true" />
+    	<parameter name="maxActive" value="20" />
+      	<parameter name="maxIdle" value="2" />
+      	<parameter name="maxWait" value="-1" />
+		<parameter name="config" value="message.dao.xml" />
+	</component>
+</module>

@@ -1,0 +1,25 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.edi.sfrm.dao.ds.SFRMPartnershipDSDAO">
+		<class>hk.hku.cecid.edi.sfrm.dao.ds.SFRMPartnershipDSDAO</class>
+		<parameter name="table" value="sfrm_partnership" />
+		<parameter name="key" value="partnership_id" />		
+		<parameter type="column" name="partnership_seq" value="partnershipSeq" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="description" value="description" />
+		<parameter type="column" name="partner_endpoint" value="partnerEndpoint" />
+		<parameter type="column" name="partner_cert_fingerprint" value="partnerCertFingerprint" />
+		<parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+		<parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+        <parameter type="column" name="retry_max" value="retryMax" />
+        <parameter type="column" name="retry_interval" value="retryInterval" />
+        <parameter type="column" name="is_disabled" value="isDisabled" />
+		<parameter type="column" name="created_timestamp" value="createdTimestamp" />
+		<parameter type="column" name="modified_timestamp" value="modifiedTimestamp" />				
+		<parameter type="selective" name="insert" value="true" />
+		<parameter type="selective" name="update" value="true" />
+		<parameter type="finder" name="key" value="SELECT * FROM sfrm_partnership WHERE partnership_seq = ?"/>
+		<parameter type="finder" name="find_partnership_by_id" value="SELECT * FROM sfrm_partnership WHERE partnership_id = ?"/>
+		<parameter type="finder" name="find_all_partnerships" value="SELECT * FROM sfrm_partnership order by partnership_id;"/>
+	</dao>
+</dao-config>

@@ -1,0 +1,13 @@
+<module id="shutdown.email.module" name="Email shutdown hook module" version="1.0.0">
+	<parameters>
+		<parameter name="host" value="smtpout.cs.hku.hk"/>
+		<parameter name="protocol" value="smtp"/>
+		<parameter name="username" value=""/>
+		<parameter name="password" value=""/>
+		<parameter name="from" value="hfttsang@cecid.hku.hk"/>
+		<parameter name="to" value="hfttsang@cecid.hku.hk" />
+		<parameter name="cc" value=""/>
+		<parameter name="subject" value="JVM has been shutdown."/>
+		<parameter name="verbose" value="false"/>
+	</parameters>
+</module>

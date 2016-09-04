@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- * = required field -->
+<admin>
+	<housecleaning>
+		<on>false</on>
+		<!-- * should be an integer representing the day of the week 1-7 Sun-Sat respectively-->
+		<day>1</day>
+		<time>00.00.00</time>
+		<!-- * should be an integer representing the number months to keep the messages -->
+		<cutoff>3</cutoff>
+		
+		<!-- should be set through the UI -->
+		<!-- ** if email is set, must also specify an smtp and needed fields -->
+		<email></email>
+		<smtp></smtp>
+		<!-- * -->
+		<port>25</port>
+		<username></username>
+		<password></password>
+		
+		<!-- should be set by the module -->
+		<status></status>
+		<lastrun></lastrun>
+		<!-- should be a date in format YYYY.MM.DD.HH.mm.ss in all integers 
+			 eg. YYYY = 2006 M = 09 or 9 D = 05 or 5 H(hr) = 24 mm = 00 ss = 00
+			 12am September 9, 2006										-->
+		<nextrun>06.4.20.24.0.0</nextrun>
+		<reason></reason>
+	</housecleaning>
+</admin>

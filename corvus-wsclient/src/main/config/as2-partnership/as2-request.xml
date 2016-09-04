@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-admin-request>
+	<config>
+		<username>corvus</username>
+		<password>corvus</password>		
+		<managePartnershipEndpoint>http://localhost:8080/corvus/admin/as2/partnership</managePartnershipEndpoint>
+	</config>
+	<param>
+		<!-- 
+		The partnership operation you want to execute, only used by AS2PartnershipSender.
+		The allowed enumeration of this tag are listed below:
+		 0 - Adding partnership
+		 1 - Deleting partnership
+		 2 - Updating partnership	
+		-->
+		<partnershipOperation>0</partnershipOperation>						
+	</param>
+</as2-admin-request>

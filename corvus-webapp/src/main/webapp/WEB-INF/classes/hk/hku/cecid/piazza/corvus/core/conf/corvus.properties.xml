@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<corvus>
+
+	<!-- Home Directory -->
+	<home>@h2.home@</home>
+
+	<!-- Plugin Registry -->
+	<plugin>
+		<registry>@h2.home@/plugins</registry>
+		<descriptor>plugin.xml</descriptor>
+	</plugin>
+
+	<!-- Encoding settings -->
+	<encoding>
+		<servlet-request>UTF-8</servlet-request>
+		<servlet-response>text/html;UTF-8</servlet-response>
+	</encoding>
+	
+	<!-- Environment settings -->
+	<environment>
+		<properties>
+			<http.proxyHost></http.proxyHost>
+			<http.proxyPort></http.proxyPort>
+			<https.proxyHost></https.proxyHost>
+			<https.proxyPort></https.proxyPort>
+			<sun.net.client.defaultConnectTimeout>30000</sun.net.client.defaultConnectTimeout>
+			<sun.net.client.defaultReadTimeout>300000</sun.net.client.defaultReadTimeout>
+			<file.encoding>UTF-8</file.encoding>
+		</properties>
+	</environment>
+	
+</corvus>

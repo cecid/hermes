@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:p="http://service.as2.edi.cecid.hku.hk/" 
+	targetNamespace="http://service.as2.edi.cecid.hku.hk/"
+>
+<types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:complexType name="MessageInfo">
+        <xs:sequence>
+            <xs:element name="status" type="xs:string"/>
+            <xs:element name="statusDescription" type="xs:string"/>
+            <xs:element name="mdnMessageId" type="xs:string"/>
+            <xs:element name="mdnStatus" type="xs:string"/>
+            <xs:element name="mdnStatusDescription" type="xs:string"/>
+        </xs:sequence>
+	</xs:complexType>
+</xs:schema>
+</types>
+<message name="AS2RequestMsg">
+  <part name="messageId" type="s:string" />
+</message>
+<message name="AS2ResponseMsg">
+  <part name="messageInfo" type="p:MessageInfo" /> 
+</message>
+<portType name="AS2StatusQuery">
+  <operation name="Request">
+    <input message="p:AS2RequestMsg" /> 
+    <output message="p:AS2ResponseMsg" /> 
+  </operation>
+</portType>
+<binding name="AS2SoapHttpStatusQuery" type="p:AS2StatusQuery">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Request">
+    <soap:operation soapAction="as2StatusQuery" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="AS2MessageStatusQuery">
+  <documentation>Documentation not available.</documentation> 
+  <port name="AS2StatusQuery" binding="p:AS2SoapHttpStatusQuery">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/as2/status" /> 
+  </port>
+</service>
+</definitions>

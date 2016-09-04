@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:p="http://service.main.core.corvus.piazza.cecid.hku.hk/" 
+	targetNamespace="http://service.main.core.corvus.piazza.cecid.hku.hk/"
+>
+<types>
+  <s:schema elementFormDefault="qualified" targetNamespace="http://service.main.core.corvus.piazza.cecid.hku.hk/">
+    <s:element minOccurs="1" maxOccurs="1" name="action">
+      <complexType>
+        <simpleContent>
+          <restriction base="s:string">
+            <enumeration value="ping"/>
+            <enumeration value="pong"/>
+          </restriction>
+        </simpleContent>
+      </complexType>
+    </s:element>
+  </s:schema>
+</types>
+<message name="WsPingMsg">
+  <part name="parameters" element="p:action" /> 
+</message>
+<message name="WsPongMsg">
+  <part name="parameters" element="p:action" /> 
+</message>
+<portType name="WsPing">
+  <operation name="Ping">
+    <input message="p:WsPingMsg" /> 
+    <output message="p:WsPongMsg" /> 
+  </operation>
+</portType>
+<binding name="WsSoapHttpPing" type="p:WsPing">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Ping">
+    <soap:operation soapAction="wsping" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="WsCheck">
+  <documentation>Documentation not available.</documentation> 
+  <port name="WsPing" binding="p:WsSoapHttpPing">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/wsping" /> 
+  </port>
+</service>
+</definitions>

@@ -1,0 +1,100 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.ebms.spa.dao.MessageDAO">
+		<class>hk.hku.cecid.ebms.spa.dao.MessageDataSourceDAO</class>
+		<parameter name="table" value="message" />
+		<parameter name="key" value="message_id,message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="message_type" value="messageType" />
+		<parameter type="column" name="from_party_id" value="fromPartyId" />
+		<parameter type="column" name="from_party_role" value="fromPartyRole" />
+		<parameter type="column" name="to_party_id" value="toPartyId" />
+		<parameter type="column" name="to_party_role" value="toPartyRole" />			
+		<parameter type="column" name="cpa_id" value="cpaId" />
+		<parameter type="column" name="service" value="service" />
+		<parameter type="column" name="action" value="action" />
+		<parameter type="column" name="conv_id" value="convId" />
+		<parameter type="column" name="ref_to_message_id" value="refToMessageId" />
+		<parameter type="column" name="sync_reply" value="syncReply" />
+		<parameter type="column" name="dup_elimination" value="dupElimination" />	
+		<parameter type="column" name="ack_requested" value="ackRequested" />
+		<parameter type="column" name="ack_sign_requested" value="ackSignRequested" />
+		<parameter type="column" name="sequence_no" value="sequenceNo" />
+		<parameter type="column" name="sequence_status" value="sequenceStatus" />
+		<parameter type="column" name="sequence_group" value="sequenceGroup" />
+		<parameter type="column" name="time_to_live" value="timeToLive" />
+		<parameter type="column" name="time_stamp" value="timeStamp" />
+		<parameter type="column" name="timeout_time_stamp" value="timeoutTimestamp" />
+		<!-- <parameter type="column" name="principal_id" value="principalId" /> -->
+		<parameter type="column" name="status" value="status" />
+		<parameter type="column" name="status_description" value="statusDescription" />
+		
+		<parameter type="finder" name="get_all_before_time" value="select * from message where time_stamp &lt; ?" />
+		<parameter type="finder" name="find_ref_to_message" value="select * from message where ref_to_message_id=? and message_box=? and message_type=?" />			
+		
+		<!-- for inbox and outbox collector -->
+		<parameter type="finder" name="find_inbox_pending_messages_by_timestamp" value="select * from message where message_box='inbox' and status='PD' and message_type&lt;&gt;'ProcessedError' order by time_stamp LIMIT 50" />
+		<parameter type="finder" name="find_outbox_pending_messages_by_timestamp" value="select * from message where message_box='outbox' and status='PD' and message_type&lt;&gt;'ProcessedError' order by time_stamp LIMIT 50" />
+		<parameter type="finder" name="find_outbox_processing_messages_by_timestamp" value="select * from message where message_box='outbox' and status='PR' and message_type&lt;&gt;'ProcessedError' order by time_stamp LIMIT 50" />
+
+		<!-- only for Ebms Message Collector Service -->
+		<parameter type="finder" name="find_message_by_cpa" value="select m.* from message m, inbox i where m.message_id = i.message_id and m.cpa_id = ? and m.service = ? and m.action = ? and m.message_box='inbox' and m.message_type='Order' and m.status='PS' " />            
+		<parameter type="filter" name="find_message_by_cpa_filter_conv_id" value="m.conv_id = ?"/>
+		<parameter type="filter" name="find_message_by_cpa_filter_from_party_id" value="from_party_id = ?"/>
+		<parameter type="filter" name="find_message_by_cpa_filter_from_party_role" value="from_party_role = ?"/>
+		<parameter type="filter" name="find_message_by_cpa_filter_to_party_id" value="to_party_id = ?"/>
+		<parameter type="filter" name="find_message_by_cpa_filter_to_party_role" value="to_party_role = ?"/>
+		<parameter type="order" name="find_message_by_cpa_order" value="order by i.order_no LIMIT ?"/>
+		
+		<parameter type="finder" name="find_inbox_ready_max_sequence_no_by_cpa" value="select sequence_no from message where message_box='inbox' and cpa_id=? and service=? and action=? and conv_id=? and status in ('PS', 'DL') order by sequence_group desc, sequence_no desc LIMIT 1" />            
+		<parameter type="finder" name="find_max_sequence_no_by_message_box_and_cpa" value="select sequence_no from message where message_box=? and cpa_id=? and service=? and action=? and conv_id=? order by sequence_group desc, sequence_no desc LIMIT 1" />
+		<parameter type="finder" name="find_max_sequence_group_by_message_box_and_cpa" value="select sequence_group from message where message_box=? and cpa_id=? and service=? and action=? and conv_id=? order by sequence_group desc LIMIT 1" />
+		<parameter type="finder" name="find_num_of_messages_by_message_box_and_cpa_and_sequence_group" value="select count(*) from message where message_box=? and cpa_id=? and service=? and action=? and conv_id=? and sequence_group=?" />
+		<parameter type="finder" name="find_ordered_message_by_message_box_and_cpa_and_sequence_group_and_sequence_no" value="select * from message where message_box=? and cpa_id=? and service=? and action=? and conv_id=? and sequence_group=? and sequence_no=?" />
+		
+		<!-- only for check the allowance of reset message -->    
+		<parameter type="finder" name="find_ordered_messages_by_message_box_and_cpa_and_status" value="select * from message where message_box=? and cpa_id=? and service=? and action=? and conv_id=? and status=? and sequence_no&lt;&gt;-1 LIMIT 1" />
+		
+		<parameter type="finder" name="find_message_by_history" value="select * from message where message_type = 'Order'" />
+		<parameter type="filter" name="find_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_cpa_id" value="cpa_id LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_service" value="service LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_action" value="action LIKE ?"/>
+		<parameter type="filter" name="find_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>				
+		<parameter type="filter" name="find_message_by_history_filter_status" value="status = ?"/>
+		<parameter type="order" name="find_message_by_history_order" value="order by time_stamp desc, message_box asc LIMIT ? offset ?"/>
+		
+		<parameter type="finder" name="find_number_of_message_by_history" value="select count(message_id) from message where message_type = 'Order'" />
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_box" value="message_box = ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_status" value="status = ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_message_id" value="message_id LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_cpa_id" value="cpa_id LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_service" value="service LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_action" value="action LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_conv_id" value="conv_id LIKE ?"/>
+		<parameter type="filter" name="find_number_of_message_by_history_filter_status" value="status = ?"/>
+		
+		<!-- 
+		@SQL (String, Timestamp)
+		update all message status which the timeout timestamp is eariler than second parameter,
+		to first parameter. Also mark the timeout_time_stamp to NULL for guaranteeing only
+		one re-pending has been done for each sending.
+		-->				 
+		<parameter type="sql" name="updated_timed_out_message_status"
+			value="UPDATE message SET status = ?, timeout_time_stamp = NULL WHERE message_id IN (SELECT message_id FROM outbox) AND timeout_time_stamp &lt; ? AND status = 'PR'" />											
+	</dao>
+	
+	<dao name="hk.hku.cecid.ebms.spa.dao.MessageServerDataSourceDAO">
+		<class>hk.hku.cecid.ebms.spa.dao.MessageServerDataSourceDAO</class>			
+	</dao>
+	
+	<dao name="hk.hku.cecid.ebms.spa.dao.OutboxDAO">
+		<class>hk.hku.cecid.ebms.spa.dao.OutboxDataSourceDAO</class>
+		<parameter name="table" value="outbox" />
+		<parameter name="key" value="message_id" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="retried" value="retried" />
+		<parameter type="finder" name="select_outbox" value="select * from outbox" />
+	</dao>
+</dao-config>

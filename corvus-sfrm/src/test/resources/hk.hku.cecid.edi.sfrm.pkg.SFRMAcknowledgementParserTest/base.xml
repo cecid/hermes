@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<message id="goodday" status="PR">
+		<segments>
+			<segment num="8" status="DL"/>
+			<segment num="6" status="DL"/>
+			<segment num="4" status="DF"/>
+			<segment num="1" status="PR"/>
+		</segments>
+	</message>
+	<message id="hello" status="PPS">
+		<segments>
+			<segment num="4" status="PR"/>
+			<segment num="9" status="DL"/>
+			<segment num="2" status="DF"/>
+		</segments>
+	</message>
+</messages>

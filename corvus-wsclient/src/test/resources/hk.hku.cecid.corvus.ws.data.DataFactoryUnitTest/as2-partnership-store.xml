@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<partnership>
+  <as2>
+    <id>as2</id>
+    <disabled>false</disabled>
+    <isSyncReply>false</isSyncReply>
+    <subject>AS2 web service client default subject</subject>
+    <recipientAddress>http://127.0.0.1:8080/corvus/httpd/as2/inbound</recipientAddress>
+    <isHostnameVerified>false</isHostnameVerified>
+    <receiptAddress>http://127.0.0.1:8080/corvus/httpd/as2/inbound</receiptAddress>
+    <isReceiptRequired>false</isReceiptRequired>
+    <isOutboundSignRequired>false</isOutboundSignRequired>
+    <isOutboundEncryptRequired>false</isOutboundEncryptRequired>
+    <isOutboundCompressRequired>false</isOutboundCompressRequired>
+    <isReceiptSignRequired>false</isReceiptSignRequired>
+    <isInboundSignRequired>false</isInboundSignRequired>
+    <isInboundEncryptRequired>false</isInboundEncryptRequired>
+    <retries>3</retries>
+    <retryInterval>30000</retryInterval>
+    <signAlgorithm>sha1</signAlgorithm>
+    <encryptAlgorithm>rc2</encryptAlgorithm>
+    <micAlgorithm>sha1</micAlgorithm>
+    <as2From>as2From</as2From>
+    <as2To>as2To</as2To>
+    <encryptCert>I am testing cert</encryptCert>
+    <verifyCert>I am verifying cert</verifyCert>
+  </as2>
+</partnership>

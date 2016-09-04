@@ -1,0 +1,10 @@
+<dao-config>		
+	<dao name="hk.hku.cecid.ebms.spa.dao.InboxDataSourceDAO">
+		<class>hk.hku.cecid.ebms.spa.dao.InboxDataSourceDAO</class>
+		<parameter name="table" value="inbox" />
+		<parameter name="key" value="message_id" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="order_no" value="orderNo" />
+		<parameter type="finder" name="find_inbox_next_order_no" value="select max(order_no)+1 from inbox" /> 		
+	</dao>
+</dao-config>

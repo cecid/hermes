@@ -1,0 +1,12 @@
+<module id="hello_world.module.unit.test" name="Hello world Module Unit test" version="1.0">		
+
+	<parameters>
+        	<parameter name="execution-interval" value="50" />
+    	</parameters>
+
+	<component id="task-list" name="Hello world task list">
+        <class>hk.hku.cecid.piazza.commons.test.sample.HelloWorldModuleTaskList</class>
+		<parameter name="max-thread-count" value="10" />		
+	</component>
+	
+</module>

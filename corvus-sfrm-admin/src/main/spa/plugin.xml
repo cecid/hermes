@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="hk.hku.cecid.edi.sfrm.admin" 
+	name="Piazza Corvus SFRM Admin Plugin"
+	version="${build-date}" 
+	provider-name="hk.hku.cecid">
+	
+	<runtime>
+		<library name="commons-fileupload.jar"/>
+		<library name="corvus-sfrm-admin.jar"/>
+		<library name="conf/"/>
+		<library name="ui/"/>
+	</runtime>
+	
+	<requires>
+		<import plugin="hk.hku.cecid.edi.sfrm"/>
+		<import plugin="hk.hku.cecid.piazza.corvus.admin"/>
+	</requires>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.module" name="Piazza Corvus SFRM Admin">
+		<parameter name="module" value="module.xml"/>		
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Partnership Pagelet Adaptor">
+		<parameter name="class" value="hk.hku.cecid.edi.sfrm.admin.listener.PartnershipPageletAdaptor"/>
+		<parameter name="context" value="/sfrm/partnership"/>
+		<parameter name="module" value="sfrm"/>
+		<parameter name="tab" value="partnership"/>
+		<parameter name="center" value="sfrm.partnership"/>
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Message History Pagelet Adaptor">
+		<parameter name="class" value="hk.hku.cecid.edi.sfrm.admin.listener.MessageHistoryPageletAdaptor"/>
+		<parameter name="context" value="/sfrm/message_history"/>
+		<parameter name="module" value="sfrm"/>
+		<parameter name="tab" value="message_history"/>
+		<parameter name="center" value="sfrm.message_history"/>
+	</extension>	
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Partnership Pagelet">
+		<parameter name="id" value="sfrm.partnership"/>
+		<parameter name="pagelet" value="partnership.xsl"/>
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Message History Pagelet">
+		<parameter name="id" value="sfrm.message_history"/>
+		<parameter name="pagelet" value="message_history.xsl"/>
+	</extension>
+</plugin>

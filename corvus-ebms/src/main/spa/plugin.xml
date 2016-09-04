@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+   id="hk.hku.cecid.ebms"
+   name="Piazza Corvus EbMS Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.ebms.spa.EbmsProcessor"
+>
+
+	<parameters>
+		<parameter name="module-group-descriptor" value="hk/hku/cecid/ebms/spa/conf/ebms.module-group.xml"/>
+	</parameters>
+	
+	<runtime>
+		<library name="corvus-ebms.jar"/>
+		<library name="ebxml-pkg.jar"/>	
+		<library name="commons-logging.jar"/>	
+		<library name="xmlsec.jar"/>			
+		<library name="xalan.jar"/>					
+		<library name="conf/"/>
+	</runtime>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Inbound Listener">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.listener.EbmsInboundListener" /> 
+	  <parameter name="context" value="/ebms/inbound" />
+	</extension>
+	
+	<!--extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Outbound Listener">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.listener.EbmsOutboundListener" />
+	  <parameter name="context" value="/auth/ebms/outbound" />
+	</extension-->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Message Sender Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsMessageSenderService" />
+	  <parameter name="context" value="/ebms/sender" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Message Receiver List Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsMessageReceiverListService" />
+	  <parameter name="context" value="/ebms/receiver_list" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Message Receiver Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsMessageReceiverService" />
+	  <parameter name="context" value="/ebms/receiver" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Message History Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsMessageHistoryService" />
+	  <parameter name="context" value="/ebms/msg_history" />
+	</extension>
+
+	<!-- extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Plugin Config Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsConfigService" />
+	  <parameter name="context" value="/ebms/config" />
+	</extension -->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="Ebms Permit Redownload Service">
+	  <parameter name="class" value="hk.hku.cecid.ebms.spa.service.EbmsPermitRedownloadService" />
+	  <parameter name="context" value="/ebms/permitdl" />
+	</extension>
+	
+</plugin>

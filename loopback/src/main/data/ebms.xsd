@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="partnership">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="parameters"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"></xs:minLength>
+            <xs:maxLength value="50"></xs:maxLength>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="protocol" use="required" fixed="ebms"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cpaId"/>
+        <xs:element ref="service"/>
+        <xs:element ref="action"/>
+        <xs:element ref="transportEndpoint"/>
+        <xs:element ref="hostnameVerfiedInSsl"/>
+        <xs:element ref="syncReplyMode"/>
+        <xs:element ref="acknowledgementRequested"/>
+        <xs:element ref="acknowledgementSignedRequest"/>
+        <xs:element ref="duplicateElimination"/>
+        <xs:element ref="messageOrder"/>
+        <xs:element ref="signingRequired"/>
+        <xs:element ref="encryptionRequired"/>
+        <xs:element ref="certificateForEncryption"/>
+        <xs:element ref="maximumRetries"/>
+        <xs:element ref="retryInterval"/>
+        <xs:element ref="certificateForVerification"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cpaId">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"></xs:minLength>
+        <xs:maxLength value="100"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="service">
+    <xs:simpleType>
+    <xs:restriction base="xs:anyURI">
+        <xs:minLength value="1"></xs:minLength>
+        <xs:maxLength value="255"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="action">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"></xs:minLength>
+        <xs:maxLength value="100"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>      
+  </xs:element>
+  <xs:element name="transportEndpoint">
+    <xs:simpleType>
+      <xs:restriction base="xs:anyURI">
+        <xs:minLength value="13"></xs:minLength>
+        <xs:maxLength value="255"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="hostnameVerfiedInSsl" type="xs:boolean" />
+  <xs:element name="syncReplyMode" type="xs:boolean" />
+  <xs:element name="acknowledgementRequested" type="xs:boolean" />
+  <xs:element name="acknowledgementSignedRequest" type="xs:boolean" />
+  <xs:element name="duplicateElimination" type="xs:boolean" />
+  <xs:element name="messageOrder" type="xs:boolean" />
+  <xs:element name="signingRequired" type="xs:boolean" />
+  <xs:element name="encryptionRequired" type="xs:boolean" />
+  <xs:element name="certificateForEncryption" type="xs:string" />
+  <xs:element name="maximumRetries">
+    <xs:simpleType>
+      <xs:restriction base="xs:positiveInteger">
+        <xs:maxInclusive value="10"></xs:maxInclusive>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="retryInterval">
+    <xs:simpleType>
+      <xs:restriction base="xs:positiveInteger">
+        <xs:maxInclusive value="60000"></xs:maxInclusive>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="certificateForVerification" type="xs:string" />
+</xs:schema>

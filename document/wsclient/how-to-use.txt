@@ -1,0 +1,465 @@
+============================================================================
+                    Hermes 2 Web Service Client v1.0.2-alpha
+============================================================================
+Hermes 2 Web Service Client (H2-WSC) is a small console tool for sending and
+receiving some common Web Service in the world of Hermes 2. Currently, it is 
+able send and receving as2 and ebMS message through the CLI(Command line 
+interface). 
+
+Author: Twinsen Tsang
+
+S1. Folder Organization:
+============================================================================
+<root>
+  |
+  |--- bin              (executeable for invoking web service client)
+  |--- dist           
+  |     |
+  |     |--- lib        (library dependences)
+  |--- doc              
+  |--- javadoc          (API of this client)
+  |--- logs             (Default log directory for web service client)
+  |--- testdata         (Sample XML Request file are located here)
+  |--- testdata-output  
+============================================================================
+
+S2. Supported Web service by this client.
+============================================================================
+1. Sending AS2/EbMS message to Hermes2 
+2. Receiving AS2/EbMS message from Hermes2
+3. Querying AS2/EbMS message which are ready to download.
+4. Configuring AS2/EbMS performance factor (non-h2O services).
+5. Query Message status through MS-E (non-h2O services).
+6. Query AS2/EbMS message status from Hermes2 (new-h2O services, v1.0.1).
+7. Query SFRM message status from Hermes2 (non-h2O services, v1.0.1).
+8. Maintain AS2/EbMS partnership to Hermes2 (new-h2O services, v1.0.2).
+9. Query AS2/EbMS message with envelop (new-h2O services, v1.0.2).
+
+S3. Pre-requisites:
+============================================================================
+1. Installed Hermes2 at target machine. The target machine is defined as the 
+   machine you wanted to send web service query to that machine. By default,
+   the request files are pointed to your local machine. 
+2. Create your partnership either through direct SQL or loopback tool that 
+   have same information with your request files located in the folder 
+   "testdata". 
+
+S4. XML Configuration files
+============================================================================
+A set of XML conf files has been defined for setting the parameters in the 
+SOAP request and listed below:
+
+     File name            |                Description 
+----------------------------------------------------------------------------
+as2-partnership.xml       | define the AS2 partnership in the web service 
+                          | call.
+as2-config-request.xml    | define the new AS2 configuration in the web  
+                          | webserivce call.
+as2-request.xml           | define the endpoint and some message-based 
+                          | information.
+as2-status-request.xml    | define the endpoint and the message you want 
+                          | to query. (v1.0.1)
+ebms-partnership.xml      | define the EBMS partnership in the web service 
+                          | call.
+ebms-config-request.xml   | define the new EBMS configuration in the web  
+                          | webserivce call.
+ebms-request.xml          | define the endpoint and some message-based 
+                          | information.
+ebms-status-request.xml   | define the endpoint and the message you want 
+                          | to query. (v1.0.1)
+ms-request.xml            | define the filter parameters for query 
+                          | the message status record.
+----------------------------------------------------------------------------
+
+When you requires to customize the request, simply change the value
+in the above XML and invoke the web serivces client. 
+
+
+S5. Invoking web services client:
+================================================================================
+Each web service described in S2 is seperated as an individual shellscript 
+or batch file. 
+The following shows the mapping for web service against it's filename.
+
+          Sending    |    Receiving    |    Querying        |  Status Querying 
+     -------------------------------------------------------|------------------
+AS2  | as2send-test  |   as2recv-test  |  as2recvlist-test  |  as2status-test
+EBMS | ebmssend-test |  ebmsrecv-test  | ebmsrecvlist-test  | ebmsstatus-test
+SFRM |     N/A       |      N/A        |       N/A          | sfrmstatus-test
+MS-E |     N/A       |      N/A        |     mse-query      |       N/A
+
+Note: The status querying is only available for ws-client version 1.0.1.
+
+S6.1 Invoking AS2 sending web services 
+================================================================================
+Syntax: 
+as2send-test [parntership-xml] [config-xml] [log-path] [payload-path].
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/as2-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/as2-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/as2send.log"
+payload-path:    The filepath of the payload attached in the message.
+                 Default is "../testdata/testpayload" 
+
+To invoke or simulate sending payload to Hermes 2 through web service, 
+follow the procedures listed below:
+
+1. Setup the configuration file( partnership, config and payload)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "as2send-test" in "bin" folders.
+4. Wait until the process is done. The new message id should be shown
+   on the bottom on the screen.
+
+Example Output:
+
+
+
+----------------------------------------------------
+           AS2 sender web service client
+----------------------------------------------------
+Initialize Logger ...
+Importing  AS2 sending parameters ...
+Importing  AS2 partnership parameters ...
+Initialize AS2 web service client...
+Adding     payload in the AS2 message...
+Sending    AS2 sending request ...
+
+                    Sending Done:
+----------------------------------------------------
+New message id: 20070323-095745-31206@147.8.177.42
+
+Please view log for details ..
+
+
+
+
+S6.2 Invoking AS2 query web services 
+============================================================================
+Syntax: 
+as2recvlist-test [parntership-xml] [config-xml] [log-path].
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/as2-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/as2-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/as2send.log"
+payload-path:    The filepath of the payload attached in the message.
+                 Default is "../testdata/testpayload" 
+
+To check whether there is any messages which are ready to download in Hermes2,
+follow the procedures listed below:
+
+1. Setup the configuration file( partnership, config)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "as2recvlist-test" in "bin" folders.
+4. Wait until the process is done. 
+
+Example Output:
+
+----------------------------------------------------
+          AS2 receiver list web service client
+----------------------------------------------------
+Initialize Logger ...
+Importing  AS2 sending parameters ...
+Importing  AS2 partnership parameters ...
+Initialize AS2 receiving list web service client...
+Sending    AS2 receiving list request ...
+
+                    Sending Done:
+----------------------------------------------------
+         AS2 Message that can be download
+----------------------------------------------------
+0 Message id : 20070323-095745-31206@147.8.177.42
+1 Message id : 20070323-095255-48404@147.8.177.42
+2 Message id : 20070323-094107-26502@147.8.177.42
+3 Message id : 20070322-100531-84306@147.8.177.42
+----------------------------------------------------
+
+Please view log for details ..
+
+In the above example, there is 4 AS2 messages received and ready to 
+download.
+
+
+S6.3 Invoking AS2 receiving web services
+=================================================================================
+Syntax: 
+as2recv-test [parntership-xml] [config-xml] [log-path] [output-folder] [output-pattern]
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/as2-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/as2-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/as2send.log"
+output-folder    The directory path for storing the downloaded message payload.
+                 Default is "../testdata-output/"
+output-pattern   The pattern used for generated the payload's name when 
+                 downloading message. The default is "as2.$mid.payload.$i".
+                 "$mid" is a pattern variable that will be replaced by 
+                 the downloading message id. 
+                 "$i" is reserved at the version and it is always zero.
+                 
+
+"as2recv-test" is a hybrid of query web services and receiving web 
+services, it first queries messages which are available to download, 
+and let the user choose one if exist downloadable messages. 
+
+The general steps is shown below:
+
+1. Setup the configuration file( partnership, config)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "as2recvlist-test" in "bin" folders.
+4. Input 0-X where X is number of available message to download if exist. 
+   "-1" is used for exit.
+
+S6.4 Invoking AS2 status query web services (v1.0.1 new)
+=================================================================================
+Syntax:
+as2status-test [config-xml] [log-path]
+
+config-xml:      The filepath of the status query configuration file. Default is 
+                 "../testdata/as2-status-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/as2status.log"
+
+To invoke or simulate status quering to Hermes 2 through web service, 
+follow the procedures listed below:
+
+1. Setup the configuration file( config ).
+2. You may use the sender web service mentioned in section 6.1 and get the 
+   message id for status query simulation.
+3. Exec "as2status-test" in "bin" folders.
+4. Wait until the process is done. 
+
+Example Output:
+
+----------------------------------------------------
+             AS2 sender test case start
+----------------------------------------------------
+Initialize logger ..
+Importing  AS2 sending parameters ...
+Initialize AS2-status web service client...
+Sending    AS2-status sending request ...
+
+                    Sending Done:
+----------------------------------------------------
+Query Message ID          : 20070521-145718-39018@147.8.177.42
+Query Message Status      : DL
+Query Message Status Desc : null
+ACK   Message ID          : null
+ACK   Message Status      : null
+ACK   Message Status Desc : null
+
+Please view log for details ..
+
+In the above example, the message shown has been delivered (DL). 
+
+
+S7.1 Invoking EBMS sending web services 
+============================================================================
+Syntax: 
+ebmssend-test [parntership-xml] [config-xml] [log-path] [payload-path].
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/ebms-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/ebms-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/ebmssend.log"
+payload-path:    The filepath of the payload attached in the message.
+                 Default is "../testdata/testpayload" 
+
+To invoke or simulate sending payload to Hermes 2 through web service, 
+follow the procedures listed below:
+
+1. Setup the configuration file( partnership, config and payload)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "ebmssend-test" in "bin" folders.
+4. Wait until the process is done. The new message id should be shown
+   on the bottom on the screen.
+
+Example Output:
+
+----------------------------------------------------
+           EBMS sender web service client
+----------------------------------------------------
+Initialize Logger ...
+Importing  EBMS sending parameters ...
+Importing  EBMS partnership parameters ...
+Initialize EBMS web service client...
+Adding     payload in the AS2 message...
+Sending    EBMS sending request ...
+
+                    Sending Done:
+----------------------------------------------------
+New message id: 20070323-095745-31206@147.8.177.42
+
+Please view log for details ..
+
+
+
+
+S7.2 Invoking EBMS query web services 
+============================================================================
+Syntax: 
+ebmsrecvlist-test [parntership-xml] [config-xml] [log-path].
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/ebms-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/ebms-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/ebmssend.log"
+payload-path:    The filepath of the payload attached in the message.
+                 Default is "../testdata/testpayload" 
+
+To check whether there is any messages which are ready to download in Hermes2,
+follow the procedures listed below:
+
+1. Setup the configuration file( partnership, config)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "ebmsrecvlist-test" in "bin" folders.
+4. Wait until the process is done. 
+
+Example Output:
+
+----------------------------------------------------
+         EbMS receiver list web service client
+----------------------------------------------------
+Initialize Logger ...
+Importing  ebMS sending parameters ...
+Initialize ebMS receiving list web service client...
+Sending    ebMS receiving list request ...
+
+                    Sending Done:
+----------------------------------------------------
+         EbMS Message that can be download
+----------------------------------------------------
+0 Message id : 20070322-174058-43701@147.8.177.42
+----------------------------------------------------
+
+Please view log for details ..
+
+In the above example, there is 1 EBMS messages received and ready to 
+download.
+
+
+S7.3 Invoking EBMS receiving web services
+============================================================================
+Syntax: 
+ebmsrecv-test [parntership-xml] [config-xml] [log-path] [output-folder] [output-pattern]
+
+partnership-xml: The filepath of the partnership configuration file. Default is 
+                 "../testdata/as2-partnership.xml".
+config-xml:      The filepath of the message configuration file. Default is 
+                 "../testdata/as2-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/as2send.log"
+output-folder    The directory path for storing the downloaded message payload.
+                 Default is "../testdata-output/"
+output-pattern   The pattern used for generated the payload's name when 
+                 downloading message. The default is "as2.$mid.payload.$i".
+                 "$mid" is a pattern variable that will be replaced by 
+                 the downloading message id. 
+                 "$i" is reserved at the version and it is always zero.
+                 
+
+"as2recv-test" is a hybrid of query web services and receiving web 
+services, it first queries messages which are available to download, 
+and let the user choose one if exist downloadable messages. 
+
+The general steps is shown below:
+
+1. Setup the configuration file( partnership, config)
+2. Remember to have a partnership with the same configuration in the Hermes2.
+3. Exec "as2recvlist-test" in "bin" folders.
+4. Input 0-X where X is number of available message to download if exist. 
+   "-1" is used for exit.
+
+Example Output on selection: 
+
+----------------------------------------------------
+         EbMS Message that can be download
+----------------------------------------------------
+0 Message id : 20070322-174058-43701@147.8.177.42
+----------------------------------------------------
+Select message (0 - 0), -1 to exit:
+
+
+S7.4 Invoking EBMS status query web services (v1.0.1 new)
+=================================================================================
+Syntax:
+ebmsstatus-test [config-xml] [log-path]
+
+config-xml:      The filepath of the status query configuration file. Default is 
+                 "../testdata/ebms-status-request.xml".
+log-path:        The filepath of the logger to log query result or error. 
+                 Default is "../testdata/ebmsstatus.log"
+
+To invoke or simulate status quering to Hermes 2 through web service, 
+follow the procedures listed below:
+
+1. Setup the configuration file( config ).
+2. You may use the sender web service mentioned in section 7.1 and get the 
+   message id for status query simulation.
+3. Exec "ebmsstatus-test" in "bin" folders.
+4. Wait until the process is done. 
+
+Example Output:
+
+----------------------------------------------------
+            EBMS sender test case start
+----------------------------------------------------
+Initialize logger ..
+Importing  EBMS sending parameters ...
+Initialize EBMS-status web service client...
+Sending    EBMS-status sending request ...
+
+                    Sending Done:
+----------------------------------------------------
+Query Message ID          : 20070517-172723-26505@147.8.177.42
+Query Message Status      : DL
+Query Message Status Desc : Message was sent
+ACK   Message ID          : null
+ACK   Message Status      : null
+ACK   Message Status Desc : null
+
+Please view log for details ..
+
+In the above example, the message shown has been delivered (DL). 
+
+
+
+S8 FAQ
+============================================================================
+Q1. When i invoke AS2/EBMS sending web services, the message id shown on the 
+    screen is null.Why?
+A1. This may be due to missing partnership at the target machine. Check your
+    target machine to see whether it has inserted the partnership with 
+    the same configuration with your XML configuration or not.
+
+Q2. The web services client throws 
+    java.net.ConnectException: Connection refused: connect during invocation
+    what is happening ? 
+A2. This may be due to the invalid endpoint entered in the configuration.
+    Double-check your endpoint in the (as2/ebms)-request.xml to validate
+    the endpoint is correct or not. 
+    By default,
+
+    AS2 sending endpoint is "http://localhost:8080/corvus/httpd/as2/sender"
+    AS2 query endpoint is "http://localhost:8080/corvus/httpd/as2/receiver_list"
+    AS2 receiving endpoint is "http://localhost:8080/corvus/httpd/as2/receiver"
+
+    EBMS sending endpoint is "http://localhost:8080/corvus/httpd/ebms/sender"
+    EBMS query endpoint is "http://localhost:8080/corvus/httpd/ebms/receiver_list"
+    EBMS receiving endpoint is "http://localhost:8080/corvus/httpd/ebms/receiver"
+   
+    for local machine.
+	
+
+

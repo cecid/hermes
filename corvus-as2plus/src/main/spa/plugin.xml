@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="hk.hku.cecid.edi.as2plus"
+   name="Corvus AS2 Plus Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.edi.as2.AS2PlusProcessor"
+>
+	<parameters>
+		<parameter name="module-group-descriptor" value="hk/hku/cecid/edi/as2/conf/as2.module-group.xml"/>
+	</parameters>
+
+	<runtime>
+		<library name="corvus-as2plus.jar"/>
+		<library name="conf/"/>
+		<library name="security/"/>
+	</runtime>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Inbound Listener">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.listener.AS2InboundListener" />
+	  <parameter name="context" value="/as2/inbound" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Receipt Listener">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.listener.AS2ReceiptListener" />
+	  <parameter name="context" value="/as2/mdn" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Sender Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2MessageSenderService" />
+	  <parameter name="context" value="/as2/sender" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Receiver List Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2MessageReceiverListService" />
+	  <parameter name="context" value="/as2/receiver_list" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Receiver Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2MessageReceiverService" />
+	  <parameter name="context" value="/as2/receiver" />
+	  <parameter name="is_compress" value="false" />
+	</extension>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Message History Service">
+		 <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2MessageHistoryService" />
+		 <parameter name="context" value="/as2/msg_history" />
+	</extension>
+
+	<!-- extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Config Service">
+	  <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2ConfigService" />
+	  <parameter name="context" value="/as2/config" />
+	</extension -->
+	
+	<extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="AS2 Permit Redownload Service">
+		 <parameter name="class" value="hk.hku.cecid.edi.as2.service.AS2PermitRedownloadService" />
+		 <parameter name="context" value="/as2/permitdl" />
+	</extension>
+
+</plugin>

@@ -1,0 +1,55 @@
+<module id="ebms.main" name="Ebms Plugin" version="1.0">
+
+	<component id="logger" name="System Logger">
+		<class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>
+		<parameter name="config" value="hk/hku/cecid/ebms/spa/conf/log4j.properties.xml" />		
+		<parameter name="category" value="hk.hku.cecid.ebms.spa" />
+	</component>
+
+	<component id="properties" name="System Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="hk/hku/cecid/ebms/spa/conf/ebms.properties.xml" />
+	</component>
+
+	<component id="messages" name="System Messages">
+		<class>hk.hku.cecid.piazza.commons.util.MessagesTree</class>
+		<parameter name="config" value="hk/hku/cecid/ebms/spa/conf/messenger.properties.xml" />		
+	</component>
+
+	<component id="daofactory" name="System DAO Factory">
+        <class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<parameter name="driver" value="@ebmsDriverClass@" />
+		<parameter name="url" value="@ebmsConnStr@" />
+		<parameter name="username" value="@ebmsuser@" />
+		<parameter name="password" value="@ebmspw@" />
+        <parameter name="pooling" value="true" />
+        <parameter name="maxActive" value="30" />
+        <parameter name="maxIdle" value="10" />
+        <parameter name="maxWait" value="-1" />
+        <parameter name="testOnBorrow" value="true" />
+        <parameter name="testOnReturn" value="false" />
+        <parameter name="testWhileIdle" value="false" />
+		<parameter name="validationQuery" value="@ebmsValidationQuery@" />
+		<parameter name="config">@ebmsDAOFile@</parameter>
+	</component>
+    
+    <component id="keystore-manager-for-signature" name="Key Store Manager for Digital Signature">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="@h2.home@/plugins/corvus-ebms/security/corvus.p12" />
+		<parameter name="keystore-password" value="password" />
+		<parameter name="key-alias" value="corvus" />
+		<parameter name="key-password" value="password" />
+		<parameter name="keystore-type" value="PKCS12" />
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+	</component>
+    
+    <component id="keystore-manager-for-decryption" name="Key Store Manager for Decryption (ebMS over SMTP)">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="@h2.home@/plugins/corvus-ebms/security/corvus.p12" />
+		<parameter name="keystore-password" value="password" />
+		<parameter name="key-alias" value="corvus" />
+		<parameter name="key-password" value="password" />
+		<parameter name="keystore-type" value="PKCS12" />
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+	</component>
+</module>

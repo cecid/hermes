@@ -1,0 +1,39 @@
+<module id="piazza.corvus" name="Piazza Corvus" version="1.0">
+
+	<component id="logger" name="System Logger">
+		<class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>
+		<parameter name="config" value="hk/hku/cecid/piazza/corvus/core/conf/corvus.log.properties.xml" />		
+		<parameter name="category" value="hk.hku.cecid.piazza" />
+	</component>
+
+	<component id="properties" name="System Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="hk/hku/cecid/piazza/corvus/core/conf/corvus.properties.xml" />
+	</component>
+
+	<component id="messages" name="System Messages">
+		<class>hk.hku.cecid.piazza.commons.util.MessagesTree</class>
+		<parameter name="config" value="hk/hku/cecid/piazza/corvus/core/conf/corvus.messages.xml" />
+	</component>
+
+	<!-- Set up a SSL Trust Manager for SSL connection
+	<component id="ssl-trust-manager" name="SSL Trust Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreTrustManager</class>
+		<parameter name="keystore-location" value="/j2sdk1.4.2_04/jre/lib/security/cacerts" />
+		<parameter name="keystore-password" value="changeit" />
+	</component>
+	-->
+
+	<!-- Set up a SSL Key Manager for SSL connection, it is configured in application server most case (e.g. Tomcat server.xml)
+	<component id="ssl-key-manager" name="SSL Key Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreKeyManager</class>
+		<parameter name="keystore-location" value="hk/hku/cecid/piazza/corvus/core/certs/cert.p12" />
+		<parameter name="keystore-password" value="password" />
+		<parameter name="key-alias" value="mykey" />
+		<parameter name="key-password" value="password" />
+		<parameter name="keystore-type" value="PKCS12" />
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+	</component>
+	-->
+	
+</module>

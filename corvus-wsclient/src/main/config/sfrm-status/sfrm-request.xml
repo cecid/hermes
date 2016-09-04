@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sfrm-status-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/sfrm/status</endpoint>
+	</config>
+	<param>
+		<messageId></messageId>
+	</param>
+</sfrm-status-request>
+
+
+

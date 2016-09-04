@@ -1,0 +1,7 @@
+INSERT INTO sfrm_message VALUES('A', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PR', 'Processing', '2008-09-18 15:14:35.794198', '2008-09-18 15:16:35.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('A', 'INBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PR', 'Processing', '2008-09-18 15:14:37.794198', '2008-09-18 15:14:40.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('B', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PPS', 'Pre-Completed', '2008-09-18 15:17:35.794198', '2008-09-18 15:18:35.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('C', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PSD', 'Pre-Suspended', '2008-09-18 15:19:35.794198', '2008-09-18 15:19:55.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('D', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PDF', 'Pre-Delivery Failed', '2008-09-18 15:20:35.794198', '2008-09-18 15:20:55.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('E', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'PRS', 'Pre-Resume', '2008-09-18 15:21:35.794198', '2008-09-18 15:21:55.794198', NULL, 'file.tar');
+INSERT INTO sfrm_message VALUES('F', 'OUTBOX', 'CECID', 'http://localhost:8080', 5, 2048, null, null, 'SD', 'Pre-Resume', '2008-09-18 15:21:35.794198', '2008-09-18 15:21:55.794198', NULL, 'file.tar');

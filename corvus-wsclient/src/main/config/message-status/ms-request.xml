@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message-status-request>
+	<config>
+		<endpoint>http://localhost:8080/message-status/services/MessageStatusService</endpoint>
+		<username>administrator</username>
+		<password>abc123</password>
+	</config>
+	<param>
+		<partnershipId></partnershipId>
+		<channelType></channelType>
+		<channelId></channelId>
+		<folderName></folderName>
+		<fileName></fileName>
+		<!-- UTC Format -->
+		<fromTimestamp></fromTimestamp>
+		<!-- UTC Format -->		
+		<toTimestamp></toTimestamp>
+		<numOfRecords>10</numOfRecords>
+		<conversationId></conversationId>
+		<messageId></messageId>
+		<messageType></messageType>
+		<messageStatus></messageStatus>
+		<protocol>SFRM</protocol>
+		<locale>EN</locale>
+		<levelOfDetails>1</levelOfDetails>
+		<offset>1</offset>
+	</param>
+</message-status-request>
+
+
+

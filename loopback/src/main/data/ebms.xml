@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partnership xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="data/ebms.xsd" id="testEbms" protocol="ebms">
+    <parameters>
+        <cpaId>cecid</cpaId>
+        <service>cecid:cecid</service>
+        <action>order</action>
+        <transportEndpoint>http://127.0.0.1:8080/corvus/httpd/ebms/inbound</transportEndpoint>
+        <hostnameVerfiedInSsl>false</hostnameVerfiedInSsl>
+        <syncReplyMode>false</syncReplyMode>
+        <acknowledgementRequested>false</acknowledgementRequested>
+        <acknowledgementSignedRequest>false</acknowledgementSignedRequest>
+        <duplicateElimination>false</duplicateElimination>
+        <messageOrder>false</messageOrder>
+        <signingRequired>false</signingRequired>
+        <encryptionRequired>false</encryptionRequired>
+        <certificateForEncryption></certificateForEncryption>
+        <maximumRetries>1</maximumRetries>
+        <retryInterval>30000</retryInterval>
+        <certificateForVerification></certificateForVerification>
+    </parameters>
+</partnership>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="hk.hku.cecid.piazza.corvus.core.main.admin"
+   name="Corvus Main System Admin Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.piazza.corvus.core.main.admin.AdminMainProcessor"
+>
+
+	<parameters>
+		<parameter name="module-group-descriptor" value="hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin.module-group.xml"/>
+	</parameters>
+
+	<runtime>
+		<library name="corvus-main-admin.jar"/>
+		<library name="conf/"/>
+	</runtime>
+
+	<requires>
+		<import plugin="hk.hku.cecid.piazza.corvus.admin" />
+		<import plugin="hk.hku.cecid.edi.as2"/>
+		<import plugin="hk.hku.cecid.ebms"/>
+	</requires>
+	
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="JVM Properties Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.admin.listener.PropertiesPageletAdaptor" />
+	  <parameter name="context" value="/main/jvmprops" />
+	  <parameter name="module" value="main" />
+	  <parameter name="tab" value="jvmprops" />
+	  <parameter name="center" value="main.properties" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Core Properties Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.admin.listener.CorePropertiesPageletAdaptor" />
+	  <parameter name="context" value="/main/coreprops" />
+	  <parameter name="module" value="main" />
+	  <parameter name="tab" value="coreprops" />
+	  <parameter name="center" value="main.properties" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="HTTP Dispatcher Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.admin.listener.HttpdPageletAdaptor" />
+	  <parameter name="context" value="/main/httpd" />
+	  <parameter name="module" value="main" />
+	  <parameter name="tab" value="httpd" />
+	  <parameter name="center" value="main.httpd" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Plugin Registry Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.admin.listener.PluginRegistryPageletAdaptor" />
+	  <parameter name="context" value="/main/plugins" />
+	  <parameter name="module" value="main" />
+	  <parameter name="tab" value="plugins" />
+	  <parameter name="center" value="main.plugins" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="System Hierarchy Pagelet Adaptor">
+	  <parameter name="class" value="hk.hku.cecid.piazza.corvus.core.main.admin.listener.ModuleInfoPageletAdaptor" />
+	  <parameter name="context" value="/main/modules" />
+	  <parameter name="module" value="main" />
+	  <parameter name="tab" value="modules" />
+	  <parameter name="center" value="main.modules" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Properties Pagelet">
+	  <parameter name="id" value="main.properties" />
+	  <parameter name="pagelet" value="hk/hku/cecid/piazza/corvus/core/main/admin/ui/properties.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="HTTP Dispatcher Pagelet">
+	  <parameter name="id" value="main.httpd" />
+	  <parameter name="pagelet" value="hk/hku/cecid/piazza/corvus/core/main/admin/ui/httpd.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Plugin Registry Pagelet">
+	  <parameter name="id" value="main.plugins" />
+	  <parameter name="pagelet" value="hk/hku/cecid/piazza/corvus/core/main/admin/ui/plugins.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Module Information Pagelet">
+	  <parameter name="id" value="main.modules" />
+	  <parameter name="pagelet" value="hk/hku/cecid/piazza/corvus/core/main/admin/ui/modules.xsl" />
+	</extension>
+
+	<extension point="hk.hku.cecid.piazza.corvus.admin.module" name="Corvus Main Admin Module">
+	  <parameter name="module" value="hk/hku/cecid/piazza/corvus/core/main/admin/conf/admin-module.xml" />
+	</extension>
+	
+</plugin>

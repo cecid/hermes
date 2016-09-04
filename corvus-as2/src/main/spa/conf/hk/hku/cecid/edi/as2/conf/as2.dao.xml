@@ -1,0 +1,76 @@
+<dao-config>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.RepositoryDAO">
+		<class>hk.hku.cecid.edi.as2.dao.RepositoryDataSourceDAO</class>
+		<parameter name="table" value="repository" />
+		<parameter name="key" value="message_id, message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="content" value="content" />
+	</dao>
+	
+	<dao name="hk.hku.cecid.edi.as2.dao.MessageDAO">
+		<class>hk.hku.cecid.edi.as2.dao.MessageDataSourceDAO</class>
+		<parameter name="table" value="message" />
+		<parameter name="key" value="message_id, message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="as2_from" value="as2From" />
+		<parameter type="column" name="as2_to" value="as2To" />
+		<parameter type="column" name="is_receipt" value="isReceipt" />
+		<parameter type="column" name="is_receipt_requested" value="isReceiptRequested" />
+		<parameter type="column" name="is_acknowledged" value="isAcknowledged" />
+		<parameter type="column" name="receipt_url" value="receiptUrl" />
+		<parameter type="column" name="mic_value" value="micValue" />
+		<parameter type="column" name="original_message_id" value="originalMessageId" />
+		<parameter type="column" name="time_stamp" value="timeStamp" />
+		<parameter type="column" name="principal_id" value="principalId" />
+		<parameter type="column" name="status" value="status" />
+		<parameter type="column" name="status_desc" value="statusDesc" />
+		
+		<parameter type="finder" name="get_all_before_time" value="select * from message where time_stamp &lt; ?" />
+        <parameter type="finder" name="find_messages_by_original_message_id" value="select * from message where original_message_id=?  and message_box=? order by time_stamp desc" />
+        <parameter type="finder" name="find_messages_by_status" value="select * from message where upper(status)=upper(?) and upper(message_box)=upper(?) LIMIT 100" />
+        <parameter type="finder" name="find_messages_by_history" value="select * from message where message_id like ? and message_box like ? and as2_from like ? and as2_to like ? and principal_id like ? and status like ? and trim(upper(is_receipt)) = 'FALSE' order by time_stamp desc,message_box asc LIMIT ? offset ?" />
+        <parameter type="finder" name="find_no_of_messages_by_history" value="select count(message_id) from message where message_id like ? and message_box like ? and as2_from like ? and as2_to like ? and principal_id like ? and status like ? and trim(upper(is_receipt)) = 'FALSE'" />
+        <parameter type="sql" name="recover_pr_msg" value="update message set status='DF', status_desc='Shutdown while processing' where status='PR'" />
+	</dao>
+	
+	<dao name="hk.hku.cecid.edi.as2.dao.PartnershipDAO">
+		<class>hk.hku.cecid.edi.as2.dao.PartnershipDataSourceDAO</class>
+		<parameter name="table" value="partnership" />
+		<parameter name="key" value="partnership_id" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="subject" value="subject" />
+		<parameter type="column" name="recipient_address" value="recipientAddress" />
+		<parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+		<parameter type="column" name="receipt_address" value="receiptAddress" />
+		<parameter type="column" name="is_sync_reply" value="isSyncReply" />
+		<parameter type="column" name="is_receipt_requested" value="isReceiptRequired" />
+		<parameter type="column" name="is_outbound_sign_required" value="isOutboundSignRequired" />
+		<parameter type="column" name="is_outbound_encrypt_required" value="isOutboundEncryptRequired" />
+		<parameter type="column" name="is_outbound_compress_required" value="isOutboundCompressRequired" />
+		<parameter type="column" name="is_receipt_sign_required" value="isReceiptSignRequired" />
+		<parameter type="column" name="is_inbound_sign_required" value="isInboundSignRequired" />
+		<parameter type="column" name="is_inbound_encrypt_required" value="isInboundEncryptRequired" />
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+        <parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+        <parameter type="column" name="mic_algorithm" value="micAlgorithm" />
+        <parameter type="column" name="as2_from" value="as2From" />
+		<parameter type="column" name="as2_to" value="as2To" />
+        <parameter type="column" name="encrypt_cert" value="encryptCert" />
+        <parameter type="column" name="verify_cert" value="verifyCert" />
+        <parameter type="column" name="retries" value="retries" />
+        <parameter type="column" name="retry_interval" value="retryInterval" />
+        <parameter type="column" name="is_disabled" value="isDisabled" />
+
+        <parameter type="finder" name="find_all_partnerships" value="select * from partnership order by partnership_id" />
+        <parameter type="finder" name="find_partnerships_by_party_id" value="select * from partnership where upper(as2_from)=upper(?) and upper(as2_to)=upper(?) order by partnership_id" />
+        <parameter type="finder" name="key" value="select * from partnership where upper(as2_from)=upper(?) and upper(as2_to)=upper(?) and trim(upper(is_disabled))='FALSE' order by partnership_id" />
+	</dao>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.MessageStoreDAO">
+		<class>hk.hku.cecid.edi.as2.dao.MessageStoreDataSourceDAO</class>
+	</dao>
+	
+</dao-config>

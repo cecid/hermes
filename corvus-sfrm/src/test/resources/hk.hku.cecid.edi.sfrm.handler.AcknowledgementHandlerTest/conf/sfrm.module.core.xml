@@ -1,0 +1,81 @@
+<module id="sfrm.core" name="Corvus SFRM" version="1.0">
+ 
+	<component id="logger" name="SFRM Core Logger">
+		<class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>	
+		<parameter name="config"   value="sfrm.log.properties.xml" />
+		<parameter name="category" value="hk.hku.cecid.edi.sfrm" />
+	</component>	
+ 
+	<component id="properties" name="System Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="sfrm.properties.xml"/>
+	</component>
+	
+	<component id="daofactory" name="SFRM DAO Factory">
+	        <class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<parameter name="driver" value="org.hsqldb.jdbcDriver" />
+		<parameter name="url" value="jdbc:hsqldb:mem:swallow" />
+		<parameter name="username" value="sa" />
+		<parameter name="password" value="" />
+	      	<parameter name="pooling" value="true" />
+	      	<parameter name="maxActive" value="20" />
+	      	<parameter name="maxIdle" value="2" />
+	      	<parameter name="maxWait" value="5000" />
+		<parameter name="config" value="sfrm.dao.xml" />
+	</component>
+	
+	<component id="keystore-manager" name="SFRM Key Store Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="corvus.p12"/>
+		<parameter name="keystore-password" value="password"/>
+		<parameter name="key-alias" value="dummy"/>
+		<parameter name="key-password" value=""/>
+		<parameter name="keystore-type" value="PKCS12"/>
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
+	</component>
+	
+	
+	<component id="os-manager" name="SFRM OS Manager">
+		<class>hk.hku.cecid.piazza.commons.os.OSManager</class>
+	</component>
+
+	<component id="message-handler" name="SFRM Message Handler">
+	 	<class>hk.hku.cecid.edi.sfrm.handler.SFRMMessageHandler</class>
+		<parameter name="cache-enable" value="true" />
+	</component>
+
+	<component id="message-segment-handler" name="SFRM Message Segment Handler">
+	 	<class>hk.hku.cecid.edi.sfrm.handler.SFRMMessageSegmentHandler</class>
+		<parameter name="cache-enable" value="true" />
+	</component>
+
+	<component id="partnership-handler" name="SFRM Partnership Handler">
+	 	<class>hk.hku.cecid.edi.sfrm.handler.SFRMPartnershipHandler</class>
+		<parameter name="cache-enable" value="true" />
+	</component>
+	
+	<component id="incoming-message-handler" name="SFRM Incoming Message Processor">
+		<class>hk.hku.cecid.edi.sfrm.handler.IncomingMessageHandler</class>
+		<parameter name="maxActive" value="10" />
+	</component>
+	
+	<component id="outgoing-message-handler" name="SFRM Outgoing Message Processor">
+		<class>hk.hku.cecid.edi.sfrm.handler.OutgoingMessageHandler</class>
+		<parameter name="maxActive" value="10" />
+	</component>
+	
+	<component id="acknowledgement-handler" name="SFRM Acknowledgement Handler">
+		<class>hk.hku.cecid.edi.sfrm.handler.AcknowledgementHandler</class>
+		<parameter name="maxActive" value="10" />
+	</component>
+
+	<component id="outgoing-payload-repository" name="SFRM Outgoing Packaged Payload Repository">
+		<class>hk.hku.cecid.edi.sfrm.com.PackagedPayloadsRepository</class>
+		<parameter name="location" value="src/test/resources/hk.hku.cecid.edi.sfrm.handler.AcknowledgementHandlerTest/tmp/sfrm-outgoing-repository" />
+	</component>
+	
+	<component id="message-status-query-handler" name="Message Status Query Handler">
+		<class>hk.hku.cecid.edi.sfrm.handler.MessageStatusQueryHandler</class>
+	</component>
+
+</module>

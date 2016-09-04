@@ -1,0 +1,99 @@
+<dao-config>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.RawRepositoryDAO">
+		<class>hk.hku.cecid.edi.as2.dao.RawRepositoryDataSourceDAO</class>
+		<parameter name="table" value="raw_repository" />
+		<parameter name="key" value="message_id" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="content" value="content" />
+	</dao>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.RepositoryDAO">
+		<class>hk.hku.cecid.edi.as2.dao.RepositoryDataSourceDAO</class>
+		<parameter name="table" value="repository" />
+		<parameter name="key" value="message_id, message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="content" value="content" />
+	</dao>
+	
+	<dao name="hk.hku.cecid.edi.as2.dao.MessageDAO">
+		<class>hk.hku.cecid.edi.as2.dao.MessageDataSourceDAO</class>
+		<parameter name="table" value="message" />
+		<parameter name="key" value="message_id, message_box" />
+		<parameter type="column" name="message_id" value="messageId" />
+		<parameter type="column" name="message_box" value="messageBox" />
+		<parameter type="column" name="as2_from" value="as2From" />
+		<parameter type="column" name="as2_to" value="as2To" />
+		<parameter type="column" name="is_receipt" value="isReceipt" />
+		<parameter type="column" name="is_receipt_requested" value="isReceiptRequested" />
+		<parameter type="column" name="is_acknowledged" value="isAcknowledged" />
+		<parameter type="column" name="receipt_url" value="receiptUrl" />
+		<parameter type="column" name="mic_value" value="micValue" />
+		<!-- The Original Message ID that the receipt replies to  -->
+		<parameter type="column" name="original_message_id" value="originalMessageId" />
+		<!-- The Message ID of the message triggered "Resend as new" -->
+		<parameter type="column" name="primal_message_id" value="primalMessageId" />
+		<!-- Keep the partnership Id because as2_from, as2_to may be changed before resend as new -->
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="has_resend_as_new" value="hasResendAsNew" />
+		<parameter type="column" name="time_stamp" value="timeStamp" />
+		<parameter type="column" name="status" value="status" />
+		<parameter type="column" name="status_desc" value="statusDesc" />
+		
+		<parameter type="finder" name="get_all_before_time" value="select * from message where time_stamp &lt; ?" />
+        <parameter type="finder" name="find_messages_by_original_message_id" value="select * from message where original_message_id=?  and message_box=? order by time_stamp desc" />
+        <parameter type="finder" name="find_messages_by_status" value="select * from (select * from message where upper(status)=upper(?) and upper(message_box)=upper(?)) where rownum &lt;=100" />
+
+        <parameter type="finder" name="find_messages_by_history" value="select * from (select a.*, rownum rnum from (select * from message where upper(is_receipt) = 'FALSE'" />
+        <parameter type="finder" name="find_no_of_messages_by_history" value="select count(message_id) from message where upper(is_receipt) = 'FALSE'" />
+        <parameter type="order" name="find_messages_by_history_order" value="order by time_stamp desc, message_box asc ) a where rownum&lt;=?) where rnum&gt;?" />
+        <!-- the above statements shares same query criteria -->
+		<parameter type="filter" name="messages_history_filter_message_id" value="message_id like ?" />
+		<parameter type="filter" name="messages_history_filter_message_box" value="message_box like ?" />
+		<parameter type="filter" name="messages_history_filter_from_party_id" value="as2_from like ?" />
+		<parameter type="filter" name="messages_history_filter_to_party_id" value="as2_to like ?" />
+		<parameter type="filter" name="messages_history_filter_primal_message_id" value="primal_message_id like ?" />
+		<parameter type="filter" name="messages_history_filter_status" value="status like ?" />
+        
+        <parameter type="sql" name="recover_pr_msg" value="update message set status='DF', status_desc='Shutdown while processing' where status='PR'" />
+	</dao>
+	
+	<dao name="hk.hku.cecid.edi.as2.dao.PartnershipDAO">
+		<class>hk.hku.cecid.edi.as2.dao.PartnershipDataSourceDAO</class>
+		<parameter name="table" value="partnership" />
+		<parameter name="key" value="partnership_id" />
+		<parameter type="column" name="partnership_id" value="partnershipId" />
+		<parameter type="column" name="subject" value="subject" />
+		<parameter type="column" name="recipient_address" value="recipientAddress" />
+		<parameter type="column" name="receipt_address" value="receiptAddress" />
+		<parameter type="column" name="is_sync_reply" value="isSyncReply" />
+		<parameter type="column" name="is_receipt_requested" value="isReceiptRequired" />
+		<parameter type="column" name="is_outbound_sign_required" value="isOutboundSignRequired" />
+		<parameter type="column" name="is_outbound_encrypt_required" value="isOutboundEncryptRequired" />
+		<parameter type="column" name="is_outbound_compress_required" value="isOutboundCompressRequired" />
+		<parameter type="column" name="is_receipt_sign_required" value="isReceiptSignRequired" />
+		<parameter type="column" name="is_inbound_sign_required" value="isInboundSignRequired" />
+		<parameter type="column" name="is_inbound_encrypt_required" value="isInboundEncryptRequired" />
+		<parameter type="column" name="sign_algorithm" value="signAlgorithm" />
+        <parameter type="column" name="encrypt_algorithm" value="encryptAlgorithm" />
+        <parameter type="column" name="mic_algorithm" value="micAlgorithm" />
+        <parameter type="column" name="as2_from" value="as2From" />
+		<parameter type="column" name="as2_to" value="as2To" />
+        <parameter type="column" name="encrypt_cert" value="encryptCert" />
+        <parameter type="column" name="verify_cert" value="verifyCert" />
+        <parameter type="column" name="retries" value="retries" />
+        <parameter type="column" name="retry_interval" value="retryInterval" />
+        <parameter type="column" name="is_disabled" value="isDisabled" />
+		<parameter type="column" name="is_hostname_verified" value="isHostnameVerified" />
+		
+        <parameter type="finder" name="find_all_partnerships" value="select * from partnership order by partnership_id" />
+        <parameter type="finder" name="find_partnerships_by_party_id" value="select * from partnership where upper(as2_from)=upper(?) and upper(as2_to)=upper(?) order by partnership_id" />
+        <parameter type="finder" name="key" value="select * from Partnership where upper(as2_from)=upper(?) and upper(as2_to)=upper(?) and trim(upper(is_disabled))='FALSE' order by partnership_id" />
+	</dao>
+
+	<dao name="hk.hku.cecid.edi.as2.dao.MessageStoreDAO">
+		<class>hk.hku.cecid.edi.as2.dao.MessageStoreDataSourceDAO</class>
+	</dao>
+	
+</dao-config>

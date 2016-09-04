@@ -1,0 +1,261 @@
+H2O Release Notes
+========================================
+
+Jan 21, 2009
+- Add jar files to enable ebMS to query mailbox with POP3 and IMAP
+- Extend the default time interval for ebMS to query mailbox from 5 seconds to 5 minutes
+- Update user interface of installer
+
+Jan 08, 2009
+- Refactored AS2 to insert message directly to database
+- Correct wrong spelling of °ßapplication/octet-stream°® in WSClient
+- Remove the usage of Message Repository.
+- Implemented to preserve filename of AS2 Message. The Filename value will added on MIMEHeader °ßContent-Disposition°® field. The Client will put the filename value to the MIME Header, and Retrieve the filename value from the header.
+- Add new framework classes PluginProcessor, SystemComponent and SystemComponentTest to Piazza Commons
+- Remove abandon field °ßprincipal-id°®
+- Remove SystemModule static reference AS2Procssor.core, AS2Processor.log, AS2Processor.dao
+- Move the getPayloadContentType() from PayloadRepository to OutgoingMessageProcessor.
+- Cleanup all trace of PayloadRepository from spa conf
+- Updated Ant Installer Script to build installer with AS2 Plus Plugin
+- Updated installation guide
+
+
+Jul 31, 2009
+- Fixed the issue on ebMS response message of async response. The response now send with a empty HTTP Body.
+- Reduced duplicated exception message on ebMS message signing or verifying signature.
+- Updated BouncyCastle library to later version (bcmail-jdk14-125.jar to bcmail-jdk15-143.jar, bcprov-jdk14-125.jar to bcprov-jdk15-143.jar)
+- Remove ebxml-pkg SMimeEncrypter & SMimeDecrypter, they are only supported by BouncyCastle JDK1.3 and not longer used in ebMS.
+
+Apr 28, 2009
+- Replace the use of org.apache.xml.utils.URI to java.net.URI in ebMS HeaderValidator
+- Fix a bug of duplicated ack checking in sync reply mode in ebMS InboundMessageProcessor
+- Rollback the change of SOAP-ENV in HeaderContainer in 1 Aug, 2008 release. Duplicated SOAP-ENV namespace is found fixed by the libraries update in 30 Jan 2009 release.
+
+Jan 30, 2009
+- Added official support for JDK1.6
+- Removed force saveChanges in all EbxmlMessage.saveChanges() and SOAPMessage.saveChanges() calls to avoid lose of SOAP attachment in JDK1.6
+- Updated third party libraries to latest version
+    *commons-collections (3.1 -> 3.2.1)
+    *commons-pool (1.2 -> 1.4)
+    *dom4j (1.4 -> 1.6.1)
+    *log4j (1.2.8 -> 1.2.15)
+    *xalan (2.7.0 -> 2.7.1)
+    *serializer (2.7.0 -> 2.7.1)
+    *xmlsec (1.4.1 -> 1.4.2)
+    *saaj-api (1.2 -> 1.3)
+    *saaj-impl (1.2 -> 1.3.2)
+    *mail (1.1 -> mailapi & smtp 1.4.1)
+    *postgresql (8.2 508 -> 8.3 604)
+- Added libraries to /WEB-INF/lib
+    *commons-logging-1.1.1.jar
+    *jaxen-1.1-beta-6.jar (for dom4j 1.6.1)
+- Updated jmock library for unit test
+ 	*jmock (2.3.0-RC2 -> 2.5.1)
+
+- Updated Installation Guide to include Tomcat basic authentication and partnership configuration
+- Remove runtime parameter SSL truststore example in corvus.properties.xml. It is recommended to define in corvus.module.xml
+- Add comment to SSL keystore manager in corvus.module.xml to mention that it can be defined in application server, e.g. Tomcat server.xml
+- Fixed inconsistent error handling between sync and async reply during connection failure occurred (Reported by William Choy)
+- Fixed a bug in Web Service Usage Sample that fail to read the criteria defined in as2-request.xml. Reason of the bug is a wrong xpath definition that omits the "criteria" element
+- Removed principle id in ebMS loopback test dao.xml
+
+========================================
+Aug 29, 2008
+- Fixed mySQL schema to add transaction support to tables by setting TYPE = INNODB
+- Fixed mySQL schema to set default value for timestamp columns to avoid mySQL set current timestamp automatically
+- Added DB transaction to Retry button for failed message in admin page which also remove corresponding acknowledgement
+- Added Hermes 2 Administration Tool User Guide reference as popup message when passing the Retry button
+- Fixed library not found in project Corvus.WSClient
+
+========================================
+Aug 01, 2008
+- Modified UI of installer to select oracle and mysql as database for as2 and ebms
+- Modified ant installer. Now will copy necessary module only by the user selected choose. e.g. ebms or as2 module or both.
+- Added RELEASE-NOTES.txt
+- Added SQL scripts for different databases for adding as2 and ebms database.
+- Cleaned up DB schema to consistence format.
+- Updated H2O installation guide
+- Updated postgres JDBC driver to 8.2 JDBC3
+- Added web service usage sample /sample to replace old loopback test.
+- Fixed SOAP-ENV namespace alias problem in digital signed ebMS
+- Fixed build date as plugins and jars version no.
+- Fixed wrong warning message when add ebMS partnership with same CPA ID, Service and Action
+- Fixed partnership ID duplication problem when uploading multiple agreement from CPA
+- Fixed ebMS InboxDataSouceDAO.findInboxNextOrderNo() to return 1 when there is no record in inbox table.
+- Fixed find_inbox_pending_messages_by_timestamp to remove message_type = 'Order' filter to solve messsage & acknowledgement status synchronization problem. (Reported by Martin Kalén)
+- Added ebMS UTC conversion support for datetime without 'Z' as timezone substitution (Reported by Tao & Martin Kalén)
+- Added InboundMessageProcessorTest to test checkExpiredMessage method
+- Added to display party type for each message in EBMS Message History Page detail.
+- Removed ebMS principle Id from message, partnership DVO, dao.xml and schema
+- Enforced XML declaration and UTF-8 encoding in ebMS message
+- Updated and synchronize libraries version in ebxml-pkg with Piazza Commons
+- Added /as2/config and /ebms/config web service interface to allow runtime configuration of execution interval for ActiveTask
+- Removed default system properties javax.net.ssl.trustStore & javax.net.ssl.trustStorePassword in corvus.properties.xml
+- Changed default certificate and extend expiry date
+- Added new message history web service to AS2 /as2/msg_history and ebMS /ebms/msg_history.
+- Merged the EBMS DAO configuration file to a single file named ebms.org.dao.xml, so deleted the configuration files for DAO as follow:
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAOMessageServer.xml
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAOInbox.xml
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAORepository.xml
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAOOutbox.xml
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAOMessage.xml
+CorvusEbMS/spa/conf/hk/hku/cecid/ebms/spa/conf/DAOPartnership.xml
+- Added
+CorvusEbMS.Admin/src/hk/hku/cecid/ebms/admin/listener/MessageHistoryOraclePageletAdaptor.java
+CorvusAS2.Admin/src/hk/hku/cecid/edi/as2/admin/listener/MessageHistoryOraclePageletAdaptor.java
+, for Oracle database in different implementation of the class MessageHistoryPageletAdaptor
+- Changed admin page error handling. Remove error trace, report which plugin causes the error and notice user to find the log file for investigation.
+
+========================================
+May 02, 2008
+- Change InboundMessageProcessor.processAcknowledgement() to get RefToMessageId from eb:Acknowledgement instead of eb:Header to cater for some other MSH.
+- Change findPartnership() and findSenderCert() try to get RefToMessageId from eb:Acknowledgement when RefToMessageId in eb:Header not exist.
+- Add InputStreamDataSource class for SOAPMailSender to encode mail multiparts in base64
+- Modify SOAPMailSender to encode mail multiparts in base64
+- Fix no AS2 message history search result introduced by removing principle ID from the page.
+- Added getRequiredParameter(key) to common module, which throws ModuleException when key does not exist.
+- Remove duplicated namespace declaraction soap-env from HeaderContainer.
+
+========================================
+Apr 01, 2008
+- Added MessageHistoryQueryService (ebms/msg_history), a new web service to look up message ID, works the same as message history page.
+- Modified Loopback batch scripts. The batch program will look for libraries in lib folder itself and append to classpath.
+- Change H2O webapp context path to be determined during runtime instead of fixed name ‘corvus’.
+- Performance tuning in ebMS MessageDataSourceDAO and MessageHistoryPageletAdaptor to query message history by dynamic SQL. SQL “find_message_by_history” and “find_no_of_messages_by_history” in DAOMessage.xml are modified.
+- Bug fix in ebMS of nonstopping retry when acknowledgement is requested and recipient failed.
+- Remove principal ID as searching criteria in AS2 and ebMS message history admin page.
+
+========================================
+Mar 18, 2008
+- Fixed the license agreement displayed in installer.
+- All functionality remain the same as the release on Feb 28, 2008
+
+========================================
+Feb 28, 2008
+- Add parameters testOnBorrow , testOnReturn, testWhileIdle to DAOFactory parameters to enable this parameters in DBCP connection pool in order to enhance DB connection stability.
+- Fix “Retry” button bug in admin page for failed message.
+- Change SQL name in EbMS inbox DAO from find_next_inbox_order_no to find_inbox_next_order_no
+- Add parameter “wait-for-list” to EbMS InboxCollector to make sure all InboxTask are executed before next iteration.
+- Fix concurrent problem of inbox order no. by using DB sequence instead of max() by SQL to generate inbox order no., it will prevent multiple ActiveTask from using same order no.
+- Modify SQL find_inbox_pending_messages_by_timestamp only query message_type = ‘Order’ to filter other message type like acknowledge from being executed by InboxTask.
+
+========================================
+Jan 28, 2008
+- Add new DataSourceDAO.getFilter() and getOrder() in Commons to allow specifying partial SQL in DAO XML in order to construction SQL dynamically. 
+e.g. <parameter type="filter" name="find_message_by_cpa_filter_conv_id" value="m.conv_id = ?"/> 
+       <parameter type="order" name="find_message_by_cpa_order" value="order by i.order_no LIMIT ?"/>
+- Modify EbMS MessageDataSourceDAO.findMessageByCpa() to construct SQL to treat convId, fromPartyId, fromPartyType, toPartyId & toPartyType as optional criteria.
+- Remove EbMSMessageReceiverListService.checkNullConvertToPercent() as it is no longer required.
+- Modify SQL find_message_by_cpa and separate it to finder , filter and order in DAOMessage.xml.
+- Add DAOTest for MessageDataSourceDAO.findMessageByCpa()
+- Remove old find_message_by_cpa SQL
+- Append build date to build version no. in plugins. It will show in corvus admin plugin page.
+- Add input validation for AS2 partnership, the max length of AS2-From and AS2-To is 100.
+- Add default value 3 retries and 60000ms retry interval to both new AS2 and EbMS partnership
+- Add CorvusAS2.Admin/test and CorvusEbMS.Admin/test that missed before
+
+========================================
+Jan 10, 2008
+- Fix SQL escape character “%” & “_” bug in AS2 & EbMS MessageHistoryPageletAdaptor. (Reported by Charles)
+- Add test cases for MessageHistoryPageletAdaptor and corresponding ant scripts.
+- Modify H2O installer to configure JDBC connection in Loopback test. (Reported by anescu)
+- Fix syntax problem in web.xml (Reported by BorgmM)
+- Fix sequence of closing ResultSet and PreparedStatement in hk.hku.cecid.piazza.commons/dao.ds.DataSourceQuery. (Reported by BorgmM)
+- Add java.sql.Blob handling in hk.hku.cecid.piazza.commons.dao.ds.DataSourceQuery.doTransaction(). It will copy Blob object as byte[] before connection disconnected.
+- Add hk.hku.cecid.piazza.commons.dao.getTimestamp() to handle java.util.Date, java.sql.Date, java.sql.Timestamp and oracle.sql.DATE, oracle.sql.TIMESTAMP
+- Deprecate hk.hku.cecid.piazza.commons.dao.AbstractDVO.getSQLDate(), getDate() or getTimestamp() are recommended.
+- Deprecate hk.hku.cecid.piazza.commons.dao.AbstractDVO.getObject() and hk.hku.cecid.piazza.commons.util.Convertor.convertObject which may introduce class cast exception for non-primitive type i.e. java.sql.Timestamp
+- Add test cases for AbstractDVO
+- Split query find_messages_by_message_box_and_status_sort_by_order_no into 3 fixed value SQLs and change interface in MessageDAO and MessageDatasourceDAO.
+- Remove pattern matching in clause in find_message_by_cpa.
+- Simplify SQL find_max_order_no_messages.
+- Change exception handling in SOAPHttpConnector.send() to throw exception when exception occurs rather than trying to read error input stream. (Reported by phil.owen)
+- Add SQL find_inbox_ready_max_sequence_no_by_cpa in EbMS to fix message pending problem when apply message ordering.
+- Simplify SQL find_max_sequence_no_by_message_box_and_cpa by removing status clause.
+- Change SOAPAction HTTP header to “ebXML” in ebxml-pkg (Reported by Per Jørgen)
+- Remove soap-env:actor from eb:MessageHeader (Reported by Per Jørgen)
+- Add SQL find_inbox_ready_max_sequence_no_by_cpa in EbMS to fix message pending problem when apply message ordering.
+- Add DAOTest for ebMS MessageDataSourceDAO and DAOTest libraries
+- Patch for robust JDBC pooling in Hermes H2O SimpleDSDAOFactory (Reported by Martin Kalén)
+
+========================================
+Nov 10, 2007
+- Updated the apache DBCP library to version 1.2.2, the previous version is found to be having a bug that prevent database connection from retrieving. Thank you for the report and suggestion from Martin Kalen and others.
+
+========================================
+Oct 10, 2007
+- Bug fixed for Loopback test which lead all payloads has multiple of 1024 size because of some I/O code mistake.
+- Release bug fix for unresolved symbol DurationDV under JDK 5.0 or higher. (Thank for Martin Kalen)
+- Removed the duplicate old Xerces implementation for XML duration data-type.
+- Updated AgreementUploadPageletAdaptor which it parses the retry interval as a javax.xml.datatype.Duration
+- The Corvus Ebms administrator plugin is no longer able to compile under JDK 1.4 version because javax.xml.datatype.Duration is available only on JDK5.0 or higher.
+- Modify hk.hku.cecid.piazza.commons.util.Generator to use java.util.UUID
+- Remove Commons/src-endorsed
+
+========================================
+Aug 09, 2007
+- Release of bug fix for sending ebms message repeatedly under stress environment.
+- Updated the SQL used re-pend the timed-out message more accurately. Now it does not update message without associated outbox record. Also, each message can only re-pend one time for each delivery attempt.
+- Updated OutboxTask so that it does not override the existing message status, leading to indefinite re-sending under some special circumstance. (Thank w.chan for figuring this)
+- [Critical] Fix for handling delivery failure when acknowledgment does not require.
+- Minimize the occurrence for another thread race condition. It happens when the acknowledgment is received and process even earlier than the outbox task that deliver the message. Thus leading two thread updating the message status together.
+- Increment Corvus EbMS From 1.1.0 to 1.1.0b.
+- Fix junit.jar classpath in CorvusEbms junit test
+
+========================================
+Jul 30, 2007
+- Fixed the bug which convert the UTC datetime with 'Z' designator incorrectly. (Thank Martin Kalen for figuring out this).
+- Fixed the bug which the UTC datetime for outgoing ACK does not conform to UTC representation.
+- Supplement the features for converting java calendar/date object to UTC conformed datetime representation in ebms/spa/EbmsUtility.
+- Removed toUTCString in EbmsMessageSenderService (use EbmsUtility now).
+- Added JUnit3 testcase for EbmsUtility.
+- Add junit test to Ebms build script
+- Added the support of converting from GMT representation string to java date object.
+- Added testcase for converting GMT representation string to java data object.
+- Added the support of <eb:Serivce type> as a input of EbMS Sender web service.
+- Fixed the bug that the ebMS IMH unable to parse the TTL value using GMT format (backward-compatiblity issue).
+
+========================================
+Jul 18, 2007
+- Change table name in DAO.xml to small letter to avoid potential SQL problem in some database.
+- Expose SQL files to user. It will now be deployed to the Corvus home after running the installer.
+- Remove unnecessary Droid documentation.
+- Remove old obfuscation package.
+- Fix basedir in build.xml of AntInstaller .
+- Update AntInstaller from 0.74 to 0.80.
+- Remove unused antinstaller files.
+- Remove antinstaller 0.74 libraries.
+- Fix partnership-as2.bat as incorrect jar filename for corvus-loopback.jar is defined in Loopback program.
+- Fix ant-install-config.xml
+- Remove src-sql folder from AS2 plugin.
+- Remove conf folder from Ebms plugin.
+
+========================================
+Jun 13, 2007
+- Bug fix on installer, there are incidents that the DB table cannot be dropped properly and an exception is throw in the installation. It should now behave properly.
+
+========================================
+Jun 06, 2007
+- Bug fix on ebMS plugin, the timestamp in acknowledgment is not in the format of UTC and it has been fixed.
+
+========================================
+Jun 01, 2007
+- Change code to support JDK1.5 (mainly rename 'enum' keyword and JAXP compatibility)
+- Update XML libraries to support JDK1.5 (update xalan.jar & xmlsec.jar, remove xmlParserAPIs.jar & xercesImpl.jar)
+- Change AS2(as2.module.core.xml) & EbMS(ebms.module.xml) JDBC connection default max to 30
+- Fix EbMS UTC format to be UTC standard compliance
+- Standardize all log size to 5MB and 1 backup
+- Improve EbMS message sync reply mode performance. When the ACK / error is received in the same connection. There is no need to do a sleeping interval before checking the existence of ACK / error.
+- Remove default proxy server settings (corvus.properties.xml)
+- Disable default compression for AS2 receiver (plugin.xml)
+- Fix bug that unable to define the customized module class when invocating hk.hku.cecid.piazza.commons.module.ModuleGroup#loadModules
+- Add new ActiveModule - MessageMonitor has been added to EbMS to manage message timeout. It involves following changes.
+- Add new column "timeout_time_stamp" in EbMS message table and update associated DAOMessage.xml.
+- Refactored / Updated the MessageDAO, MessageDVO, MessageDatasSourceDAO, MessageDataSourceDVO for DB schema synchronization.
+- Added a DAO update query called "updatedTimedOutMessageStatus" for resend all timed-out message.
+- Added a new ActiveModule called "MessageMonitor" which update all timed-out message to PENDING periodically.
+- Refactor / Updated OutboxTask for the support of new Timeout mechanism. The thread terminate itself after attempting to deliver (no matter success or fail). Then it will try to resend the message after timeout. If it has already -reached the number of retired allowed, mark it as fail.
+- Refactor / Updated IncomingMessageProcessor at processing acknowledgment module. It nows update the status of the order message corresponding to the ACK to final status (DF, PS). And clear that message in the outbox queue.
+- Update Loopback test to use SAAJ model instead of AXIS and support JDK1.5.
+- Fix some javadoc comments
+

@@ -1,0 +1,48 @@
+<module id="as2.core" name="Corvus AS2 Plus" version="1.0">
+
+	<component id="logger" name="AS2 Core Logger">
+		<class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>
+		<parameter name="config" value="hk/hku/cecid/edi/as2/conf/as2.log.properties.xml" />		
+		<parameter name="category" value="hk.hku.cecid.edi.as2" />
+	</component>
+
+	<component id="properties" name="AS2 Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="hk/hku/cecid/edi/as2/conf/as2.properties.xml" />
+	</component>
+
+	<component id="daofactory" name="AS2 DAO Factory">
+        <class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+		<parameter name="driver" value="@as2DriverClass@" />
+		<parameter name="url" value="@as2ConnStr@" />
+		<parameter name="username" value="@as2user@" />
+		<parameter name="password" value="@as2pw@" />
+        <parameter name="pooling" value="true" />
+        <parameter name="maxActive" value="30" />
+        <parameter name="maxIdle" value="10" />
+        <parameter name="maxWait" value="-1" />
+        <parameter name="testOnBorrow" value="true" />
+        <parameter name="testOnReturn" value="false" />
+        <parameter name="testWhileIdle" value="false" />
+		<parameter name="validationQuery" value="@as2ValidationQuery@" />
+		<parameter name="config" value="@as2DAOFile@" />
+	</component>
+	
+	<component id="keystore-manager" name="AS2 Key Store Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="corvus.p12" />
+		<parameter name="keystore-password" value="password" />
+		<parameter name="key-alias" value="corvus" />
+		<parameter name="key-password" value="password" />
+		<parameter name="keystore-type" value="PKCS12" />
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+	</component>
+
+	<component id="incoming-message-processor" name="AS2 Incoming Message Processor">
+		<class>hk.hku.cecid.edi.as2.module.IncomingMessageProcessor</class>
+	</component>
+
+	<component id="outgoing-message-processor" name="AS2 Outgoing Message Processor">
+		<class>hk.hku.cecid.edi.as2.module.OutgoingMessageProcessor</class>
+	</component>
+</module>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="partnership">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="parameters"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"></xs:minLength>
+            <xs:maxLength value="50"></xs:maxLength>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="protocol" use="required" fixed="as2"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" ref="as2From"/>
+        <xs:element ref="as2To"/>
+        <xs:element ref="subject"/>
+        <xs:element ref="recipientAddress"/>
+        <xs:element ref="hostnameVerifiedInSsl"/>
+        <xs:element ref="requestMdn"/>
+        <xs:element ref="signedReceipt"/>
+        <xs:element ref="asynchronousReceipt"/>
+        <xs:element ref="mdnReturnUrl"/>
+        <xs:element ref="messageCompressionRequired"/>
+        <xs:element ref="messageSigningRequired"/>
+        <xs:element ref="signingAlgorithm"/>
+        <xs:element ref="messageEncryptionRequired"/>
+        <xs:element ref="encryptionAlgorithm"/>
+        <xs:element ref="certificateForEncryption"/>
+        <xs:element ref="micAlgorithm"/>
+        <xs:element ref="maximumRetries"/>
+        <xs:element ref="retryInterval"/>
+        <xs:element ref="messageSignatureEnforced"/>
+        <xs:element ref="messageEncryptionEnforced"/>
+        <xs:element ref="certificateForVerification"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="as2From">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"></xs:minLength>
+        <xs:maxLength value="50"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="as2To">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"></xs:minLength>
+        <xs:maxLength value="50"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="subject">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="3"></xs:minLength>
+        <xs:maxLength value="100"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="recipientAddress">
+    <xs:simpleType>
+      <xs:restriction base="xs:anyURI">
+        <xs:minLength value="13"></xs:minLength>
+        <xs:maxLength value="255"></xs:maxLength>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="hostnameVerifiedInSsl" type="xs:boolean"/>
+  <xs:element name="requestMdn" type="xs:boolean"/>
+  <xs:element name="signedReceipt" type="xs:boolean"/>
+  <xs:element name="asynchronousReceipt" type="xs:boolean"/>
+  <xs:element name="mdnReturnUrl" type="xs:anyURI"/>
+  <xs:element name="messageCompressionRequired" type="xs:boolean"/>
+  <xs:element name="messageSigningRequired" type="xs:boolean"/>
+  <xs:element name="signingAlgorithm">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="md5"/>
+        <xs:enumeration value="sha1"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="messageEncryptionRequired" type="xs:boolean"/>
+  <xs:element name="encryptionAlgorithm">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="3des"/>
+      <xs:enumeration value="rc2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  </xs:element>
+  <xs:element name="certificateForEncryption" type="xs:string"/>
+  <xs:element name="micAlgorithm">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sha1"/>
+      <xs:enumeration value="md5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  </xs:element>  
+  <xs:element name="maximumRetries">
+  <xs:simpleType>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxInclusive value="10"></xs:maxInclusive>
+    </xs:restriction>
+  </xs:simpleType>
+  </xs:element>  
+  <xs:element name="retryInterval">
+  <xs:simpleType>
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="60000"></xs:maxInclusive>
+    </xs:restriction>
+  </xs:simpleType>
+  </xs:element>  
+  <xs:element name="messageSignatureEnforced" type="xs:boolean"/>
+  <xs:element name="messageEncryptionEnforced" type="xs:boolean"/>
+  <xs:element name="certificateForVerification" type="xs:string"/>
+</xs:schema>

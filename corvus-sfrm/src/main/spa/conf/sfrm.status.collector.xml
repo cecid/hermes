@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<module id="sfrm.status.collector" name="SFRM Plugin" version="1.0">
+	
+	<parameters>
+		<parameter name="execution-interval" value="3000" />
+	</parameters>
+
+	<component id="task-list" name="Status Collector Module">
+		<class>hk.hku.cecid.edi.sfrm.task.MessageStatusCollector</class>
+		<parameter name="max-task-per-list" value="1" />
+		<parameter name="max-thread-count" value="10" />
+	</component>
+</module>

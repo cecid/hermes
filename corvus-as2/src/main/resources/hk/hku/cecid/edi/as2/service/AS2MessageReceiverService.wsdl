@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:p="http://service.as2.edi.cecid.hku.hk/" 
+	targetNamespace="http://service.as2.edi.cecid.hku.hk/"
+>
+<types>
+</types>
+<message name="AS2RequestMsg">
+  <part name="messageId" type="s:string" /> 
+</message>
+<message name="AS2ResponseMsg">
+  <part name="hasMessage" type="s:string" /> 
+</message>
+<portType name="AS2ReceiverDownload">
+  <operation name="Request">
+    <input message="p:AS2RequestMsg" /> 
+    <output message="p:AS2ResponseMsg" /> 
+  </operation>
+</portType>
+<binding name="AS2SoapHttpReceiverDownload" type="p:AS2ReceiverDownload">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Request">
+    <soap:operation soapAction="as2receiverdownload" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="AS2MessageReceiverDownload">
+  <documentation>Documentation not available.</documentation> 
+  <port name="AS2ReceiverDownload" binding="p:AS2SoapHttpReceiverDownload">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/as2/receiver" /> 
+  </port>
+</service>
+</definitions>

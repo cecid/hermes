@@ -1,0 +1,5 @@
+<module id="ebms.message-monitor" name="Ebms Plugin" version="1.0">
+    <parameters>
+        <parameter name="execution-interval" value="5000" />
+    </parameters>
+</module>

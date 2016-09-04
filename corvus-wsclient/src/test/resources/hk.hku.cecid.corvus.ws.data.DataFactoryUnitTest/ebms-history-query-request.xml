@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-msg-history-request>
+	<config>	
+		<endpoint>http://127.0.0.1:8080/corvus/httpd/ebms/msg_history</endpoint>
+	</config>
+	<param>	
+		<criteria>
+			<!-- Enter MessageId Here, you can use % as wildcart
+				THIS IS AN OPTIONAL FIELD 			-->
+			<messageId>%localhost%</messageId>
+			
+			<!-- Chose either "INBOX" or "OUTBOX" , 
+						empty string stand for searching on both message box-->
+			<messageBox>*box</messageBox>
+			
+			<!-- Enter ConversationId here, you can use % as wildcart
+				THIS IS AN OPTIONAL FIELD 			-->
+			<conversationId>   </conversationId>
+			
+			<!-- Enter CpaId here, you can use % as wildcart-
+				THIS IS AN OPTIONAL FIELD 			-->
+			<cpaId>$-_+*^()!?.,</cpaId>
+			
+			<!-- Enter Service string here, you can use % as wildcart-
+				THIS IS AN OPTIONAL FIELD 			-->
+			<!-- service></service -->
+			
+			<!-- Enter Action string here, you can use % as wildcart
+				THIS IS AN OPTIONAL FIELD 			-->
+			<action>1234567890</action>
+			
+			<!-- Enter target Message Status here, You can chose
+					DL  for  Delivered
+					DF  for  Delivery Failure
+					PE for   Processed Error
+					PS  for  Processed
+					PR  for  Processing
+					RC  for  Received
+				empty string means searching on ALL types of message status				-->
+			<status></status>
+		</criteria>
+	</param>
+</ebms-msg-history-request>

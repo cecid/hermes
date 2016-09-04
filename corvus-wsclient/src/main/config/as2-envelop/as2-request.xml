@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-admin-request>
+	<config>
+		<!-- The user name for logging H2O administrative area -->
+		<username>corvus</username>
+		<!-- The password for logging H2O administrative area -->
+		<password>corvus</password>				
+
+		<envelopQueryEndpoint>http://localhost:8080/corvus/admin/as2/repository</envelopQueryEndpoint>
+	</config>
+	<param>	
+		<!-- 
+		The message criteria you want to search, only used by AS2EvenlopQuerySender. 
+		-->
+		<criteria>
+			<!-- message ID
+				if you have entered a message Id, the programme will search 
+				the repositry by your entered messageid. If there is no value in messageid field, 
+				the program will list out all avaliable message.
+			-->			
+		    <!-- <messageId>20071127-102629-93702@147.8.177.42</messageId> -->
+			
+			<!-- either INBOX or OUTBOX are allowed 
+				if you have entered a message Id but haven't specified which message box, 
+				the programe will search the repositry with your entered messageid, 
+				and list out matched records in those message box.
+			-->
+			<!-- <messageBox>INBOX</messageBox> -->
+		</criteria>					
+	</param>
+</as2-admin-request>

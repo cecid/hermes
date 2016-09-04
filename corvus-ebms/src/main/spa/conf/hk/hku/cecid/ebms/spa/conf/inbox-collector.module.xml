@@ -1,0 +1,13 @@
+<module id="ebms.inbox-collector" name="Ebms Plugin" version="1.0">
+
+	<parameters>
+        <parameter name="execution-interval" value="50" />
+    </parameters>
+
+	<component id="task-list" name="Inbox Collector">
+        <class>hk.hku.cecid.ebms.spa.task.InboxCollector</class>
+		<parameter name="max-thread-count" value="10" />
+		<parameter name="wait-for-list" value="true" />
+	</component>
+
+</module>

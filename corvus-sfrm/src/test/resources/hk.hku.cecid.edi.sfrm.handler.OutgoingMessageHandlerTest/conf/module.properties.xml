@@ -1,0 +1,8 @@
+<sfrm>		
+	<trusted-certificates>/home/elf/certificates/public_certs</trusted-certificates>
+	<segment-size>1024000</segment-size>			
+	<max-payload-size>5046586573</max-payload-size>
+	<mailcaps>
+        <cap>application/octet-stream;; x-java-content-handler=hk.hku.cecid.piazza.commons.activation.ByteStreamDataContentHandler</cap>
+	</mailcaps>
+</sfrm>

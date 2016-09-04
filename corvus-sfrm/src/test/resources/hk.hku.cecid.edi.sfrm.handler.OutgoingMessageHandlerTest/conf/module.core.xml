@@ -1,0 +1,26 @@
+<module id="sfrm.core" name="Corvus SFRM" version="1.0">
+
+	<component id="logger" name="SFRM Core Logger">
+		<class>hk.hku.cecid.piazza.commons.util.ConsoleLogger</class>
+	</component>	
+	 
+	<component id="properties" name="System Properties">
+		<class>hk.hku.cecid.piazza.commons.util.PropertyTree</class>
+		<parameter name="config" value="module.properties.xml"/>
+	</component>
+	 
+	<component id="keystore-manager" name="SFRM Key Store Manager">
+		<class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+		<parameter name="keystore-location" value="corvus.p12"/>
+		<parameter name="keystore-password" value="password"/>
+		<parameter name="key-alias" value="dummy"/>
+		<parameter name="key-password" value=""/>
+		<parameter name="keystore-type" value="PKCS12"/>
+		<parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
+	</component>
+	 
+	<component id="outgoing-message-handler" name="SFRM Outgoing Message Processor">
+		<class>hk.hku.cecid.edi.sfrm.handler.OutgoingMessageHandler</class>
+	</component>
+
+</module>

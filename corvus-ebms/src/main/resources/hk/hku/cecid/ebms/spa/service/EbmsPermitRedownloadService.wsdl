@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
+			elementFormDefault="qualified">
+			<element name="RequestElement">
+				<complexType>
+					<sequence>
+						<element name="messageId" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="ResponseElement">
+				<complexType>
+					<sequence>
+						<element name="messageId" type="string" />
+					</sequence>
+				</complexType>
+			</element>			
+		</schema>
+	</types>
+
+	<message name="EbmsRequestMsg">
+		<part name="EbmsRequestMsg" element="tns:RequestElement" /> 
+	</message>
+
+	<message name="EbmsResponseMsg">
+		<part name="EbmsResponseMsg" element="tns:ResponseElement" /> 
+	</message>
+
+	<portType name="EbmsResetReceiver">
+		<operation name="Request">
+			<input message="tns:EbmsRequestMsg" /> 
+			<output message="tns:EbmsResponseMsg" /> 
+		</operation>
+	</portType>
+
+	<binding name="EbmsHttpResetReceiver" type="tns:EbmsResetReceiver">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+		<operation name="Request">
+			<soap:operation soapAction="Ebmsresetrecv" style="document" /> 
+			<input>
+				<soap:body use="literal" /> 
+			</input>
+			<output>
+				<soap:body use="literal" /> 
+			</output>
+		</operation>
+	</binding>
+
+	<service name="EbmsResetReceiver">
+		<documentation>Documentation not available.</documentation> 
+		<port name="EbmsResetReceiver" binding="tns:EbmsHttpResetReceiver">
+			<soap:address location="http://127.0.0.1:8080/corvus/httpd/Ebms/permitdl" /> 
+		</port>
+	</service>
+</definitions>

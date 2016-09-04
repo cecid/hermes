@@ -1,0 +1,12 @@
+<module-group name="AS2 Module Group">
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>module.core.xml</descriptor>
+	</module>
+	
+	<module>
+		<class>hk.hku.cecid.edi.as2.module.AS2EventModule</class>
+		<descriptor>as2.module.event.xml</descriptor>
+	</module>
+</module-group>

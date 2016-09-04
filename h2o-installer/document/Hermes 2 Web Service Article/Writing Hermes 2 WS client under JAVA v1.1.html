@@ -1,0 +1,3062 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+<title>View Entry | ExpressionEngine</title>
+
+<meta http-equiv='content-type' content='text/html; charset=utf-8' >
+<meta http-equiv='expires' content='-1' >
+<meta http-equiv='expires' content='Mon, 01 Jan 1970 23:59:59 GMT' >
+<meta http-equiv='pragma' content='no-cache' >
+<style type='text/css'>
+body { 
+	margin: 0; 
+	padding: 0; 
+	font-family: Arial, Lucida Grande, Verdana, Geneva, Sans-serif; 
+	font-size: 12px; 
+	color: #333; 
+	background-color: #fff; 
+}
+#content { 
+	left: 0px; 
+	right: 10px; 
+	margin: 0 15px 30px 15px; 
+	padding: 14px 13px 0 13px; 
+	width: auto; 
+	background-color: transparent; 
+}
+* html #content { 
+	width: 100%; 
+	w\idth: auto; 
+}
+#contentNB { 
+	left: 0px; 
+	right: 10px; 
+	margin: 0 0px 20px 5px; 
+	padding: 0 18px 20px 13px; 
+	width: auto; 
+	background-color: #fff; 
+}
+* html #contentNB { 
+	width: 100%; 
+	w\idth: auto; 
+}
+a { 
+	color: #1D7FC6; 
+	background-color: transparent; 
+	text-decoration: none; 
+}
+a:visited { 
+	color: #1D7FC6; 
+	background-color: transparent; 
+	text-decoration: none; 
+}
+a:hover { 
+	color: #1D7FC6; 
+	text-decoration: none; 
+	background-color: transparent; 
+}
+.smallLinks { 
+	font-size: 10px; 
+	color: #38394B; 
+	background-color: transparent; 
+	white-space: nowrap; 
+}
+.smallLinks a:link { 
+	color: #333399; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.smallLinks a:visited { 
+	color: #333399; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.smallLinks a:hover { 
+	color: #A0A4C1; 
+	background: transparent; 
+	text-decoration: underline; 
+}
+.lightLinks { 
+	font-size: 10px; 
+	color: #888; 
+	background-color: transparent; 
+	white-space: nowrap; 
+	cursor: pointer; 
+}
+.lightLinks a:link { 
+	color: #353962; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.lightLinks a:visited { 
+	color: #353962; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.lightLinks a:hover { 
+	color: #A0A4C1; 
+	background: transparent; 
+	text-decoration: underline; 
+}
+.helpLinks { 
+	color: #3D525F; 
+	background: #27343C url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_top.gif) repeat-x left top;
+	text-align: right; 
+	font-size: 10px; 
+	padding: 25px 30px 10px 0px; 
+}
+.helpLinks a:link { 
+	color: #45A7DC; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.helpLinks a:visited { 
+	color: #45A7DC;; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.helpLinks a:hover { 
+	color: #B9BDD4; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.helpLinksLeft { 
+	text-align: left; 
+	padding-left: 25px; 
+color:#fff;
+}
+.helpLinksLeft a:link { 
+        color:#fff;
+}
+.altLink { 
+	font-size: 11px; 
+	font-weight: normal; 
+	color: #fff; 
+}
+.altLink a:link { 
+	color: #fff; 
+	text-decoration: none; 
+	white-space: nowrap; 
+}
+.altLink  a:visited { 
+	text-decoration: none; 
+	color: #fff; 
+}
+.altLink a:hover { 
+	text-decoration: underline; 
+	color: #D6D8E4; 
+}
+.default, .defaultPad, .defaultRight, .defaultPadBold, .defaultBold, .defaultSmall, .defaultCenter, .defaultLight { 
+	font-size: 11px; 
+	color: #666; 
+	padding: 1px 0 1px 0; 
+	margin: 0; 
+	background-color: transparent; 
+}
+.defaultLight { 
+	color: #999; 
+}
+.defaultRight { 
+	text-align: right; 
+}
+.defaultRightBold { 
+	text-align: right; 
+	font-weight: bold; 
+}
+.defaultCenter { 
+	text-align: center; 
+}
+.defaultBold { 
+	font-weight: bold; 
+	font-size: 11px; 
+}
+.defaultBold a:link { 
+	text-decoration: none; 
+}
+.defaultBold a:visited { 
+	text-decoration: none; 
+}
+.defaultBold a:active { 
+	text-decoration: none; 
+}
+.defaultBold a:hover { 
+	text-decoration: underline; 
+}
+.defaultPad { 
+	padding: 3px 0 3px 5px; 
+}
+.defaultPadBold { 
+	padding: 3px 0 3px 5px; 
+	font-weight: bold; 
+}
+.defaultSmall { 
+	color: #333; 
+	font-size: 10px; 
+}
+.smallNoWrap { 
+	color: #333; 
+	font-size: 11px; 
+	white-space: nowrap; 
+}
+blockquote { 
+	background: #EFEFF4; 
+	border-left: 4px solid #6363A0; 
+	border-top: 1px solid #B2B3CE; 
+	border-bottom: 1px solid #B2B3CE; 
+	border-right: 1px solid #B2B3CE; 
+	font-size: 11px; 
+	color: #38394B; 
+	margin: 8px 2px 10px 6px; 
+	padding: 10px 10px 10px 6px; 
+}
+h1 { 
+	font-size: 14px; 
+	font-weight: bold; 
+	color: #424354; 
+	background: transparent; 
+	margin: 0 0 5px 0; 
+	padding: 0; 
+}
+h2 { 
+	font-size: 13px; 
+	font-weight: bold; 
+	color: #424354; 
+	background: transparent; 
+}
+h3 { 
+	font-size: 16px; 
+	font-weight: bold; 
+	color: #999; 
+	background: transparent; 
+	margin: 5px 8px 7px 0; 
+}
+h5 { 
+	font-size: 12px; 
+	font-weight: bold; 
+	color: #333; 
+	background: transparent; 
+	margin: 0 0 3px 0; 
+}
+pre { 
+	font-size: 11px; 
+	color: #009933; 
+	background: transparent; 
+	margin: 6px 0 6px 19px; 
+}
+p, strong { 
+	font-size: 11px; 
+	color: #333; 
+	background: transparent; 
+	margin: 4px 0 4px 0; 
+}
+strong { 
+	font-weight: bold; 
+}
+.bold { 
+	font-weight: bold; 
+}
+.highlight { 
+	color: #990000; 
+}
+.highlight_bold { 
+	color: #990000; 
+	font-weight: bold; 
+}
+.highlight_alt { 
+	color: #009933; 
+}
+.highlight_alt2 { 
+	color: #333399; 
+}
+.highlight_alt_bold { 
+	color: #009933; 
+	font-weight: bold; 
+}
+.alert { 
+	color: #990000; 
+	font-weight: bold; 
+}
+.nowrap { 
+	white-space: nowrap; 
+}
+.simpleLine { 
+	margin: 3px 0 3px 0; 
+	padding: 0; 
+	border-bottom: #B1B6D2 1px solid; 
+	background-color: transparent; 
+}
+.alertHeading, .alertHeadingCenter { 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #fff; 
+	padding: 6px 6px 6px 6px; 
+	background: #6D0000 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_alert.jpg) repeat-x left top; 
+	border-top: 1px solid #660000; 
+	border-bottom: 1px solid #660000; 
+}
+.alertHeadingCenter { 
+	text-align: center; 
+}
+.paddedWrapper { 
+	padding: 3px 0 10px 3px; 
+	background-color: transparent; 
+}
+.bigPad { 
+	padding: 6px 0 3px 6px; 
+	background-color: transparent; 
+}
+.paddedTop { 
+	padding: 8px 0 2px 0; 
+	background-color: transparent; 
+}
+.paddedBorder { 
+	padding: 10px 12px 10px 12px; 
+	border-bottom: #7B81A9 1px solid; 
+	background-color: transparent; 
+}
+.leftPad { 
+	padding-left: 5px; 
+}
+.rightPad { 
+	padding-right: 10px; 
+}
+.bottomPad { 
+	padding-bottom: 5px; 
+}
+.loginBox { 
+	background-color: #fff;
+	color: #333; 
+	border-bottom: #ccc 1px solid; 
+	padding: 0 0 40px 60px; 
+	text-align: left; 
+	margin-top: 1px; 
+}
+.loginLogo { 
+	text-align: left; 
+	padding: 5px 0 0 60px; 
+	color:#fff;
+}
+.loginInnerBox { 
+	margin: 20px 50px 4px 0; 
+}
+#topBar { 
+}
+#header { 
+	background-color: #27343C; 
+	height: 10px; 
+}
+#simpleHeader { 
+	background-color: #27343c; 
+	height: 14px; 
+	border-bottom: #2E345D 1px solid; 
+	margin: 0; 
+	padding: 0; 
+}
+.navCell { 
+	background-color: #27343C; 
+	padding: 0; 
+	margin: 0; 
+	cursor: pointer; 
+}
+.navCell a:hover { 
+	color: #787FA4; 
+	text-decoration: none; 
+}
+.cpNavOff, .cpNavLocked { 
+	background: #142129 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/tab_inactive.gif) repeat-x left bottom; 
+	font-size: 12px; 
+	color: #ADC0CB ; 
+	text-align: center; 
+	padding: 6px 4px 5px 4px; 
+	margin: 0; 
+	border-left: #27343C 1px solid; 
+	border-right: #27343C 2px solid; 
+
+	white-space: nowrap; 
+}
+.cpNavHover { 
+	font-size: 12px; 
+	color: #fff; 
+	background: #101B22 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/tab_inactive.gif) repeat-x left bottom;	text-align: center; 
+	padding: 6px 4px 5px 4px; 
+	margin: 0; 
+	border-left: #27343C 1px solid; 
+	border-right: #27343C 2px solid; 
+
+	white-space: nowrap; 
+}
+.cpNavOn { 
+	font-size: 12px; 
+	color: #666; 
+	background: #fff url(http://community.cecid.hku.hk/themes/cp_themes/default/images/tab_selected.gif) repeat-x right top; ; 
+	padding: 8px 4px 3px 4px; 
+	margin: 0; 
+	text-align: center; 
+	font-weight: bold; 
+	border-left: #fff 1px solid; 
+	border-right: #27343C 2px solid; 
+}
+.cpNavOn a:hover { 
+	color: #000; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.cpNavOff a:link, .cpNavOff a:visited { 
+	color: #ADC0CB; 
+	background: transparent; 
+	text-decoration: none; 
+}
+.cpNavHover a:link, c.NavHover a:visited, .cpNavOff a:hover { 
+	color: #E6E8F9; 
+	background: transparent; 
+	text-decoration: none; 
+}
+#breadcrumb { 
+	margin: 8px 30px 0 28px; 
+	padding: 4px 0 0 3px; 
+	line-height: 18px; 
+	border-bottom: #ccc 1px solid; 
+	width: auto; 
+}
+* html #breadcrumb { 
+	width: 100%; 
+	w\idth: auto; 
+}
+#breadcrumbNoLine { 
+	margin: 0px 19px 0 19px; 
+	padding: 10px 13px 0 13px; 
+	line-height: 18px; 
+	background-color: #fff; 
+	width: auto;
+
+}
+* html #breadcrumbNoLine { 
+	width: 100%; 
+	w\idth: auto; 
+}
+.crumbPad { 
+	padding: 0px 0 10px 0; 
+	margin: 0; 
+	font-size: 11px; 
+	color: #666; 
+	background-color: #fff; 
+}
+.breadcrumbRight { 
+	background: transparent; 
+	padding-bottom: 10px; 
+	margin: 0;
+	background-color: #fff;
+	overflow: hidden;
+}
+.crumblinksR { 
+	font-size: 12px; 
+	text-align: center; 
+	font-weight: bold; 
+	margin: 0 0 0 0; 
+	padding: 3px; 
+	color: #fff;
+	background-color: #96C251;
+	cursor: pointer; 
+	border-left:3px solid #fff;
+	text-shadow: 1px 1px 1px #85AD45;
+}
+.crumblinksRHover { 
+	font-size: 12px; 
+	text-align: center; 
+	font-weight: bold;
+	margin: 0 0 0 0; 
+	padding: 3px; 
+	color: #fff; 
+	background-color: #85AD45;
+	cursor: pointer; 
+	border-left:3px solid #fff;
+	text-shadow: 1px 1px 1px #85AD45;
+}
+.breadcrumbRight a {
+    background: transparent url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_button_a.gif) no-repeat scroll top right;
+    color: #f93d00;
+    display: block;
+    font: normal 12px arial, sans-serif;
+    height: 27px;
+    margin-right: 6px;
+    padding-right: 20px; 
+    text-decoration: none;
+	outline: none;
+	overflow: hidden;
+}
+.breadcrumbRight a div {
+    background: transparent url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_button_div.gif) no-repeat;
+    display: block;
+    line-height: 17px;
+    padding: 5px 0 5px 20px;
+}
+.breadcrumbRight a:active {
+    background-position: bottom right;
+    color: #b53910;
+    outline: none; 
+}
+.breadcrumbRight a:active div {
+    background-position: bottom left;
+    padding: 6px 0 4px 20px; 
+}
+.publishBox { 
+	background-color: #E4EAF1; 
+	border: #C5CFDA 1px solid; 
+        border-top:none; 
+	padding: 6px 6px 2px 6px; 
+	margin: 0; 
+}
+.publishInnerPad { 
+	padding: 0 0 8px 8px; 
+	margin: 0; 
+}
+.publishRows { 
+	border-top: 1px solid #fff; 
+	border-bottom: 1px solid #B1B6D2; 
+	margin: 0; 
+	padding: 5px 0 3px 8px; 
+	background: transparent; 
+}
+.publishLine { 
+	margin: 2px 0 0 0; 
+	padding: 0; 
+	border-bottom: 1px solid #B1B6D2; 
+}
+.publishTitleCluster { 
+	padding: 0 0 0 8px; 
+}
+.publishTabWrapper { 
+	margin: 0; 
+	padding: 0; 
+	background-color: transparent; 
+	border-bottom: #fff 1px solid; 
+}
+.publishPad { 
+	font-size: 11px; 
+	color: #333; 
+	padding: 1px 5px 1px 10px; 
+	background-color: transparent; 
+}
+.submitBox { 
+	background-color: #96C251; 
+	border: #709567 1px solid; 
+	font-size: 11px; 
+	color: #000; 
+	text-align: center; 
+	margin: 20px 0 5px 14px; 
+	padding: 6px 4px 7px 4px; 
+}
+.uploadBox { 
+	background-color: #C5CFDa; 
+	border: #A6B3C0 1px solid;  
+	font-size: 11px; 
+	color: #000; 
+	text-align: center; 
+	margin: 2px 0 5px 14px; 
+	padding: 5px 0 5px 0;
+	height: 20px;
+}
+.uploadBox a {
+	display: block;
+	font-weight: bold;
+}
+.uploadBox a:hover {
+	color:	#fff;
+}
+.uploadBox img {
+	vertical-align:	bottom;
+	margin-bottom: -2px;
+}
+.previewBox { 
+	background-color: #F7F7F9; 
+	border: #7B81A9 1px solid; 
+	color: #38394B; 
+	font-size: 11px; 
+	margin: 0 0 10px 0; 
+	padding: 6px 8px 10px 8px; 
+}
+.previewItemTitle { 
+	font-family: Lucida Grande, Verdana, Geneva, Sans-serif; 
+	font-size: 16px; 
+	color: #44496B; 
+	background-color: transparent; 
+}
+.clusterBox { 
+	margin: 6px 0 0 0; 
+	border: #AFBBCF 1px solid; 
+}
+.clusterLineR { 
+	border-right: #C4CFE1 1px solid; 
+}
+.publishItemWrapper { 
+	font-size: 11px; 
+	color: #333; 
+	padding: 5px 15px 20px 15px; 
+	margin: 0; 
+	background-color: #fff;
+}
+.publishSmPad { 
+	margin: 2px 0 2px 0; 
+}
+.publishTabWidth { 
+	width: 100px; 
+}
+.publishTabWidth a:hover { 
+	text-decoration: none; 
+}
+.publishTabLine { 
+	border-bottom: #C5CFDA 1px solid; 
+	margin: 0; 
+}
+.publishTabs { 
+
+
+	border: #A6B3C0 1px solid; 
+	border-bottom: #A6B3C0 2px solid; 
+border-left: none; 
+	background-color: #C5CFDa ;
+	font-size: 11px; 
+	text-align: center; 
+	color: #37454E; 
+	font-weight: bold; 
+	padding: 6px 0 6px 0; 
+	margin: 0; 
+	white-space: nowrap; 
+}
+.publishTabs a { 
+	color: #2C3467; 
+}
+.publishTabsHover { 
+	border-top: #9BA7B4 1px solid; 
+
+	border-right: #9BA7B4 1px solid; 
+	border-bottom: #9BA7B4 2px solid; 
+	font-size: 11px; 
+	text-align: center; 
+	color: #37454E; 
+	font-weight: bold; 
+	padding: 6px 0 6px 0; 
+	margin: 0; 
+	white-space: nowrap; 
+	background-color: #A9B7C5;
+}
+.publishTabSelected { 
+
+	border: #C5CFDA 1px solid;
+border-right: #A6B3C0 1px solid; 
+	border-bottom: #E4EAF1 2px solid; 
+	background-color: #E4EAF1; 
+	font-size: 11px; 
+	text-align: center; 
+	color: #405579; 
+	font-weight: bold; 
+	padding: 6px 0 6px 0; 
+	margin: 0; 
+	white-space: nowrap; 
+}
+#publishdropmenu { 
+	position: absolute; 
+	visibility: hidden; 
+	background-color: #E1E8E9; 
+	margin: 0; 
+	border-bottom: 1px solid #ccc; 
+	border-left: 1px solid #ccc; 
+	border-right: 1px solid #ccc; 
+}
+.publishdropmenuinner { 
+	font-size: 11px; 
+	line-height: 20px; 
+	text-indent: 4px; 
+	border-bottom: 1px solid #C2DBEB; 
+	margin: 0; 
+	background: transparent;
+	width: 200px;
+}
+#publishdropmenu a:link { 
+	display: block; 
+	color: #1D7FC6; 
+	text-decoration: none; 
+}
+#publishdropmenu a:visited { 
+	display: block; 
+	color: #1D7FC6; 
+	background-color: transparent; 
+}
+#publishdropmenu a:hover { 
+	display: block; 
+	background-color: #C2DBEB; 
+	text-decoration: none; 
+}
+#publishdropmenu li:hover { background-color: #C2DBEB }
+#sitesdropmenu {
+	position: absolute; 
+	visibility: hidden; 
+	background-color: #E1E8E9; 
+	margin: 0; 
+	border-bottom: 1px solid #ccc; 
+	border-left: 1px solid #ccc; 
+	border-right: 1px solid #ccc;
+}
+.sitesdropmenuinner {
+	font-size: 11px; 
+	line-height: 20px; 
+	text-indent: 4px; 
+	border-bottom: 1px solid #C2DBEB; 
+	margin: 0; 
+	background: transparent;
+	width: 200px;
+}
+#sitesdropmenu a:link {
+	display: block; 
+	color: #1D7FC6; 
+	text-decoration: none;
+}
+#sitesdropmenu a:visited {
+	display: block; 
+	color: #1D7FC6; 
+	background-color: transparent;
+}
+#sitesdropmenu a:hover {
+	display: block; 
+	background-color: #C2DBEB; 
+	text-decoration: none;
+}
+#sitesdropmenu li:hover { background-color: #C2DBEB }
+#boardsdropmenu {
+	position: absolute; 
+	visibility: hidden; 
+	background-color: #E1E8E9; 
+	margin: 0;
+	width: 200px;
+	border-bottom: 1px solid #9fa3a5; 
+	border-left: 1px solid #9fa3a5; 
+	border-right: 1px solid #9fa3a5;
+}
+.boardsdropmenuinner {
+	font-size: 11px; 
+	line-height: 20px; 
+	text-indent: 4px; 
+	border-bottom: 1px solid #C2DBEB; 
+	margin: 0; 
+	background: transparent;
+	width: 300px;
+}
+#boardsdropmenu a:link {
+	display: block; 
+	color: #1D7FC6; 
+	text-decoration: none; 
+}
+#boardsdropmenu a:visited {
+	display: block; 
+	color: #1D7FC6; 
+	background-color: transparent;
+}
+#boardsdropmenu a:hover {
+	display: block; 
+	background-color: #C2DBEB; 
+	text-decoration: none;
+}
+html>body .navCell:hover
+#publishdropmenu { display:block; visibility: visible;
+}
+html>body .navCell:hover
+#publishdropmenu ul { display:none;
+}
+html>body #publishdropmenu { display:none; position:absolute; }
+html>body #publishdropmenu,
+html>body #publishdropmenu * { list-style:none; width:200px; }
+html>body #publishdropmenu,
+html>body #publishdropmenu * { margin:0; padding:0; }
+html>body #publishdropmenu li { position: relative; }
+html>body #publishdropmenu ul { display:none; position:absolute; top:5px; left:190px; border-top:1px solid #B2B3CE; }
+html>body .navCell #publishdropmenu li:hover { background-color: #C2DBEB; }
+html>body .navCell:hover
+#sitesdropmenu { display:block; visibility: visible;
+}
+html>body .navCell:hover
+#sitesdropmenu ul { display:none;
+}
+html>body #sitesdropmenu { display:none; position:absolute; }
+html>body #sitesdropmenu,
+html>body #sitesdropmenu * { list-style:none; width:200px; }
+html>body #sitesdropmenu,
+html>body #sitesdropmenu * { margin:0; padding:0; }
+html>body #sitesdropmenu li { position: relative; }
+html>body #sitesdropmenu ul { display:none; position:absolute; top:5px; left:190px; border-top:1px solid #B2B3CE; }
+html>body .navCell #sitesdropmenu li:hover { background-color: #C2DBEB; }
+html>body .navCell:hover #boardsdropmenu { display:block; visibility: visible; }
+html>body .navCell:hover #boardsdropmenu ul { display:none; }
+html>body #boardsdropmenu { display:none; position:absolute; }
+html>body #boardsdropmenu,
+html>body #boardsdropmenu * { list-style:none; width: 275px;}
+html>body #boardsdropmenu,
+html>body #boardsdropmenu * { margin:0; padding:0; }
+html>body #boardsdropmenu li { position: relative; }
+html>body #boardsdropmenu ul { display:none; position:absolute; top:5px; left:190px; border-top:1px solid #B2B3CE; }
+html>body .navCell #boardsdropmenu li:hover { background-color: #C2DBEB; }
+.altTabs {
+	cursor: pointer;
+	background: #546167 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/alt_tab_inactive.gif) repeat-x left bottom;
+	font-size: 12px; 
+	color: #fff ; 
+	text-align: center; 
+	padding: 6px 4px 5px 4px; 
+	margin: 0; 
+	border-right: #fff 2px solid;
+	white-space: nowrap;
+}
+.altTabs a:link, .altTabs a:visited, .altTabsHover a:link, altTabsHover a:visited { 
+	color: #ADC0CB;
+}
+.altTabs a:hover, .altTabsHover a:link, .altTabsHover a:visited {
+	color: #fff;
+}
+.altTabsHover { 
+	font-size: 12px; 
+	color: #ADC0CB; 
+	background: #546167 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/alt_tab_inactive.gif) repeat-x left bottom;
+	text-align: center; 
+	padding: 6px 4px 5px 4px; 
+	margin: 0; 
+	border-right: #fff 2px solid; 
+	white-space: nowrap;
+}
+.altTabSelected { 
+	font-size: 12px; 
+	color: #666; 
+	background: #fff url(http://community.cecid.hku.hk/themes/cp_themes/default/images/alt_tab_selected.gif) right top; ; 
+	padding: 8px 4px 3px 4px; 
+	margin: 0; 
+	text-align: center; 
+	font-weight: normal; 
+	border-left: #9fa3a5 1px solid; 
+}
+.buttonMargin { 
+	margin-bottom: 4px; 
+}
+.buttonInsert { 
+	background: #fff url(http://community.cecid.hku.hk/themes/cp_themes/default/images/gradient_bg.jpg) repeat-x left top; 
+	border: #6F7CA2 1px solid; 
+	padding: 6px; 
+	margin: 3px 0 2px 8px; 
+}
+.htmlButtonOuter, .htmlButtonOuterL { 
+	background-color: #f6f6f6; 
+	padding: 0; 
+	border-top: #333 1px solid; 
+	border-right: #333 1px solid; 
+	border-bottom: #333 1px solid; 
+}
+.htmlButtonOuterL { 
+	border-left: #333 1px solid; 
+}
+.htmlButtonInner { 
+	background-color: transparent; 
+	border-left: #fff 1px solid; 
+	border-top: #fff 1px solid; 
+	border-right: #ccc 1px solid; 
+	border-bottom: #ccc 1px solid; 
+}
+.htmlButtonA { 
+	font-size: 11px; 
+	font-weight: bold; 
+	padding: 2px 3px 3px 3px; 
+	white-space: nowrap; 
+}
+.htmlButtonB { 
+	font-size: 11px; 
+	font-weight: bold; 
+	background: #E1E3EC; 
+	padding: 2px 3px 3px 3px; 
+	white-space: nowrap; 
+}
+.htmlButtonA a:link { 
+	color: #000; 
+	font-weight: bold; 
+	text-decoration: none; 
+	white-space: nowrap; 
+}
+.htmlButtonA  a:visited { 
+	text-decoration: none; 
+}
+.htmlButtonA a:active { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonA a:hover { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonB a:link { 
+	color: #990000; 
+	font-weight: bold; 
+	text-decoration: none; 
+	white-space: nowrap; 
+}
+.htmlButtonB  a:visited { 
+	text-decoration: none; 
+}
+.htmlButtonB a:active { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonB a:hover { 
+	color: #999; 
+	text-decoration: none; 
+}
+.buttonMode { 
+	font-size: 10px; 
+	color: #73769D; 
+	background-color: transparent; 
+	white-space: nowrap; 
+}
+.htmlButtonOff { 
+	font-size: 11px; 
+	font-weight: bold; 
+	padding: 1px 2px 2px 2px; 
+	white-space: nowrap; 
+}
+.htmlButtonOff a:link { 
+	color: #000; 
+	text-decoration: none; 
+	white-space: nowrap; 
+}
+.htmlButtonOff  a:visited { 
+	text-decoration: none; 
+}
+.htmlButtonOff a:active { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonOff a:hover { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonOn { 
+	font-size: 11px; 
+	font-weight: bold; 
+	background: #f6f6f6; 
+	padding: 1px 2px 2px 2px; 
+	white-space: nowrap; 
+}
+.htmlButtonOn a:link { 
+	color: #990000; 
+	text-decoration: none; 
+	white-space: nowrap; 
+}
+.htmlButtonOn  a:visited { 
+	text-decoration: none; 
+}
+.htmlButtonOn a:active { 
+	text-decoration: none; 
+	color: #999; 
+}
+.htmlButtonOn a:hover { 
+	color: #999; 
+	text-decoration: none; 
+}
+.leftColumn { 
+	padding: 0 14px 0 0; 
+}
+.rightColumn { 
+	padding: 0 0 0 0; 
+}
+.itemPad { 
+	padding: 0 0 20px 0; 
+}
+.templatePrefBox { 
+	background-color: #fff;
+	padding: 0; 
+	margin: 0; 
+}
+.templateEditBox { 
+	background: #fff;
+	padding: 0px; 
+	border: #B8c6ce 1px solid; 
+	margin: 0 0 0 0; 
+}
+.templateprefpad { 
+	padding: 3px 0 0 6px; 
+	background-color: transparent; 
+}
+.templatebox { 
+	background: #fff;
+	border-right: #9298BF 1px solid; 
+	border-left: #9298BF 1px solid; 
+	border-top: #BABEDA 1px solid; 
+	border-bottom: #9298BF 1px solid; 
+	padding: 4px 6px 6px 10px; 
+	margin: 1px 0 1px 0; 
+}
+.templatepad { 
+	margin: 1px 0 1px 0; 
+}
+.profileMenuInner { 
+	padding: 4px 6px 4px 10px; 
+	margin-bottom: 0; 
+	background-color: #fff;
+	border-left: 1px solid #ccc; 
+	border-right: 1px solid #ccc; 
+	border-bottom: 1px solid #ccc; 
+}
+.profileHead { 
+	font-size: 10px; 
+	font-weight: bold; 
+	color: #fff; 
+	padding: 4px 4px 4px 10px; 
+	background: #7E7EB3 url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_profile_heading.jpg) repeat-x left top; 
+	border-top: 1px solid #D9DBE7; 
+	border-bottom: 1px solid #636A96; 
+	margin: 0 0 0 0; 
+}
+.navPad { 
+	padding: 2px 0 3px 0; 
+}
+.navPad a {
+	outline: none;
+}
+.buttonWrapper { 
+	background-color: transparent; 
+	padding: 10px 0 10px 10px; 
+}
+.leftCel { 
+	border-right: #7B81A9 1px solid; 
+	padding: 0 40px 0 0; 
+	white-space: nowrap; 
+}
+.rightCel { 
+	padding: 0 0 0 25px; 
+	white-space: nowrap; 
+}
+.menuHeading { 
+	font-size: 14px; 
+	color: #333; 
+	font-weight: bold; 
+	margin: 3px 0 3px 5px; 
+	background: transparent; 
+}
+.menuItem { 
+	font-size: 11px; 
+	color: #333; 
+	background-color: transparent; 
+	padding: 3px 0 3px 6px; 
+}
+.menuWrapper { 
+	margin: 0 0 14px 0; 
+}
+.success { 
+	font-size: 12px;
+	color:#009933;
+	font-weight: bold; 
+	margin: 5px 0; 
+}
+.successBox { 
+	background-color: transparent; 
+	background-color:#FAFAB5;
+	padding: 6px 10px;
+	border-top:1px solid #DBDB8E;	
+	border-bottom:1px solid #DBDB8E;
+}
+.itemWrapper { 
+	padding: 3px 0 5px 0; 
+	background-color: transparent; 
+}
+.itemWrapperTop { 
+	padding: 12px 0 4px 0; 
+	background-color: transparent; 
+}
+.itemTitle { 
+	font-size: 12px; 
+	font-weight: bold; 
+	color: #333; 
+	padding: 4px 0 3px 0; 
+	background-color: transparent; 
+}
+.fieldWrapper { 
+	font-size: 11px; 
+	color: #333; 
+	padding: 0 0 12px 0; 
+	background-color: transparent; 
+}
+.xhtmlWrapper { 
+	font-size: 10px; 
+	font-weight: normal; 
+	color: #666; 
+	text-align: right; 
+	padding: 0; 
+	margin: 2px 0 0 0; 
+	background-color: transparent; 
+}
+.xhtmlWrapperLight { 
+	color: #666; 
+	font-weight: normal; 
+}
+.box { 
+	background: #fff url(http://community.cecid.hku.hk/themes/cp_themes/default/images/box_bg.gif) top left repeat-x; 
+	border: #CCC9A4 1px solid; 
+	padding: 8px 10px 8px 10px; 
+	margin: 0px 0 10px 0; 
+}
+.box280 { 
+	background-color: #fff; 
+	border: #CCC9A4 1px solid; 
+	padding: 12px; 
+	width: 280px; 
+	margin-top: 8px; 
+}
+.box320 { 
+	background: #F7F8FA url(http://community.cecid.hku.hk/themes/cp_themes/default/images/box_bg.jpg) repeat-x left top; 
+	border: #B1B6D2 1px solid; 
+	padding: 12px; 
+	width: 320px; 
+	margin-bottom: 4px; 
+	margin-top: 2px; 
+}
+.box450 { 
+	background: #F7F8FA url(http://community.cecid.hku.hk/themes/cp_themes/default/images/box_bg.jpg) repeat-x left top; 
+	border: #B1B6D2 1px solid; 
+	padding: 12px; 
+	width: 450px; 
+	margin-bottom: 4px; 
+	margin-top: 2px; 
+}
+.subNavWrapper { 
+	margin: 0 28px 0 28px; 
+	padding: 0; 
+}
+.galleryBG { 
+	background-color: #8F91AA; 
+	border: #333 1px solid; 
+	padding: 3px 0 3px 0; 
+	text-align: center; 
+	color: #fff; 
+}
+.galleryBG img { 
+	border: #000 1px solid; 
+}
+.galleryThumbView { 
+	background-color: #8F91AA; 
+	border-top: #ccc 1px solid; 
+	border-bottom: #333 1px solid; 
+	border-left: #333 1px solid; 
+	border-right: #333 1px solid; 
+	text-align: center; 
+	color: #fff; 
+	padding: 3px; 
+}
+.galleryThumbView img { 
+	border: #000 1px solid; 
+}
+.galleryTools { 
+	font-size: 11px; 
+	color: #ccc; 
+	width: 230px; 
+	height: 170px; 
+	border: 1px solid #999; 
+	padding: 3px; 
+}
+.galleryToolsOn { 
+	font-size: 11px; 
+	color: #000; 
+	background-color: #DFE0E8; 
+	width: 230px; 
+	height: 170px; 
+	border: 1px solid #990000; 
+	padding: 3px; 
+}
+.galleryToolTips { 
+	font-size: 11px; 
+	color: #009900; 
+	background-color: transparent; 
+	padding: 2px 0 2px 0; 
+	margin: 1px 0 5px 0px; 
+	visibility: hidden; 
+}
+.galleryToolsInputOn { 
+	border-top: 1px solid #999999; 
+	border-left: 1px solid #999999; 
+	background-color: #fff; 
+	color: #000; 
+	margin-top: 2px; 
+	margin-bottom: 2px; 
+}
+.galleryToolsInputOff { 
+	border-top: 1px solid #ccc; 
+	border-left: 1px solid #ccc; 
+	background-color: #fff; 
+	color: #ccc; 
+	font-size: 11px; 
+	height: 1.6em; 
+	padding: .3em 0 0 2px; 
+	margin-top: 2px; 
+	margin-bottom: 2px; 
+}
+.galleryToolsSelectOn { 
+	background-color: #fff; 
+	font-size: 11px; 
+	font-weight: normal; 
+	letter-spacing: .1em; 
+	color: #000; 
+	margin-top: 2px; 
+	margin-bottom: 2px; 
+}
+.galleryToolsSelectOff { 
+	background-color: #fff; 
+	font-size: 11px; 
+	font-weight: normal; 
+	letter-spacing: .1em; 
+	color: #ccc; 
+	margin-top: 2px; 
+	margin-bottom: 2px; 
+}
+.galleryPrefHeading { 
+	font-size: 11px; 
+	color: #009933; 
+	font-weight: bold; 
+	background-color: transparent; 
+	padding: 10px 6px 10px 0; 
+}
+.galleryLight { 
+	font-size: 10px; 
+	color: #333; 
+}
+.padBotBorder { 
+	background-color: transparent; 
+	border-bottom: #7B81A9 1px dashed; 
+	margin: 4px 0 4px 0; 
+}
+.commentBox { 
+	background: #F7F8FA url(http://community.cecid.hku.hk/themes/cp_themes/default/images/box_bg.jpg) repeat-x left top; 
+	border: #B1B6D2 1px solid; 
+	padding: 1px 5px 1px 1px; 
+	margin: 1px 0 1px 0; 
+}
+.comments { 
+	background-color: #fff; 
+	border-bottom: #7B81A9 1px solid; 
+}
+.cmtCredits { 
+	font-size: 11px; 
+	color: #8990B5; 
+	margin-bottom: 2px; 
+}
+.cmtCreditVal { 
+	color: #000; 
+	padding-left: 6px; 
+}
+.cmtRightBorder { 
+	border-right: #B1B6D2 1px solid; 
+	padding-right: 14px; 
+}
+.cmtLeftPad { 
+	padding: 2px 6px 0 6px; 
+}
+.category { 
+	font-size: 11px; 
+	color: #666; 
+	line-height: 18px; 
+	letter-spacing: .09em; 
+}
+.subtext { 
+	font-size: 11px; 
+	font-weight: normal; 
+	color: #333; 
+	padding: 6px 0 3px 0; 
+}
+.border { 
+	border: 1px solid #B1B6D2; 
+	margin-top: 1px; 
+}
+.tablePad { 
+	padding: 1px 1px 1px 1px; 
+	background-color: #fff; 
+}
+.tableBorder { 
+	border-left: 1px solid #B1B6D2; 
+	border-right: 1px solid #B1B6D2; 
+	margin: 0 0 3px 0; 
+	padding: 0; 
+}
+.tableBorderNoTop { 
+	border-bottom: 1px solid #B1B6D2; 
+	border-right: 1px solid #B1B6D2; 
+	border-left: 1px solid #B1B6D2; 
+}
+.tableBorderNoBot { 
+	border-top: 1px solid #B1B6D2; 
+	border-right: 1px solid #B1B6D2; 
+	border-left: 1px solid #B1B6D2; 
+}
+.tableBorderSides { 
+	border-right: 1px solid #B1B6D2; 
+	border-left: 1px solid #B1B6D2; 
+}
+.tableHeading { 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #fff; 
+	padding: 7px 6px 7px 6px; 
+	background: #768E9D url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_table_heading.gif) repeat-x left bottom;
+}
+.tableHeadingAlt { 
+	font-size: 11px; 
+	font-weight: bold; 
+	white-space: nowrap; 
+	color: #0C1216; 
+	padding: 5px 6px 5px 6px; 
+	background: #B8C6CE url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_table_heading_alt.gif) repeat-x left bottom;
+}
+.default .tableHeadingAlt { 
+	font-size: 11px; 
+	font-weight: bold; 
+	white-space: nowrap; 
+	color: #0C1216; 
+	padding: 5px 6px 5px 6px; 
+	background-color: #B8C6CE;
+	background-image:none;
+}
+.tableHeadingAlt a:link { 
+	color: #424665; 
+	text-decoration: none; 
+}
+.tableHeadingAlt a:visited { 
+	color: #424665; 
+	text-decoration: none; 
+}
+.tableHeadingAlt a:hover { 
+	color: #787FA4; 
+	text-decoration: none; 
+}
+.tableHeadingAltHover { 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #000; 
+	padding: 5px 6px 5px 6px; 
+	background-color: #A1B1BB;
+
+	cursor: pointer; 
+}
+.tableHeadingAltHover a { 
+	color: #696F92; 
+	text-decoration: none; 
+}
+.tableHeadingSmall { 
+	font-size: 11px; 
+	font-weight: bold; 
+	white-space: nowrap; 
+	color: #0C1216; 
+	padding: 5px 6px 5px 6px; 
+	background: #B8C6CE url(http://community.cecid.hku.hk/themes/cp_themes/default/images/bg_table_heading_alt.gif) repeat-x left bottom;
+}
+.tableCellOne, .tableCellOneBold { 
+	color: #333; 
+	padding: 6px 10px 6px 6px; 
+	border-bottom: 1px solid #CAD0D5; 
+	background-color: #EEF4F9; 
+}
+.tableCellOne a:link, .tableCellOne a:visited, .tableCellTwo a:link ,.tableCellTwo a:visited{
+font-size:11px;
+color: #1D7FC6; 
+}
+.tableCellOne div, .tableCellTwo div {
+font-size:11px;
+
+}
+.tableCellTwo, .tableCellTwoBold { 
+	color: #333; 
+	padding: 6px 10px 6px 6px; 
+	border-bottom: 1px solid #CAD0D5; 
+	background: #fff; 
+}
+.tableCellPlain { 
+	color: #333; 
+	padding: 5px 10px 8px 7px; 
+	border-bottom: 1px solid #B1B6D2; 
+	background: #fff; 
+}
+.tableCellOneBold { 
+	font-weight: bold; 
+}
+.tableCellTwoBold { 
+	font-weight: bold; 
+}
+.tableCellOneHover, .tableCellTwoHover { 
+	background-color: #E1FAD8; 
+	font-size: 11px; 
+	color: #333; 
+	padding: 6px 10px 6px 6px; 
+	border-bottom: 1px solid #fff; 
+}
+.thumb { 
+	font-size: 11px; 
+	color: #000; 
+	width: 240px; 
+	border: 1px solid #990000; 
+}
+.thumbPad { 
+	padding: 8px; 
+}
+.copyright { 
+	clear: both; 
+	vertical-align: bottom; 
+	text-align: center; 
+	font-size: 11px; 
+	color: #999; 
+	line-height: 15px; 
+	margin: 1px 0 1px 0; 
+	padding: 14px 0 14px 0; 
+}
+form { 
+	margin: 0; 
+	padding: 0; 
+	border: 0; 
+}
+.hidden { 
+	margin: 0; 
+	padding: 0; 
+	border: 0; 
+}
+.input { 
+	font-family: arial; 
+	color: #333; 
+	font-size: 12px; 
+	padding: 0; 
+	margin: 0; 
+}
+.textarea { 
+	color: #333; 
+	font-size: 11px; 
+	padding: 0; 
+	margin: 0; 
+font: 13px/17px arial, sans-serif;
+color: #333;
+}
+.select { 
+	background-color: #fff; 
+	font-size: 11px; 
+	font-weight: normal; 
+	color: #333; 
+	margin-top: 2px; 
+	margin-bottom: 2px; 
+}
+.multiselect { 
+	color: #333; 
+	margin: 7px 0; 
+border:1px solid #ccc;
+}
+.radio { 
+	background-color: transparent; 
+	margin-top: 4px; 
+	margin-bottom: 4px; 
+	padding: 0; 
+	border: 0; 
+}
+.checkbox { 
+	background-color: transparent; 
+	padding: 0; 
+	border: 0; 
+}
+.buttons { 
+	font-size: 11px; 
+	font-weight: bold; 
+	border-top: 1px solid #9EA3D5; 
+	border-left: 1px solid #9EA3D5; 
+	border-right: 1px solid #000; 
+	border-bottom: 1px solid #000; 
+	letter-spacing: .1em; 
+	margin: 0; 
+	padding: 1px 6px 3px 6px; 
+	background-color: #3F4471; 
+	color: #fff; 
+	cursor: pointer; 
+}
+.submit {  
+}
+#error { 
+	margin-top: 15px; 
+	padding: 1px; 
+	border: #7B81A9 1px solid; 
+}
+.errorheading { 
+	color: #fff; 
+	background: #990000; 
+	text-align: center; 
+	font-size: 12px; 
+	font-weight: bold; 
+	letter-spacing: 1px; 
+	text-transform: uppercase; 
+	padding: 4px; 
+	margin-bottom: 1px; 
+}
+.errormessage { 
+	color: #333; 
+	border-top: #7B81A9 1px solid; 
+	font-size: 12px; 
+	text-align: center; 
+	padding: 20px 10px 20px 10px; 
+}
+.calendar { 
+	border: 1px #6975A3 solid; 
+	background-color: transparent; 
+}
+.calheading { 
+	background-color: #27343c; 
+	color: #fff; 
+	font-size: 11px; 
+	font-weight: bold; 
+	text-align: center; 
+}
+.calnavleft { 
+	background-color: #27343c; 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #fff; 
+	padding: 4px; 
+	cursor: pointer; 
+}
+.calnavright { 
+	background-color: #27343c; 
+	font-size: 10px; 
+	font-weight: bold; 
+	color: #fff; 
+	text-align: right; 
+	padding: 4px; 
+	cursor: pointer; 
+}
+.caldayheading { 
+	background-color: #a9b7c5; 
+	color: #fff; 
+	font-size: 10px; 
+	text-align: center; 
+	padding: 6px 2px 6px 2px; 
+}
+.caldaycells { 
+	color: #000; 
+	background-color: #e4eaf1; 
+	font-size: 11px; 
+	text-align: center; 
+	padding: 4px; 
+	border: 1px #E0E5F1 solid; 
+	cursor: pointer; 
+}
+.caldaycellhover { 
+	color: #fff; 
+	background-color: #a9b7c5; 
+	font-size: 11px; 
+	text-align: center; 
+	padding: 4px; 
+	border: 1px #B3BCD4 solid; 
+	cursor: pointer; 
+}
+.caldayselected { 
+	background-color: #96c251; 
+	color: #fff; 
+	font-size: 11px; 
+	font-weight: bold; 
+	text-align: center; 
+	border: 1px #fff solid; 
+	padding: 3px; 
+	cursor: pointer; 
+}
+.calblanktop { 
+	background-color: #fff; 
+	padding: 4px; 
+}
+.calblankbot { 
+	background-color: #fff; 
+	padding: 4px; 
+}
+.iframe { 
+	border: 1px solid #6666CC; 
+}
+.wordSuggestion { 
+	background-color: #f4f4f4; 
+	border: 1px solid #ccc; 
+	padding: 4px; 
+}
+.wordSuggestion a, .wordSuggestion a:active { 
+	cursor: pointer; 
+}
+.spellchecked_word { 
+	cursor: pointer; 
+	background-color: #fff; 
+	border-bottom: 1px dashed #ff0000; 
+}
+.spellchecked_word_selected { 
+	cursor: pointer; 
+	background-color: #ADFF98; 
+}
+.roundBox { 
+	margin: 0 5px; 
+	background: #FBFBFD url(http://community.cecid.hku.hk/themes/cp_themes/default/images/gradient_bg.jpg) repeat-x left top; 
+	font-size:12px;
+}
+.roundBox ul li { 
+	padding-bottom: 5px; 
+}
+b.roundBoxTop, b.roundBoxBottom { 
+	display: block; 
+	background: #FFF; 
+}
+b.roundBoxTop b, b.roundBoxBottom b { 
+	display: block; 
+	height: 1px; 
+	background: #B8c6ce;
+	line-height: 1px;	
+	font-size: 1px;		
+}
+b.roundBoxBottom b { 
+	background: #FBFBFD; 
+}
+b.roundBox1 { 
+	margin: 0 5px;
+}
+b.roundBox2 { 
+	margin: 0 3px;
+}
+b.roundBox3 { 
+	margin: 0 2px;
+}
+b.roundBoxTop b.roundBox4, b.roundBoxBottom b.roundBox4 { 
+	margin: 0 1px; 
+	height: 2px;
+	line-height: 2px;	
+	font-size: 2px;		
+}
+.adminTab { 
+	background-color: #B3D7A7; 
+	border: #709567 1px solid; 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #000; 
+	text-align: center; 
+	margin: 0 0 5px 5px; 
+	padding: 4px 5px 5px 5px; 
+	cursor: pointer; 
+}
+.adminTabOn { 
+	background-color: #97BA8B; 
+	border: #709567 1px solid; 
+	font-size: 11px; 
+	font-weight: bold; 
+	color: #000; 
+	text-align: center; 
+	margin: 0 0 5px 5px; 
+	padding: 4px 5px 5px 5px; 
+	cursor: pointer; 
+}
+
+
+</style>
+
+			<script type="text/javascript"> 
+			<!--
+			var menu = new Array();
+			function dropdownmenu(el)
+			{
+				if (document.getElementById(el).style.visibility == 'visible')
+				{
+					document.getElementById(el).style.display = 'none';
+					document.getElementById(el).style.visibility = 'hidden';		
+				}
+				else
+				{
+					document.getElementById(el).style.display = 'block';
+					document.getElementById(el).style.visibility = 'visible';
+				}
+			}
+			
+			function delayhidemenu(){
+				return false;
+			}
+			
+			//-->
+			</script>
+			
+					<script type="text/javascript"> 
+			<!--
+			
+			var browser = "Unknown";
+			var version = "Unknown";
+			var OS 		= "Unknown";
+		
+			var info = navigator.userAgent.toLowerCase();
+							
+			var browsers = new Array();
+				browsers['safari']		= "Safari";
+				browsers['omniweb']		= "OmniWeb";
+				browsers['opera']		= "Opera"; 
+				browsers['webtv']		= "WebTV"; 
+				browsers['icab']		= "iCab";
+				browsers['konqueror']	= "Konqueror";
+				browsers['msie']		= "IE";
+				browsers['mozilla']		= "Mozilla";
+				
+			for (b in browsers)
+			{
+				pos = info.indexOf(b) + 1;
+				if (pos != false)
+				{
+					browser = browsers[b];
+					version = info.charAt(pos + b.length);
+					break;
+				}	
+			}
+			
+			var systems = new Array();
+				systems['linux']	= "Linux";
+				systems['x11'] 		= "Unix";
+				systems['mac'] 		= "Mac";
+				systems['win'] 		= "Win";
+
+		
+			for (s in systems)
+			{
+				pos = info.indexOf(s) + 1;
+				if (pos != false)
+				{
+					OS = systems[s];
+					break;
+				}	
+			}
+			
+			
+			function navCrumbOn()
+			{
+				if (document.getElementById('rcrumb').className == 'crumblinksR')
+				{
+					document.getElementById('rcrumb').className = 'crumblinksRHover';
+				}
+			}
+			
+			function navCrumbOff()
+			{
+				if (document.getElementById('rcrumb').className == 'crumblinksRHover')
+				{
+					document.getElementById('rcrumb').className = 'crumblinksR';
+				}
+			}
+	
+			function navTabOn(link, idoff, idhover)
+			{
+				if ( ! idoff)
+					idoff = 'cpNavOff';
+					
+				if ( ! idhover)
+					idhover = 'cpNavHover';
+			
+				if (document.getElementById(link))
+				{
+					if (document.getElementById(link).className == idoff)
+					{
+						document.getElementById(link).className = idhover;
+					}
+				}
+			}
+		
+			function navTabOff(link, idoff, idhover)
+			{  
+				if ( ! idoff)
+					idoff = 'cpNavOff';
+					
+				if ( ! idhover)
+					idhover = 'cpNavHover';		
+			
+				if (document.getElementById(link).className == idhover)
+				{
+					document.getElementById(link).className = idoff;
+				}
+			}
+			
+			function navjump(where, pop)
+			{			
+				if (browser != 'IE')
+					return false;
+			
+				if (pop == 'true')
+				{
+					window.open(where, '_blank');
+				}
+				else
+				{
+					window.location=where;
+				}
+			}			
+			//-->
+			</script>
+
+			
+			<!--[if lt IE 7]>
+			<script language="JavaScript">
+			/*
+			/* Fix for PNG alpha transparency for Internet Explorer
+			/* Solution courtesy Bob Osola
+			/* http://homepage.ntlworld.com/bobosola/index.htm
+			*/
+			function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
+			{
+			   var arVersion = navigator.appVersion.split("MSIE")
+			   var version = parseFloat(arVersion[1])
+			   if ((version >= 5.5) && (document.body.filters)) 
+			   {
+			      for(var i=0; i<document.images.length; i++)
+			      {
+			         var img = document.images[i]
+			         var imgName = img.src.toUpperCase()
+			         if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
+			         {
+			            var imgID = (img.id) ? "id='" + img.id + "' " : ""
+			            var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+			            var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+			            var imgStyle = "display:inline-block;" + img.style.cssText 
+			            if (img.align == "left") imgStyle = "float:left;" + imgStyle
+			            if (img.align == "right") imgStyle = "float:right;" + imgStyle
+			            if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+			            var strNewHTML = "<span " + imgID + imgClass + imgTitle
+			            + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+			            + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+			            + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" 
+			            img.outerHTML = strNewHTML
+			            i = i-1
+			         }
+			      }
+			   }    
+			}
+			window.attachEvent("onload", correctPNG);
+			</script>
+			<![endif]-->
+		</head>
+	<body>
+     <h2>Introduction</h2>
+<p>This article is purposed to assist developers whose want to write a Hermes 2 web service client using <b>JAVA</b>.<br/>
+
+   It assumes you have successfully installed Hermes 2 and how to communicate Hermes 2 in external application.<br/><br/>
+   
+   Please refer to 
+   <a style="text-decoration: underline;" href="http://community.cecid.hku.hk/index.php/product/download/download_h2o/#" title="Hermes 2 Installation Guide">
+   Hermes 2 Installation Guide
+   </a> and 
+   <a style="text-decoration: underline;" href="../communicating_hermes_2_through_ws/">communicating hermes 2 through WS</a> if you don't.
+   
+</p><br/>
+<a id="summary"></a>
+<h2>Table of Content</h2>
+<p>
+   <ol>
+    <li><a href="#ebms-2_0-sender-ws" style="text-decoration: underline">  <span>Writing an ebMS 2.0 Sender Web Service client</span></a></li>
+    <li><a href="#ebms-2_0-recvlist-ws" style="text-decoration: underline"><span>Writing an ebMS 2.0 Receiver List Web Service client</span></a></li>   
+    <li><a href="#ebms-2_0-recv-ws" style="text-decoration: underline">    <span>Writing an ebMS 2.0 Receiver Web Service client</span></a></li>
+    <li><a href="#ebms-2_0-status-ws" style="text-decoration: underline">  <span>Writing an ebMS 2.0 Status Web Service client</span></a></li>
+    <li><a href="#ebms-2_0-msgHistory-ws" style="text-decoration: underline">  <span>Writing an ebMS 2.0 Message History Web Service client</span></a></li>	
+    <li><a href="#as2-sender-ws" style="text-decoration: underline">   <span>Writing an AS2 Sender Web Service client</span></a></li>
+    <li><a href="#as2-recvlist-ws" style="text-decoration: underline"> <span>Writing an AS2 Receiver List Web Service client</span></a></li>   
+    <li><a href="#as2-recv-ws" style="text-decoration: underline">     <span>Writing an AS2 Receiver Web Service client</span></a></li>
+    <li><a href="#as2-status-ws" style="text-decoration: underline">   <span>Writing an AS2 Status Web Service client</span></a></li>
+    <li><a href="#as2-msgHistory-ws" style="text-decoration: underline">  <span>Writing an AS2 Message History Web Service client</span></a></li>	
+   </ol>
+   The source code using in below section is originally from the loopback test in the Hermes 2 open source. You may 
+   refer it for full detail. Also the sample code assumes the hermes 2 you installed is in <b>localhost</b> with 
+   port <b>8080</b> (the default port of Tomcat).   
+</p>   
+
+<br/><br/><hr/>
+<h2>0. Pre-requisite</h2>
+<p>The sample code requires several library and shown below: 
+   <ol>
+    <li><span>saaj-api.jar and saaj-impl.jar<br/>
+     	(From the starting of JDK1.6, this is already bundled along with the JDK and does not require).<br/>    
+     	</span>
+    <li><span>activiation.jar</span></li>
+    <li><span>mail.jar</span></li>
+   </ol>
+</p>
+
+<br/><br/>
+<h2>1. Global Import for all web service sample code</h2>
+<p>Each web service sample code requires at <b>least</b> the imports shown below for running properly:<br/>
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+   <code> import java.net.URL;<br/>
+ import java.net.MalformedURLException;<br/>
+ import javax.activation.DataHandler;<br/>
+ import javax.activation.FileDataSource;<br/>
+ import javax.xml.soap.AttachmentPart;<br/>
+ import javax.xml.soap.MessageFactory;<br/>
+ import javax.xml.soap.Name;<br/>
+ import javax.xml.soap.SOAPBody;<br/>
+ import javax.xml.soap.SOAPConnection;<br/>
+ import javax.xml.soap.SOAPConnectionFactory;<br/>
+ import javax.xml.soap.SOAPElement;<br/>
+ import javax.xml.soap.SOAPException;<br/>
+ import javax.xml.soap.SOAPFactory;<br/>
+ import javax.xml.soap.SOAPMessage;   </code>
+ </blockquote>
+</p>
+   
+
+<!-- ebMS Sender Web Service -->
+<br/><hr/>
+<a id="ebms-2_0-sender-ws"></a>
+<h2>2. Writing an ebMS 2.0 Sender Web Service client</h2>
+<p>We need to create a SOAP Message with 10 parameters (cpaId, service, action, convId, fromPartyId, fromPartyType, 
+   toPartyId, toPartyType, refToMessageId and serviceType) as the web service request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL. Also the endpoint URL of the ebMS sender web service.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";<br>
+ private String nsPrefix = "tns";<br>
+ private URL senderWSURL = "http://localhost:8080/corvus/httpd/ebms/sender";<br>
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();
+</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;cpaId&gt; ebmscpaid &lt;/cpaId&gt;</span></li>
+    <li><span>&lt;service&gt; http://localhost:8080/corvus/httpd/ebms/inbound &lt;service&gt;</li>
+    <li><span>&lt;action&gt; action &lt;/action&gt;</span></li>
+    <li><span>&lt;convId&gt; convId &lt;/convId&gt;</span></li>
+    <li><span>&lt;fromPartyId&gt; fromPartyId &lt;/fromPartyId&gt;</span></li>
+    <li><span>&lt;fromPartyType&gt; fromPartyType &lt;/fromPartyType&gt;</span></li>
+    <li><span>&lt;toPartyId&gt; toPartyId &lt;/toPartyId&gt;</span></li>
+    <li><span>&lt;toPartyType&gt; toPartyType &lt;/toPartyType&gt;</span></li>
+    <li><span>&lt;refToMessageId&gt; &lt;/refToMessageId&gt;</span></li>  
+    <li><span>&lt;serviceType&gt; &lt;/serviceType&gt;</span></li>  	
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody();<br>
+ soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));<br>
+ soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));<br>
+ soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));<br>
+ soapBody.addChildElement(createElement("convId", nsPrefix, nsURI, conversationId));<br>
+ soapBody.addChildElement(createElement("fromPartyId", nsPrefix, nsURI, fromPartyId));<br>
+ soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));<br>
+ soapBody.addChildElement(createElement("toPartyId", nsPrefix, nsURI, toPartyId));<br>
+ soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));<br>
+ soapBody.addChildElement(createElement("refToMessageId", nsPrefix, nsURI, refToMessageId));<br>
+ soapBody.addChildElement(createElement("serviceType", nsPrefix, nsURI, serviceType));
+</code>
+</blockquote>
+</div>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+
+</p>
+<!-- Step 4 -->
+4. Attach a payload if necessary. The example here uses a purchase order XML as the payload
+   of the ebms message. So the associated content type is <b>application/xml</b>.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ AttachmentPart attachmentPart = request.createAttachmentPart();<br/>
+ FileDataSource fileDS = new FileDataSource(new File("purchase_order.xml"));<br/>
+ attachmentPart.setDataHandler(new DataHandler(fileDS));<br/>
+ attachmentPart.setContentType("application/xml");<br/>
+ request.addAttachmentPart(attachmentPart);
+</code>
+</blockquote>
+<br/>
+<!-- Step 5 -->
+5. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+6. Send the SOAP request to Hermes 2 ebMS Sender Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPMessage response = soapConn.call(request, senderWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();<br/>
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the message identifiers to System.out if doesn't.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   SOAPElement messageIdElement = getFirstChild(responseBody, "message_id", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   System.out.println(messageIdElement == null ? null : messageIdElement.getValue());<br/>
+ } else {<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+ }		
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>messageId</b> and 
+namspace URI equal to <i>nsURI</i>.The <b>messageId</b> represent the message has been sucessfully send to hermes2 and 
+registered an identifier.
+<br/>
+The SOAP Request is now transformed to ebms message storing in the persistence. It 
+will deliver the ebms message a while later to your partner specifing in the SOAP request 
+parameter (It use cpaId, service and action to identify the partnership).    
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+
+<!-- EbMS Receiver List Web Service -->
+<br/><br/><br/><hr/>
+<a id="ebms-2_0-recvlist-ws"></a>
+<h2>3. Writing an ebMS 2.0 Receiver List Web Service client</h2>
+<p>
+<p>We need to create a SOAP Message with 9 parameters (cpaId, service, action, convId, fromPartyId, fromPartyType, 
+   toPartyId, toPartyType and numOfMessages) as the web service request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";<br />
+ private String nsPrefix = "tns"; <br />
+ private String URL receiverListWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver_list";
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;cpaId&gt; ebmscpaid &lt;/cpaId&gt;</span></li>
+    <li><span>&lt;service&gt; http://localhost:8080/corvus/httpd/ebms/inbound &lt;service&gt;</li>
+    <li><span>&lt;action&gt; action &lt;/action&gt;</span></li>
+    <li><span>&lt;convId&gt; convId &lt;/convId&gt;</span></li>
+    <li><span>&lt;fromPartyId&gt; fromPartyId &lt;/fromPartyId&gt;</span></li>
+    <li><span>&lt;fromPartyType&gt; fromPartyType &lt;/fromPartyType&gt;</span></li>
+    <li><span>&lt;toPartyId&gt; toPartyId &lt;/toPartyId&gt;</span></li>
+    <li><span>&lt;toPartyType&gt; toPartyType &lt;/toPartyType&gt;</span></li>
+    <li><span>&lt;numOfMessages&gt; &lt;/100&gt;</span></li>  
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));<br/>
+ soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));<br/>
+ soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));<br/>
+ soapBody.addChildElement(createElement("convId", nsPrefix, nsURI, conversationId));<br/>
+ soapBody.addChildElement(createElement("fromPartyId", nsPrefix, nsURI, fromPartyId));<br/>
+ soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));<br/>
+ soapBody.addChildElement(createElement("toPartyId", nsPrefix, nsURI, toPartyId));<br/>
+ soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));<br/>
+ soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, numOfMessages));
+</code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+</p>
+<!-- Step 5 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+5. Send the SOAP request to Hermes 2 ebMS Receiver List Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage response = soapConn.call(request, receiverListWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the all downloadable message identifiers to System.out if doesn't.<br/>
+   The response is something like:
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+&lt;soap-body&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;messageIds&gt;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&lt;messageId&gt; .. &lt;/messageId&gt;<br/>	
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/messageIds&gt;<br/>
+&lt;/soap-body&gt;
+</code>
+</blockquote>
+<br/><br/>
+   
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   SOAPElement messageIdsElement = getFirstChild(responseBody, "messageIds", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Iterator messageIdElementIter = getChildren(messageIdsElement, "messageId", nsURI);
+	<br/><br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    while(messageIdElementIter.hasNext()) {<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    SOAPElement messageIdElement = (SOAPElement)messageIdElementIter.next();<br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    System.out.println(messageIdElement.getValue());<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   }<br/>
+ } else {<br/>
+    throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+ }			
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>messageIds</b> and 
+namspace URI equal to <i>nsURI</i>.<br/> It then extract <b>messageId</b> which represent a list of avalable message awaiting further action.
+<br/>
+The SOAP Request is now transformed to ebms message storing in the persistence. It 
+will deliver the ebms message a while later to your partner specifing in the SOAP request 
+parameter (It use cpaId, service and action to identify the partnership).    
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- EbMS Receiver Web Service -->
+<br/><br/><br/><hr/>
+<a id="ebms-2_0-recv-ws"></a>
+<h2>4. Writing an ebMS 2.0 Receiver Web Service client</h2>
+<p>We need to create a SOAP Message with the message identifier you want to download as the 
+   web service request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL receiverWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver";<br/>
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;messageId&gt; messageId &lt;/messageId&gt;</span></li>
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+ </code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+</p>
+<!-- Step 5 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+5. Send the SOAP request to Hermes 2 ebMS Receiver List Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPMessage response = soapConn.call(request, receiverWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the the payload if the received ebMS message has payload inside the SOAP Response.<br/>
+   The response is something like:<br/>
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ &lt;soap-body&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;	&lt;hasMessage&gt;<br/>
+&lt;/soap-body&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   	.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   	.<br/>
+&nbsp;&nbsp;&nbsp; attachment as a MIME part.
+</code>
+</blockquote>
+<br/>      
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;   SOAPElement hasMessageElement = getFirstChild(responseBody, "hasMessage", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;   ArrayList payloadsList = new ArrayList();<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;   if (hasMessageElement != null){				<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iterator attachmentPartIter = response.getAttachments();<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while(attachmentPartIter.hasNext()) {<br/>
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AttachmentPart attachmentPart = (AttachmentPart) attachmentPartIter.next();<br/>
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InputStream ins = attachmentPart.getDataHandler().getInputStream();<br/>
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Do something I/O to extract the payload to physical file.<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;    }<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp; } else {<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp; }			
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>hasMessage</b> and 
+namspace URI equal to <i>nsURI</i>. The boolean value of <b>hasMessage</b> representing whethere there is payload in this message.
+<br/><br/>
+The payload is extracted as the input stream from the attachment part and can be saved
+by some traditional I/O pipeling to physical file or other business operation.
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- EbMS Status Web Service -->
+<br/><br/><br/><hr/>
+<a id="ebms-2_0-status-ws"></a>
+<h2>5. Writing an ebMS 2.0 Status Web Service client</h2>
+<p>
+<p>We need to create a SOAP Message with the message identifier you want to track it's status as the 
+   web service request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/ebms/status";
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;messageId&gt; messageId &lt;/messageId&gt;</span></li>
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+</code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+</p>
+<!-- Step 5 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+5. Send the SOAP request to Hermes 2 ebMS Status Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPMessage response = soapConn.call(request, statusQueryWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the the status information.<br/>
+   The response is something like:<br/>
+ <blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+&lt;soap-body&gt;<br/>
+ &nbsp;&nbsp;&nbsp;	&lt;MessageInfo&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;status&gt; The current status of message &lt;/status&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;statusDescription&gt; The current status description of message &lt;/statusDescription&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ackMessageId&gt; The message id of acknowledgment / receipt if any &lt;/ackMessageId&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ackStatus&gt; The status of acknowledgment / receipt if any &lt;/ackStatus&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ackStatusDescription&gt; The status description of acknowledgment / receipt if any<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ackStatusDescription&gt; <br/>
+ &nbsp;&nbsp;&nbsp;	&lt;/MessageInfo&gt;<br/>
+&lt;/soap-body&gt;
+</code>
+</blockquote>
+<br/>      
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){ <br/>
+  &nbsp;&nbsp;&nbsp;   SOAPElement messageInfoElement = getFirstChild(responseBody, "messageInfo", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  System.out.println("Message Status          : " <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ getFirstChild(messageInfoElement, "status", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  System.out.println("Message Status Desc     : " <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ getFirstChild(messageInfoElement, "statusDescription", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  System.out.println("Ack Message Identifiers : " <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ getFirstChild(messageInfoElement, "ackMessageId", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  System.out.println("Ack Status              : " <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ getFirstChild(messageInfoElement, "ackStatus", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  System.out.println("Ack Status Desc         : " <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  	+ getFirstChild(messageInfoElement, "ackStatusDescription", nsURI);    <br/>
+ } else {<br/>
+  &nbsp;&nbsp;&nbsp;  throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+ }			
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>messageInfo</b> and 
+namspace URI equal to <i>nsURI</i>.  It then retreive those status value from the element.
+<br/>
+
+
+<!-- EbMS Message History Web Service -->
+<br/><br/><br/><hr/>
+<a id="ebms-2_0-msgHistory-ws"></a>
+<h2>6. Writing an ebMS 2.0 Message History Web Service client</h2>
+<p>
+<p>We need to create a SOAP Message with 7 parameters 
+   (messageId, messageBox, conversationId, cpaId, status, action and service) 
+   as the web service request message and send it to Hermes 2. <br/>
+   It can be done by the following steps:
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/ebms/msg_history";
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.
+This is the sample WSDL request for the message history query WS request:
+<ul>
+   <li><span>&lt;messageId&gt; messageId &lt;/messageId&gt;</span></li>
+   <li><span>&lt;messageBox&gt; messageBox &lt;/messageBox&gt;</span></li>
+   <li><span>&lt;conversationId&gt; conversationId &lt;/conversationId&gt;</span></li>
+   <li><span>&lt;cpaId&gt; cpaId &lt;/cpaId&gt;</span></li>
+   <li><span>&lt;service&gt; service &lt;/service&gt;</span></li>
+   <li><span>&lt;action&gt; action &lt;/action&gt;</span></li>
+   <li><span>&lt;status&gt; status &lt;/status&gt;</span></li>
+</ul>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));<br/>
+ soapBody.addChildElement(createElement("messageBox", nsPrefix, nsURI, messageBox));<br/>
+ soapBody.addChildElement(createElement("conversationId", nsPrefix, nsURI, conversationId));<br/>
+ soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));<br/>
+ soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));<br/>
+ soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));<br/>
+ soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));<br/>
+ soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
+</code>
+</blockquote>
+<br/>
+The method createElement basically creates a SOAP Element with namespace prefix equal to nsPrefix, the namespace URL equal to nsURI and with a textual value equal to the last arguments of the method.
+The implementation of createElement is shown below: 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI);<br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br />
+<!-- Step 4 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br />
+<!-- Step 5 -->
+5. Send the SOAP request to Hermes 2 ebMS Status Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>  
+ SOAPMessage response = soapConn.call(request, msgHistoryWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+6. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the the status information.<br/>
+   The response is something like:<br/>
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ &lt;soap-body&gt; <br/>
+ &nbsp;&nbsp;&nbsp; &lt;messageList&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; MessageID of the Message &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageBox&gt; Message Box containing this message &lt;/messageBox&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; MessageID of the Message &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageBox&gt; Message Box containing this message &lt;/messageBox&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/messageElement&gt;		<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;  . . .  &lt;/messageElement&gt;		<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;  . . .  &lt;/messageElement&gt;		<br/>
+ &nbsp;&nbsp;&nbsp;&lt;/messageList&gt;	<br/>
+&lt;/soap-body&gt;<br/>
+</code>
+</blockquote>
+<br/>      
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+if (!responseBody.hasFault()){ <br/>
+ &nbsp;&nbsp;&nbsp; SOAPElement msgList = SOAPUtilities.getElement(responseBody, "messageList", nsURI, 0);
+  <br/> <br/>
+ &nbsp;&nbsp;&nbsp; Iterator msgIterator =  msgList.getChildElements(); <br/>
+ &nbsp;&nbsp;&nbsp; while(msgIterator.hasNext()){
+ <br/> <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List elementList = new ArrayList();
+ <br/> <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SOAPElement messageElement = (SOAPElement)msgIterator.next();
+ <br/> <br/>		
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Iterator elements = messageElement.getChildElements();
+ <br/> <br/>		
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // MessageId <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SOAPElement msgId = (SOAPElement)(elements.next());					
+ <br/> <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // MessageId <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SOAPElement msgBox = (SOAPElement)(elements.next());
+ <br/> <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.println("Message ID: " + (String)msgId.get(0) + <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "\t" + "Message Box: " + msgBox.get(0)); <br/>
+ &nbsp;&nbsp;&nbsp; } <br/>
+}
+</code>
+</blockquote>
+The method <i>getElement</i> get the element with the name <b>messageList</b> and 
+namspace URI equal to <i>NAMESPACE</i> which is <i>http://service.ebms.edi.cecid.hku.hk/</i>.
+Then, list of <b>messageElement</b> will be extract from <b>messageList</b>, each <b>messageElement</b> contains 
+value of <b>messageId</b> and <b>messageBox</b>.
+<br/>
+ 
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- AS2 Sender Web Service -->
+<br/><br/><br/><hr/>
+<a id="as2-sender-ws"></a>
+<h2>7. Writing a AS2 Sender Web Service client</h2>
+<p>We need to create a SOAP Message with 3 parameters (as2_from, as2_to, type) as the web service request message and 
+   send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL. Also define the AS2 sender web service for Hermes 2.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ private String nsURI = "http://service.as2.edi.cecid.hku.hk/"; <br/>
+ private String nsPrefix = "tns"; <br/>
+ private URL senderWSURL = "http://localhost:8080/corvus/httpd/as2/sender"; <br/>
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;as2_from&gt; as2from &lt;/as2_from&gt;</span></li>
+    <li><span>&lt;as2_to&gt; as2to &lt;as2_to&gt;</li>
+    <li><span>&lt;type&gt; type &lt;/type&gt;</span></li>
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody(); <br/>
+ soapBody.addChildElement(createElement("as2_from", nsPrefix, nsURI, this.as2From)); <br/>
+ soapBody.addChildElement(createElement("as2_to" , nsPrefix, nsURI, this.as2To)); <br/>
+ soapBody.addChildElement(createElement("type"	 , nsPrefix, nsURI, this.type)); <br/>
+</code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI);  <br/>
+ soapElement.addTextNode(value); <br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+
+</p>
+<!-- Step 4 -->
+4. Attach a payload if necessary. The example here uses a purchase order XML as the payload
+   of the ebms message. So the associated content type is <b>application/xml</b>.<br/>
+   <br/>
+   <b>NOTE</b> Only ONE payload is allowed to attach in a SOAP Request for AS2 Sender web service. 
+   
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ AttachmentPart attachmentPart = request.createAttachmentPart(); <br/>
+ FileDataSource fileDS = new FileDataSource(new File("purchase_order.xml")); <br/>
+ attachmentPart.setDataHandler(new DataHandler(fileDS)); <br/>
+ attachmentPart.setContentType("application/xml"); <br/>
+ request.addAttachmentPart(attachmentPart);
+</code>
+</blockquote>
+<br/>
+<!-- Step 5 -->
+5. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+6. Send the SOAP request to Hermes 2 ebMS Sender Web service and get the SOAP Response 
+   for extracting the message identifiers of this AS2 message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPMessage response = soapConn.call(request, senderWSURL); <br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the message identifiers to System.out if doesn't.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){ <br/>
+ &nbsp;&nbsp;&nbsp;   SOAPElement messageIdElement = getFirstChild(responseBody, "message_id", nsURI); <br/>
+ &nbsp;&nbsp;&nbsp;   System.out.println(messageIdElement == null ? null : messageIdElement.getValue()); <br/>
+ } else { <br/>
+ &nbsp;&nbsp;&nbsp;   throw new SOAPException(responseBody.getFault().getFaultString()); <br/>
+ }		
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>message_id</b> and 
+namspace URI equal to <i>nsURI</i>.<br/>
+<br/>
+The SOAP Request is now transformed to as2 message storing in the file system. It 
+will deliver the as2 message a while later to your partner specifing in the SOAP request 
+parameter (It use AS2From and AS2To to identify the sending and receiving partnership).   
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- AS2 Receiver List Web Service -->
+<br/><br/><hr/>
+<a id="as2-recvlist-ws"></a>
+<h2>8. Writing a AS2 Receiver List Web Service client</h2>
+<p>
+We need to create a SOAP Message with 3 parameters (as2From, as2To, numOfMessages) as the web service 
+   request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL. Also define the AS2 receiver list web service for Hermes 2.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ private String nsURI = "http://service.as2.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL receiverListWSURL = "http://localhost:8080/corvus/httpd/as2/receiver_list";
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+     <li><span>&lt;as2_from&gt; as2from &lt;/as2_from&gt;</span></li>
+     <li><span>&lt;as2_to&gt; as2to &lt;as2_to&gt;</li>
+     <li><span>&lt;numOfMessages&gt; 100 &lt;/numOfMessages&gt;</span></li>
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("as2From" , nsPrefix, nsURI, this.as2From));<br/>
+ soapBody.addChildElement(createElement("as2To"	 , nsPrefix, nsURI, this.as2To));<br/>
+ soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, this.numOfMessages + ""));<br/>
+</code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+</p>
+<!-- Step 5 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+5. Send the SOAP request to Hermes 2 ebMS Receiver List Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPMessage response = soapConn.call(request, senderWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the all downloadable message identifiers to System.out if doesn't.<br/>
+   The response is something like:
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ &lt;soap-body&gt;<br/>
+ &nbsp;&nbsp;&nbsp; &lt;messageIds&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; .. &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp; &lt;/messageIds&gt;<br/>
+&lt;/soap-body&gt;
+</code>
+</blockquote>
+<br/>
+   
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+  &nbsp;&nbsp;&nbsp;  SOAPElement messageIdsElement = getFirstChild(responseBody, "messageIds", nsURI);<br/>
+  &nbsp;&nbsp;&nbsp;  Iterator messageIdElementIter = getChildren(messageIdsElement, "messageId", nsURI);
+  <br/><br/>		
+   &nbsp;&nbsp;&nbsp; while(messageIdElementIter.hasNext()) {<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   SOAPElement messageIdElement = (SOAPElement)messageIdElementIter.next();<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   System.out.println(messageIdElement.getValue());<br/>
+   &nbsp;&nbsp;&nbsp; }<br/>
+ } else {,br/>
+  &nbsp;&nbsp;&nbsp; throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+ }			
+</code>
+</blockquote>
+The method <i>getFirstChild</i> get the first child with the name <b>messageIds</b> and 
+namspace URI equal to <i>nsURI</i>.<br/> It then extract all children with the name <b>messageId</b>
+and namespace URI equal to <i>nsURI</i>.
+<br/>
+The SOAP Request is now transformed to ebms message storing in the persistence. It 
+will deliver the ebms message a while later to your partner specifing in the SOAP request 
+parameter (It use cpaId, service and action to identify the partnership).    
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- AS2 Receiver Web Service -->
+<br/><br/><hr/>
+<a id="as2-recv-ws"></a>
+<h2>9. Writing a AS2 Receiver Web Service client</h2>
+<p>The procedure is same as <a href="#ebms-recv-ws" style="text-decoration: underline">ebMS Receiver Web Service Client</a> except
+   following variables are different :<br/>
+   <ol>
+    <li><span>namespace URI   : http://service.as2.edi.cecid.hku.hk/</span></li>
+    <li><span>web service URL : http://localhost:8080/corvus/httpd/as2/receiver</span></li>
+   </ol>     
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<br/><br/><hr/>
+<a id="as2-status-ws"></a>
+<h2>10. Writing a AS2 Status Web Service client</h2>
+<p>
+We need to create a SOAP Message with the message identifier you want to track it's status as the 
+   web service request message and send it to Hermes 2.<br/>
+   It can be done by the following steps:    
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ private String nsURI = "http://service.as2.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/as2/status";
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.<br/>
+   This is the sample WSDL request for the sending EbMS message WS request:<br/>
+   <ul>
+    <li><span>&lt;messageId&gt; messageId &lt;/messageId&gt;</span></li>
+   </ul>	 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+</code>
+</blockquote>
+The method <i>createElement</i> basically creates a SOAP Element with namespace prefix equal to <i>nsPrefix</i>,
+the namespace URL equal to <i>nsURI</i> and with a textual value equal to the last arguments of the method.<br/>
+The implementation of <i>createElement</i> is shown below: 
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br/>
+</p>
+<!-- Step 5 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+5. Send the SOAP request to Hermes 2 AS2 Status Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPMessage response = soapConn.call(request, statusQueryWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();
+</code>
+</blockquote>
+<br/>
+<!-- Step 7 -->
+7. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the the status information.<br/>
+   The response is something like:<br/>
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ &lt;soap-body&gt;<br/>
+  &nbsp;&nbsp;&nbsp; &lt;MessageInfo&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;status&gt; The current status of message &lt;/status&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;statusDescription&gt; The current status description of message &lt;/statusDescription&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mdnMessageId&gt; The message id of acknowledgment / receipt if any &lt;/mdnMessageId&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mdnStatus&gt; The status of acknowledgment / receipt if any &lt;/mdnStatus&gt;<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mdnStatusDescription&gt; The status description of acknowledgment / receipt if any<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/mdnStatusDescription&gt;  <br/>
+  &nbsp;&nbsp;&nbsp; &lt;/MessageInfo&gt;	<br/>
+&lt;/soap-body&gt;
+</code>
+</blockquote>
+<br/>      
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+ &nbsp;&nbsp;&nbsp; SOAPElement messageInfoElement = getFirstChild(responseBody, "MessageInfo", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp; System.out.println("Message Status          : " <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + getFirstChild(messageInfoElement, "status", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp; System.out.println("Message Status Desc     : " <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + getFirstChild(messageInfoElement, "statusDescription", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp; System.out.println("Ack Message Identifiers : " <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + getFirstChild(messageInfoElement, "mdnMessageId", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp; System.out.println("Ack Status              : " <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + getFirstChild(messageInfoElement, "mdnStatus", nsURI);<br/>
+ &nbsp;&nbsp;&nbsp; System.out.println("Ack Status Desc         : " <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + getFirstChild(messageInfoElement, "mdnStatusDescription", nsURI);    <br/>
+ } else { <br/>
+ &nbsp;&nbsp;&nbsp; throw new SOAPException(responseBody.getFault().getFaultString());<br/>
+ }			
+</code>
+</blockquote>
+</div>
+The method <i>getFirstChild</i> get the first child with the name <b>message_id</b> and 
+namspace URI equal to <i>nsURI</i>.<br/>
+<br/>
+</p>
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+
+<!-- AS2 Message History Web Service -->
+<br/><br/><br/><hr/>
+<a id="as2-msgHistory-ws"></a>
+<h2>11. Writing an AS2 Message History Web Service client</h2>
+<p>
+<p>We need to create a SOAP Message with 5 parameters 
+   (messageId, messageBox, as2From, as2To, and status) 
+   as the web service request message and send it to Hermes 2. <br/>
+   It can be done by the following steps:
+<br/><br/>   
+<!-- Step 1 -->     
+1. Define the namespace URI and prefix conformed the WSDL.
+<!-- Code fragment -->
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ private String nsURI = "http://service.as2.edi.cecid.hku.hk/";<br/>
+ private String nsPrefix = "tns";<br/>
+ private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/as2/msg_history";<br/>
+</code>
+</blockquote>
+<br/> 	
+<!-- Step 2 -->
+2. Create a SOAP Message factory and SOAP Message object accordingly.
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> SOAPMessage request = MessageFactory.newInstance().createMessage();</code>
+</blockquote>
+<br/>
+<!-- Step 3 -->
+3. Populate the SOAP Body by filling the required parameters.
+This is the sample WSDL request for the message history query WS request:
+<ul>
+   <li><span>&lt;messageId&gt; messageId &lt;/messageId&gt;</span></li>
+   <li><span>&lt;messageBox&gt; messageBox &lt;/messageBox&gt;</span></li>
+   <li><span>&lt;as2From&gt; as2From &lt;/as2From&gt;</span></li>
+   <li><span>&lt;as2To&gt; as2To &lt;/as2To&gt;</span></li>
+   <li><span>&lt;status&gt; status &lt;/status&gt;</span></li>
+</ul>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPBody soapBody = request.getSOAPBody();<br/>
+ soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));<br/>
+ soapBody.addChildElement(createElement("messageBox", nsPrefix, nsURI, messageBox));<br/>
+ soapBody.addChildElement(createElement("as2From", nsPrefix, nsURI, cpaId));<br/>
+ soapBody.addChildElement(createElement("as2To", nsPrefix, nsURI, service));<br/>
+ soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
+</code>
+</blockquote>
+<br/>
+The method createElement basically creates a SOAP Element with namespace prefix equal to nsPrefix, the namespace URL equal to nsURI and with a textual value equal to the last arguments of the method.
+The implementation of createElement is shown below: 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); <br/>
+ soapElement.addTextNode(value);<br/>
+ return soapElement;
+</code>
+</blockquote>
+<br />
+<!-- Step 4 -->
+4. Save any changes to SOAP Message we've made. 
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> request.saveChange();</code>
+</blockquote>
+<br />
+<!-- Step 5 -->
+5. Send the SOAP request to Hermes 2 AS2 Message History Web service and get the SOAP Response 
+   for extracting the message identifiers of this ebMS message you request for this SOAP
+   request.<br/>
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ SOAPMessage response = soapConn.call(request, receiverListWSURL);<br/>
+ SOAPBody responseBody = response.getSOAPBody();<br/>
+</code>
+</blockquote>
+<br/>
+<!-- Step 6 -->
+6. Process the SOAP Response to see whether there is any SOAP fault and extract 
+   the the status information.<br/>
+   The response is something like:<br/>
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code>
+ &lt;soap-body&gt;<br/>
+ &nbsp;&nbsp;&nbsp; &lt;messageList&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; MessageID of the Message &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageBox&gt; Message Box containing this message &lt;/messageBox&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageId&gt; MessageID of the Message &lt;/messageId&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageBox&gt; Message Box containing this message &lt;/messageBox&gt;<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/messageElement&gt;		<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;  . . .  &lt;/messageElement&gt;		<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;messageElement&gt;  . . .  &lt;/messageElement&gt;		<br/>
+  &nbsp;&nbsp;&nbsp; &lt;/messageList&gt;	<br/>
+&lt;/soap-body&gt;
+</code>
+</blockquote>
+<br/>      
+<!-- Code fragment --> 
+<blockquote style="Background-color: #A9A9A9; color: #FFFFFF">
+<code> 
+ if (!responseBody.hasFault()){<br/>
+	&nbsp;&nbsp;&nbsp;  SOAPElement msgList = SOAPUtilities.getElement(responseBody, "messageList", nsURI, 0);
+	  <br/><br/>
+	&nbsp;&nbsp;&nbsp;  Iterator msgIterator =  msgList.getChildElements();<br/>
+	&nbsp;&nbsp;&nbsp;  while(msgIterator.hasNext()){
+      <br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		List elementList = new ArrayList();
+	  <br/><br/>	
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		SOAPElement messageElement = (SOAPElement)msgIterator.next();
+	  <br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Iterator elements = messageElement.getChildElements();
+	  <br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		// MessageId<br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		SOAPElement msgId = (SOAPElement)(elements.next());	
+	  <br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		// MessageId<br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		SOAPElement msgBox = (SOAPElement)(elements.next());
+      <br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		System.out.println("Message ID: " + (String)msgId.get(0) +<br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			"\t" + "Message Box: " + msgBox.get(0));<br/>
+	 &nbsp;&nbsp;&nbsp; }<br/>
+</code>
+</blockquote>
+The method <i>getElement</i> get the element with the name <b>messageList</b> and 
+namspace URI equal to <i>NAMESPACE</i> which is <i>http://service.as2.edi.cecid.hku.hk/</i>.
+Then, list of <b>messageElement</b> will be extract from <b>messageList</b>, each <b>messageElement</b> contains 
+value of <b>messageId</b> and <b>messageBox</b>.
+<br/>
+
+<div align="right">
+<a href="#summary">Top</a>
+</div>
+<br/><br/><hr/>
+<h2>Reference Article</h2>
+<ul>
+  <li><a style="text-decoration: underline" href="../communicating_hermes_2_through_ws/">Communicating Hermes 2 through WS</a></li>
+  <li><a style="text-decoration: underline" href="../reference_of_ebms_2_0_partnership_configuration" >Reference of ebMS 2.0 Partnership Configuration</a></li>
+  </li>
+  <li><a style="text-decoration: underline" href="../reference_of_as2_partnership_configuration">Reference of AS2 Partnership Configuration</a></li> 
+  </li>
+</ul>
+
+<br/><br/><hr/>
+<h2>Reference Documentation</h2>
+<ul>
+ <li><span>Hermes 2 Application Development Guide</span></li> 
+</ul>
+ 
+   
+	</body>
+</html>

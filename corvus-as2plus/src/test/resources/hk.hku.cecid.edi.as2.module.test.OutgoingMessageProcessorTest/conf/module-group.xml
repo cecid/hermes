@@ -1,0 +1,7 @@
+<module-group name="AS2 Module Group">
+
+	<module>
+		<class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+		<descriptor>module.core.xml</descriptor>
+	</module>
+</module-group>

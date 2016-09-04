@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebms-admin-request>
+	<config>
+		<!-- The user name for logging H2O administrative area -->
+		<username>ebmsTestname</username>
+		<!-- The password for logging H2O administrative area -->
+		<password>ebmsTestpassword</password>				
+		
+		<managePartnershipEndpoint>http://ebmsTest:8080/corvus/admin/ebms/partnership</managePartnershipEndpoint>
+		
+		<envelopQueryEndpoint>http://ebmsTest:8080/corvus/admin/ebms/repository</envelopQueryEndpoint>
+	</config>
+	<param>
+		<!-- 
+		The partnership operation you want to execute, only used by EBMSPartnershipSender.
+		The allowed enumeration of this tag are listed below:
+		 0 - Adding partnership
+		 1 - Deleting partnership
+		 2 - Updating partnership	
+		-->
+		<partnershipOperation>0</partnershipOperation>	
+		
+		<!-- 
+		The message criteria you want to search, only used by EBMSEvenlopQuerySender. 
+		-->
+		<criteria>
+			<messageId>test-ebms-message-id</messageId>							
+			<!-- either INBOX or OUTBOX are allowed -->
+			<messageBox>INBOX</messageBox>
+		</criteria>					
+	</param>		
+</ebms-admin-request>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<as2-msg-history-request>
+	<config>
+		<endpoint>http://localhost:8080/corvus/httpd/as2/msg_history</endpoint>
+	</config>
+	<param>
+		<!--  These fields inside "Criteria" are uses for message history query -->
+		<criteria>
+			<!-- (Optional) Enter message ID Here, you can use % as wildcard -->
+			<!-- <messageId>%localhost%</messageId> -->
+			
+			<!-- Choose either "INBOX" or "OUTBOX", 
+				 empty string stand for searching on both message box-->
+			<!-- <messageBox>INBOX</messageBox> -->
+		
+			<!-- (Optional) Enter as2From party name here, you can use % as wildcard -->
+			<!-- <as2From></as2From> -->
+		
+			<!-- (Optional) Enter as2To party name here, you can use % as wildcard -->
+			<!-- <as2To></as2To> -->
+		
+			<!-- Enter target Message Status here, You can chose
+					DL  for  Delivered
+					DF  for  Delivery Failure
+					PE for   Processed Error
+					PS  for  Processed
+					PR  for  Processing
+					RC  for  Received
+				empty string means searching on ALL types of message status-->
+			<!-- <status>PS</status> -->
+		</criteria>
+	</param>
+</as2-msg-history-request>
+
+
+
