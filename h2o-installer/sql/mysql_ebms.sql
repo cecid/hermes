@@ -27,7 +27,7 @@ CREATE TABLE message (
 	status varchar(2),
 	status_description varchar(4000),
 	PRIMARY KEY (message_id, message_box)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE repository (
 	message_id varchar(255),
@@ -36,19 +36,19 @@ CREATE TABLE repository (
 	time_stamp timestamp null default null,
 	message_box varchar(255),
 	PRIMARY KEY (message_id, message_box)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE outbox (
 	message_id varchar(255),
 	retried integer,
 	PRIMARY KEY (message_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE inbox (
 	message_id varchar(255),
 	order_no bigint,
 	PRIMARY KEY (message_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
 CREATE TABLE partnership (
 	partnership_id varchar(255),
@@ -76,4 +76,4 @@ CREATE TABLE partnership (
 	encrypt_cert LONGBLOB,
 	encrypt_algorithm varchar(5),
 	PRIMARY KEY (partnership_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
