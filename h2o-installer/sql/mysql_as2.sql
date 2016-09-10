@@ -1,4 +1,4 @@
-CREATE TABLE partnership (
+CREATE TABLE IF NOT EXISTS partnership (
 	partnership_id varchar(255) NOT NULL,
 	subject varchar(255),
 	recipient_address varchar(1000),
@@ -25,7 +25,7 @@ CREATE TABLE partnership (
 	PRIMARY KEY (partnership_id)
 )ENGINE=INNODB;
 
-CREATE TABLE message (
+CREATE TABLE IF NOT EXISTS message (
 	message_id varchar(255) NOT NULL,
 	message_box varchar(50) NOT NULL,
 	as2_from varchar(255) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE message (
 	PRIMARY KEY (message_id, message_box)
 )ENGINE= INNODB;
 
-CREATE TABLE repository (
+CREATE TABLE IF NOT EXISTS repository (
 	message_id varchar(255) NOT NULL,
 	message_box varchar(50) NOT NULL,
 	content LONGBLOB NOT NULL,
