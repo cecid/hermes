@@ -9,7 +9,9 @@
    cd hermes
    vagrant up
    ```
-1. Point browser to:
+   Provision is done when `Provision done!` message is shown.
+1. Hermes admin page at:
    ```
-   http://localhost:18080
+   http://localhost:18080/corvus/admin/home
    ```
+   User name and password is both `corvus`
