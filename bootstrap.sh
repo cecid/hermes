@@ -24,6 +24,7 @@ MYSQL_PWD=corvus mysql -u corvus as2 < /vagrant/h2o-installer/sql/mysql_as2.sql
 MYSQL_PWD=corvus mysql -u corvus ebms < /vagrant/h2o-installer/sql/mysql_ebms.sql
 
 # deploy
+service tomcat7 stop
 mv /etc/tomcat7/tomcat-users.xml /etc/tomcat7/tomcat-users.xml.bak
 cat <<EOF > /etc/tomcat7/tomcat-users.xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -33,11 +34,15 @@ cat <<EOF > /etc/tomcat7/tomcat-users.xml
   <user username="corvus" password="corvus" roles="tomcat,admin"/>
 </tomcat-users>
 EOF
+chown root:tomcat7 /etc/tomcat7/tomcat-users.xml
+chmod 640 /etc/tomcat7/tomcat-users.xml
+rm -rf /home/vagrant/hermes_home
 mkdir -p /home/vagrant/hermes_home/logs
 mkdir -p /tmp/h
 cd /tmp/h
 unzip /vagrant/target/hermes2_bin.zip
 rm -rf /tmp/h/plugins/corvus-sfrm
+rm -rf /tmp/h/plugins/corvus-as2plus-admin
 find . -name *.xml -exec sed -i 's/@h2\.home@/\/home\/vagrant\/hermes_home/g' {} \;
 find . -name *.xml -exec sed -i 's/@as2PageletAdaptor@/hk\.hku\.cecid\.edi\.as2\.admin\.listener\.MessageHistoryPageletAdaptor/g' {} \;
 find . -name *.xml -exec sed -i 's/@as2DriverClass@/com\.mysql\.jdbc\.Driver/g' {} \;
@@ -55,7 +60,11 @@ find . -name *.xml -exec sed -i 's/@ebmsValidationQuery@/SELECT now\(\)/g' {} \;
 find . -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/spa\/conf\/ebms.mysql.dao.xml/g' {} \;
 cd
 mv /tmp/h/plugins /home/vagrant/hermes_home
+cp /usr/share/java/mysql.jar /tmp/h/webapps/corvus/WEB-INF/lib/
+rm -rf /var/lib/tomcat7/webapps/corvus
 mv /tmp/h/webapps/* /var/lib/tomcat7/webapps
 chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/*
 chown -R tomcat7:tomcat7 /home/vagrant/hermes_home
 rm -rf /tmp/h
+service tomcat7 stop
+echo "Provision done!"
