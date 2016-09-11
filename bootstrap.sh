@@ -66,5 +66,5 @@ mv /tmp/h/webapps/* /var/lib/tomcat7/webapps
 chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/*
 chown -R tomcat7:tomcat7 /home/vagrant/hermes_home
 rm -rf /tmp/h
-service tomcat7 stop
+service tomcat7 start
 echo "Provision done!"
