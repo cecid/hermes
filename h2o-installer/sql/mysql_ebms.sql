@@ -1,4 +1,4 @@
-CREATE TABLE message (
+CREATE TABLE IF NOT EXISTS message (
 	message_id varchar(255),
 	message_box varchar(255),
 	message_type varchar(255),
@@ -27,30 +27,30 @@ CREATE TABLE message (
 	status varchar(2),
 	status_description varchar(4000),
 	PRIMARY KEY (message_id, message_box)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
-CREATE TABLE repository (
+CREATE TABLE IF NOT EXISTS repository (
 	message_id varchar(255),
 	content_type varchar(255),
 	content LONGBLOB,
 	time_stamp timestamp null default null,
 	message_box varchar(255),
 	PRIMARY KEY (message_id, message_box)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
-CREATE TABLE outbox (
+CREATE TABLE IF NOT EXISTS outbox (
 	message_id varchar(255),
 	retried integer,
 	PRIMARY KEY (message_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
-CREATE TABLE inbox (
+CREATE TABLE IF NOT EXISTS inbox (
 	message_id varchar(255),
 	order_no bigint,
 	PRIMARY KEY (message_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
 
-CREATE TABLE partnership (
+CREATE TABLE IF NOT EXISTS partnership (
 	partnership_id varchar(255),
 	cpa_id varchar(255),
 	service varchar(255),
@@ -76,4 +76,4 @@ CREATE TABLE partnership (
 	encrypt_cert LONGBLOB,
 	encrypt_algorithm varchar(5),
 	PRIMARY KEY (partnership_id)
-)TYPE= INNODB;
+)ENGINE=INNODB;
