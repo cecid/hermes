@@ -5,15 +5,15 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 apt-get update
 echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-apt-get install -y openjdk-7-jdk tomcat7 maven mysql-server libmysql-java
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
+apt-get install -y openjdk-8-jdk tomcat8 maven mysql-server libmysql-java
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
 
 # compile
 cd /vagrant
-sudo -u vagrant mvn pre-clean
-sudo -u vagrant mvn compile
-sudo -u vagrant mvn package
+sudo -u ubuntu mvn pre-clean
+sudo -u ubuntu mvn compile
+sudo -u ubuntu mvn package
 
 # setup database
 MYSQL_PWD=root mysql -u root -e "create database if not exists as2 collate=latin1_general_cs"
@@ -24,9 +24,9 @@ MYSQL_PWD=corvus mysql -u corvus as2 < /vagrant/h2o-installer/sql/mysql_as2.sql
 MYSQL_PWD=corvus mysql -u corvus ebms < /vagrant/h2o-installer/sql/mysql_ebms.sql
 
 # deploy
-service tomcat7 stop
-mv /etc/tomcat7/tomcat-users.xml /etc/tomcat7/tomcat-users.xml.bak
-cat <<EOF > /etc/tomcat7/tomcat-users.xml
+service tomcat8 stop
+mv /etc/tomcat8/tomcat-users.xml /etc/tomcat8/tomcat-users.xml.bak
+cat <<EOF > /etc/tomcat8/tomcat-users.xml
 <?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
   <role rolename="tomcat"/>
@@ -34,8 +34,8 @@ cat <<EOF > /etc/tomcat7/tomcat-users.xml
   <user username="corvus" password="corvus" roles="tomcat,admin"/>
 </tomcat-users>
 EOF
-chown root:tomcat7 /etc/tomcat7/tomcat-users.xml
-chmod 640 /etc/tomcat7/tomcat-users.xml
+chown root:tomcat8 /etc/tomcat8/tomcat-users.xml
+chmod 640 /etc/tomcat8/tomcat-users.xml
 rm -rf /home/vagrant/hermes_home
 mkdir -p /home/vagrant/hermes_home/logs
 mkdir -p /tmp/h
@@ -61,10 +61,10 @@ find . -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/spa\/conf
 cd
 mv /tmp/h/plugins /home/vagrant/hermes_home
 cp /usr/share/java/mysql.jar /tmp/h/webapps/corvus/WEB-INF/lib/
-rm -rf /var/lib/tomcat7/webapps/corvus
-mv /tmp/h/webapps/* /var/lib/tomcat7/webapps
-chown -R tomcat7:tomcat7 /var/lib/tomcat7/webapps/*
-chown -R tomcat7:tomcat7 /home/vagrant/hermes_home
+rm -rf /var/lib/tomcat8/webapps/corvus
+mv /tmp/h/webapps/* /var/lib/tomcat8/webapps
+chown -R tomcat8:tomcat8 /var/lib/tomcat8/webapps/*
+chown -R tomcat8:tomcat8 /home/vagrant/hermes_home
 rm -rf /tmp/h
-service tomcat7 start
+service tomcat8 start
 echo "Provision done!"
