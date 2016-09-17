@@ -17,6 +17,9 @@
 					<execution>
 						<id>spa-zip</id>
 						<phase>package</phase>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

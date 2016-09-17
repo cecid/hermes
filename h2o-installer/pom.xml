@@ -118,6 +118,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
 							<outputDirectory>${project.parent.build.directory}</outputDirectory>							
 							<finalName>hermes2_bin</finalName>
 							<descriptors>
@@ -130,6 +131,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.3</version>
 				<executions>
 					<!-- build classdigram javadoc -->
 					<!--					

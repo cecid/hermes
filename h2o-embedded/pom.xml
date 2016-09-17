@@ -351,6 +351,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
 							<outputDirectory>${project.parent.build.directory}</outputDirectory>							
 							<finalName>hermes2_embedded</finalName>
 							<descriptors>
