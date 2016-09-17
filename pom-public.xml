@@ -75,6 +75,7 @@
 								<goal>single</goal>
 							</goals>
 							<configuration>						
+								<appendAssemblyId>false</appendAssemblyId>
 								<descriptors>
 									<descriptor>${project.parent.basedir}/spa.xml</descriptor>
 								</descriptors>

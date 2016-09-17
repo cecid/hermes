@@ -1,3 +1,5 @@
+## H2O Development Environment
+
 1. Install [Vagrant](https://www.vagrantup.com)
 1. Install [Virtualbox](https://www.virtualbox.org)
 1. Clone repository
@@ -14,4 +16,4 @@
    ```
    http://localhost:18080/corvus/admin/home
    ```
-   User name and password is both `corvus`
+   User name and password are both `corvus`

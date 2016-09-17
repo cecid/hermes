@@ -40,6 +40,7 @@
 							<goal>single</goal>
 						</goals>
 						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
 								<descriptor>assembly.xml</descriptor>
 							</descriptors>

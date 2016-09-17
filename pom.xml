@@ -81,6 +81,7 @@
 								<goal>single</goal>
 							</goals>
 							<configuration>						
+								<appendAssemblyId>false</appendAssemblyId>
 								<descriptors>
 									<descriptor>${project.parent.basedir}/spa.xml</descriptor>
 								</descriptors>
@@ -121,6 +122,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<inherited>false</inherited>
 				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
 					<outputDirectory>${project.build.directory}</outputDirectory>							
 					<finalName>hermes2_src</finalName>
 					<descriptors>
