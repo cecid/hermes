@@ -5,7 +5,7 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 apt-get update
 echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-apt-get install -y openjdk-8-jdk tomcat8 maven mysql-server libmysql-java
+apt-get install -y openjdk-8-jdk tomcat8 maven mysql-server libmysql-java unzip
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
 
