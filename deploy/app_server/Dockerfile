@@ -57,4 +57,4 @@ RUN rm -rf /build
 
 EXPOSE 8080
 
-CMD service tomcat8 start && tail -f /var/log/tomcat6/catalina.out
+CMD service tomcat8 start && tail -f /var/log/tomcat8/catalina.out
