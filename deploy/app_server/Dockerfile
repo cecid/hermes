@@ -49,10 +49,12 @@ RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/
 RUN mv /tmp/h/plugins /hermes_home
 RUN cp /usr/share/java/mysql.jar /tmp/h/webapps/corvus/WEB-INF/lib/
 RUN rm -rf /var/lib/tomcat8/webapps/corvus
-RUN mv /tmp/h/webapps/* /var/lib/tomcat8/webapps
-RUN chown -R tomcat8:tomcat8 /var/lib/tomcat8/webapps/*
+RUN mv /tmp/h/webapps/corvus /var/lib/tomcat8/webapps
+RUN chown -R tomcat8:tomcat8 /var/lib/tomcat8/webapps/corvus
 RUN chown -R tomcat8:tomcat8 /hermes_home
 RUN rm -rf /tmp/h
 RUN rm -rf /build
 
 EXPOSE 8080
+
+CMD service tomcat8 start && tail -f /var/log/tomcat6/catalina.out
