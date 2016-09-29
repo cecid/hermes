@@ -27,7 +27,7 @@
 							<version>3.3.7</version>
 							<packaging>jar</packaging>
 						</configuration>
-					</execution>	
+					</execution>
 					<execution>
 						<id>oracle</id>
 						<phase>pre-clean</phase>
@@ -41,9 +41,9 @@
 							<version>10.2.0.1.0</version>
 							<packaging>jar</packaging>
 						</configuration>
-					</execution>									
+					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -75,8 +75,8 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
-		</plugins>		
+			</plugin>
+		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -93,7 +93,7 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -107,19 +107,19 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-  			<version>4.8.1</version>   			  
-		</dependency>	
+			<version>4.8.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.4.3</version>
-		</dependency>			
+		</dependency>
 		<dependency>
 			<groupId>oracle</groupId>
 			<artifactId>ojdbc14</artifactId>
 			<version>10.2.0.1.0</version>
 			<scope>provided</scope>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-legacy</artifactId>
@@ -132,7 +132,7 @@
 				<exclusion>
 					<groupId>org.hamcrest</groupId>
 					<artifactId>hamcrest-library</artifactId>
-				</exclusion>			
+				</exclusion>
 				<exclusion>
 					<groupId>org.objenesis</groupId>
 					<artifactId>objenesis</artifactId>
@@ -141,8 +141,8 @@
 					<groupId>cglib</groupId>
 					<artifactId>cglib-nodep</artifactId>
 				</exclusion>
-			</exclusions>			
-		</dependency>		
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
@@ -151,11 +151,11 @@
 				<exclusion>
 					<groupId>jaxen</groupId>
 					<artifactId>jaxen</artifactId>
-				</exclusion>	
+				</exclusion>
 				<exclusion>
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
-				</exclusion>						
+				</exclusion>
 				<exclusion>
 					<groupId>xom</groupId>
 					<artifactId>xom</artifactId>
@@ -175,9 +175,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-		 	<groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.15</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.jms</groupId>
@@ -195,8 +195,8 @@
 					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
 				</exclusion>
-			</exclusions>		
-		</dependency>		
+			</exclusions>
+		</dependency>
 		<!-- not required from jdk1.6 -->
 		<dependency>
 			<groupId>javax.xml.soap</groupId>
@@ -207,7 +207,7 @@
 			<groupId>com.sun.xml.messaging.saaj</groupId>
 			<artifactId>saaj-impl</artifactId>
 			<version>1.3.2</version>
-			<scope>runtime</scope>			
-		</dependency>											
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 </project>

@@ -108,7 +108,7 @@ public class PartnershipOpVerifer
 			throws SAXException 
 		{
 			if (capturedEnabled){
-				String s = new String(ch, start, length).replaceAll("\\A\\s|\\s\\z", " ");				
+				String s = new String(ch, start, length).replaceAll("\\A\\s|\\s\\z|\\n", " ");
 				result += s;
 			}
 		}
