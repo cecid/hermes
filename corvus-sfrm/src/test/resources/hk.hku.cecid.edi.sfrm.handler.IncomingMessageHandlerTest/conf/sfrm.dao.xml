@@ -170,5 +170,11 @@
 		
 		<parameter type="sql" name="update_batch_segments_status_complete_time" 
 			value="UPDATE sfrm_message_segment SET status=?, completed_timestamp=? WHERE message_id=? AND message_box=? AND segment_type=?"/>
+
+		<parameter type="finder" name="find_num_of_bytes_by_msgid_msgbox_type_statues"
+			value="SELECT SUM(segment_end - segment_start + 1) FROM sfrm_message_segment WHERE message_id = ? AND message_box = ? AND segment_type LIKE ? AND proceed_timestamp IS NOT NULL AND proceed_timestamp >= ?"/>
+
+		<parameter type="filter" name="find_num_of_bytes_by_msgid_msgbox_type_statues_filter"
+			value="status IN(?)"/>
 	</dao>				
 </dao-config>
