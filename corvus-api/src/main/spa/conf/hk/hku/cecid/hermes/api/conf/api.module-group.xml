@@ -1,0 +1,6 @@
+<module-group name="api">
+    <module>
+        <class>hk.hku.cecid.piazza.commons.module.SystemModule</class>
+        <descriptor>hk/hku/cecid/hermes/api/conf/api.module.xml</descriptor>
+    </module>
+</module-group>

@@ -1,0 +1,7 @@
+<module id="api.main" name="API Plugin" version="1.0">
+    <component id="logger" name="System Logger">
+        <class>hk.hku.cecid.piazza.commons.util.LoggerLog4j</class>
+        <parameter name="config" value="hk/hku/cecid/hermes/api/conf/log4j.properties.xml" />       
+        <parameter name="category" value="hk.hku.cecid.hermes.api" />
+    </component>
+</module>
