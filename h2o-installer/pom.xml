@@ -98,6 +98,12 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
+									<artifactId>corvus-api</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+								</artifactItem>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
 									<artifactId>corvus-wsclient</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>

@@ -10,7 +10,6 @@
 package hk.hku.cecid.hermes.api.listener;
 
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,8 +37,10 @@ public class HermesApiListener extends HttpRequestAdaptor {
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws RequestListenerException {
         try {
             response.setStatus(HttpServletResponse.SC_OK);
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(response.getOutputStream()));
-            pw.println("<html><body><h1>Hello, API!</h1></body></html>");
+            response.setContentType("application/json");
+            OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
+            osw.write("{'msg': 'hello, api!'}");
+            osw.close();
             return null;
         }
         catch (Exception e) {
