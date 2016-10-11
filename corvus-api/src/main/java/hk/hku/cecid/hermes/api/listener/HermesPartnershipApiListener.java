@@ -22,11 +22,11 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  * @author Patrick Yee
  *
  */
-public class HermesApiListener extends HermesAbstractApiListener {
+public class HermesPartnershipApiListener extends HermesAbstractApiListener {
 
-    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException{
+    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
         if (request.getMethod().equalsIgnoreCase("GET")) {
-            jsonBuilder.add("message", "Welcome to Hermes API");
+            jsonBuilder.add("message", "Welcome to Hermes Partnership API");
             jsonBuilder.add("status", "healthy");
         }
         else {

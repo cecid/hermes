@@ -11,13 +11,20 @@
     </parameters>
 
     <runtime>
-        <library name="corvus-api.jar"/>
+        <!--library name="corvus-api.jar"/-->
+        <library name="classes/"/>
         <library name="conf/"/>
+        <library name="javax.json.jar"/>
     </runtime>
 
-    <extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="API Plugin Listener">
+    <extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="API Plugin Greeting Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener" /> 
         <parameter name="context" value="/api" />
+    </extension>
+
+    <extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="API Plugin Partnership Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener" /> 
+        <parameter name="context" value="/api/partnership" />
     </extension>
     
 </plugin>
