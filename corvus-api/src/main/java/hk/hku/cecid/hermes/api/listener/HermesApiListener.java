@@ -11,6 +11,10 @@ package hk.hku.cecid.hermes.api.listener;
 
 import java.io.OutputStreamWriter;
 
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +30,12 @@ import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
  */
 public class HermesApiListener extends HttpRequestAdaptor {
 
+    private JsonBuilderFactory jsonFactory;
+
+    public HermesApiListener() {
+        jsonFactory = Json.createBuilderFactory(null);
+    }
+
     /**
      * processRequest
      * @param request
@@ -35,16 +45,25 @@ public class HermesApiListener extends HttpRequestAdaptor {
      * @see hk.hku.cecid.piazza.commons.servlet.http.HttpRequestListener#processRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws RequestListenerException {
-        try {
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentType("application/json");
-            OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
-            osw.write("{'msg': 'hello, api!'}");
-            osw.close();
-            return null;
+        if (request.getMethod().equalsIgnoreCase("GET")) {
+            try {
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/vnd.api+json");
+                OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
+
+                JsonObjectBuilder jsonBuilder = jsonFactory.createObjectBuilder();
+                jsonBuilder.add("message", "Welcome to Hermes API");
+                jsonBuilder.add("status", "healthy");
+                osw.write(jsonBuilder.build().toString());
+                osw.close();
+                return null;
+            }
+            catch (Exception e) {
+                throw new RequestListenerException("Error in processing API request", e);
+            }
         }
-        catch (Exception e) {
-            throw new RequestListenerException("Error in processing API request", e);
+        else {
+            throw new RequestListenerException("Request method not supported");            
         }
     }
 }
