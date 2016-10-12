@@ -14,9 +14,9 @@ import hk.hku.cecid.piazza.corvus.core.main.handler.HttpdRequestListenerRegistra
 /**
  * ApiRequestListenerRegistrar handles the registration of an HTTP request
  * listener with the API dispatcher context.
- * 
+ *
  * @author Patrick Yee
- *  
+ *
  */
 public class ApiRequestListenerRegistrar extends HttpdRequestListenerRegistrar {
 
