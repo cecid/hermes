@@ -11,6 +11,7 @@ package hk.hku.cecid.hermes.api.listener;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Date;
 
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;
@@ -39,6 +40,10 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
 
     private JsonObjectBuilder createJson() {
         return jsonFactory.createObjectBuilder();
+    }
+
+    protected void addDate(JsonObjectBuilder jsonBuilder) {
+        jsonBuilder.add("Date", (new Date()).getTime() / 1000);
     }
 
     /**

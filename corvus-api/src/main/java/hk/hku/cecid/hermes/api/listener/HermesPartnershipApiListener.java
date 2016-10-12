@@ -27,7 +27,7 @@ public class HermesPartnershipApiListener extends HermesAbstractApiListener {
     protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
         if (request.getMethod().equalsIgnoreCase("GET")) {
             jsonBuilder.add("message", "Welcome to Hermes Partnership API");
-            jsonBuilder.add("status", "healthy");
+            addDate(jsonBuilder);
         }
         else {
             throw new RequestListenerException("Request method not supported");
