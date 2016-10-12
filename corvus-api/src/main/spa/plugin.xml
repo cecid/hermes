@@ -17,14 +17,14 @@
         <library name="javax.json.jar"/>
     </runtime>
 
-    <extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="API Plugin Greeting Listener">
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener" /> 
-        <parameter name="context" value="/api" />
+        <parameter name="context" value="/status" />
     </extension>
 
-    <extension point="hk.hku.cecid.piazza.corvus.core.httpd.listener" name="API Plugin Partnership Listener">
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Partnership Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener" /> 
-        <parameter name="context" value="/api/partnership" />
+        <parameter name="context" value="/partnership" />
     </extension>
     
 </plugin>

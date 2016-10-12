@@ -29,7 +29,7 @@
     <servlet-name>StartupServlet</servlet-name>
     <display-name>Startup Servlet</display-name>
     <servlet-class>
-		hk.hku.cecid.piazza.corvus.core.servlet.StartupServlet
+      hk.hku.cecid.piazza.corvus.core.servlet.StartupServlet
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -38,7 +38,7 @@
     <servlet-name>CoreDispatcher</servlet-name>
     <display-name>Core Dispatcher</display-name>
     <servlet-class>
-        hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcher
+      hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcher
     </servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
@@ -47,15 +47,28 @@
     <servlet-name>AdminDispatcher</servlet-name>
     <display-name>Administration Dispatcher</display-name>
     <servlet-class>
-        hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcher
+      hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcher
     </servlet-class>
     <init-param>
-    	<param-name>context-id</param-name>
-    	<param-value>admin</param-value>
+      <param-name>context-id</param-name>
+      <param-value>admin</param-value>
     </init-param>
     <load-on-startup>3</load-on-startup>
   </servlet>
   
+  <servlet>
+    <servlet-name>ApiDispatcher</servlet-name>
+    <display-name>API Dispatcher</display-name>
+    <servlet-class>
+      hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcher
+    </servlet-class>
+    <init-param>
+      <param-name>context-id</param-name>
+      <param-value>api</param-value>
+    </init-param>
+    <load-on-startup>4</load-on-startup>
+  </servlet>
+
   <!-- Servlet Mappings -->
   <servlet-mapping>
     <servlet-name>CoreDispatcher</servlet-name>
@@ -67,6 +80,11 @@
     <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>ApiDispatcher</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+
   <!-- Welcome Files -->
   <welcome-file-list id="WelcomeFileList">
     <welcome-file>index.html</welcome-file>
@@ -124,6 +142,9 @@
   </security-role> 
   <security-role> 
     <role-name>corvus</role-name> 
+  </security-role> 
+  <security-role> 
+    <role-name>api</role-name> 
   </security-role> 
   <security-role> 
     <role-name>user</role-name> 
