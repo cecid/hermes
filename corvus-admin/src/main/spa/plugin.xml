@@ -22,6 +22,8 @@
 
 	<extension-point id="hk.hku.cecid.piazza.corvus.admin.httpd.listener" name="Admin Request Listener Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminRequestListenerRegistrar" />
 
+	<extension-point id="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Request Listener Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.ApiRequestListenerRegistrar" />
+
 	<extension-point id="hk.hku.cecid.piazza.corvus.admin.pagelet" name="Admin Page Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminPageletRegistrar" />
 
 	<extension-point id="hk.hku.cecid.piazza.corvus.admin.module" name="Admin Module Registrar" class="hk.hku.cecid.piazza.corvus.admin.handler.AdminModuleRegistrar" />

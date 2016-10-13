@@ -29,7 +29,15 @@ public class AdminPluginHandler implements PluginHandler {
      * The ID of the admin dispatcher context.
      */
     public static final String ADMIN_CONTEXT_ID = "admin"; 
+    public static final String API_CONTEXT_ID = "api"; 
         
+    private HttpDispatcherContext createDefaultDispatchContext() {
+        HttpDispatcherContext context = new HttpDispatcherContext();
+        context.setRequestEncoding(HttpDispatcherContext.getDefaultContext().getRequestEncoding());
+        context.setResponseEncoding(HttpDispatcherContext.getDefaultContext().getResponseEncoding());
+        return context;
+    }
+
     /**
      * Processes the admin plugin activation and creates a new HTTP dispatcher
      * context for the admin dispatcher.
@@ -39,11 +47,9 @@ public class AdminPluginHandler implements PluginHandler {
      * @see hk.hku.cecid.piazza.commons.spa.PluginHandler#processActivation(hk.hku.cecid.piazza.commons.spa.Plugin)
      */
     public void processActivation(Plugin plugin) throws PluginException {
-       
-        HttpDispatcherContext context = new HttpDispatcherContext();
-        context.setRequestEncoding(HttpDispatcherContext.getDefaultContext().getRequestEncoding());
-        context.setResponseEncoding(HttpDispatcherContext.getDefaultContext().getResponseEncoding());
-        HttpDispatcherContext.addContext(ADMIN_CONTEXT_ID, context);
+      
+        HttpDispatcherContext.addContext(ADMIN_CONTEXT_ID, this.createDefaultDispatchContext());
+        HttpDispatcherContext.addContext(API_CONTEXT_ID, this.createDefaultDispatchContext());
     }
 
     /**

@@ -30,6 +30,7 @@
 		<module>corvus-as2plus-admin</module>
 		<module>corvus-main-admin</module>
 		<module>corvus-wsclient</module>
+		<module>corvus-api</module>
 	</modules>
 	<!-- Build Configuration -->
 	<build>
@@ -152,6 +153,11 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>corvus-as2plus</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>corvus-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

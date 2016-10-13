@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin 
+   id="hk.hku.cecid.hermes.api"
+   name="Piazza Corvus API Plugin"
+   version="${build-date}"
+   provider-name="hk.hku.cecid"
+   class="hk.hku.cecid.hermes.api.spa.ApiPlugin">
+
+    <parameters>
+        <parameter name="module-group-descriptor" value="hk/hku/cecid/hermes/api/conf/api.module-group.xml"/>
+    </parameters>
+
+    <runtime>
+        <!--library name="corvus-api.jar"/-->
+        <library name="classes/"/>
+        <library name="conf/"/>
+        <library name="javax.json.jar"/>
+    </runtime>
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener" /> 
+        <parameter name="context" value="/status" />
+    </extension>
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Partnership Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener" /> 
+        <parameter name="context" value="/partnership" />
+    </extension>
+    
+</plugin>

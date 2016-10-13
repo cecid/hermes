@@ -26,6 +26,10 @@
    ```
    git clone git@gitlab.com:cecid/hermes.git
    ```
+1. Set environment variable
+   ```
+   export DOCKER_HOST=unix:///var/run/docker.sock
+   ```
 1. Run
    ```
    cd hermes
@@ -41,6 +45,10 @@
 1. Clone repository (if not already cloned)
    ```
    git clone git@gitlab.com:cecid/hermes.git
+   ```
+1. Set environment variable
+   ```
+   export DOCKER_HOST=unix:///var/run/docker.sock
    ```
 1. Build Hermes Database image
    ```
@@ -67,6 +75,10 @@
 1. Clone repository (if not already cloned)
    ```
    git clone git@gitlab.com:cecid/hermes.git
+   ```
+1. Set environment variable
+   ```
+   export DOCKER_HOST=unix:///var/run/docker.sock
    ```
 1. Build Hermes App Server image
    ```
