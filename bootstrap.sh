@@ -31,7 +31,9 @@ cat <<EOF > /etc/tomcat8/tomcat-users.xml
 <tomcat-users>
   <role rolename="tomcat"/>
   <role rolename="admin"/>
+  <role rolename="api"/>
   <user username="corvus" password="corvus" roles="tomcat,admin"/>
+  <user username="apiuser" password="corvus" roles="api"/>
 </tomcat-users>
 EOF
 chown root:tomcat8 /etc/tomcat8/tomcat-users.xml
