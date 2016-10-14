@@ -113,6 +113,26 @@
 
   <security-constraint>
     <web-resource-collection>
+      <web-resource-name>Restricted API resources</web-resource-name>
+      <description>No description</description>
+      <url-pattern>/api/*</url-pattern>
+      <http-method>HEAD</http-method>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+      <http-method>PUT</http-method>
+      <http-method>DELETE</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>api</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <description>No description</description>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <security-constraint>
+    <web-resource-collection>
       <web-resource-name>Restricted Admin resources</web-resource-name>
       <description>No description</description>
       <url-pattern>/admin/*</url-pattern>
@@ -133,7 +153,7 @@
   </security-constraint>
 
   <login-config>
-    <auth-method>BASIC</auth-method>
+    <auth-method>DIGEST</auth-method>
     <realm-name>Corvus Restricted Area</realm-name>
   </login-config>
 
