@@ -17,6 +17,11 @@
         <library name="javax.json.jar"/>
     </runtime>
 
+    <requires>
+      <import plugin="hk.hku.cecid.ebms" />
+      <import plugin="hk.hku.cecid.piazza.corvus.admin" />
+    </requires>
+
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener" /> 
         <parameter name="context" value="/status" />
