@@ -29,7 +29,7 @@
 
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Partnership Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener" /> 
-        <parameter name="context" value="/partnership" />
+        <parameter name="context" value="/partnership/*" />
     </extension>
     
 </plugin>
