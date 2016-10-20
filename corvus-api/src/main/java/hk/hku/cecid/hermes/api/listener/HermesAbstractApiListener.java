@@ -16,6 +16,7 @@ import java.util.Date;
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,12 +39,21 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         jsonFactory = Json.createBuilderFactory(null);
     }
 
-    private JsonObjectBuilder createJson() {
+    protected JsonObjectBuilder createJsonObject() {
         return jsonFactory.createObjectBuilder();
     }
 
+    protected JsonArrayBuilder createJsonArray() {
+        return jsonFactory.createArrayBuilder();
+    }
+
     protected void addDate(JsonObjectBuilder jsonBuilder) {
-        jsonBuilder.add("Date", (new Date()).getTime() / 1000);
+        jsonBuilder.add("server_time", (new Date()).getTime() / 1000);
+    }
+
+    protected void fillError(JsonObjectBuilder jsonBuilder, int code, String message) {
+        jsonBuilder.add("code", code);
+        jsonBuilder.add("message", message);
     }
 
     /**
@@ -56,7 +66,7 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
      */
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws RequestListenerException {
 
-        JsonObjectBuilder jsonBuilder = createJson();
+        JsonObjectBuilder jsonBuilder = createJsonObject();
 
         try {
             processApi(request, response, jsonBuilder);
