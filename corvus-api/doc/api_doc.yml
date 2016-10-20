@@ -1,0 +1,286 @@
+swagger: '2.0'
+info:
+  title: Hermes RESTful API
+  description: Access Hermes functionalities using RESTful API.
+  version: "1.0.0"
+host: hermes_install_host
+schemes:
+  - http
+basePath: /corvus/api
+produces:
+  - application/vnd.api+json
+paths:
+  /status:
+    get:
+      summary: Query API server status
+      description: |
+        The status endpoint returns the health status of the API server.
+        It also returns the current timestamp and current version of the
+        API server. No parameters are needed.
+      tags:
+        - Status
+      responses:
+        200:
+          description: Hermes' API server status
+          schema:
+            $ref: '#/definitions/Status'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /partnership/ebms:
+    get:
+      summary: Query ebMS partnership
+      description: |
+        The query ebMS partnership endpoint returns all partnerships set up
+        in Hermes ebMS plugin.
+      tags:
+        - Partnership
+      responses:
+        200:
+          description: An array of partnership objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Ebms_Partnership_with_Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create an ebMS partnership
+      description: |
+        The create ebMS partnership endpoint creates a partnership in Hermes
+        server using the parameters.
+      tags:
+        - Partnership
+      parameters:
+        - name: partnership
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Ebms_Partnership'
+      responses:
+        200:
+          description: A partnership ID
+          schema:
+            $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /message/send/ebms:
+    post:
+      summary: Send an ebMS message
+      description: |
+        The send ebMS message endpoint requests Hermes server to send a message.
+        The message should have its parameters fitting a valid partnership configured
+        at Hermes server before sending.
+      tags:
+        - Message
+        - Send
+      parameters:
+        - name: message
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Ebms_Message'
+      responses:
+        200:
+          description: The same message ID that is passed in with the message.
+          schema:
+            $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Query for the status of a ebMS message sending request
+      description: |
+        The query ebMS message status endpoints queries for the status of a previous
+        message sending request.
+      tags:
+        - Message
+        - Send
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: A message with all fields, including the status
+          schema:
+            $ref: '#/definitions/Ebms_Message'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /message/receive/ebms:
+    get:
+      summary: Get a list of unread received ebMS message
+      description: |
+        The get unread ebMS messages endpoints queries for the list of unread
+        messages that has been received for the specified partnership.
+      tags:
+        - Message
+        - Receive
+      parameters:
+        - name: partnership_id
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: |
+            A list of message IDs, which identifies a list unread received
+            messages for the specified partnership. Note that upon query,
+            the list of returned messages will be marked as read; which means
+            it will not be returned next time the same endpoint is invoked.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Get ebMS message by identifier
+      description: |
+        The get ebMS message by identifier endpoint queries Hermes server for the ebMS 
+        message identified by the specified identifier.
+      tags:
+        - Message
+        - Receive
+      parameters:
+        - name: message_id
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Identifier'
+      responses:
+        200:
+          description: The message identified by the specified identifier
+          schema:
+            $ref: '#/definitions/Ebms_Message'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Ebms_Partnership:
+    type: object
+    properties:
+      cpa_id:
+        type: string
+        description: CPA ID field in ebMS contract.
+      service:
+        type: string
+        description: Service field in ebMS contract.
+      action:
+        type: string
+        description: Action field in ebMS contract.
+      disabled:
+        type: boolean
+        description: Whether this partnership is disabled.
+      transport_endpoint:
+        type: string
+        description: Transport endpoint of the partnership.
+      ack_requested:
+        type: boolean
+        description: Whether acknowledgement is required.
+      signed_ack_requested:
+        type: boolean
+        description: Whether signed acknowledgement is required.
+      duplicate_elimination:
+        type: boolean
+        description: Whether duplicate elimination is required.
+      message_order:
+        type: boolean
+        description: Whether message order is guaranteed.
+      persist_duration:
+        type: integer
+        description: Persistence duration of messages.
+      retries:
+        type: integer
+        description: Number of retries for delivery.
+      retry_interval:
+        type: integer
+        description: Number of seconds to wait until retry.
+      signed_requested:
+        type: boolean
+        description: Whether digital signature is required.
+      sign_certicate:
+        type: string
+        format: byte
+        description: Base64 encoded string of the signing certificate.
+  Ebms_Message:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique message identifier
+      from_party_id:
+        type: string
+        description: The 'From Party ID' in the message
+      from_party_role:
+        type: string
+        description: The 'From Party Role' in the message
+      to_party_id:
+        type: string
+        description: The 'To Party ID' in the message
+      to_party_role:
+        type: string
+        description: The 'To Party Role' in the message
+      cpa_id:
+        type: string
+        description: The ID of CPA referenced in the message
+      service:
+        type: string
+        description: The Service referenced in the message
+      action:
+        type: string
+        description: The Action referenced in the message
+      conversation_id:
+        type: string
+        description: Conversation ID of the message
+      ref_message_id:
+        type: string
+        description: Reference messsage ID of the message
+      timestamp:
+        type: integer
+        description: The UNIX timestamp of the message
+      status:
+        type: string
+        description: The status of the message
+      status_description:
+        type: string
+        description: The status description of the message
+  Identifier:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier
+  Ebms_Partnership_with_Identifier:
+    type: object
+    allOf:
+      - "$ref": "#/definitions/Identifier"  
+      - "$ref": "#/definitions/Ebms_Partnership"  
+  Status:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Current status of Hermes API server.
+      server_time:
+        type: integer
+        description: Current datetime in Hermes server (Unix timestamp)
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
