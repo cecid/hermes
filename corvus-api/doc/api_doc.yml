@@ -40,9 +40,12 @@ paths:
         200:
           description: An array of partnership objects
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Ebms_Partnership_with_Identifier'
+            type: object
+            properties:
+              partnerships:
+                type: array
+                items:
+                  $ref: '#/definitions/Ebms_Partnership_with_Identifier'
         500:
           description: Unexpected error
           schema:
@@ -188,27 +191,24 @@ definitions:
         type: string
         description: Transport endpoint of the partnership.
       ack_requested:
-        type: boolean
+        type: string
         description: Whether acknowledgement is required.
       signed_ack_requested:
-        type: boolean
+        type: string
         description: Whether signed acknowledgement is required.
       duplicate_elimination:
-        type: boolean
+        type: string
         description: Whether duplicate elimination is required.
       message_order:
-        type: boolean
+        type: string
         description: Whether message order is guaranteed.
-      persist_duration:
-        type: integer
-        description: Persistence duration of messages.
       retries:
         type: integer
         description: Number of retries for delivery.
       retry_interval:
         type: integer
         description: Number of seconds to wait until retry.
-      signed_requested:
+      sign_requested:
         type: boolean
         description: Whether digital signature is required.
       sign_certicate:
