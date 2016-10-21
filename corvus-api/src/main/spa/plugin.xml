@@ -11,8 +11,7 @@
     </parameters>
 
     <runtime>
-        <!--library name="corvus-api.jar"/-->
-        <library name="classes/"/>
+        <library name="corvus-api.jar"/>
         <library name="conf/"/>
         <library name="javax.json.jar"/>
     </runtime>
