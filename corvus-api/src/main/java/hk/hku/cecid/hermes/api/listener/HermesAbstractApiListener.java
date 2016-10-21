@@ -51,6 +51,15 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         jsonBuilder.add("server_time", (new Date()).getTime() / 1000);
     }
 
+    protected void addString(JsonObjectBuilder jsonBuilder, String key, String value) {
+        if (value != null) {
+            jsonBuilder.add(key, value);
+        }
+        else {
+            jsonBuilder.addNull(key);
+        }
+    }
+
     protected void fillError(JsonObjectBuilder jsonBuilder, int code, String message) {
         jsonBuilder.add("code", code);
         jsonBuilder.add("message", message);
