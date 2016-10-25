@@ -54,7 +54,7 @@ public class HermesPartnershipApiListener extends HermesAbstractApiListener {
                         PartnershipDVO partnershipDVO = (PartnershipDVO) i.next();
                         JsonObjectBuilder jsonItem = this.createJsonObject();
                         this.addString(jsonItem, "id", partnershipDVO.getPartnershipId());
-                        this.addString(jsonItem, "cpa_id", partnershipDVO.getPartnershipId());
+                        this.addString(jsonItem, "cpa_id", partnershipDVO.getCpaId());
                         this.addString(jsonItem, "service", partnershipDVO.getService());
                         this.addString(jsonItem, "action", partnershipDVO.getAction());
                         jsonItem.add("disabled", partnershipDVO.getDisabled().equals("true"));
