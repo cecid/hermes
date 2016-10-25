@@ -9,12 +9,18 @@
 
 package hk.hku.cecid.hermes.api.listener;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Iterator;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -78,11 +84,76 @@ public class HermesPartnershipApiListener extends HermesAbstractApiListener {
                     jsonBuilder.add("partnerships", arrayBuilder);
                 }
                 catch (DAOException e) {
-                    this.fillError(jsonBuilder, -1, "DAO exception");                    
+                    this.fillError(jsonBuilder, -1, "DAO exception");
                 }
             }
             else if (request.getMethod().equalsIgnoreCase("POST")) {
-                // TODO: implement set partnership API here...
+
+                JsonObject jsonObject = null;
+                String id = null;
+                String cpa_id = null;
+                String service = null;
+                String action = null;
+                String transport_endpoint = null;
+
+                try {
+                    JsonReaderFactory factory = Json.createReaderFactory(null);
+                    JsonReader jsonReader = factory.createReader(request.getInputStream());
+                    jsonObject = jsonReader.readObject();
+                    jsonReader.close();
+
+                    id = jsonObject.getString("id");
+                    cpa_id = jsonObject.getString("cpa_id");
+                    service = jsonObject.getString("service");
+                    action = jsonObject.getString("action");
+                    transport_endpoint = jsonObject.getString("transport_endpoint");
+                }
+                catch (IOException e) {
+                    this.fillError(jsonBuilder, -1, "Error reading request data");
+                    return;
+                }
+                catch (Exception e) {
+                    this.fillError(jsonBuilder, -1, "Error parsing request data");
+                    return;
+                }
+
+                if (id == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required partinership field: id");
+                    return;
+                }
+                if (cpa_id == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required partinership field: cpa_id");
+                    return;
+                }
+                if (service == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required partinership field: service");
+                    return;
+                }
+                if (action == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required partinership field: action");
+                    return;
+                }
+                if (transport_endpoint == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required partinership field: transport_endpoint");
+                    return;
+                }
+
+                try {
+                    PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
+                    PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+                    partnershipDVO.setPartnershipId(id);
+                    partnershipDVO.setCpaId(cpa_id);
+                    partnershipDVO.setService(service);
+                    partnershipDVO.setAction(action);
+                    partnershipDVO.setTransportEndpoint(transport_endpoint);
+
+                    partnershipDAO.create(partnershipDVO);
+                    jsonBuilder.add("id", id);
+                }
+                catch (DAOException e) {
+                    this.fillError(jsonBuilder, -1, "Error saving partinership");
+                    return;
+                }
             }
             else {
                 throw new RequestListenerException("Request method not supported");
