@@ -23,6 +23,7 @@ import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPException;
 
+import hk.hku.cecid.ebms.spa.EbmsUtility;
 import hk.hku.cecid.ebms.pkg.EbxmlMessage;
 import hk.hku.cecid.ebms.pkg.MessageHeader;
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
@@ -53,6 +54,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
                 JsonObject jsonObject = null;
                 String partnership_id = null;
+                String conversation_id = null;
                 //byte[] payload = null;
 
                 try {
@@ -62,6 +64,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     jsonReader.close();
 
                     partnership_id = jsonObject.getString("partnership_id");
+                    conversation_id = jsonObject.getString("conversation_id");
                     //String payload_string = jsonObject.getString("payload");
 
                     //Base64.Decoder decoder = Base64.getDecoder();
@@ -99,6 +102,10 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     msgHeader.setCpaId(partnershipDVO.getCpaId());
                     msgHeader.setService(partnershipDVO.getService());
                     msgHeader.setAction(partnershipDVO.getAction());
+                    msgHeader.addFromPartyId("from");
+                    msgHeader.addToPartyId("to");
+                    msgHeader.setConversationId(conversation_id);
+                    msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
 
                     ebmsRequest = new EbmsRequest(request);
                     ebmsRequest.setMessage(ebxmlMessage);
