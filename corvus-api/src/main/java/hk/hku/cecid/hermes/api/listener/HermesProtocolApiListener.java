@@ -9,22 +9,6 @@
 
 package hk.hku.cecid.hermes.api.listener;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Date;
-
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
-import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
-
-
 /**
  * HermesProtocolApiListener
  * 

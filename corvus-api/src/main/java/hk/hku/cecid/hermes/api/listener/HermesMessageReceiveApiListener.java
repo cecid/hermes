@@ -16,12 +16,12 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 
@@ -33,13 +33,14 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  */
 public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
-    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
-        String protocol = this.getProtocolFromPathInfo(request.getPathInfo());
+    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
 
         if (protocol.equalsIgnoreCase("ebms")) {
-            if (request.getMethod().equalsIgnoreCase("GET")) {
+            if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
             }
-            else if (request.getMethod().equalsIgnoreCase("POST")) {
+            else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
             }
             else {
                 throw new RequestListenerException("Request method not supported");

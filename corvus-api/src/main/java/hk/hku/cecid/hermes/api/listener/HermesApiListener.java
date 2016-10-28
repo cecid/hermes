@@ -13,6 +13,7 @@ import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 
@@ -24,8 +25,9 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  */
 public class HermesApiListener extends HermesAbstractApiListener {
 
-    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException{
-        if (request.getMethod().equalsIgnoreCase("GET")) {
+    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException{
+    	HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
             jsonBuilder.add("status", "healthy");
             addDate(jsonBuilder);
         }

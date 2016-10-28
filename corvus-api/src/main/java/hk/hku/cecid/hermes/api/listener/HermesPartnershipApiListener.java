@@ -16,12 +16,12 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 
@@ -33,11 +33,12 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  */
 public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
-    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
-        String protocol = this.getProtocolFromPathInfo(request.getPathInfo());
+    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
 
         if (protocol.equalsIgnoreCase("ebms")) {
-            if (request.getMethod().equalsIgnoreCase("GET")) {
+            if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
                 try {
                     PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
                     JsonArrayBuilder arrayBuilder = this.createJsonArray();
@@ -45,7 +46,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                         PartnershipDVO partnershipDVO = (PartnershipDVO) i.next();
                         JsonObjectBuilder jsonItem = this.createJsonObject();
                         this.addString(jsonItem, "id", partnershipDVO.getPartnershipId());
-                        this.addString(jsonItem, "cpa_id", partnershipDVO.getPartnershipId());
+                        this.addString(jsonItem, "cpa_id", partnershipDVO.getCpaId());
                         this.addString(jsonItem, "service", partnershipDVO.getService());
                         this.addString(jsonItem, "action", partnershipDVO.getAction());
                         jsonItem.add("disabled", partnershipDVO.getDisabled().equals("true"));
@@ -72,7 +73,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                     this.fillError(jsonBuilder, -1, "DAO exception");                    
                 }
             }
-            else if (request.getMethod().equalsIgnoreCase("POST")) {
+            else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
                 // TODO: implement set partnership API here...
             }
             else {
