@@ -26,21 +26,12 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 
 /**
- * HermesApiListener
+ * HermesPartnershipApiListener
  * 
  * @author Patrick Yee
  *
  */
-public class HermesPartnershipApiListener extends HermesAbstractApiListener {
-
-    private String getProtocolFromPathInfo(String pathInfo) {
-        int startIndex = pathInfo.indexOf("/", 1) + 1;
-        int endIndex = pathInfo.indexOf("/", startIndex);
-        if (endIndex == -1) {
-            endIndex = pathInfo.length();
-        }
-        return pathInfo.substring(startIndex, endIndex);
-    }
+public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
     protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
         String protocol = this.getProtocolFromPathInfo(request.getPathInfo());

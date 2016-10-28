@@ -21,13 +21,23 @@
     </requires>
 
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
-        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener" /> 
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesApiListener"/> 
         <parameter name="context" value="/status" />
     </extension>
 
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Partnership Listener">
-        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener" /> 
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesPartnershipApiListener"/> 
         <parameter name="context" value="/partnership/*" />
     </extension>
-    
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message Send Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageSendApiListener"/> 
+        <parameter name="context" value="/message/send/*" />
+    </extension>
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message Receive Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageReceiveApiListener"/> 
+        <parameter name="context" value="/message/receive/*" />
+    </extension>
+
 </plugin>
