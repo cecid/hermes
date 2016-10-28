@@ -18,12 +18,11 @@ package hk.hku.cecid.hermes.api.listener;
 public abstract class HermesProtocolApiListener extends HermesAbstractApiListener {
 
     protected String getProtocolFromPathInfo(String pathInfo) {
-        int startIndex = pathInfo.indexOf("/", 1) + 1;
-        int endIndex = pathInfo.indexOf("/", startIndex);
-        if (endIndex == -1) {
-            endIndex = pathInfo.length();
-        }
-        return pathInfo.substring(startIndex, endIndex);
+    	if (pathInfo.endsWith("/")) {
+    		pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
+    	}
+        int startIndex = pathInfo.lastIndexOf("/") + 1;
+        return pathInfo.substring(startIndex);
     }
 
 }
