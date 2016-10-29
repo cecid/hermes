@@ -12,7 +12,6 @@ package hk.hku.cecid.hermes.api.listener;
 import java.io.IOException;
 
 import java.util.Base64;
-import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.json.Json;
@@ -61,7 +60,6 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     return;
                 }
 
-                List results = null;
                 try {
                     MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
                     MessageDVO message = (MessageDVO) msgDAO.createDVO();
