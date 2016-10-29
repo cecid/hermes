@@ -64,24 +64,22 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 List results = null;
                 try {
                     MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
-                    MessageDVO criteriaDVO = (MessageDVO) msgDAO.createDVO();
-                    criteriaDVO.setMessageId(messageId);
-                    criteriaDVO.setMessageBox(MessageClassifier.MESSAGE_BOX_OUTBOX);
-                    results = msgDAO.findMessagesByHistory(criteriaDVO, 1, 0);
+                    MessageDVO message = (MessageDVO) msgDAO.createDVO();
+                    message.setMessageId(messageId);
+                    message.setMessageBox(MessageClassifier.MESSAGE_BOX_OUTBOX);
+
+                    if (msgDAO.findMessage(message)) {
+                        String status = message.getStatus();
+                        jsonBuilder.add("message_id", messageId);
+                        jsonBuilder.add("status", status);
+                    }
+                    else {
+                        this.fillError(jsonBuilder, -1, "Message with such id not found");
+                        return;
+                    }
                 }
                 catch (DAOException e) {
                     this.fillError(jsonBuilder, -1, "Error loading message status");
-                    return;
-                }
-
-                if (results != null && results.size() > 0) {
-                    MessageDVO message = (MessageDVO) results.get(0);
-                    String status = message.getStatus();
-                    jsonBuilder.add("message_id", messageId);
-                    jsonBuilder.add("status", status);
-                }
-                else {
-                    this.fillError(jsonBuilder, -1, "Message with such id not found");
                     return;
                 }
             }
