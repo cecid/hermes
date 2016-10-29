@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Iterator;
 
+import javax.activation.DataHandler;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -35,6 +36,8 @@ import hk.hku.cecid.ebms.spa.listener.EbmsRequest;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
 import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
+import hk.hku.cecid.piazza.commons.activation.ByteArrayDataSource;
+import hk.hku.cecid.piazza.commons.util.Generator;
 
 /**
  * HermesMessageSendApiListener
@@ -54,8 +57,10 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
                 JsonObject jsonObject = null;
                 String partnership_id = null;
+                String from_party_id = null;
+                String to_party_id = null;
                 String conversation_id = null;
-                //byte[] payload = null;
+                byte[] payload = null;
 
                 try {
                     JsonReaderFactory factory = Json.createReaderFactory(null);
@@ -64,11 +69,15 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     jsonReader.close();
 
                     partnership_id = jsonObject.getString("partnership_id");
+                    from_party_id = jsonObject.getString("from_party_id");
+                    to_party_id = jsonObject.getString("to_party_id");
                     conversation_id = jsonObject.getString("conversation_id");
-                    //String payload_string = jsonObject.getString("payload");
+                    String payload_string = jsonObject.getString("payload");
 
-                    //Base64.Decoder decoder = Base64.getDecoder();
-                    //payload = decoder.decode(payload_string.getBytes());
+                    if (payload_string != null) {
+                        Base64.Decoder decoder = Base64.getDecoder();
+                        payload = decoder.decode(payload_string.getBytes());
+                    }
                 }
                 catch (IOException e) {
                     this.fillError(jsonBuilder, -1, "Error reading request data");
@@ -83,12 +92,21 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     this.fillError(jsonBuilder, -1, "Missing required field: partnership_id");
                     return;
                 }
-                //if (payload == null) {
-                //    this.fillError(jsonBuilder, -1, "Missing required field: payload");
-                //    return;
-                //}
+                if (from_party_id == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required field: from_party_id");
+                    return;
+                }
+                if (to_party_id == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required field: to_party_id");
+                    return;
+                }
+                if (conversation_id == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required field: conversation_id");
+                    return;
+                }
 
                 EbmsRequest ebmsRequest;
+                String messageId = Generator.generateMessageID();
                 try {
                     PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
                     PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
@@ -99,13 +117,21 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
 
                     EbxmlMessage ebxmlMessage = new EbxmlMessage();
                     MessageHeader msgHeader = ebxmlMessage.addMessageHeader();
+
                     msgHeader.setCpaId(partnershipDVO.getCpaId());
                     msgHeader.setService(partnershipDVO.getService());
                     msgHeader.setAction(partnershipDVO.getAction());
-                    msgHeader.addFromPartyId("from");
-                    msgHeader.addToPartyId("to");
+                    msgHeader.addFromPartyId(from_party_id);
+                    msgHeader.addToPartyId(to_party_id);
                     msgHeader.setConversationId(conversation_id);
+                    msgHeader.setMessageId(messageId);
                     msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
+
+                    if (payload != null) {
+                        ByteArrayDataSource bads = new ByteArrayDataSource(payload, "application/octet");
+                        DataHandler dh = new DataHandler(bads);
+                        ebxmlMessage.addPayloadContainer(dh, "payload", null);
+                    }
 
                     ebmsRequest = new EbmsRequest(request);
                     ebmsRequest.setMessage(ebxmlMessage);
@@ -123,11 +149,13 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 try {
                     msh.processOutboundMessage(ebmsRequest, null);
                 } catch (MessageServiceHandlerException e) {
-                    EbmsProcessor.core.log.error(
-                            "Error in passing ebms Request to msh outbound", e);
-                    throw new RequestListenerException(
-                            "Error in passing ebms Request to msh outbound", e);
+                    String message = "Error in passing ebms Request to msh outbound";
+                    EbmsProcessor.core.log.error(message, e);
+                    this.fillError(jsonBuilder, -1, message);
+                    return;
                 }
+
+                jsonBuilder.add("message_id", messageId);
             }
             else {
                 throw new RequestListenerException("Request method not supported");
