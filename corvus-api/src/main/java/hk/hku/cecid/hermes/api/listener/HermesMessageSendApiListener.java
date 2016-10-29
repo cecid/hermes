@@ -12,11 +12,10 @@ package hk.hku.cecid.hermes.api.listener;
 import java.io.IOException;
 
 import java.util.Base64;
-import java.util.Iterator;
+import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
@@ -28,8 +27,11 @@ import hk.hku.cecid.ebms.spa.EbmsUtility;
 import hk.hku.cecid.ebms.pkg.EbxmlMessage;
 import hk.hku.cecid.ebms.pkg.MessageHeader;
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
+import hk.hku.cecid.ebms.spa.dao.MessageDAO;
+import hk.hku.cecid.ebms.spa.dao.MessageDVO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
+import hk.hku.cecid.ebms.spa.handler.MessageClassifier;
 import hk.hku.cecid.ebms.spa.handler.MessageServiceHandler;
 import hk.hku.cecid.ebms.spa.handler.MessageServiceHandlerException;
 import hk.hku.cecid.ebms.spa.listener.EbmsRequest;
@@ -53,6 +55,35 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
 
         if (protocol.equalsIgnoreCase("ebms")) {
             if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
+                String messageId = httpRequest.getParameter("id");
+                if (messageId == null) {
+                    this.fillError(jsonBuilder, -1, "Missing required field: id");
+                    return;
+                }
+
+                List results = null;
+                try {
+                    MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
+                    MessageDVO criteriaDVO = (MessageDVO) msgDAO.createDVO();
+                    criteriaDVO.setMessageId(messageId);
+                    criteriaDVO.setMessageBox(MessageClassifier.MESSAGE_BOX_OUTBOX);
+                    results = msgDAO.findMessagesByHistory(criteriaDVO, 1, 0);
+                }
+                catch (DAOException e) {
+                    this.fillError(jsonBuilder, -1, "Error loading message status");
+                    return;
+                }
+
+                if (results != null && results.size() > 0) {
+                    MessageDVO message = (MessageDVO) results.get(0);
+                    String status = message.getStatus();
+                    jsonBuilder.add("message_id", messageId);
+                    jsonBuilder.add("status", status);
+                }
+                else {
+                    this.fillError(jsonBuilder, -1, "Message with such id not found");
+                    return;
+                }
             }
             else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
                 JsonObject jsonObject = null;
