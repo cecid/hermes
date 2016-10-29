@@ -14,10 +14,12 @@ import java.io.OutputStreamWriter;
 import java.util.Date;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -64,6 +66,20 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
     protected void fillError(JsonObjectBuilder jsonBuilder, int code, String message) {
         jsonBuilder.add("code", code);
         jsonBuilder.add("message", message);
+    }
+
+    protected JsonObject getJsonObjectFromRequest(HttpServletRequest request) {
+        JsonObject jsonObject = null;
+        try {
+            JsonReaderFactory factory = Json.createReaderFactory(null);
+            JsonReader jsonReader = factory.createReader(request.getInputStream());
+            jsonObject = jsonReader.readObject();
+            jsonReader.close();
+        }
+        catch(IOException e) {
+            jsonObject = null;
+        }
+        return jsonObject;
     }
 
     /**

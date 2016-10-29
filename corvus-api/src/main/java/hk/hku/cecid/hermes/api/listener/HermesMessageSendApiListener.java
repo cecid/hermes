@@ -18,8 +18,6 @@ import javax.activation.DataHandler;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPException;
 
@@ -84,38 +82,23 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 }
             }
             else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
-                JsonObject jsonObject = null;
                 String partnership_id = null;
                 String from_party_id = null;
                 String to_party_id = null;
                 String conversation_id = null;
                 byte[] payload = null;
 
-                try {
-                    JsonReaderFactory factory = Json.createReaderFactory(null);
-                    JsonReader jsonReader = factory.createReader(httpRequest.getInputStream());
-                    jsonObject = jsonReader.readObject();
-                    jsonReader.close();
-
-                    partnership_id = jsonObject.getString("partnership_id");
-                    from_party_id = jsonObject.getString("from_party_id");
-                    to_party_id = jsonObject.getString("to_party_id");
-                    conversation_id = jsonObject.getString("conversation_id");
-                    String payload_string = jsonObject.getString("payload");
-
-                    if (payload_string != null) {
-                        Base64.Decoder decoder = Base64.getDecoder();
-                        payload = decoder.decode(payload_string.getBytes());
-                    }
-                }
-                catch (IOException e) {
+                JsonObject jsonObject = this.getJsonObjectFromRequest(httpRequest);
+                if (jsonObject == null) {
                     this.fillError(jsonBuilder, -1, "Error reading request data");
                     return;
                 }
-                catch (Exception e) {
-                    this.fillError(jsonBuilder, -1, "Error parsing request data");
-                    return;
-                }
+
+                partnership_id = jsonObject.getString("partnership_id");
+                from_party_id = jsonObject.getString("from_party_id");
+                to_party_id = jsonObject.getString("to_party_id");
+                conversation_id = jsonObject.getString("conversation_id");
+                String payload_string = jsonObject.getString("payload");
 
                 if (partnership_id == null) {
                     this.fillError(jsonBuilder, -1, "Missing required field: partnership_id");
