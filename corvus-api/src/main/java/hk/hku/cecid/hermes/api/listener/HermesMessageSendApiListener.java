@@ -98,6 +98,11 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 conversation_id = jsonObject.getString("conversation_id");
                 String payload_string = jsonObject.getString("payload");
 
+                if (payload_string != null) {
+                    Base64.Decoder decoder = Base64.getDecoder();
+                    payload = decoder.decode(payload_string.getBytes());
+                }
+
                 if (partnership_id == null) {
                     this.fillError(jsonBuilder, -1, "Missing required field: partnership_id");
                     return;
