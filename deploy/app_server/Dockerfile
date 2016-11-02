@@ -53,7 +53,7 @@ RUN mv /tmp/h/webapps/corvus /var/lib/tomcat8/webapps
 RUN chown -R tomcat8:tomcat8 /var/lib/tomcat8/webapps/corvus
 RUN chown -R tomcat8:tomcat8 /hermes_home
 RUN rm -rf /tmp/h
-#RUN rm -rf /build
+RUN rm -rf /build
 
 EXPOSE 8080
 
