@@ -26,6 +26,7 @@ import hk.hku.cecid.ebms.spa.dao.RepositoryDVO;
 import hk.hku.cecid.ebms.spa.listener.EbmsRequest;
 import hk.hku.cecid.ebms.spa.listener.EbmsResponse;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.soap.SOAPRequest;
 import hk.hku.cecid.piazza.commons.soap.WebServicesRequest;
 import hk.hku.cecid.piazza.commons.util.Generator;
@@ -81,6 +82,8 @@ public class OutboundMessageProcessor {
 					validMessage = handleSOAPRequest((SOAPRequest) requestSource, ebxmlMsg);
 				} else if (requestSource instanceof WebServicesRequest) {
 					validMessage = handleWebServiceRequest((WebServicesRequest) requestSource, ebxmlMsg);
+				} else if (requestSource instanceof RestRequest) {
+					validMessage = handleRestRequest((RestRequest) requestSource, ebxmlMsg);
 				} else {
 					validMessage = false;
 				}
@@ -148,6 +151,24 @@ public class OutboundMessageProcessor {
 				generateAndStoreEbxmlMessage(ebxmlMsg);
 				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Handle message came from Restful API
+	 * 
+	 * @param request
+	 * @return true if valid message, otherwise false
+	 * @throws DAOException
+	 * @throws MessageServiceHandlerException
+	 * @throws SOAPException
+	 */
+	private boolean handleRestRequest(RestRequest restRequest, EbxmlMessage ebxmlMsg)
+			throws DAOException, MessageServiceHandlerException, SOAPException {
+		if (restRequest.getSource() instanceof HttpServletRequest) {
+			generateAndStoreEbxmlMessage(ebxmlMsg);
+			return true;
 		}
 		return false;
 	}

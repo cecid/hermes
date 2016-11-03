@@ -21,6 +21,7 @@ import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
 
@@ -78,7 +79,8 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         JsonObjectBuilder jsonBuilder = createJsonObject();
 
         try {
-            processApi(request, response, jsonBuilder);
+            RestRequest restRequest = new RestRequest(request);
+            processApi(restRequest, jsonBuilder);
 
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/vnd.api+json");
@@ -94,5 +96,5 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         return null;
     }
 
-    protected abstract void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException;
+    protected abstract void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException;
 }
