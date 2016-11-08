@@ -79,7 +79,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                     this.fillError(jsonBuilder, -1, "DAO exception");
                 }
             }
-            else if (request.getMethod().equalsIgnoreCase("POST")) {
+            else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
 
                 JsonObject jsonObject = null;
                 String id = null;
@@ -90,7 +90,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
                 try {
                     JsonReaderFactory factory = Json.createReaderFactory(null);
-                    JsonReader jsonReader = factory.createReader(request.getInputStream());
+                    JsonReader jsonReader = factory.createReader(httpRequest.getInputStream());
                     jsonObject = jsonReader.readObject();
                     jsonReader.close();
 
@@ -131,8 +131,16 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                 }
 
                 try {
+                    // check if partnership id already exists
                     PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
                     PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+                    partnershipDVO.setPartnershipId(id);
+                    if (partnershipDAO.retrieve(partnershipDVO)) {
+                        this.fillError(jsonBuilder, -1, "Partnership [" + id + "] already exists");
+                        return;
+                    }
+
+                    partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
                     partnershipDVO.setPartnershipId(id);
                     partnershipDVO.setCpaId(cpa_id);
                     partnershipDVO.setService(service);
