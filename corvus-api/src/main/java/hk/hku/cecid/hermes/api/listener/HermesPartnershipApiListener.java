@@ -22,37 +22,29 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 
 /**
- * HermesApiListener
+ * HermesPartnershipApiListener
  * 
  * @author Patrick Yee
  *
  */
-public class HermesPartnershipApiListener extends HermesAbstractApiListener {
+public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
-    private String getProtocolFromPathInfo(String pathInfo) {
-        int startIndex = pathInfo.indexOf("/", 1) + 1;
-        int endIndex = pathInfo.indexOf("/", startIndex);
-        if (endIndex == -1) {
-            endIndex = pathInfo.length();
-        }
-        return pathInfo.substring(startIndex, endIndex);
-    }
-
-    protected void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
-        String protocol = this.getProtocolFromPathInfo(request.getPathInfo());
+    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
 
         if (protocol.equalsIgnoreCase("ebms")) {
-            if (request.getMethod().equalsIgnoreCase("GET")) {
+            if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
                 try {
                     PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
                     JsonArrayBuilder arrayBuilder = this.createJsonArray();

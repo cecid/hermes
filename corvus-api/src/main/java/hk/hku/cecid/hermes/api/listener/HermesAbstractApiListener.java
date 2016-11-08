@@ -14,13 +14,16 @@ import java.io.OutputStreamWriter;
 import java.util.Date;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
 
@@ -65,6 +68,20 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         jsonBuilder.add("message", message);
     }
 
+    protected JsonObject getJsonObjectFromRequest(HttpServletRequest request) {
+        JsonObject jsonObject = null;
+        try {
+            JsonReaderFactory factory = Json.createReaderFactory(null);
+            JsonReader jsonReader = factory.createReader(request.getInputStream());
+            jsonObject = jsonReader.readObject();
+            jsonReader.close();
+        }
+        catch(IOException e) {
+            jsonObject = null;
+        }
+        return jsonObject;
+    }
+
     /**
      * processRequest
      * @param request
@@ -78,7 +95,8 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         JsonObjectBuilder jsonBuilder = createJsonObject();
 
         try {
-            processApi(request, response, jsonBuilder);
+            RestRequest restRequest = new RestRequest(request);
+            processApi(restRequest, jsonBuilder);
 
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/vnd.api+json");
@@ -94,5 +112,5 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
         return null;
     }
 
-    protected abstract void processApi(HttpServletRequest request, HttpServletResponse response, JsonObjectBuilder jsonBuilder) throws RequestListenerException;
+    protected abstract void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException;
 }

@@ -43,6 +43,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>ebxml-pkg</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>corvus-admin</artifactId>
             <scope>provided</scope>
         </dependency>
