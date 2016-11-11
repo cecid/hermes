@@ -21,7 +21,7 @@ paths:
         - Status
       responses:
         200:
-          description: Hermes' API server status
+          description: Hermes API server status
           schema:
             $ref: '#/definitions/Status'
         500:
@@ -45,7 +45,7 @@ paths:
               partnerships:
                 type: array
                 items:
-                  $ref: '#/definitions/Ebms_Partnership_with_Identifier'
+                  $ref: '#/definitions/Ebms_Partnership'
         500:
           description: Unexpected error
           schema:
@@ -87,7 +87,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Ebms_Message'
+            $ref: '#/definitions/EbmsMessageSendRequest'
       responses:
         200:
           description: The same message ID that is passed in with the message.
@@ -112,9 +112,9 @@ paths:
           type: string
       responses:
         200:
-          description: A message with all fields, including the status
+          description: Message ID and status
           schema:
-            $ref: '#/definitions/Ebms_Message'
+            $ref: '#/definitions/MessageSendStatus'
         500:
           description: Unexpected error
           schema:
@@ -141,9 +141,12 @@ paths:
             the list of returned messages will be marked as read; which means
             it will not be returned next time the same endpoint is invoked.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Identifier'
+            type: object
+            properties:
+              message_ids:
+                type: array
+                items:
+                  $ref: '#/definitions/ReceivedMessageIdentifier'
         500:
           description: Unexpected error
           schema:
@@ -166,7 +169,7 @@ paths:
         200:
           description: The message identified by the specified identifier
           schema:
-            $ref: '#/definitions/Ebms_Message'
+            $ref: '#/definitions/EbmsReceivedMessage'
         500:
           description: Unexpected error
           schema:
@@ -175,6 +178,9 @@ definitions:
   Ebms_Partnership:
     type: object
     properties:
+      id:
+        type: string
+        description: Unique ID of partnership.
       cpa_id:
         type: string
         description: CPA ID field in ebMS contract.
@@ -263,11 +269,83 @@ definitions:
       id:
         type: string
         description: Unique identifier
-  Ebms_Partnership_with_Identifier:
+  EbmsMessageSendRequest:
     type: object
-    allOf:
-      - "$ref": "#/definitions/Identifier"  
-      - "$ref": "#/definitions/Ebms_Partnership"  
+    properties:
+      partnership_id:
+        type: string
+        description: ID of partnership to refer to for the message to be sent.
+      from_party_id:
+        type: string
+        description: From Party ID of the message to be sent.
+      to_party_id:
+        type: string
+        description: From Party ID of the message to be sent.
+      conversation_id:
+        type: string
+        description: Conversation ID of the message to be sent.
+      payload:
+        type: string
+        description: Payload to be attached with the message, should be Base64 encoded.
+  EbmsReceivedMessage:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Message ID of the message received.
+      cpa_id:
+        type: string
+        description: CPA ID of the message received.
+      service:
+        type: string
+        description: Service of the message received.
+      action:
+        type: string
+        description: Action of the message received.
+      from_party_id:
+        type: string
+        description: From Party ID of the message received.
+      to_party_id:
+        type: string
+        description: From Party ID of the message received.
+      conversation_id:
+        type: string
+        description: Conversation ID of the message received.
+      timestamp:
+        type: integer
+        description: Message timestamp (Unix timestamp).
+      status:
+        type: string
+        description: Status of the message received.
+      payloads:
+        type: array
+        items:
+          $ref: '#/definitions/Payload'
+        description: Payload to be attached with the message, should be Base64 encoded.
+  MessageSendStatus:
+    type: object
+    properties:
+      message_id:
+        type: string
+        description: Message ID
+      status:
+        type: string
+        description: Send status of the message
+  ReceivedMessageIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Message ID
+      timestamp:
+        type: integer
+        description: Message timestamp (Unix timestamp)
+  Payload:
+    type: object
+    properties:
+      payload:
+        type: string
+        description : Payload to attached with the message, Base64 encoded.
   Status:
     type: object
     properties:
