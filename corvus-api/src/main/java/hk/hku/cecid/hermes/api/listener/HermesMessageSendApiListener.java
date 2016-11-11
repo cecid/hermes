@@ -170,7 +170,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     return;
                 }
 
-                jsonBuilder.add("message_id", messageId);
+                jsonBuilder.add("id", messageId);
             }
             else {
                 throw new RequestListenerException("Request method not supported");
