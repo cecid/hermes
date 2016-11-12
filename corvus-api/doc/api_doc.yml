@@ -221,48 +221,6 @@ definitions:
         type: string
         format: byte
         description: Base64 encoded string of the signing certificate.
-  Ebms_Message:
-    type: object
-    properties:
-      id:
-        type: string
-        description: Unique message identifier
-      from_party_id:
-        type: string
-        description: The 'From Party ID' in the message
-      from_party_role:
-        type: string
-        description: The 'From Party Role' in the message
-      to_party_id:
-        type: string
-        description: The 'To Party ID' in the message
-      to_party_role:
-        type: string
-        description: The 'To Party Role' in the message
-      cpa_id:
-        type: string
-        description: The ID of CPA referenced in the message
-      service:
-        type: string
-        description: The Service referenced in the message
-      action:
-        type: string
-        description: The Action referenced in the message
-      conversation_id:
-        type: string
-        description: Conversation ID of the message
-      ref_message_id:
-        type: string
-        description: Reference messsage ID of the message
-      timestamp:
-        type: integer
-        description: The UNIX timestamp of the message
-      status:
-        type: string
-        description: The status of the message
-      status_description:
-        type: string
-        description: The status description of the message
   Identifier:
     type: object
     properties:
