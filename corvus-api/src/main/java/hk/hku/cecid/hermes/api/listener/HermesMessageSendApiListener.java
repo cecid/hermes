@@ -152,7 +152,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     ebmsRequest.setMessage(ebxmlMessage);
                 }
                 catch (DAOException e) {
-                    this.fillError(jsonBuilder, -1, "Error loading partinership");
+                    this.fillError(jsonBuilder, -1, "Error loading partnership");
                     return;
                 }
                 catch (SOAPException e) {
