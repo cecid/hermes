@@ -55,7 +55,12 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                         this.addString(jsonItem, "cpa_id", partnershipDVO.getCpaId());
                         this.addString(jsonItem, "service", partnershipDVO.getService());
                         this.addString(jsonItem, "action", partnershipDVO.getAction());
-                        jsonItem.add("disabled", partnershipDVO.getDisabled().equals("true"));
+                        if (partnershipDVO.getDisabled() != null && partnershipDVO.getDisabled().equals("true")) {
+                            jsonItem.add("disabled", true);
+                        }
+                        else {
+                            jsonItem.add("disabled", false);
+                        }
                         this.addString(jsonItem, "transport_endpoint", partnershipDVO.getTransportEndpoint());
                         this.addString(jsonItem, "ack_requested", partnershipDVO.getAckRequested());
                         this.addString(jsonItem, "signed_ack_requested", partnershipDVO.getAckSignRequested());
@@ -63,7 +68,12 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
                         this.addString(jsonItem, "message_order", partnershipDVO.getMessageOrder());
                         jsonItem.add("retries", partnershipDVO.getRetries());
                         jsonItem.add("retry_interval", partnershipDVO.getRetryInterval());
-                        jsonItem.add("sign_requested", partnershipDVO.getSignRequested().equals("true"));
+                        if (partnershipDVO.getSignRequested() != null && partnershipDVO.getSignRequested().equals("true")) {
+                            jsonItem.add("sign_requested", true);
+                        }
+                        else {
+                            jsonItem.add("sign_requested", false);
+                        }
                         String cert = null;
                         if (partnershipDVO.getSignCert() != null) {
                             Base64.Encoder encoder = Base64.getEncoder();
