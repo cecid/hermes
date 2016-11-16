@@ -702,66 +702,86 @@ margin-bottom: 20px;
 
   var defs = {}
 
-  defs.Ebms_Message = {
+  defs.EbmsMessageSendRequest = {
+  "type" : "object",
+  "properties" : {
+    "partnership_id" : {
+      "type" : "string",
+      "description" : "ID of partnership to refer to for the message to be sent."
+    },
+    "from_party_id" : {
+      "type" : "string",
+      "description" : "From Party ID of the message to be sent."
+    },
+    "to_party_id" : {
+      "type" : "string",
+      "description" : "From Party ID of the message to be sent."
+    },
+    "conversation_id" : {
+      "type" : "string",
+      "description" : "Conversation ID of the message to be sent."
+    },
+    "payload" : {
+      "type" : "string",
+      "description" : "Payload to be attached with the message, should be Base64 encoded."
+    }
+  }
+};
+  defs.EbmsReceivedMessage = {
   "type" : "object",
   "properties" : {
     "id" : {
       "type" : "string",
-      "description" : "Unique message identifier"
-    },
-    "from_party_id" : {
-      "type" : "string",
-      "description" : "The 'From Party ID' in the message"
-    },
-    "from_party_role" : {
-      "type" : "string",
-      "description" : "The 'From Party Role' in the message"
-    },
-    "to_party_id" : {
-      "type" : "string",
-      "description" : "The 'To Party ID' in the message"
-    },
-    "to_party_role" : {
-      "type" : "string",
-      "description" : "The 'To Party Role' in the message"
+      "description" : "Message ID of the message received."
     },
     "cpa_id" : {
       "type" : "string",
-      "description" : "The ID of CPA referenced in the message"
+      "description" : "CPA ID of the message received."
     },
     "service" : {
       "type" : "string",
-      "description" : "The Service referenced in the message"
+      "description" : "Service of the message received."
     },
     "action" : {
       "type" : "string",
-      "description" : "The Action referenced in the message"
+      "description" : "Action of the message received."
+    },
+    "from_party_id" : {
+      "type" : "string",
+      "description" : "From Party ID of the message received."
+    },
+    "to_party_id" : {
+      "type" : "string",
+      "description" : "From Party ID of the message received."
     },
     "conversation_id" : {
       "type" : "string",
-      "description" : "Conversation ID of the message"
-    },
-    "ref_message_id" : {
-      "type" : "string",
-      "description" : "Reference messsage ID of the message"
+      "description" : "Conversation ID of the message received."
     },
     "timestamp" : {
       "type" : "integer",
-      "description" : "The UNIX timestamp of the message"
+      "description" : "Message timestamp (Unix timestamp)."
     },
     "status" : {
       "type" : "string",
-      "description" : "The status of the message"
+      "description" : "Status of the message received."
     },
-    "status_description" : {
-      "type" : "string",
-      "description" : "The status description of the message"
+    "payloads" : {
+      "type" : "array",
+      "description" : "Payload to be attached with the message, should be Base64 encoded.",
+      "items" : {
+        "$ref" : "#/definitions/Payload"
+      }
     }
   }
 };
   defs.Ebms_Partnership = {
   "type" : "object",
   "properties" : {
+    "id" : {
+      "type" : "string",
+      "description" : "Unique ID of partnership."
+    },
     "cpa_id" : {
       "type" : "string",
       "description" : "CPA ID field in ebMS contract."
@@ -783,24 +803,20 @@ margin-bottom: 20px;
       "description" : "Transport endpoint of the partnership."
     },
     "ack_requested" : {
-      "type" : "boolean",
+      "type" : "string",
       "description" : "Whether acknowledgement is required."
     },
     "signed_ack_requested" : {
-      "type" : "boolean",
+      "type" : "string",
       "description" : "Whether signed acknowledgement is required."
     },
     "duplicate_elimination" : {
-      "type" : "boolean",
+      "type" : "string",
       "description" : "Whether duplicate elimination is required."
     },
     "message_order" : {
-      "type" : "boolean",
+      "type" : "string",
       "description" : "Whether message order is guaranteed."
-    },
-    "persist_duration" : {
-      "type" : "integer",
-      "description" : "Persistence duration of messages."
     },
     "retries" : {
       "type" : "integer",
@@ -810,7 +826,7 @@ margin-bottom: 20px;
       "type" : "integer",
       "description" : "Number of seconds to wait until retry."
     },
-    "signed_requested" : {
+    "sign_requested" : {
       "type" : "boolean",
       "description" : "Whether digital signature is required."
     },
@@ -820,13 +836,6 @@ margin-bottom: 20px;
       "description" : "Base64 encoded string of the signing certificate."
     }
   }
-};
-  defs.Ebms_Partnership_with_Identifier = {
-  "allOf" : [ {
-    "$ref" : "#/definitions/Identifier"
-  }, {
-    "$ref" : "#/definitions/Ebms_Partnership"
-  } ]
 };
   defs.Error = {
   "type" : "object",
@@ -845,6 +854,61 @@ margin-bottom: 20px;
     "id" : {
       "type" : "string",
       "description" : "Unique identifier"
+    }
+  }
+};
+  defs.inline_response_200 = {
+  "properties" : {
+    "message_ids" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/ReceivedMessageIdentifier"
+      }
+    }
+  }
+};
+  defs.inline_response_200_1 = {
+  "properties" : {
+    "partnerships" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/Ebms_Partnership"
+      }
+    }
+  }
+};
+  defs.MessageSendStatus = {
+  "type" : "object",
+  "properties" : {
+    "message_id" : {
+      "type" : "string",
+      "description" : "Message ID"
+    },
+    "status" : {
+      "type" : "string",
+      "description" : "Send status of the message"
+    }
+  }
+};
+  defs.Payload = {
+  "type" : "object",
+  "properties" : {
+    "payload" : {
+      "type" : "string",
+      "description" : "Payload to attached with the message, Base64 encoded."
+    }
+  }
+};
+  defs.ReceivedMessageIdentifier = {
+  "type" : "object",
+  "properties" : {
+    "id" : {
+      "type" : "string",
+      "description" : "Message ID"
+    },
+    "timestamp" : {
+      "type" : "integer",
+      "description" : "Message timestamp (Unix timestamp)"
     }
   }
 };
@@ -1034,7 +1098,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         String partnershipId = partnershipId_example; // String | 
         try {
-            array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+            inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageReceiveEbmsGet");
@@ -1057,7 +1121,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         String partnershipId = partnershipId_example; // String | 
         try {
-            array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+            inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageReceiveEbmsGet");
@@ -1084,7 +1148,7 @@ MessageApi *apiInstance = [[MessageApi alloc] init];
 
 // Get a list of unread received ebMS message
 [apiInstance messageReceiveEbmsGetWith:partnershipId
-              completionHandler: ^(array[Identifier] output, NSError* error) {
+              completionHandler: ^(inline_response_200 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1141,7 +1205,7 @@ namespace Example
             try
             {
                 // Get a list of unread received ebMS message
-                array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+                inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1264,10 +1328,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "A list of message IDs, which identifies a list unread received\nmessages for the specified partnership. Note that upon query,\nthe list of returned messages will be marked as read; which means\nit will not be returned next time the same endpoint is invoked.\n",
   "schema" : {
-    "type" : "array",
-    "items" : {
-      "$ref" : "#/definitions/Identifier"
-    }
+    "$ref" : "#/definitions/inline_response_200"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -1488,7 +1549,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         Identifier messageId = ; // Identifier | 
         try {
-            Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+            EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageReceiveEbmsPost");
@@ -1511,7 +1572,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         Identifier messageId = ; // Identifier | 
         try {
-            Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+            EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageReceiveEbmsPost");
@@ -1538,7 +1599,7 @@ MessageApi *apiInstance = [[MessageApi alloc] init];
 
 // Get ebMS message by identifier
 [apiInstance messageReceiveEbmsPostWith:messageId
-              completionHandler: ^(Ebms_Message output, NSError* error) {
+              completionHandler: ^(EbmsReceivedMessage output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -1595,7 +1656,7 @@ namespace Example
             try
             {
                 // Get ebMS message by identifier
-                Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+                EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -1730,7 +1791,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "The message identified by the specified identifier",
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/EbmsReceivedMessage"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -1951,7 +2012,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         String id = id_example; // String | 
         try {
-            Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+            MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageSendEbmsGet");
@@ -1974,7 +2035,7 @@ public class MessageApiExample {
         MessageApi apiInstance = new MessageApi();
         String id = id_example; // String | 
         try {
-            Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+            MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MessageApi#messageSendEbmsGet");
@@ -2001,7 +2062,7 @@ MessageApi *apiInstance = [[MessageApi alloc] init];
 
 // Query for the status of a ebMS message sending request
 [apiInstance messageSendEbmsGetWith:id
-              completionHandler: ^(Ebms_Message output, NSError* error) {
+              completionHandler: ^(MessageSendStatus output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2058,7 +2119,7 @@ namespace Example
             try
             {
                 // Query for the status of a ebMS message sending request
-                Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+                MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2148,7 +2209,7 @@ try {
 
                                             <h2>Responses</h2>
 
-                                                <h3> Status: 200 - A message with all fields, including the status </h3>
+                                                <h3> Status: 200 - Message ID and status </h3>
 
                                                 <ul class="nav nav-tabs nav-tabs-examples" >
 
@@ -2179,9 +2240,9 @@ try {
                                                             <script>
                                                                 $(document).ready(function() {
                                                                     var schemaWrapper = {
-  "description" : "A message with all fields, including the status",
+  "description" : "Message ID and status",
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/MessageSendStatus"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -2400,7 +2461,7 @@ public class MessageApiExample {
     public static void main(String[] args) {
         
         MessageApi apiInstance = new MessageApi();
-        Ebms_Message message = ; // Ebms_Message | 
+        EbmsMessageSendRequest message = ; // EbmsMessageSendRequest | 
         try {
             Identifier result = apiInstance.messageSendEbmsPost(message);
             System.out.println(result);
@@ -2423,7 +2484,7 @@ public class MessageApiExample {
 
     public static void main(String[] args) {
         MessageApi apiInstance = new MessageApi();
-        Ebms_Message message = ; // Ebms_Message | 
+        EbmsMessageSendRequest message = ; // EbmsMessageSendRequest | 
         try {
             Identifier result = apiInstance.messageSendEbmsPost(message);
             System.out.println(result);
@@ -2446,7 +2507,7 @@ public class MessageApiExample {
                                                 <div class="tab-pane" id="examples-Message-messageSendEbmsPost-0-objc">
                                                     <pre class="prettyprint"><code class="language-cpp">
 
-Ebms_Message *message = ; // 
+EbmsMessageSendRequest *message = ; // 
 
 MessageApi *apiInstance = [[MessageApi alloc] init];
 
@@ -2469,7 +2530,7 @@ var  = require('');
 
 var api = new .MessageApi()
 
-var message = ; // {Ebms_Message} 
+var message = ; // {EbmsMessageSendRequest} 
 
 
 var callback = function(error, data, response) {
@@ -2504,7 +2565,7 @@ namespace Example
         {
             
             var apiInstance = new MessageApi();
-            var message = new Ebms_Message(); // Ebms_Message | 
+            var message = new EbmsMessageSendRequest(); // EbmsMessageSendRequest | 
 
             try
             {
@@ -2530,7 +2591,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new io.swagger.client\Api\MessageApi();
-$message = ; // Ebms_Message | 
+$message = ; // EbmsMessageSendRequest | 
 
 try {
     $result = $api_instance->messageSendEbmsPost($message);
@@ -2573,7 +2634,7 @@ try {
   "name" : "message",
   "required" : true,
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/EbmsMessageSendRequest"
   }
 };
 													
@@ -2868,7 +2929,7 @@ public class PartnershipApiExample {
         
         PartnershipApi apiInstance = new PartnershipApi();
         try {
-            array[Ebms_Partnership_with_Identifier] result = apiInstance.partnershipEbmsGet();
+            inline_response_200_1 result = apiInstance.partnershipEbmsGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling PartnershipApi#partnershipEbmsGet");
@@ -2890,7 +2951,7 @@ public class PartnershipApiExample {
     public static void main(String[] args) {
         PartnershipApi apiInstance = new PartnershipApi();
         try {
-            array[Ebms_Partnership_with_Identifier] result = apiInstance.partnershipEbmsGet();
+            inline_response_200_1 result = apiInstance.partnershipEbmsGet();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling PartnershipApi#partnershipEbmsGet");
@@ -2916,7 +2977,7 @@ PartnershipApi *apiInstance = [[PartnershipApi alloc] init];
 
 // Query ebMS partnership
 [apiInstance partnershipEbmsGetWithCompletionHandler: 
-              ^(array[Ebms_Partnership_with_Identifier] output, NSError* error) {
+              ^(inline_response_200_1 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2969,7 +3030,7 @@ namespace Example
             try
             {
                 // Query ebMS partnership
-                array[Ebms_Partnership_with_Identifier] result = apiInstance.partnershipEbmsGet();
+                inline_response_200_1 result = apiInstance.partnershipEbmsGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3051,10 +3112,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "An array of partnership objects",
   "schema" : {
-    "type" : "array",
-    "items" : {
-      "$ref" : "#/definitions/Ebms_Partnership_with_Identifier"
-    }
+    "$ref" : "#/definitions/inline_response_200_1"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -3742,7 +3800,7 @@ public class ReceiveApiExample {
         ReceiveApi apiInstance = new ReceiveApi();
         String partnershipId = partnershipId_example; // String | 
         try {
-            array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+            inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ReceiveApi#messageReceiveEbmsGet");
@@ -3765,7 +3823,7 @@ public class ReceiveApiExample {
         ReceiveApi apiInstance = new ReceiveApi();
         String partnershipId = partnershipId_example; // String | 
         try {
-            array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+            inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ReceiveApi#messageReceiveEbmsGet");
@@ -3792,7 +3850,7 @@ ReceiveApi *apiInstance = [[ReceiveApi alloc] init];
 
 // Get a list of unread received ebMS message
 [apiInstance messageReceiveEbmsGetWith:partnershipId
-              completionHandler: ^(array[Identifier] output, NSError* error) {
+              completionHandler: ^(inline_response_200 output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3849,7 +3907,7 @@ namespace Example
             try
             {
                 // Get a list of unread received ebMS message
-                array[Identifier] result = apiInstance.messageReceiveEbmsGet(partnershipId);
+                inline_response_200 result = apiInstance.messageReceiveEbmsGet(partnershipId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -3973,10 +4031,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "A list of message IDs, which identifies a list unread received\nmessages for the specified partnership. Note that upon query,\nthe list of returned messages will be marked as read; which means\nit will not be returned next time the same endpoint is invoked.\n",
   "schema" : {
-    "type" : "array",
-    "items" : {
-      "$ref" : "#/definitions/Identifier"
-    }
+    "$ref" : "#/definitions/inline_response_200"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -4197,7 +4252,7 @@ public class ReceiveApiExample {
         ReceiveApi apiInstance = new ReceiveApi();
         Identifier messageId = ; // Identifier | 
         try {
-            Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+            EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ReceiveApi#messageReceiveEbmsPost");
@@ -4220,7 +4275,7 @@ public class ReceiveApiExample {
         ReceiveApi apiInstance = new ReceiveApi();
         Identifier messageId = ; // Identifier | 
         try {
-            Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+            EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ReceiveApi#messageReceiveEbmsPost");
@@ -4247,7 +4302,7 @@ ReceiveApi *apiInstance = [[ReceiveApi alloc] init];
 
 // Get ebMS message by identifier
 [apiInstance messageReceiveEbmsPostWith:messageId
-              completionHandler: ^(Ebms_Message output, NSError* error) {
+              completionHandler: ^(EbmsReceivedMessage output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4304,7 +4359,7 @@ namespace Example
             try
             {
                 // Get ebMS message by identifier
-                Ebms_Message result = apiInstance.messageReceiveEbmsPost(messageId);
+                EbmsReceivedMessage result = apiInstance.messageReceiveEbmsPost(messageId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4440,7 +4495,7 @@ try {
                                                                     var schemaWrapper = {
   "description" : "The message identified by the specified identifier",
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/EbmsReceivedMessage"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -4665,7 +4720,7 @@ public class SendApiExample {
         SendApi apiInstance = new SendApi();
         String id = id_example; // String | 
         try {
-            Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+            MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling SendApi#messageSendEbmsGet");
@@ -4688,7 +4743,7 @@ public class SendApiExample {
         SendApi apiInstance = new SendApi();
         String id = id_example; // String | 
         try {
-            Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+            MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling SendApi#messageSendEbmsGet");
@@ -4715,7 +4770,7 @@ SendApi *apiInstance = [[SendApi alloc] init];
 
 // Query for the status of a ebMS message sending request
 [apiInstance messageSendEbmsGetWith:id
-              completionHandler: ^(Ebms_Message output, NSError* error) {
+              completionHandler: ^(MessageSendStatus output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4772,7 +4827,7 @@ namespace Example
             try
             {
                 // Query for the status of a ebMS message sending request
-                Ebms_Message result = apiInstance.messageSendEbmsGet(id);
+                MessageSendStatus result = apiInstance.messageSendEbmsGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4863,7 +4918,7 @@ try {
 
                                             <h2>Responses</h2>
 
-                                                <h3> Status: 200 - A message with all fields, including the status </h3>
+                                                <h3> Status: 200 - Message ID and status </h3>
 
                                                 <ul class="nav nav-tabs nav-tabs-examples" >
 
@@ -4894,9 +4949,9 @@ try {
                                                             <script>
                                                                 $(document).ready(function() {
                                                                     var schemaWrapper = {
-  "description" : "A message with all fields, including the status",
+  "description" : "Message ID and status",
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/MessageSendStatus"
   }
 };
                                                                     var schema = schemaWrapper.schema;
@@ -5115,7 +5170,7 @@ public class SendApiExample {
     public static void main(String[] args) {
         
         SendApi apiInstance = new SendApi();
-        Ebms_Message message = ; // Ebms_Message | 
+        EbmsMessageSendRequest message = ; // EbmsMessageSendRequest | 
         try {
             Identifier result = apiInstance.messageSendEbmsPost(message);
             System.out.println(result);
@@ -5138,7 +5193,7 @@ public class SendApiExample {
 
     public static void main(String[] args) {
         SendApi apiInstance = new SendApi();
-        Ebms_Message message = ; // Ebms_Message | 
+        EbmsMessageSendRequest message = ; // EbmsMessageSendRequest | 
         try {
             Identifier result = apiInstance.messageSendEbmsPost(message);
             System.out.println(result);
@@ -5161,7 +5216,7 @@ public class SendApiExample {
                                                 <div class="tab-pane" id="examples-Send-messageSendEbmsPost-0-objc">
                                                     <pre class="prettyprint"><code class="language-cpp">
 
-Ebms_Message *message = ; // 
+EbmsMessageSendRequest *message = ; // 
 
 SendApi *apiInstance = [[SendApi alloc] init];
 
@@ -5184,7 +5239,7 @@ var  = require('');
 
 var api = new .SendApi()
 
-var message = ; // {Ebms_Message} 
+var message = ; // {EbmsMessageSendRequest} 
 
 
 var callback = function(error, data, response) {
@@ -5219,7 +5274,7 @@ namespace Example
         {
             
             var apiInstance = new SendApi();
-            var message = new Ebms_Message(); // Ebms_Message | 
+            var message = new EbmsMessageSendRequest(); // EbmsMessageSendRequest | 
 
             try
             {
@@ -5245,7 +5300,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new io.swagger.client\Api\SendApi();
-$message = ; // Ebms_Message | 
+$message = ; // EbmsMessageSendRequest | 
 
 try {
     $result = $api_instance->messageSendEbmsPost($message);
@@ -5288,7 +5343,7 @@ try {
   "name" : "message",
   "required" : true,
   "schema" : {
-    "$ref" : "#/definitions/Ebms_Message"
+    "$ref" : "#/definitions/EbmsMessageSendRequest"
   },
   "x-codegen-hasMoreRequired" : false
 };
@@ -5734,7 +5789,7 @@ try {
 
                                             <h2>Responses</h2>
 
-                                                <h3> Status: 200 - Hermes&#39; API server status </h3>
+                                                <h3> Status: 200 - Hermes API server status </h3>
 
                                                 <ul class="nav nav-tabs nav-tabs-examples" >
 
@@ -5765,7 +5820,7 @@ try {
                                                             <script>
                                                                 $(document).ready(function() {
                                                                     var schemaWrapper = {
-  "description" : "Hermes' API server status",
+  "description" : "Hermes API server status",
   "schema" : {
     "$ref" : "#/definitions/Status"
   }
@@ -5929,7 +5984,7 @@ try {
             </div>
             <div id="generator">
                 <div class="content">
-                    Generated 2016-10-15T20:42:42.970Z
+                    Generated 2016-11-12T23:23:09.977Z
                 </div>
             </div>
         </div>

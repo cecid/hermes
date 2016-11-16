@@ -152,7 +152,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     ebmsRequest.setMessage(ebxmlMessage);
                 }
                 catch (DAOException e) {
-                    this.fillError(jsonBuilder, -1, "Error loading partinership");
+                    this.fillError(jsonBuilder, -1, "Error loading partnership");
                     return;
                 }
                 catch (SOAPException e) {
@@ -170,7 +170,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                     return;
                 }
 
-                jsonBuilder.add("message_id", messageId);
+                jsonBuilder.add("id", messageId);
             }
             else {
                 throw new RequestListenerException("Request method not supported");
