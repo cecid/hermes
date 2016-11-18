@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER patrick.yee@gmail.com
 
 # Update System
-RUN apt-get update && apt install -y \
+RUN apt-get update && apt-get install -y \
 	openjdk-8-jdk \
         tomcat8 \
 	maven \
