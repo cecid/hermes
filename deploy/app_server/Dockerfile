@@ -4,7 +4,7 @@ MAINTAINER patrick.yee@gmail.com
 # Update System
 RUN apt-get update && apt-get install -y \
 	openjdk-8-jdk \
-	tomcat8 \
+        tomcat8 \
 	maven \
 	unzip \
 	libmysql-java
