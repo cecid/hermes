@@ -10,25 +10,25 @@
 package hk.hku.cecid.hermes.api.listener;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
+import hk.hku.cecid.piazza.commons.json.JsonParseException;
+import hk.hku.cecid.piazza.commons.json.JsonUtil;
 import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
+import hk.hku.cecid.hermes.api.Constants;
+import hk.hku.cecid.hermes.api.ErrorCode;
 
 
 /**
@@ -39,138 +39,153 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  */
 public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
-    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException {
+    protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+
+        if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+        }
+
+        try {
+            PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
+            ArrayList<Object> partnershipList = new ArrayList<Object>();
+            for (Iterator i = partnershipDAO.findAllPartnerships().iterator(); i.hasNext(); ) {
+                PartnershipDVO partnershipDVO = (PartnershipDVO) i.next();
+
+                Map<String, Object> partnershipDict = new HashMap<String, Object>();
+                partnershipDict.put("id", partnershipDVO.getPartnershipId());
+                partnershipDict.put("cpa_id", partnershipDVO.getCpaId());
+                partnershipDict.put("service", partnershipDVO.getService());
+                partnershipDict.put("action", partnershipDVO.getAction());
+                if (partnershipDVO.getDisabled() != null && partnershipDVO.getDisabled().equals("true")) {
+                    partnershipDict.put("disabled", new Boolean(true));
+                }
+                else {
+                    partnershipDict.put("disabled", new Boolean(false));
+                }
+                partnershipDict.put("transport_endpoint", partnershipDVO.getTransportEndpoint());
+                partnershipDict.put("ack_requested", partnershipDVO.getAckRequested());
+                partnershipDict.put("signed_ack_requested", partnershipDVO.getAckSignRequested());
+                partnershipDict.put("duplicate_elimination", partnershipDVO.getDupElimination());
+                partnershipDict.put("message_order", partnershipDVO.getMessageOrder());
+                partnershipDict.put("retries", new Integer(partnershipDVO.getRetries()));
+                partnershipDict.put("retry_interval", new Integer(partnershipDVO.getRetryInterval()));
+                if (partnershipDVO.getSignRequested() != null && partnershipDVO.getSignRequested().equals("true")) {
+                    partnershipDict.put("sign_requested", new Boolean(true));
+                }
+                else {
+                    partnershipDict.put("sign_requested", new Boolean(false));
+                }
+                String cert = null;
+                if (partnershipDVO.getSignCert() != null) {
+                    Base64.Encoder encoder = Base64.getEncoder();
+                    cert = new String(encoder.encode(partnershipDVO.getSignCert()));
+                }
+                partnershipDict.put("sign_certicate", cert);
+                partnershipList.add(partnershipDict);
+            }
+
+            Map<String, Object> returnObj = new HashMap<String, Object>();
+            returnObj.put("partnerships", partnershipList);
+            return returnObj;
+
+        } catch (DAOException e) {
+            return createError(ErrorCode.ERROR_READING_DATABASE, "DAO exception");
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_UNKNOWN, "Unknown exception: " + e.getMessage());
+        }
+    }
+
+    protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
 
-        if (protocol.equalsIgnoreCase("ebms")) {
-            if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-                try {
-                    PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
-                    JsonArrayBuilder arrayBuilder = this.createJsonArray();
-                    for (Iterator i = partnershipDAO.findAllPartnerships().iterator(); i.hasNext(); ) {
-                        PartnershipDVO partnershipDVO = (PartnershipDVO) i.next();
-                        JsonObjectBuilder jsonItem = this.createJsonObject();
-                        this.addString(jsonItem, "id", partnershipDVO.getPartnershipId());
-                        this.addString(jsonItem, "cpa_id", partnershipDVO.getCpaId());
-                        this.addString(jsonItem, "service", partnershipDVO.getService());
-                        this.addString(jsonItem, "action", partnershipDVO.getAction());
-                        if (partnershipDVO.getDisabled() != null && partnershipDVO.getDisabled().equals("true")) {
-                            jsonItem.add("disabled", true);
-                        }
-                        else {
-                            jsonItem.add("disabled", false);
-                        }
-                        this.addString(jsonItem, "transport_endpoint", partnershipDVO.getTransportEndpoint());
-                        this.addString(jsonItem, "ack_requested", partnershipDVO.getAckRequested());
-                        this.addString(jsonItem, "signed_ack_requested", partnershipDVO.getAckSignRequested());
-                        this.addString(jsonItem, "duplicate_elimination", partnershipDVO.getDupElimination());
-                        this.addString(jsonItem, "message_order", partnershipDVO.getMessageOrder());
-                        jsonItem.add("retries", partnershipDVO.getRetries());
-                        jsonItem.add("retry_interval", partnershipDVO.getRetryInterval());
-                        if (partnershipDVO.getSignRequested() != null && partnershipDVO.getSignRequested().equals("true")) {
-                            jsonItem.add("sign_requested", true);
-                        }
-                        else {
-                            jsonItem.add("sign_requested", false);
-                        }
-                        String cert = null;
-                        if (partnershipDVO.getSignCert() != null) {
-                            Base64.Encoder encoder = Base64.getEncoder();
-                            cert = new String(encoder.encode(partnershipDVO.getSignCert()));
-                        }
-                        this.addString(jsonItem, "sign_certicate", cert);
-
-                        arrayBuilder.add(jsonItem);
-                    }
-                    jsonBuilder.add("partnerships", arrayBuilder);
-                }
-                catch (DAOException e) {
-                    this.fillError(jsonBuilder, -1, "DAO exception");
-                }
-            }
-            else if (httpRequest.getMethod().equalsIgnoreCase("POST")) {
-
-                JsonObject jsonObject = null;
-                String id = null;
-                String cpa_id = null;
-                String service = null;
-                String action = null;
-                String transport_endpoint = null;
-
-                try {
-                    JsonReaderFactory factory = Json.createReaderFactory(null);
-                    JsonReader jsonReader = factory.createReader(httpRequest.getInputStream());
-                    jsonObject = jsonReader.readObject();
-                    jsonReader.close();
-
-                    id = jsonObject.getString("id");
-                    cpa_id = jsonObject.getString("cpa_id");
-                    service = jsonObject.getString("service");
-                    action = jsonObject.getString("action");
-                    transport_endpoint = jsonObject.getString("transport_endpoint");
-                }
-                catch (IOException e) {
-                    this.fillError(jsonBuilder, -1, "Error reading request data");
-                    return;
-                }
-                catch (Exception e) {
-                    this.fillError(jsonBuilder, -1, "Error parsing request data");
-                    return;
-                }
-
-                if (id == null) {
-                    this.fillError(jsonBuilder, -1, "Missing required partinership field: id");
-                    return;
-                }
-                if (cpa_id == null) {
-                    this.fillError(jsonBuilder, -1, "Missing required partinership field: cpa_id");
-                    return;
-                }
-                if (service == null) {
-                    this.fillError(jsonBuilder, -1, "Missing required partinership field: service");
-                    return;
-                }
-                if (action == null) {
-                    this.fillError(jsonBuilder, -1, "Missing required partinership field: action");
-                    return;
-                }
-                if (transport_endpoint == null) {
-                    this.fillError(jsonBuilder, -1, "Missing required partinership field: transport_endpoint");
-                    return;
-                }
-
-                try {
-                    // check if partnership id already exists
-                    PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
-                    PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
-                    partnershipDVO.setPartnershipId(id);
-                    if (partnershipDAO.retrieve(partnershipDVO)) {
-                        this.fillError(jsonBuilder, -1, "Partnership [" + id + "] already exists");
-                        return;
-                    }
-
-                    partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
-                    partnershipDVO.setPartnershipId(id);
-                    partnershipDVO.setCpaId(cpa_id);
-                    partnershipDVO.setService(service);
-                    partnershipDVO.setAction(action);
-                    partnershipDVO.setTransportEndpoint(transport_endpoint);
-
-                    partnershipDAO.create(partnershipDVO);
-                    jsonBuilder.add("id", id);
-                }
-                catch (DAOException e) {
-                    this.fillError(jsonBuilder, -1, "Error saving partinership");
-                    return;
-                }
-            }
-            else {
-                throw new RequestListenerException("Request method not supported");
-            }
+        if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
         }
-        else {
-            this.fillError(jsonBuilder, -1, "Protocol unknown");
+
+        Map<String, Object> inputDict = null;
+        try {
+            inputDict = getDictionaryFromRequest(httpRequest);
+        } catch (IOException e) {
+            return createError(ErrorCode.ERROR_READING_REQUEST, "Exception while reading input stream");
+        } catch (JsonParseException e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Exception while parsing input stream");
+        }
+
+        String id = null;
+        try {
+            id = (String) inputDict.get("id");
+            if (id == null) {
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: id");
+            }
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: id");
+        }
+        String cpa_id = null;
+        try {
+            cpa_id = (String) inputDict.get("cpa_id");
+            if (cpa_id == null) {
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: cpa_id");
+            }
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: cpa_id");
+        }
+        String service = null;
+        try {
+            service = (String) inputDict.get("service");
+            if (service == null) {
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: service");
+            }
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: service");
+        }
+        String action = null;
+        try {
+            action = (String) inputDict.get("action");
+            if (action == null) {
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: action");
+            }
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: action");
+        }
+        String transport_endpoint = null;
+        try {
+            transport_endpoint = (String) inputDict.get("transport_endpoint");
+            if (transport_endpoint == null) {
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: transport_endpoint");
+            }
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: transport_endpoint");
+        }
+
+        try {
+            // check if partnership id already exists
+            PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
+            PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+            partnershipDVO.setPartnershipId(id);
+            if (partnershipDAO.retrieve(partnershipDVO)) {
+                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, "Partnership [" + id + "] already exists");
+            }
+
+            partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+            partnershipDVO.setPartnershipId(id);
+            partnershipDVO.setCpaId(cpa_id);
+            partnershipDVO.setService(service);
+            partnershipDVO.setAction(action);
+            partnershipDVO.setTransportEndpoint(transport_endpoint);
+            partnershipDVO.setRetryInterval(Constants.DEFAULT_PARTNERSHIP_RETRY_INTERVAL);
+            partnershipDVO.setRetries(Constants.DEFAULT_PARTNERSHIP_RETRY_COUNT);
+
+            partnershipDAO.create(partnershipDVO);
+            Map<String, Object> returnObj = new HashMap<String, Object>();
+            returnObj.put("id", id);
+            return returnObj;
+        } catch (DAOException e) {
+            return createError(ErrorCode.ERROR_WRITING_DATABASE, "Error saving partinership");
+        } catch (Exception e) {
+            return createError(ErrorCode.ERROR_UNKNOWN, "Unknown exception: " + e.getMessage());
         }
     }
 }
