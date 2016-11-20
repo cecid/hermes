@@ -19,4 +19,8 @@ public class ErrorCode {
     public static final int ERROR_READING_REQUEST = 10005;
     public static final int ERROR_PARSING_REQUEST = 10006;
     public static final int ERROR_RECORD_ALREADY_EXIST = 10007;
+    public static final int ERROR_DATA_NOT_FOUND = 10008;
+    public static final int ERROR_WRITING_MESSAGE = 10009;
+    public static final int ERROR_SENDING_MESSAGE = 10010;
+    public static final int ERROR_EXTRACTING_PAYLOAD_FROM_MESSAGE = 10011;
 }

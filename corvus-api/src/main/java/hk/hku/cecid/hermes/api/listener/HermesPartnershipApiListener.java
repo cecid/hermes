@@ -24,7 +24,6 @@ import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
 import hk.hku.cecid.piazza.commons.json.JsonParseException;
-import hk.hku.cecid.piazza.commons.json.JsonUtil;
 import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.hermes.api.Constants;
@@ -170,6 +169,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             }
 
             partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+            partnershipDVO.setDisabled(Constants.DEFAULT_PARTNERSHIP_DISABLED);
             partnershipDVO.setPartnershipId(id);
             partnershipDVO.setCpaId(cpa_id);
             partnershipDVO.setService(service);
@@ -177,6 +177,15 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             partnershipDVO.setTransportEndpoint(transport_endpoint);
             partnershipDVO.setRetryInterval(Constants.DEFAULT_PARTNERSHIP_RETRY_INTERVAL);
             partnershipDVO.setRetries(Constants.DEFAULT_PARTNERSHIP_RETRY_COUNT);
+            partnershipDVO.setTransportProtocol(Constants.DEFAULT_PARTNERSHIP_TRANSPORT_PROTOCOL);
+            partnershipDVO.setIsHostnameVerified(Constants.DEFAULT_PARTNERSHIP_HOSTNAME_VERIFY);
+            partnershipDVO.setSyncReplyMode(Constants.DEFAULT_PARTNERSHIP_SYNC_REPLY_MODE);
+            partnershipDVO.setAckRequested(Constants.DEFAULT_PARTNERSHIP_ACK_REQUESTED);
+            partnershipDVO.setAckSignRequested(Constants.DEFAULT_PARTNERSHIP_ACK_SIGN_REQUESTED);
+            partnershipDVO.setDupElimination(Constants.DEFAULT_PARTNERSHIP_DUPLICATE_ELIMINATION);
+            partnershipDVO.setMessageOrder(Constants.DEFAULT_PARTNERSHIP_MESSAGE_ORDER);
+            partnershipDVO.setSignRequested(Constants.DEFAULT_PARTNERSHIP_SIGN_REQUESTED);
+            partnershipDVO.setEncryptRequested(Constants.DEFAULT_PARTNERSHIP_ENCRYPT_REQUESTED);
 
             partnershipDAO.create(partnershipDVO);
             Map<String, Object> returnObj = new HashMap<String, Object>();
