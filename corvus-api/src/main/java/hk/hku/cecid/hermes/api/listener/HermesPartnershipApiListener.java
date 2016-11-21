@@ -169,6 +169,15 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             }
 
             partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+            partnershipDVO.setCpaId(cpa_id);
+            partnershipDVO.setService(service);
+            partnershipDVO.setAction(action);
+
+            if (partnershipDAO.findPartnershipByCPA(partnershipDVO)) {
+                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, "Partnership with same CPA parameters already exists");
+            }
+
+            partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
             partnershipDVO.setDisabled(Constants.DEFAULT_PARTNERSHIP_DISABLED);
             partnershipDVO.setPartnershipId(id);
             partnershipDVO.setCpaId(cpa_id);
