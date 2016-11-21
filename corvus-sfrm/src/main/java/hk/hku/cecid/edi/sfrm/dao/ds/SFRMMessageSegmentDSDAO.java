@@ -344,6 +344,12 @@ public class SFRMMessageSegmentDSDAO extends DataSourceDAO implements
 		String filter = super.getFilter("find_num_of_bytes_by_msgid_msgbox_type_statues_filter");
 		
 		String questionToken = buildQuestionToken(statues.size());
+		if (filter == null) {
+			System.err.println("filter is null");
+		}
+		if (questionToken == null) {
+			System.err.println("questionToken is null");
+		}
 		filter = filter.replace("?", questionToken);
 		sql += " AND " + filter;
 		
