@@ -27,6 +27,7 @@ import hk.hku.cecid.ebms.pkg.EbxmlMessage;
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.MessageDAO;
 import hk.hku.cecid.ebms.spa.dao.MessageDVO;
+import hk.hku.cecid.ebms.spa.dao.MessageServerDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDAO;
 import hk.hku.cecid.ebms.spa.dao.PartnershipDVO;
 import hk.hku.cecid.ebms.spa.handler.EbxmlMessageDAOConvertor;
@@ -63,7 +64,6 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required field: partnership_id");
         }
 
-        List results = null;
         try {
             PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
             PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
@@ -79,27 +79,35 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             criteriaDVO.setService(partnershipDVO.getService());
             criteriaDVO.setAction(partnershipDVO.getAction());
             criteriaDVO.setMessageBox(MessageClassifier.MESSAGE_BOX_INBOX);
-            results = msgDAO.findMessagesByHistory(criteriaDVO, MAX_NUMBER, 0);
+            criteriaDVO.setStatus(MessageClassifier.INTERNAL_STATUS_PROCESSED);
+            List results = msgDAO.findMessagesByHistory(criteriaDVO, MAX_NUMBER, 0);
+
+            MessageServerDAO messageServerDao = (MessageServerDAO) EbmsProcessor.core.dao.createDAO(MessageServerDAO.class);
+
+            if (results != null) {
+                ArrayList<Object> messages = new ArrayList<Object>();
+                for (Iterator i=results.iterator(); i.hasNext() ; ) {
+                    MessageDVO message = (MessageDVO) i.next();
+                    Map<String, Object> messageDict = new HashMap<String, Object>();
+                    messageDict.put("id", message.getMessageId());
+                    messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
+                    messages.add(messageDict);
+
+                    // save delivered status and clear message from inbox
+                    message.setStatus(MessageClassifier.INTERNAL_STATUS_DELIVERED);
+                    message.setStatusDescription("Message is delivered");
+                    messageServerDao.clearMessage(message);
+                }
+                Map<String, Object> returnObj = new HashMap<String, Object>();
+                returnObj.put("message_ids", messages);
+                return returnObj;
+            }
+            else {
+                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "No message can be loaded");
+            }
         }
         catch (DAOException e) {
             return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Error loading messages");
-        }
-
-        if (results != null) {
-            ArrayList<Object> messages = new ArrayList<Object>();
-            for (Iterator i=results.iterator(); i.hasNext() ; ) {
-                MessageDVO message = (MessageDVO) i.next();
-                Map<String, Object> messageDict = new HashMap<String, Object>();
-                messageDict.put("id", message.getMessageId());
-                messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
-                messages.add(messageDict);
-            }
-            Map<String, Object> returnObj = new HashMap<String, Object>();
-            returnObj.put("message_ids", messages);
-            return returnObj;
-        }
-        else {
-            return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "No message can be loaded");
         }
     }
 
