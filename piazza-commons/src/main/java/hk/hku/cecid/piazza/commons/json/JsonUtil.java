@@ -138,10 +138,14 @@ public class JsonUtil {
         }
 
         JsonObject jsonObject = null;
-        JsonReaderFactory factory = Json.createReaderFactory(null);
-        JsonReader jsonReader = factory.createReader(new StringReader(source));
-        jsonObject = jsonReader.readObject();
-        jsonReader.close();
+        try {
+            JsonReaderFactory factory = Json.createReaderFactory(null);
+            JsonReader jsonReader = factory.createReader(new StringReader(source));
+            jsonObject = jsonReader.readObject();
+            jsonReader.close();
+        } catch (Exception e) {
+            throw new JsonParseException(e);
+        }
 
         Map<String, Object> dictionary = new HashMap<String, Object>();
         fill_dictionary(dictionary, jsonObject);
