@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS;
-import org.apache.commons.dbcp.datasources.SharedPoolDataSource;
+import org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS;
+import org.apache.commons.dbcp2.datasources.SharedPoolDataSource;
 
 /**
  * SimpleDSDAOFactory is a subclass of DataSourceDAOFactory and provides an
@@ -104,13 +104,13 @@ public class SimpleDSDAOFactory extends DataSourceDAOFactory {
     
                 SharedPoolDataSource sds = new SharedPoolDataSource();
                 sds.setConnectionPoolDataSource(cpds);
-				sds.setMaxIdle(maxIdle);
-                sds.setMaxActive(maxActive);
-                sds.setMaxWait(maxWait);
+				sds.setDefaultMaxIdle(maxIdle);
+                sds.setMaxTotal(maxActive);
+                sds.setDefaultMaxWaitMillis(maxWait);
                 
-            	sds.setTestOnBorrow(testOnBorrow);
-            	sds.setTestOnReturn(testOnReturn);
-            	sds.setTestWhileIdle(testWhileIdle);
+            	sds.setDefaultTestOnBorrow(testOnBorrow);
+            	sds.setDefaultTestOnReturn(testOnReturn);
+            	sds.setDefaultTestWhileIdle(testWhileIdle);
                 sds.setValidationQuery(validationQuery);
                 	 				
                 datasource = sds;
