@@ -85,8 +85,7 @@ public class SimpleHttpMonitor implements Runnable
 			this.stopped = true;
 			this.serverThread.interrupt();		
 			try{
-				if (this.sSocket!=null) 
-					this.sSocket.close();
+				this.sSocket.close();
 			}catch(IOException ioex){
 				// log information 
 			}
