@@ -391,8 +391,8 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
+					<groupId>com.sun.mail</groupId>
+					<artifactId>javax.mail</artifactId>
 				</exclusion>
 			</exclusions>		
 		</dependency>		
