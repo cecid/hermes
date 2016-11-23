@@ -28,6 +28,7 @@ import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.hermes.api.Constants;
 import hk.hku.cecid.hermes.api.ErrorCode;
+import hk.hku.cecid.hermes.api.spa.ApiPlugin;
 
 
 /**
@@ -41,9 +42,12 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Get partnership API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         try {
@@ -87,77 +91,113 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
             Map<String, Object> returnObj = new HashMap<String, Object>();
             returnObj.put("partnerships", partnershipList);
+            ApiPlugin.core.log.info("" + partnershipList.size() + " partnerships returned");
             return returnObj;
 
         } catch (DAOException e) {
-            return createError(ErrorCode.ERROR_READING_DATABASE, "DAO exception");
+            String errorMessage = "DAO exception";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_UNKNOWN, "Unknown exception: " + e.getMessage());
+            String errorMessage = "Unknown exception: " + e.getMessage();
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_UNKNOWN, errorMessage);
         }
     }
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Add partnership API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
         } catch (IOException e) {
-            return createError(ErrorCode.ERROR_READING_REQUEST, "Exception while reading input stream");
+            String errorMessage = "Exception while reading input stream";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_REQUEST, errorMessage);
         } catch (JsonParseException e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Exception while parsing input stream");
+            String errorMessage = "Exception while parsing input stream";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String id = null;
         try {
             id = (String) inputDict.get("id");
             if (id == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: id");
+                String errorMessage = "Missing required partinership field: id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: id");
+            String errorMessage = "Error parsing parameter: id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
         String cpa_id = null;
         try {
             cpa_id = (String) inputDict.get("cpa_id");
             if (cpa_id == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: cpa_id");
+                String errorMessage = "Missing required partinership field: cpa_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: cpa_id");
+            String errorMessage = "Error parsing parameter: cpa_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
         String service = null;
         try {
             service = (String) inputDict.get("service");
             if (service == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: service");
+                String errorMessage = "Missing required partinership field: service";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: service");
+            String errorMessage = "Error parsing parameter: service";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
         String action = null;
         try {
             action = (String) inputDict.get("action");
             if (action == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: action");
+                String errorMessage = "Missing required partinership field: action";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: action");
+            String errorMessage = "Error parsing parameter: action";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
         String transport_endpoint = null;
         try {
             transport_endpoint = (String) inputDict.get("transport_endpoint");
             if (transport_endpoint == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: transport_endpoint");
+                String errorMessage = "Missing required partinership field: transport_endpoint";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: transport_endpoint");
+            String errorMessage = "Error parsing parameter: transport_endpoint";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
+
+        ApiPlugin.core.log.debug("Parameters: id=" + id + ", cpa_id=" + cpa_id +
+                                 ", service=" + service + ", action=" + action +
+                                 ", transport_endpoint=" + transport_endpoint);
 
         try {
             // check if partnership id already exists
@@ -165,7 +205,9 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
             partnershipDVO.setPartnershipId(id);
             if (partnershipDAO.retrieve(partnershipDVO)) {
-                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, "Partnership [" + id + "] already exists");
+                String errorMessage = "Partnership [" + id + "] already exists";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
             }
 
             partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
@@ -174,7 +216,9 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             partnershipDVO.setAction(action);
 
             if (partnershipDAO.findPartnershipByCPA(partnershipDVO)) {
-                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, "Partnership with same CPA parameters already exists");
+                String errorMessage = "Partnership with same CPA parameters already exists";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
             }
 
             partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
@@ -201,9 +245,13 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             returnObj.put("id", id);
             return returnObj;
         } catch (DAOException e) {
-            return createError(ErrorCode.ERROR_WRITING_DATABASE, "Error saving partinership");
+            String errorMessage = "Error saving partinership";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_WRITING_DATABASE, errorMessage);
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_UNKNOWN, "Unknown exception: " + e.getMessage());
+            String errorMessage = "Unknown exception: " + e.getMessage();
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_UNKNOWN, errorMessage);
         }
     }
 }
