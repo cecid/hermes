@@ -246,10 +246,10 @@
 							<goal>install-file</goal>
 						</goals>
 						<configuration>
-							<file>lib/wrapper-3.3.7.jar</file>
-							<groupId>wrapper</groupId>
+							<file>lib/wrapper.jar</file>
+							<groupId>tanukisoft</groupId>
 							<artifactId>wrapper</artifactId>
-							<version>3.3.7</version>
+							<version>3.5.30</version>
 							<packaging>jar</packaging>
 						</configuration>
 					</execution>
@@ -325,9 +325,9 @@
 		    <version>1.5.6</version>
 		</dependency>
 		<dependency>
-			<groupId>wrapper</groupId>
+			<groupId>tanukisoft</groupId>
 			<artifactId>wrapper</artifactId>
-			<version>3.3.7</version>
+			<version>3.5.30</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
