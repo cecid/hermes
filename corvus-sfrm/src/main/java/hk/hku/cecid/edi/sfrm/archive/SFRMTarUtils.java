@@ -28,7 +28,7 @@ public class SFRMTarUtils extends TarUtils {
      * @param length The number of header bytes to parse.
      * @return The header's entry name.
      */
-    public static StringBuffer parseName(byte[] header, int offset, int length) {
+    public static StringBuffer parseName(final byte[] header, final int offset, final int length) {
 
 		StringBuffer result = null;
         int nameLen = length; 
