@@ -15,7 +15,7 @@ package hk.hku.cecid.hermes.api.listener;
  * @author Patrick Yee
  *
  */
-public abstract class HermesProtocolApiListener extends HermesAbstractApiListener {
+public class HermesProtocolApiListener extends HermesAbstractApiListener {
 
     protected String getProtocolFromPathInfo(String pathInfo) {
     	if (pathInfo.endsWith("/")) {

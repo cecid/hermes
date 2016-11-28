@@ -9,23 +9,23 @@
 
 package hk.hku.cecid.hermes.api.listener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonReaderFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import hk.hku.cecid.piazza.commons.json.JsonParseException;
+import hk.hku.cecid.piazza.commons.json.JsonUtil;
 import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
+import hk.hku.cecid.hermes.api.Constants;
 
 
 /**
@@ -34,52 +34,32 @@ import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
  * @author Patrick Yee
  *
  */
-public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
-
-    private JsonBuilderFactory jsonFactory;
+public class HermesAbstractApiListener extends HttpRequestAdaptor {
 
     public HermesAbstractApiListener() {
-        jsonFactory = Json.createBuilderFactory(null);
     }
 
-    protected JsonObjectBuilder createJsonObject() {
-        return jsonFactory.createObjectBuilder();
+    protected void fillDate(Map<String, Object> dictionary) {
+        dictionary.put("server_time", new Long((new Date()).getTime() / 1000));
     }
 
-    protected JsonArrayBuilder createJsonArray() {
-        return jsonFactory.createArrayBuilder();
+    protected Map<String, Object> createError(int code, String message) {
+        Map<String, Object> dictionary = new HashMap<String, Object>();
+        dictionary.put("code", new Integer(code));
+        dictionary.put("message", message);
+        return dictionary;
     }
 
-    protected void addDate(JsonObjectBuilder jsonBuilder) {
-        jsonBuilder.add("server_time", (new Date()).getTime() / 1000);
-    }
-
-    protected void addString(JsonObjectBuilder jsonBuilder, String key, String value) {
-        if (value != null) {
-            jsonBuilder.add(key, value);
+    protected Map<String, Object> getDictionaryFromRequest(HttpServletRequest request) throws IOException, JsonParseException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        InputStream in = request.getInputStream();
+        int readSize = in.read(buf);
+        while (readSize > 0) {
+            baos.write(buf, 0, readSize);
+            readSize = in.read(buf);
         }
-        else {
-            jsonBuilder.addNull(key);
-        }
-    }
-
-    protected void fillError(JsonObjectBuilder jsonBuilder, int code, String message) {
-        jsonBuilder.add("code", code);
-        jsonBuilder.add("message", message);
-    }
-
-    protected JsonObject getJsonObjectFromRequest(HttpServletRequest request) {
-        JsonObject jsonObject = null;
-        try {
-            JsonReaderFactory factory = Json.createReaderFactory(null);
-            JsonReader jsonReader = factory.createReader(request.getInputStream());
-            jsonObject = jsonReader.readObject();
-            jsonReader.close();
-        }
-        catch(IOException e) {
-            jsonObject = null;
-        }
-        return jsonObject;
+        return JsonUtil.toDictionary(baos.toString());
     }
 
     /**
@@ -92,25 +72,48 @@ public abstract class HermesAbstractApiListener extends HttpRequestAdaptor {
      */
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws RequestListenerException {
 
-        JsonObjectBuilder jsonBuilder = createJsonObject();
-
         try {
             RestRequest restRequest = new RestRequest(request);
-            processApi(restRequest, jsonBuilder);
+            Map<String, Object> dictionaryResponse = processApi(restRequest);
+            String jsonResponse = JsonUtil.fromDictionary(dictionaryResponse);
 
             response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentType("application/vnd.api+json");
+            response.setContentType(Constants.CONTENT_TYPE);
 
             OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
-            osw.write(jsonBuilder.build().toString());
+            osw.write(jsonResponse);
             osw.close();
         }
         catch (Exception e) {
-            throw new RequestListenerException(e.getMessage());
+            throw new RequestListenerException(e.getMessage(), e);
         }
 
         return null;
     }
 
-    protected abstract void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException;
+    protected Map<String, Object> processApi(RestRequest request) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        try {
+            if (httpRequest.getMethod().equalsIgnoreCase(Constants.METHOD_GET)) {
+                return processGetRequest(request);
+            }
+            else if (httpRequest.getMethod().equalsIgnoreCase(Constants.METHOD_POST)) {
+                return processPostRequest(request);
+            }
+            else {
+                throw new RequestListenerException("Request method not supported");
+            }
+
+        } catch (UnsupportedOperationException e) {
+            throw new RequestListenerException("Request method not supported");
+        }
+    }
+
+    protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
+        throw new UnsupportedOperationException();
+    }
+
+    protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
+        throw new UnsupportedOperationException();
+    }
 }

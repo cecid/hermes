@@ -9,12 +9,12 @@
 
 package hk.hku.cecid.hermes.api.listener;
 
-import javax.json.JsonObjectBuilder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
+import hk.hku.cecid.hermes.api.Constants;
 
 
 /**
@@ -24,15 +24,10 @@ import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
  *
  */
 public class HermesApiListener extends HermesAbstractApiListener {
-
-    protected void processApi(RestRequest request, JsonObjectBuilder jsonBuilder) throws RequestListenerException{
-    	HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-            jsonBuilder.add("status", "healthy");
-            addDate(jsonBuilder);
-        }
-        else {
-            throw new RequestListenerException("Request method not supported");
-        }
+    protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
+        HashMap<String, Object> dict = new HashMap<String, Object>();
+        dict.put("status", Constants.HEALTHY);
+        fillDate(dict);
+        return dict;
     }
 }
