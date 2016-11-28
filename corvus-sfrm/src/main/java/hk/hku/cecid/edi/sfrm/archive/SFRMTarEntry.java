@@ -72,11 +72,11 @@ public class SFRMTarEntry extends TarEntry {
         int offset = 0;
 
         offset = SFRMTarUtils.getNameBytes(new StringBuffer(this.getName()), outbuf, offset, NAMELEN);
-        offset = TarUtils.getOctalBytes(this.getMode(), outbuf, offset, MODELEN);
-        offset = TarUtils.getOctalBytes(this.getUserId(), outbuf, offset, UIDLEN);
-        offset = TarUtils.getOctalBytes(this.getGroupId(), outbuf, offset, GIDLEN);
-        offset = TarUtils.getLongOctalBytes(this.getSize(), outbuf, offset, SIZELEN);
-        offset = TarUtils.getLongOctalBytes(this.getModTime().getTime(), outbuf, offset, MODTIMELEN);
+        offset = TarUtils.formatOctalBytes(this.getMode(), outbuf, offset, MODELEN);
+        offset = TarUtils.formatOctalBytes(this.getUserId(), outbuf, offset, UIDLEN);
+        offset = TarUtils.formatOctalBytes(this.getGroupId(), outbuf, offset, GIDLEN);
+        offset = TarUtils.formatLongOctalBytes(this.getSize(), outbuf, offset, SIZELEN);
+        offset = TarUtils.formatLongOctalBytes(this.getModTime().getTime(), outbuf, offset, MODTIMELEN);
 
         int csOffset = offset;
 
@@ -89,8 +89,8 @@ public class SFRMTarEntry extends TarEntry {
 	        offset = SFRMTarUtils.getNameBytes((StringBuffer) getPrivateVariable("magic").get(this), outbuf, offset, MAGICLEN);
 	        offset = SFRMTarUtils.getNameBytes(new StringBuffer(this.getUserName()), outbuf, offset, UNAMELEN);
 	        offset = SFRMTarUtils.getNameBytes(new StringBuffer(this.getGroupName()), outbuf, offset, GNAMELEN);
-	        offset = TarUtils.getOctalBytes(getPrivateVariable("devMajor").getInt(this), outbuf, offset, DEVLEN);
-	        offset = TarUtils.getOctalBytes(getPrivateVariable("devMinor").getInt(this), outbuf, offset, DEVLEN);
+	        offset = TarUtils.formatOctalBytes(getPrivateVariable("devMajor").getInt(this), outbuf, offset, DEVLEN);
+	        offset = TarUtils.formatOctalBytes(getPrivateVariable("devMinor").getInt(this), outbuf, offset, DEVLEN);
         }catch(Exception e){
         	System.err.println("Error when getting the private variable from TarEntry");
         }
@@ -101,7 +101,7 @@ public class SFRMTarEntry extends TarEntry {
 
         long chk = TarUtils.computeCheckSum(outbuf);
 
-        TarUtils.getCheckSumOctalBytes(chk, outbuf, csOffset, CHKSUMLEN);
+        TarUtils.formatCheckSumOctalBytes(chk, outbuf, csOffset, CHKSUMLEN);
     }
     
     /**
@@ -112,7 +112,7 @@ public class SFRMTarEntry extends TarEntry {
     public void parseTarHeader(byte[] header) {
         int offset = 0;
         
-        this.setName(SFRMTarUtils.parseName(header, offset, NAMELEN).toString());
+        this.setName(SFRMTarUtils.parseName(header, offset, NAMELEN));
         offset += NAMELEN;
         
         this.setMode((int) TarUtils.parseOctal(header, offset, MODELEN));
@@ -135,16 +135,16 @@ public class SFRMTarEntry extends TarEntry {
         try{
 	        getPrivateVariable("linkFlag").setByte(this, header[offset++]);
 	        
-	        getPrivateVariable("linkName").set(this, SFRMTarUtils.parseName(header, offset, NAMELEN));
+	        getPrivateVariable("linkName").set(this, new StringBuffer(SFRMTarUtils.parseName(header, offset, NAMELEN)));
 	        offset += NAMELEN;
 	        
-	        getPrivateVariable("magic").set(this, SFRMTarUtils.parseName(header, offset, MAGICLEN));
+	        getPrivateVariable("magic").set(this, new StringBuffer(SFRMTarUtils.parseName(header, offset, MAGICLEN)));
 	        offset += MAGICLEN;
 	        
-	        this.setUserName(SFRMTarUtils.parseName(header, offset, UNAMELEN).toString());
+	        this.setUserName(SFRMTarUtils.parseName(header, offset, UNAMELEN));
 	        offset += UNAMELEN;
 	        
-	        this.setGroupName(SFRMTarUtils.parseName(header, offset, GNAMELEN).toString());
+	        this.setGroupName(SFRMTarUtils.parseName(header, offset, GNAMELEN));
 	        offset += GNAMELEN;
 	        
 	        getPrivateVariable("devMajor").setInt(this, (int)TarUtils.parseOctal(header, offset, DEVLEN));
