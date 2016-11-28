@@ -17,7 +17,11 @@ import org.apache.tools.tar.TarUtils;
  * @author Patrick Yip
  *
  */
-public class SFRMTarUtils extends TarUtils {
+// public class SFRMTarUtils extends TarUtils {
+public class SFRMTarUtils{
+
+    /** Private constructor to prevent instantiation of this utility class */
+    private SFRMTarUtils() {}
 	
 	public final static String NAME_ENCODING = "UTF-8";
 	/**
@@ -28,7 +32,7 @@ public class SFRMTarUtils extends TarUtils {
      * @param length The number of header bytes to parse.
      * @return The header's entry name.
      */
-    public static StringBuffer parseName(final byte[] header, final int offset, final int length) {
+    public static String parseName(final byte[] header, final int offset, final int length) {
 
 		StringBuffer result = null;
         int nameLen = length; 
@@ -51,7 +55,7 @@ public class SFRMTarUtils extends TarUtils {
            e.printStackTrace();
         } 
 
-        return result;
+        return result.toString();
     }
     
     /**
