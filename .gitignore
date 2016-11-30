@@ -1,5 +1,6 @@
 .vagrant
 *.log
+*.lck
 .vscode/
 **/.settings/
 **/target/
