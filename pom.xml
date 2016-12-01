@@ -76,6 +76,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.6</version>
                     <executions>
                         <execution>
                             <id>spa-zip</id>
@@ -123,6 +124,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
                 <inherited>false</inherited>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
