@@ -39,6 +39,7 @@ import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.hermes.api.Constants;
 import hk.hku.cecid.hermes.api.ErrorCode;
+import hk.hku.cecid.hermes.api.spa.ApiPlugin;
 
 
 /**
@@ -54,15 +55,22 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Get received message list API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         String partnershipId = httpRequest.getParameter("partnership_id");
         if (partnershipId == null) {
-            return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required field: partnership_id");
+            String errorMessage = "Missing required field: partnership_id";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
         }
+
+        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId);
 
         try {
             PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
@@ -70,7 +78,9 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
             partnershipDVO.setPartnershipId(partnershipId);
             if (!partnershipDAO.retrieve(partnershipDVO)) {
-                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Cannot load partnership: " + partnershipId);
+                String errorMessage = "Cannot load partnership: " + partnershipId;
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
             }
 
             MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
@@ -100,43 +110,61 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
                 }
                 Map<String, Object> returnObj = new HashMap<String, Object>();
                 returnObj.put("message_ids", messages);
+                ApiPlugin.core.log.info("" + messages.size() + " messages returned");
                 return returnObj;
             }
             else {
-                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "No message can be loaded");
+                String errorMessage = "No message can be loaded";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
             }
         }
         catch (DAOException e) {
-            return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Error loading messages");
+            String errorMessage = "Error loading messages";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
         }
     }
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Get received message API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
         } catch (IOException e) {
-            return createError(ErrorCode.ERROR_READING_REQUEST, "Exception while reading input stream");
+            String errorMessage = "Exception while reading input stream";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_READING_REQUEST, errorMessage);
         } catch (JsonParseException e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Exception while parsing input stream");
+            String errorMessage = "Exception while parsing input stream";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String messageId = null;
         try {
             messageId = (String) inputDict.get("message_id");
             if (messageId == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: message_id");
+                String errorMessage = "Missing required partinership field: message_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: message_id");
+            String errorMessage = "Error parsing parameter: message_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
+
+        ApiPlugin.core.log.debug("Parameters: message_id=" + messageId);
 
         try {
             MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
@@ -154,7 +182,9 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
                 }
 
                 if (ebxmlMessage == null) {
-                    return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Unable to read message from repository");
+                    String errorMessage = "Unable to read message from repository";
+                    ApiPlugin.core.log.error(errorMessage);
+                    return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
                 }
 
                 Map<String, Object> returnObj = new HashMap<String, Object>();
@@ -184,16 +214,22 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
                     }
                 }
                 catch (Exception e) {
-                    return createError(ErrorCode.ERROR_EXTRACTING_PAYLOAD_FROM_MESSAGE, "Error extracting message payload");
+                    String errorMessage = "Error extracting message payload";
+                    ApiPlugin.core.log.error(errorMessage, e);
+                    return createError(ErrorCode.ERROR_EXTRACTING_PAYLOAD_FROM_MESSAGE, errorMessage);
                 }
                 return returnObj;
             }
             else {
-                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Message with such id not found");
+                String errorMessage = "Message with such id not found";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
             }
         }
         catch (DAOException e) {
-            return createError(ErrorCode.ERROR_READING_DATABASE, "Error loading message status");
+            String errorMessage = "Error loading message status";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
         }
     }
 

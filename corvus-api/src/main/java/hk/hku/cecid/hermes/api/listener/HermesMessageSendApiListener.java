@@ -39,6 +39,7 @@ import hk.hku.cecid.piazza.commons.activation.ByteArrayDataSource;
 import hk.hku.cecid.piazza.commons.util.Generator;
 import hk.hku.cecid.hermes.api.Constants;
 import hk.hku.cecid.hermes.api.ErrorCode;
+import hk.hku.cecid.hermes.api.spa.ApiPlugin;
 
 
 /**
@@ -52,15 +53,22 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Get message sending status API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         String messageId = httpRequest.getParameter("id");
         if (messageId == null) {
-            return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required field: id");
+            String errorMessage = "Missing required field: id";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
         }
+
+        ApiPlugin.core.log.debug("Parameters: id=" + messageId);
 
         try {
             MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
@@ -76,69 +84,96 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 return returnObj;
             }
             else {
-                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, "Message with such id not found");
+                String errorMessage = "Message with such id not found";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_DATA_NOT_FOUND, errorMessage);
             }
         }
         catch (DAOException e) {
-            return createError(ErrorCode.ERROR_READING_DATABASE, "DAO exception");
+            String errorMessage = "DAO exception";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
         }
     }
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        ApiPlugin.core.log.info("Send message API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Protocol unknown");
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
 
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
         } catch (IOException e) {
-            return createError(ErrorCode.ERROR_READING_REQUEST, "Exception while reading input stream");
+            String errorMessage = "Exception while reading input stream";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_REQUEST, errorMessage);
         } catch (JsonParseException e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Exception while parsing input stream");
+            String errorMessage = "Exception while parsing input stream";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String partnershipId = null;
         try {
             partnershipId = (String) inputDict.get("partnership_id");
             if (partnershipId == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: partnership_id");
+                String errorMessage = "Missing required partinership field: partnership_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: partnership_id");
+            String errorMessage = "Error parsing parameter: partnership_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String fromPartyId = null;
         try {
             fromPartyId = (String) inputDict.get("from_party_id");
             if (fromPartyId == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: from_party_id");
+                String errorMessage = "Missing required partinership field: from_party_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: from_party_id");
+            String errorMessage = "Error parsing parameter: from_party_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String toPartyId = null;
         try {
             toPartyId = (String) inputDict.get("to_party_id");
             if (toPartyId == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: to_party_id");
+                String errorMessage = "Missing required partinership field: to_party_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: to_party_id");
+            String errorMessage = "Error parsing parameter: to_party_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String conversationId = null;
         try {
             conversationId = (String) inputDict.get("conversation_id");
             if (conversationId == null) {
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, "Missing required partinership field: conversation_id");
+                String errorMessage = "Missing required partinership field: conversation_id";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: conversation_id");
+            String errorMessage = "Error parsing parameter: conversation_id";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
         String payloadString = null;
@@ -150,8 +185,14 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 payload = decoder.decode(payloadString.getBytes());
             }
         } catch (Exception e) {
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, "Error parsing parameter: payload");
+            String errorMessage = "Error parsing parameter: payload";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
+
+        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + ", from_party_id=" + fromPartyId +
+                                 ", to_party_id=" + toPartyId + ", conversation_id=" + conversationId +
+                                 ", payload=" + payload);
 
         EbmsRequest ebmsRequest;
         String messageId = Generator.generateMessageID();
@@ -185,19 +226,24 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             ebmsRequest.setMessage(ebxmlMessage);
         }
         catch (DAOException e) {
-            return createError(ErrorCode.ERROR_READING_DATABASE, "Error loading partnership");
+            String errorMessage = "Error loading partnership";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
         }
         catch (SOAPException e) {
-            return createError(ErrorCode.ERROR_WRITING_MESSAGE, "Error constructing ebXML message");
+            String errorMessage = "Error constructing ebXML message";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_WRITING_MESSAGE, errorMessage);
         }
 
         MessageServiceHandler msh = MessageServiceHandler.getInstance();
         try {
             msh.processOutboundMessage(ebmsRequest, null);
+            ApiPlugin.core.log.info("Message sent, ID: " + messageId);
         } catch (MessageServiceHandlerException e) {
-            String message = "Error in passing ebms Request to msh outbound";
-            EbmsProcessor.core.log.error(message, e);
-            return createError(ErrorCode.ERROR_SENDING_MESSAGE, message);
+            String errorMessage = "Error in passing ebms Request to msh outbound";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_SENDING_MESSAGE, errorMessage);
         }
 
         Map<String, Object> returnObj = new HashMap<String, Object>();
