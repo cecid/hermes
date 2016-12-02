@@ -1,5 +1,10 @@
 .vagrant
+*.log
+*.lck
+.vscode/
+**/.settings/
 **/target/
 **/test.log
 **/.DS_Store
-*.log
+**/.classpath
+**/.project

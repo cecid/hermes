@@ -9,10 +9,11 @@
 	<artifactId>corvus-as2-admin</artifactId>
 	<name>Corvus AS2 Admin</name>
 	<build>
-		<plugins>	
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>spa-zip</id>
@@ -24,8 +25,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>					
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
 				<executions>
 					<execution>
 						<id>spa-copy</id>
@@ -39,17 +41,17 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>piazza-commons</artifactId>
-			<scope>provided</scope>			
-		</dependency>		
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>corvus-admin</artifactId>
-			<scope>provided</scope>			
-		</dependency>		
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>corvus-as2</artifactId>
-			<scope>provided</scope>			
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
