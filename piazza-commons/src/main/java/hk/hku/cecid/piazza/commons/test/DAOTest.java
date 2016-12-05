@@ -204,7 +204,7 @@ public abstract class DAOTest<T extends DataSourceDAO> extends UnitTest<T>
 		final String sql = IOHandler.readString(resourceStream, null);
 		final String canonicalizedSql = sql.replace("(?! \\S)\\s+", " ");
 		
-		if (canonicalizedSql.trim().length > 0) {
+		if (canonicalizedSql.trim().length() > 0) {
 
 		this.containerLogger.info("Execute SQL: \n " + canonicalizedSql);
 		

@@ -1,4 +1,4 @@
-CREATE TABLE message (
+CREATE TABLE IF NOT EXISTS message (
 	message_id varchar(200) NOT NULL,
 	message_box varchar(200) NOT NULL,
 	as2_from varchar(200) NOT NULL,

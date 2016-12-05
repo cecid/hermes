@@ -1,5 +1,5 @@
 -- MessageDataSourceDAOTest
-//Insert OUTBOX Message
+-- Insert OUTBOX Message
 INSERT INTO message (message_id, message_box, as2_from, as2_to,  is_receipt, is_acknowledged, is_receipt_requested, receipt_url, mic_value, original_message_id, time_stamp, status, status_desc)
 VALUES ('20090910-120000-12345@127.0.0.1', 'OUT', 'as2From', 'as2To', false, '', false, '"http://127.0.0.1:8080/corvus/httpd/as2/inbound"','','', '2008-01-07 12:08:11.79', 'DL', 'Message was sent.');
 INSERT INTO message (message_id, message_box, as2_from, as2_to,  is_receipt, is_acknowledged, is_receipt_requested, receipt_url, mic_value, original_message_id, time_stamp, status, status_desc)
