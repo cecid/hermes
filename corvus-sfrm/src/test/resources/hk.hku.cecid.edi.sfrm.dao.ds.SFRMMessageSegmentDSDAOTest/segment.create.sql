@@ -1,9 +1,9 @@
 CREATE TABLE sfrm_message_segment 
 (
-   message_id varchar NOT NULL,
-   message_box varchar NOT NULL,
+   message_id varchar(200) NOT NULL,
+   message_box varchar(200) NOT NULL,
    segment_no int NOT NULL,
-   segment_type varchar NOT NULL,
+   segment_type varchar(200) NOT NULL,
    segment_start bigint,
    segment_end bigint,
    retried int DEFAULT -1,

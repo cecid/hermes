@@ -5,7 +5,7 @@ CREATE TABLE sfrm_partnership
   partnership_seq int DEFAULT 1,
   partnership_id varchar(50) NOT NULL,
   description varchar,
-  partner_endpoint varchar NOT NULL,
+  partner_endpoint varchar(200) NOT NULL,
   partner_cert_fingerprint varchar,
   is_hostname_verified boolean DEFAULT FALSE,
   sign_algorithm varchar,
