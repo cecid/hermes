@@ -36,12 +36,13 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
-                            <file>lib/ojdbc14-10.2.0.1.0.jar</file>
-                            <groupId>oracle</groupId>
-                            <artifactId>ojdbc14</artifactId>
-                            <version>10.2.0.1.0</version>
+                            <file>lib/ojdbc7.jar</file>
+                            <groupId>com.oracle.jdbc</groupId>
+                            <artifactId>ojdbc7</artifactId>
+                            <version>12.1.0.2</version>
                             <packaging>jar</packaging>
                         </configuration>
+
                     </execution>
                 </executions>
             </plugin>
