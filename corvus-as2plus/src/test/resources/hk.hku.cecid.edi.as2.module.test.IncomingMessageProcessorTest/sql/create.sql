@@ -1,4 +1,4 @@
-CREATE TABLE partnership (
+CREATE TABLE IF NOT EXISTS partnership (
 	partnership_id varchar(200) NOT NULL,
 	subject varchar(200),
 	recipient_address varchar(200),
@@ -25,7 +25,7 @@ CREATE TABLE partnership (
 	PRIMARY KEY (partnership_id)
 );
 
-CREATE TABLE message (
+CREATE TABLE IF NOT EXISTS message (
 	message_id varchar(200) NOT NULL,
 	message_box varchar(200) NOT NULL,
 	as2_from varchar(200) NOT NULL,
@@ -45,14 +45,14 @@ CREATE TABLE message (
 	PRIMARY KEY (message_id, message_box)
 );
 
-CREATE TABLE repository (
+CREATE TABLE IF NOT EXISTS repository (
 	message_id varchar(200) NOT NULL,
 	message_box varchar(200) NOT NULL,
 	content BINARY NOT NULL, -- HSQL Specified
 	PRIMARY KEY (message_id, message_box)
 );
 
-CREATE TABLE raw_repository (
+CREATE TABLE IF NOT EXISTS raw_repository (
 	message_id varchar(200) NOT NULL,
 	content BINARY NOT NULL, -- HSQL Specified
 	PRIMARY KEY (message_id)
