@@ -86,6 +86,8 @@ public class OutgoingPayloadsTaskTest extends PluginTest<SFRMProcessor> {
 			
 			pp.setToProcessing();
 			OutgoingPayloadsTask task = new OutgoingPayloadsTask(pp, pDVO, SFRMConstant.MSGS_PACKAGED);
+
+			Thread.sleep(1000);
 			
 			task.execute();
 			
