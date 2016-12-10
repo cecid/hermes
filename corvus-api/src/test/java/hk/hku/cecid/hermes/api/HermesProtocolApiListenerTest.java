@@ -9,6 +9,7 @@
 
 package hk.hku.cecid.hermes.api.listener;
 
+import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,31 +31,73 @@ public class HermesProtocolApiListenerTest {
 
     @Test
     public void testGetProtocolFromPathInfo_one_segment() {
-        String protocol = this.listener.getProtocolFromPathInfo("/aa");
-        Assert.assertEquals("aa", protocol);
+        ArrayList<String> parts = this.listener.parseFromPathInfo("/aa");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("", parts.get(1));
+        Assert.assertEquals("", parts.get(2));
     }
 
     @Test
     public void testGetProtocolFromPathInfo_two_segments() {
-        String protocol = this.listener.getProtocolFromPathInfo("/aa/bb");
-        Assert.assertEquals("bb", protocol);
+        ArrayList<String> parts = this.listener.parseFromPathInfo("/aa/bb");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("bb", parts.get(1));
+        Assert.assertEquals("", parts.get(2));
     }
 
     @Test
     public void testGetProtocolFromPathInfo_three_segments() {
-        String protocol = this.listener.getProtocolFromPathInfo("/aa/bb/cc");
-        Assert.assertEquals("cc", protocol);
+        ArrayList<String> parts = this.listener.parseFromPathInfo("/aa/bb/cc");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("bb", parts.get(1));
+        Assert.assertEquals("cc", parts.get(2));
+    }
+
+    @Test
+    public void testGetProtocolFromPathInfo_four_segments() {
+        ArrayList<String> parts = this.listener.parseFromPathInfo("/aa/bb/cc/dd");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("bb", parts.get(1));
+        Assert.assertEquals("cc/dd", parts.get(2));
+    }
+
+    @Test
+    public void testGetProtocolFromPathInfo_four_segments_no_prefix() {
+        ArrayList<String> parts = this.listener.parseFromPathInfo("aa/bb/cc/dd");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("bb", parts.get(1));
+        Assert.assertEquals("cc/dd", parts.get(2));
     }
 
     @Test
     public void testGetProtocolFromPathInfo_end_with_slash() {
-        String protocol = this.listener.getProtocolFromPathInfo("/aa/bb/cc/");
-        Assert.assertEquals("cc", protocol);
+        ArrayList<String> parts = this.listener.parseFromPathInfo("/aa/bb/cc/");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("bb", parts.get(1));
+        Assert.assertEquals("cc", parts.get(2));
     }
 
     @Test
     public void testGetProtocolFromPathInfo_no_segment() {
-        String protocol = this.listener.getProtocolFromPathInfo("");
-        Assert.assertEquals("", protocol);
+        ArrayList<String> parts = this.listener.parseFromPathInfo("");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("", parts.get(0));
+        Assert.assertEquals("", parts.get(1));
+        Assert.assertEquals("", parts.get(2));
+    }
+
+    @Test
+    public void testGetProtocolFromPathInfo_some_empty_segment() {
+        ArrayList<String> parts = this.listener.parseFromPathInfo("aa//cc/dd");
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa", parts.get(0));
+        Assert.assertEquals("", parts.get(1));
+        Assert.assertEquals("cc/dd", parts.get(2));
     }
 }

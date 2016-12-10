@@ -52,7 +52,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
         ApiPlugin.core.log.info("Get message sending status API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -98,7 +98,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
         ApiPlugin.core.log.info("Send message API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
