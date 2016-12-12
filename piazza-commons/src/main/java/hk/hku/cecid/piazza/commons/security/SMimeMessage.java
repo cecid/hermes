@@ -33,6 +33,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cms.AttributeTable;
 import org.bouncycastle.asn1.cms.IssuerAndSerialNumber;
 import org.bouncycastle.asn1.smime.SMIMECapabilitiesAttribute;
@@ -41,11 +42,23 @@ import org.bouncycastle.asn1.smime.SMIMECapabilityVector;
 import org.bouncycastle.asn1.smime.SMIMEEncryptionKeyPreferenceAttribute;
 import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.cms.DefaultCMSSignatureAlgorithmNameGenerator;
 import org.bouncycastle.cms.RecipientId;
 import org.bouncycastle.cms.RecipientInformation;
 import org.bouncycastle.cms.RecipientInformationStore;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.SignerInformationVerifier;
+import org.bouncycastle.cms.bc.BcRSASignerInfoVerifierBuilder;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientInfoGenerator;
+import org.bouncycastle.cms.jcajce.JceCMSContentEncryptorBuilder;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientId;
+import org.bouncycastle.cms.jcajce.JceKeyTransEnvelopedRecipient;
+import org.bouncycastle.cms.jcajce.ZlibCompressor;
+import org.bouncycastle.cms.jcajce.ZlibExpanderProvider;
+import org.bouncycastle.cert.jcajce.JcaCertStore;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.mail.smime.SMIMECompressed;
 import org.bouncycastle.mail.smime.SMIMECompressedGenerator;
@@ -53,6 +66,9 @@ import org.bouncycastle.mail.smime.SMIMEEnveloped;
 import org.bouncycastle.mail.smime.SMIMEEnvelopedGenerator;
 import org.bouncycastle.mail.smime.SMIMESigned;
 import org.bouncycastle.mail.smime.SMIMESignedGenerator;
+import org.bouncycastle.operator.DefaultSignatureAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.bc.BcDigestCalculatorProvider;
 import org.bouncycastle.util.encoders.Base64;
 
 
@@ -228,19 +244,30 @@ public class SMimeMessage {
     
                 SMIMESignedGenerator signer = new SMIMESignedGenerator();
                 signer.setContentTransferEncoding(getContentTransferEncoding());
-                signer.addSigner(privateKey, cert, getDigestAlgorithm(),
-                    new AttributeTable(attributes), null);
+		// addSigner(java.security.PrivateKey privateKey, java.security.cert.X509Certificate cert,
+		// 	  String digestOID, org.bouncycastle.asn1.cms.AttributeTable signedAttr,
+		// 	  org.bouncycastle.asn1.cms.AttributeTable unsignedAttr);
+                // signer.addSigner(privateKey, cert, getDigestAlgorithm(),
+                //     new AttributeTable(attributes), null);
+		signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder()
+					      .setProvider(SECURITY_PROVIDER)
+					      .setSignedAttributeGenerator(new AttributeTable(attributes))
+					      .build(getDigestAlgorithm(), privateKey, cert));
     
                 /* Add the list of certs to the generator */
                 ArrayList certList = new ArrayList();
                 certList.add(cert);
-                CertStore certs = CertStore.getInstance("Collection",
-                        new CollectionCertStoreParameters(certList), SECURITY_PROVIDER);
-                signer.addCertificatesAndCRLs(certs);
+                // CertStore certs = CertStore.getInstance("Collection",
+                //         new CollectionCertStoreParameters(certList), SECURITY_PROVIDER);
+		// addCertificatesAndCRLs(java.security.cert.CertStore);
+                // signer.addCertificatesAndCRLs(certs);
+		signer.addCertificates(new JcaCertStore(certList));
     
                 /* Sign the body part */
-                MimeMultipart mm = signer.generate(bodyPart, SECURITY_PROVIDER);
-
+		// generate(javax.mail.internet.MimebodyPart, String sigProvider);
+                // MimeMultipart mm = signer.generate(bodyPart, SECURITY_PROVIDER);
+		MimeMultipart mm = signer.generate(bodyPart);
+		
                 InternetHeaders headers = new InternetHeaders();
                 boolean isContentTypeFolded = new Boolean(System.getProperty("mail.mime.foldtext","true")).booleanValue();
                 headers.setHeader("Content-Type", isContentTypeFolded? mm.getContentType():mm.getContentType().replaceAll("\\s", " "));
@@ -316,7 +343,15 @@ public class SMimeMessage {
         
             while (signerInfos.hasNext()) {
                 SignerInformation   signerInfo = (SignerInformation)signerInfos.next();
-                if (!signerInfo.verify(cert, "BC")) {
+                // if (!signerInfo.verify(cert, "BC")) {  // Deprecated
+		// TODO: revise the choice of components
+		SignerInformationVerifier verifier =
+		    new BcRSASignerInfoVerifierBuilder(new DefaultCMSSignatureAlgorithmNameGenerator(),
+						  new DefaultSignatureAlgorithmIdentifierFinder(),
+						  new DefaultDigestAlgorithmIdentifierFinder(), 
+						  new BcDigestCalculatorProvider())
+		    .build(new JcaX509CertificateHolder(cert));
+		if (!signerInfo.verify(verifier)) {		    
                     throw new SMimeException("Verification failed");
                 }
             }
@@ -366,10 +401,20 @@ public class SMimeMessage {
                 /* Create the encrypter */
                 SMIMEEnvelopedGenerator encrypter = new SMIMEEnvelopedGenerator();
                 encrypter.setContentTransferEncoding(getContentTransferEncoding());
-                encrypter.addKeyTransRecipient(cert);
+                // encrypter.addKeyTransRecipient(cert); // Deprecated
+		encrypter.addRecipientInfoGenerator(
+		    // JceKeyTransRecipientInfoGenerator(X509Certificate,
+		    // 			    [org.bouncycastle.asn1.x509.AlgorithmIdentifier])
+		    new JceKeyTransRecipientInfoGenerator(cert).setProvider(SECURITY_PROVIDER));
         
                 /* Encrypt the body part */
-                MimeBodyPart encryptedPart = encrypter.generate(bodyPart, getEncryptAlgorithm(), SECURITY_PROVIDER);
+                MimeBodyPart encryptedPart =
+		    // encrypter.generate(bodyPart, getEncryptAlgorithm(), SECURITY_PROVIDER);  // Deprecated
+		    // encryptor.generate(MimeBodyPart, JceCMSContentEncryptorBuilder(
+		    //     org.bouncycastle.asn1.ANS1ObjectIdentifier, [int keySize])
+		    encrypter.generate(bodyPart,
+				       new JceCMSContentEncryptorBuilder(new ASN1ObjectIdentifier(getEncryptAlgorithm()))
+				       .setProvider(SECURITY_PROVIDER).build());
                 return new SMimeMessage(encryptedPart, this);
             }
             catch (org.bouncycastle.mail.smime.SMIMEException ex) {
@@ -405,20 +450,36 @@ public class SMimeMessage {
 
         try {
             setDefaults();
-            
+	    	    
             SMIMEEnveloped       m = new SMIMEEnveloped(bodyPart);
-            RecipientId          recId = new RecipientId();
-    
-            recId.setSerialNumber(cert.getSerialNumber());
-            recId.setIssuer(cert.getIssuerX500Principal().getEncoded());
-    
-            RecipientInformationStore  recipients = m.getRecipientInfos();
-            RecipientInformation       recipient = recipients.get(recId);
-    
-            if (recipient == null) {
-                throw new SMimeException("Invalid encrypted content");
-            }
-            ByteArrayInputStream ins = new ByteArrayInputStream(recipient.getContent(privateKey, "BC"));
+
+	    // RecipientId          recId = new RecipientId();  // change to abstract class
+	    // 								   
+	    // recId.setSerialNumber(cert.getSerialNumber());		   
+	    // recId.setIssuer(cert.getIssuerX500Principal().getEncoded());
+	    
+	    RecipientId          recId = new JceKeyTransRecipientId(cert);
+
+	    // RecipientId          recId = new RecipientId();		   
+	    // 								   
+            // recId.setSerialNumber(cert.getSerialNumber());		   
+            // recId.setIssuer(cert.getIssuerX500Principal().getEncoded());
+
+	    // RecipientInformationStore  recipients = m.getRecipientInfos();
+	    // RecipientInformation       recipient = recipientsInfo.get(recId);
+	    
+	    RecipientInformationStore  recipientsInfo = m.getRecipientInfos();	
+	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
+
+	    if (recipientInfo == null) {				      
+	        throw new SMimeException("Invalid encrypted content");
+	    }
+	    
+	    JceKeyTransEnvelopedRecipient       recipient = new JceKeyTransEnvelopedRecipient(privateKey);
+	    recipient.setProvider(SECURITY_PROVIDER);							
+	    
+            // ByteArrayInputStream ins = new ByteArrayInputStream(recipient.getContent(privateKey, "BC")); // Deprecated
+	    ByteArrayInputStream ins = new ByteArrayInputStream(recipientInfo.getContent(recipient));
             MimeBodyPart decryptedPart = new MimeBodyPart(ins); 
             return new SMimeMessage(decryptedPart, this);
         }
@@ -443,7 +504,8 @@ public class SMimeMessage {
                 compressor.setContentTransferEncoding(getContentTransferEncoding());
         
                 /* compress the body part */ 
-                MimeBodyPart compressedPart = compressor.generate(bodyPart, SMIMECompressedGenerator.ZLIB);
+                // MimeBodyPart compressedPart = compressor.generate(bodyPart, SMIMECompressedGenerator.ZLIB);
+		MimeBodyPart compressedPart = compressor.generate(bodyPart, new ZlibCompressor());
                 return new SMimeMessage(compressedPart, this);
             }
             catch (org.bouncycastle.mail.smime.SMIMEException ex) {
@@ -466,7 +528,7 @@ public class SMimeMessage {
             setDefaults();
             
             SMIMECompressed      m = new SMIMECompressed(bodyPart);
-            ByteArrayInputStream ins = new ByteArrayInputStream(m.getContent());
+            ByteArrayInputStream ins = new ByteArrayInputStream(m.getContent(new ZlibExpanderProvider()));
             
             MimeBodyPart decompressedPart = new MimeBodyPart(ins); 
             return new SMimeMessage(decompressedPart, this);
@@ -696,4 +758,4 @@ public class SMimeMessage {
         CommandMap.setDefaultCommandMap(mailcap);
     }
 }
- 
+
