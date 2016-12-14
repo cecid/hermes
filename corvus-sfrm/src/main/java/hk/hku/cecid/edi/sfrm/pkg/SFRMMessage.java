@@ -849,14 +849,7 @@ public class SFRMMessage implements Cloneable {
             SMIMESignedGenerator signer = new SMIMESignedGenerator();
             
             signer.setContentTransferEncoding("binary");
-            
-            // if (digestAlg.equalsIgnoreCase(ALG_SIGN_MD5))
-            // 	signer.addSigner(privateKey, cert, SMIMESignedGenerator.DIGEST_MD5);
-            // else if (digestAlg.equalsIgnoreCase(ALG_SIGN_SHA1))
-            // 	signer.addSigner(privateKey, cert, SMIMESignedGenerator.DIGEST_SHA1);
-            // else
-            // 	throw new SFRMException("Encryption algorithm error - " + digestAlg);
-	    
+
 	    String signerDigestAlg = "";
 	    
 	    if (digestAlg.equalsIgnoreCase(ALG_SIGN_MD5))
@@ -938,19 +931,16 @@ public class SFRMMessage implements Cloneable {
             /* Create the encrypter */
             SMIMEEnvelopedGenerator encrypter = new SMIMEEnvelopedGenerator();
             encrypter.setContentTransferEncoding("binary");
-            // encrypter.addKeyTransRecipient(cert);
 	    encrypter.addRecipientInfoGenerator(
 		new JceKeyTransRecipientInfoGenerator(cert).setProvider(SECURITY_PROVIDER));
     
             /* Encrypt the body part */
         	if (encryptAlg.equalsIgnoreCase(ALG_ENCRYPT_RC2))
-		    // this.bodyPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.RC2_CBC, "BC");
 		    this.bodyPart = encrypter.generate(bodyPart,
 				        new JceCMSContentEncryptorBuilder(
 					    new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.RC2_CBC))
 				        .setProvider(SECURITY_PROVIDER).build());
         	else if (encryptAlg.equalsIgnoreCase(ALG_ENCRYPT_3DES))
-		    //this.bodyPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.DES_EDE3_CBC, "BC");
 		    this.bodyPart = encrypter.generate(bodyPart,
 				        new JceCMSContentEncryptorBuilder(
 					    new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.DES_EDE3_CBC))
@@ -970,15 +960,9 @@ public class SFRMMessage implements Cloneable {
     public void decrypt(X509Certificate cert, PrivateKey privateKey) throws SFRMException {
         try {
             SMIMEEnveloped m = new SMIMEEnveloped(bodyPart);
-            // RecipientId recId = new RecipientId();
+
 	    RecipientId recId = new JceKeyTransRecipientId(cert);
-    
-            // recId.setSerialNumber(cert.getSerialNumber());
-            // recId.setIssuer(cert.getIssuerX500Principal().getEncoded());
-    
-            // RecipientInformationStore  recipients = m.getRecipientInfos();
-            // RecipientInformation       recipient = recipients.get(recId);
-	    
+
 	    RecipientInformationStore  recipientsInfo = m.getRecipientInfos();	
 	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
     

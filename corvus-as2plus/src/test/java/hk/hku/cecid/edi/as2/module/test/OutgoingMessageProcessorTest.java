@@ -195,7 +195,6 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 								       new BcDigestCalculatorProvider())
 				    .build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
 				
-				// if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
 				if (!signerInfo.verify(verifier)) {
 					Assert.fail("Signature Verfifcation Failed");
 				}
@@ -279,21 +278,11 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 	    
 	    // RecipientId recId = new RecipientId();
 	    RecipientId recId = new JceKeyTransRecipientId(partnershipDVO.getEncryptX509Certificate());
-	    // recId.setSerialNumber(partnershipDVO.getEncryptX509Certificate().getSerialNumber());
-	    // recId.setIssuer(partnershipDVO.getEncryptX509Certificate().getIssuerX500Principal().getEncoded());
-
-	    // RecipientInformationStore recipients = crypted.getRecipientInfos();
-	    // RecipientInformation recipient = recipients.get(recId);
 
 	    RecipientInformationStore  recipientsInfo = crypted.getRecipientInfos();	
 	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
 
-	    // if (recipientInfo == null) {				      
-	    // 	throw new SMimeException("Invalid encrypted content");
-	    // }
-
 	    KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
-	    // MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipient.getContent( keyMan.getPrivateKey(), "BC"));
 
 	    JceKeyTransEnvelopedRecipient recipient = new JceKeyTransEnvelopedRecipient(keyMan.getPrivateKey());	
 	    recipient.setProvider(SECURITY_PROVIDER);							
@@ -338,15 +327,6 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 		
 	    // Decrypt Message
 	    SMIMEEnveloped crypted = new SMIMEEnveloped(as2Msg.getBodyPart());
-	    // RecipientId recId = new RecipientId();
-	    // recId.setSerialNumber(partnershipDVO.getEncryptX509Certificate().getSerialNumber());
-	    // recId.setIssuer(partnershipDVO.getEncryptX509Certificate().getIssuerX500Principal().getEncoded());
-            // 
-	    // RecipientInformationStore recipients = crypted.getRecipientInfos();
-	    // RecipientInformation recipient = recipients.get(recId);
-            // 
-	    // KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
-	    // MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipient.getContent( keyMan.getPrivateKey(), "BC"));
 
 	    RecipientId recId = new JceKeyTransRecipientId(partnershipDVO.getEncryptX509Certificate());
 	    
@@ -375,7 +355,6 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 							   new DefaultDigestAlgorithmIdentifierFinder(), 
 							   new BcDigestCalculatorProvider())
 			.build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
-		    // if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
 		    if (!signerInfo.verify(verifier)) {
 			Assert.fail("Signature Verfifcation Failed");
 		    }
@@ -435,7 +414,6 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 								       new BcDigestCalculatorProvider())
 				    .build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
 				
-				// if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
 				if (!signerInfo.verify(verifier)) {
 					Assert.fail("Signature Verfifcation Failed");
 				}

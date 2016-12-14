@@ -355,9 +355,6 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 
         SMIMESignedGenerator signer = new SMIMESignedGenerator();
         signer.setContentTransferEncoding("base64");
-        // signer.addSigner(keyMan.getPrivateKey(), partnershipDVO.getVerifyX509Certificate(),
-        // 		SMIMESignedGenerator.DIGEST_SHA1,
-        //    new AttributeTable(attributes), null);
 	signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder().setProvider(SECURITY_PROVIDER)
 				      .setSignedAttributeGenerator(new AttributeTable(attributes))
 				      .build("SHA1withRSA",
@@ -369,11 +366,9 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
         certList.add(cert);
         CertStore certs = CertStore.getInstance("Collection",
                 new CollectionCertStoreParameters(certList), "BC");
-        // signer.addCertificatesAndCRLs(certs);
 	signer.addCertificates(new JcaCertStore(certList));
 
         // Sign body part
-        // MimeMultipart mm = signer.generate(bodyPart, "BC");
 	MimeMultipart mm = signer.generate(bodyPart);
 
         InternetHeaders headers = new InternetHeaders();
@@ -390,13 +385,10 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 		 // Create Encrypter
         SMIMEEnvelopedGenerator encrypter = new SMIMEEnvelopedGenerator();
         encrypter.setContentTransferEncoding("base64");
-        // encrypter.addKeyTransRecipient(partnershipDVO.getEncryptX509Certificate());
 	encrypter.addRecipientInfoGenerator(new JceKeyTransRecipientInfoGenerator(partnershipDVO.getEncryptX509Certificate())
 					    .setProvider(SECURITY_PROVIDER));
 		
         // Encrypt BodyPart
-        // MimeBodyPart encryptedPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.DES_EDE3_CBC,
-        // 		"BC");
 	MimeBodyPart encryptedPart = encrypter.generate(bodyPart,
 				       new JceCMSContentEncryptorBuilder(
 					   new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.DES_EDE3_CBC))
