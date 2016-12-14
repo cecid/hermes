@@ -106,7 +106,7 @@
         <dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper</artifactId>
-            <version>3.5.30</version>
+            <version>3.3.7</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -206,12 +206,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- not required from jdk1.6 -->
+        <!-- not required from jdk1.6
         <dependency>
             <groupId>javax.xml.soap</groupId>
             <artifactId>saaj-api</artifactId>
             <version>1.3</version>
-        </dependency>         
+        </dependency>
+         -->      
         <dependency>
             <groupId>com.sun.xml.messaging.saaj</groupId>
             <artifactId>saaj-impl</artifactId>
