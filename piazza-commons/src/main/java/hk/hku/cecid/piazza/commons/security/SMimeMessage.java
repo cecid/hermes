@@ -250,27 +250,24 @@ public class SMimeMessage {
                 // signer.addSigner(privateKey, cert, getDigestAlgorithm(),
                 //     new AttributeTable(attributes), null);
 
-		System.out.println("$$$ Security provider = " + SECURITY_PROVIDER);
+		// System.out.println("$$$ Security provider = " + SECURITY_PROVIDER);
 
 		String digestAlgmName = MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm();
 		String digestAlgm = "";
 		switch (digestAlgmName) {
 		case "SHA-1":
 		    digestAlgm = "SHA1withRSA";
-		    System.out.println("$$$ get SHA-1");
 		    break;
 		case "MD5":
 		    digestAlgm = "MD5withRSA";
-		    System.out.println("$$$ get MD5");
 		    break;
 		default:
-		    digestAlgm = digestAlgmName;
-		    System.out.println("$$$ Default: " + getDigestAlgorithm() + ".");
+		    throw new SMimeException("Unsupported digest algorithm: " + digestAlgmName);
 		}
-											  
-		System.out.println("$$$ Digest algorithm = " + getDigestAlgorithm() + ", " +					
-				   (MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm()) + " / " +
-				   digestAlgm);
+		
+		// System.out.println("$$$ Digest algorithm = " + getDigestAlgorithm() + ", " +					
+		// 		   (MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm()) + " / " +
+		// 		   digestAlgm);
 				   
 		signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder()
 		    .setProvider(SECURITY_PROVIDER)

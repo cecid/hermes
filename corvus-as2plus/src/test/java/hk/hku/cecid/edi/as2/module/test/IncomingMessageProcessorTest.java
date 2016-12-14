@@ -86,7 +86,6 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 
         // Constants
         private static final String SECURITY_PROVIDER = "BC";
-        public static final String DIGEST_ALG_SHA1 = OIWObjectIdentifiers.sha1WithRSA.getId();
 	
 	@Override
 	public String getSystemComponentId() {
