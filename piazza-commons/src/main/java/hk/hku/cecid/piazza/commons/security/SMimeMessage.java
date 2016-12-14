@@ -104,7 +104,7 @@ public class SMimeMessage {
     /**
      * Digest algorithm: SHA
      */
-    public static final String DIGEST_ALG_SHA1 = SMIMESignedGenerator.DIGEST_SHA1;
+     public static final String DIGEST_ALG_SHA1 = SMIMESignedGenerator.DIGEST_SHA1;
     
     /**
      * Encryption algorithm: DES EDE3
@@ -185,7 +185,7 @@ public class SMimeMessage {
      */
     public SMimeMessage(MimeBodyPart bodyPart, X509Certificate cert, PrivateKey privateKey) {
         this(bodyPart, cert, privateKey, null);
-    }
+   }
     
     /**
      * Creates a new instance of SMimeMessage.
@@ -249,10 +249,33 @@ public class SMimeMessage {
 		// 	  org.bouncycastle.asn1.cms.AttributeTable unsignedAttr);
                 // signer.addSigner(privateKey, cert, getDigestAlgorithm(),
                 //     new AttributeTable(attributes), null);
+
+		System.out.println("$$$ Security provider = " + SECURITY_PROVIDER);
+
+		String digestAlgmName = MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm();
+		String digestAlgm = "";
+		switch (digestAlgmName) {
+		case "SHA-1":
+		    digestAlgm = "SHA1withRSA";
+		    System.out.println("$$$ get SHA-1");
+		    break;
+		case "MD5":
+		    digestAlgm = "MD5withRSA";
+		    System.out.println("$$$ get MD5");
+		    break;
+		default:
+		    digestAlgm = digestAlgmName;
+		    System.out.println("$$$ Default: " + getDigestAlgorithm() + ".");
+		}
+											  
+		System.out.println("$$$ Digest algorithm = " + getDigestAlgorithm() + ", " +					
+				   (MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm()) + " / " +
+				   digestAlgm);
+				   
 		signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder()
-					      .setProvider(SECURITY_PROVIDER)
-					      .setSignedAttributeGenerator(new AttributeTable(attributes))
-					      .build(getDigestAlgorithm(), privateKey, cert));
+		    .setProvider(SECURITY_PROVIDER)
+		    .setSignedAttributeGenerator(new AttributeTable(attributes))
+		    .build(digestAlgm, privateKey, cert));
     
                 /* Add the list of certs to the generator */
                 ArrayList certList = new ArrayList();
@@ -692,6 +715,27 @@ public class SMimeMessage {
             return digestAlgorithm;
         }
     }
+
+    // **
+    // * Gets the digest algorithm name which will be used in digital signing for 
+    // * SignerInfoGeneratorBuilder.
+    // *
+    // * @return the digest algorithm name.
+    // */
+    // rivate String getDigestAlgorithmName() throws Exception{
+    // 	if (digestAlgorithm == null) {
+    // 	    if (privateKey == null) {
+    // 		return null;
+    // 	    }
+    // 	    else {
+    // 		return "DSA".equals(privateKey.getAlgorithm()) ?
+    // 		    "SHA1withRSA" : "MD5withRSA";
+    // 	    }
+    // 	}
+    // 	else {
+    // 	    return MessageDigest.getInstance(digestAlgorithm, SECURITY_PROVIDER).getAlgorithm();
+    // 	}
+    // 
     
     /**
      * Sets the digest algorithm to used in digital signing.
