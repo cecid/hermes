@@ -71,6 +71,7 @@ package hk.hku.cecid.ebms.pkg;
 import org.apache.xml.security.signature.XMLSignatureInput;
 import org.apache.xml.security.utils.resolver.ResourceResolverException;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
+import org.apache.xml.security.utils.resolver.ResourceResolverContext;
 import org.w3c.dom.Attr;
 /**
  * A <code>ResourceResolver</code> implementation used by Apache Security
@@ -92,14 +93,14 @@ class AttachmentResolver extends ResourceResolverSpi {
         this.ebxmlMessage = ebxmlMessage;
     }
 
-    public XMLSignatureInput engineResolve(Attr uri, String baseUri)
+    public XMLSignatureInput engineResolveURI(ResourceResolverContext context)
         throws ResourceResolverException {
-        final String href = uri.getNodeValue();
+        final String href = context.attr.getNodeValue();
 
         if (!href.startsWith(PayloadContainer.HREF_PREFIX)) {
             final Object exArgs[] = { "Reference URI does not start with "
                                       + PayloadContainer.HREF_PREFIX };
-            throw new ResourceResolverException(href, exArgs, uri, baseUri);
+            throw new ResourceResolverException(href, exArgs, context.uriToResolve, context.baseUri);
         }
 
         final String contentId = href.substring(PayloadContainer.HREF_PREFIX.
@@ -109,7 +110,7 @@ class AttachmentResolver extends ResourceResolverSpi {
         if (payload == null) {
             final Object exArgs[] = { "Reference URI = " + href
                                       + " does not exist!" };
-            throw new ResourceResolverException(href, exArgs, uri, baseUri);
+            throw new ResourceResolverException(href, exArgs, context.uriToResolve, context.baseUri);
         }
         final XMLSignatureInput input;
         try {
@@ -117,7 +118,7 @@ class AttachmentResolver extends ResourceResolverSpi {
                                           getInputStream());
         }
         catch (Exception e) {
-            throw new ResourceResolverException(href, e, uri, baseUri);
+            throw new ResourceResolverException(href, e, context.uriToResolve, context.baseUri);
         }
         input.setSourceURI(href);
         input.setMIMEType(payload.getContentType());
@@ -125,8 +126,8 @@ class AttachmentResolver extends ResourceResolverSpi {
         return input;
     }
 
-    public boolean engineCanResolve(Attr uri, String baseUri) {
-        final String href = uri.getNodeValue();
+    public boolean engineCanResolveURI(ResourceResolverContext context) {
+        final String href = context.attr.getNodeValue();
         if (href.startsWith(PayloadContainer.HREF_PREFIX)) {
             final String contentId = href.substring(PayloadContainer.
                                                     HREF_PREFIX.length());
