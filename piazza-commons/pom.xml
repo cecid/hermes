@@ -23,7 +23,7 @@
                         </goals>
                         <configuration>
                             <file>lib/wrapper-3.5.30.jar</file>
-                            <groupId>wrapper</groupId>
+                            <groupId>tanukisoft</groupId>
                             <artifactId>wrapper</artifactId>
                             <version>3.5.30</version>
                             <packaging>jar</packaging>
