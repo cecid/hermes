@@ -106,7 +106,7 @@
         <dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper</artifactId>
-            <version>3.5.30</version>
+            <version>3.3.7</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
