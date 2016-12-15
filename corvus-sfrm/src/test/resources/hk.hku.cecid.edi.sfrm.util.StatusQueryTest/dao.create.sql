@@ -1,4 +1,4 @@
-CREATE TABLE sfrm_message
+CREATE TABLE IF NOT EXISTS sfrm_message
 (
   message_id varchar(200) NOT NULL,
   message_box varchar(200) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE sfrm_message
   PRIMARY KEY (message_id, message_box)
 );
 
-CREATE TABLE sfrm_message_segment 
+CREATE TABLE IF NOT EXISTS sfrm_message_segment 
 (
    message_id varchar(200) NOT NULL,
    message_box varchar(200) NOT NULL,
@@ -36,10 +36,10 @@ CREATE TABLE sfrm_message_segment
    PRIMARY KEY (message_id, message_box, segment_no, segment_type)
 );
 
-CREATE TABLE sfrm_partnership
+CREATE TABLE IF NOT EXISTS sfrm_partnership
 (
   partnership_seq int DEFAULT 1,
-  partnership_id varchar(200)(50) NOT NULL,
+  partnership_id varchar(50) NOT NULL,
   description varchar(200),
   partner_endpoint varchar(200) NOT NULL,
   partner_cert_fingerprint varchar(200),

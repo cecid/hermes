@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS partnership (
 	mic_algorithm varchar(200),
 	as2_from varchar(200) NOT NULL,
 	as2_to varchar(200) NOT NULL,
-	encrypt_cert BINARY,--  HSQL Specified
-	verify_cert BINARY, -- HSQL Specified
+	encrypt_cert VARBINARY(2500),--  HSQL Specified
+	verify_cert VARBINARY(2500), -- HSQL Specified
 	retries INTEGER,
 	retry_interval INTEGER,
 	is_disabled varchar(200) NOT NULL,
@@ -48,12 +48,12 @@ CREATE TABLE IF NOT EXISTS message (
 CREATE TABLE IF NOT EXISTS repository (
 	message_id varchar(200) NOT NULL,
 	message_box varchar(200) NOT NULL,
-	content BINARY NOT NULL, -- HSQL Specified
+	content BLOB NOT NULL, -- HSQL Specified
 	PRIMARY KEY (message_id, message_box)
 );
 
 CREATE TABLE IF NOT EXISTS raw_repository (
 	message_id varchar(200) NOT NULL,
-	content BINARY NOT NULL, -- HSQL Specified
+	content BLOB NOT NULL, -- HSQL Specified
 	PRIMARY KEY (message_id)
 );

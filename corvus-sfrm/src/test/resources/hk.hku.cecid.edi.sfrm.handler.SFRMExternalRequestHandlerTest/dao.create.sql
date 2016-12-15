@@ -39,7 +39,7 @@ CREATE TABLE sfrm_message_segment
 CREATE TABLE sfrm_partnership
 (
   partnership_seq int DEFAULT 1,
-  partnership_id varchar(200)(50) NOT NULL,
+  partnership_id varchar(50) NOT NULL,
   description varchar(200),
   partner_endpoint varchar(200) NOT NULL,
   partner_cert_fingerprint varchar(200),
