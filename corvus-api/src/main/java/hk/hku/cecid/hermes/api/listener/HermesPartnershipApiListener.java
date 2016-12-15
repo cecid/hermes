@@ -41,7 +41,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
         ApiPlugin.core.log.info("Get partnership API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -107,7 +107,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = this.getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
         ApiPlugin.core.log.info("Add partnership API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -133,7 +133,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
         try {
             id = (String) inputDict.get("id");
             if (id == null) {
-                String errorMessage = "Missing required partinership field: id";
+                String errorMessage = "Missing required partnership field: id";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -146,7 +146,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
         try {
             cpa_id = (String) inputDict.get("cpa_id");
             if (cpa_id == null) {
-                String errorMessage = "Missing required partinership field: cpa_id";
+                String errorMessage = "Missing required partnership field: cpa_id";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -159,7 +159,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
         try {
             service = (String) inputDict.get("service");
             if (service == null) {
-                String errorMessage = "Missing required partinership field: service";
+                String errorMessage = "Missing required partnership field: service";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -172,7 +172,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
         try {
             action = (String) inputDict.get("action");
             if (action == null) {
-                String errorMessage = "Missing required partinership field: action";
+                String errorMessage = "Missing required partnership field: action";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -185,7 +185,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
         try {
             transport_endpoint = (String) inputDict.get("transport_endpoint");
             if (transport_endpoint == null) {
-                String errorMessage = "Missing required partinership field: transport_endpoint";
+                String errorMessage = "Missing required partnership field: transport_endpoint";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -245,7 +245,7 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             returnObj.put("id", id);
             return returnObj;
         } catch (DAOException e) {
-            String errorMessage = "Error saving partinership";
+            String errorMessage = "Error saving partnership";
             ApiPlugin.core.log.error(errorMessage, e);
             return createError(ErrorCode.ERROR_WRITING_DATABASE, errorMessage);
         } catch (Exception e) {
@@ -253,5 +253,45 @@ public class HermesPartnershipApiListener extends HermesProtocolApiListener {
             ApiPlugin.core.log.error(errorMessage, e);
             return createError(ErrorCode.ERROR_UNKNOWN, errorMessage);
         }
+    }
+
+    protected Map<String, Object> processDeleteRequest(RestRequest request) throws RequestListenerException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
+        ArrayList<String> pathInfo = parseFromPathInfo(httpRequest.getPathInfo());
+        String protocol = pathInfo.get(1);
+        String id = pathInfo.get(2);
+        ApiPlugin.core.log.info("Delete partnership API invoked, protocol = " + protocol + ", id = " + id);
+
+        if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
+        }
+
+        if ("".equals(id)) {
+            String errorMessage = "Missing required partnership field: id";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
+        }
+
+        boolean success = false;
+        try {
+            PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
+            PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+            partnershipDVO.setPartnershipId(id);
+            if (!partnershipDAO.retrieve(partnershipDVO)) {
+                String errorMessage = "Partnership [" + id + "] not found";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
+            }
+
+            success = partnershipDAO.remove(partnershipDVO);
+        } catch (DAOException e) {
+            String errorMessage = "Error deleting partnership";
+            ApiPlugin.core.log.error(errorMessage, e);
+            return createError(ErrorCode.ERROR_WRITING_DATABASE, errorMessage);
+        }
+
+        return createActionResult(id, success);
     }
 }

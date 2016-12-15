@@ -50,6 +50,13 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
         return dictionary;
     }
 
+    protected Map<String, Object> createActionResult(String id, boolean success) {
+        Map<String, Object> dictionary = new HashMap<String, Object>();
+        dictionary.put("id", id);
+        dictionary.put("success", success);
+        return dictionary;
+    }
+
     protected Map<String, Object> getDictionaryFromRequest(HttpServletRequest request) throws IOException, JsonParseException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buf = new byte[1024];
@@ -100,6 +107,9 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
             else if (httpRequest.getMethod().equalsIgnoreCase(Constants.METHOD_POST)) {
                 return processPostRequest(request);
             }
+            else if (httpRequest.getMethod().equalsIgnoreCase(Constants.METHOD_DELETE)) {
+                return processDeleteRequest(request);
+            }
             else {
                 throw new RequestListenerException("Request method not supported");
             }
@@ -114,6 +124,10 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
     }
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
+        throw new UnsupportedOperationException();
+    }
+
+    protected Map<String, Object> processDeleteRequest(RestRequest request) throws RequestListenerException {
         throw new UnsupportedOperationException();
     }
 }

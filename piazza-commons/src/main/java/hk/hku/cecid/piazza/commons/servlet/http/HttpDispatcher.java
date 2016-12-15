@@ -278,6 +278,17 @@ public class HttpDispatcher extends HttpServlet {
     }
 
     /**
+     * Handles the HTTP <code>POST</code> method.
+     * 
+     * @param request the servlet request.
+     * @param response the servlet response.
+     */
+    protected void doDelete(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
      * Gets a short description of this servlet.
      * 
      * @return a short description of this servlet.

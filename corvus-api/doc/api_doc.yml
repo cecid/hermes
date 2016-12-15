@@ -50,6 +50,22 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+    delete:
+      summary: Delete an ebMS partnership
+      description: |
+        The delete ebMS partnership endpoint remove the specified partnership
+        in Hermes ebMS plugin.
+      tags:
+        - Partnership
+      responses:
+        200:
+          description: Whether the deletion is successful or not
+          schema:
+            $ref: '#/definitions/ActionResult'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     post:
       summary: Create an ebMS partnership
       description: |
@@ -298,6 +314,15 @@ definitions:
       timestamp:
         type: integer
         description: Message timestamp (Unix timestamp)
+  ActionResult:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID
+      success:
+        type: boolean
+        description: Whether the action requested is success
   Payload:
     type: object
     properties:
