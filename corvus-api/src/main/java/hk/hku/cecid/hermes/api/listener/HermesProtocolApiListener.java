@@ -19,11 +19,15 @@ import java.util.ArrayList;
  */
 public class HermesProtocolApiListener extends HermesAbstractApiListener {
 
+    protected ArrayList<String> parseFromPathInfo(String pathInfo) {
+        return parseFromPathInfo(pathInfo, 1);
+    }
+
     /**
      * Returns a list of three strings:
      * [ action, protocol, parameter ]
      */
-    protected ArrayList<String> parseFromPathInfo(String pathInfo) {
+    protected ArrayList<String> parseFromPathInfo(String pathInfo, int numActionParts) {
         final int NUM_PARTS = 3;
 
         ArrayList<String> result = new ArrayList<String>();
@@ -43,25 +47,52 @@ public class HermesProtocolApiListener extends HermesAbstractApiListener {
             pathInfo = pathInfo.substring(0, pathInfo.length() - 1);
         }
 
-        String part;
         int searchFrom = 0;
         int index;
-        for (int i=0 ; i<NUM_PARTS ; i++) {
-            if (searchFrom >= 0 && searchFrom < pathInfo.length()) {
-                index = pathInfo.indexOf("/", searchFrom);
-                if (index != -1 && i != NUM_PARTS - 1) {
-                    part = pathInfo.substring(searchFrom, index);
-                    searchFrom = index + 1;
-                } else {
-                    part = pathInfo.substring(searchFrom);
-                    searchFrom = -1;
-                }
-            } else {
-                part = "";
+        ArrayList<String> parts = new ArrayList<String>();
+        while (searchFrom != -1) {
+            index = pathInfo.indexOf("/", searchFrom);
+            if (index != -1) {
+                parts.add(pathInfo.substring(searchFrom, index));
+                searchFrom = index + 1;
             }
-            result.add(part);
+            else {
+                parts.add(pathInfo.substring(searchFrom));
+                searchFrom = -1;
+            }
         }
+
+        StringBuffer action = new StringBuffer();
+        index = 0;
+        for (int i=0 ; i<numActionParts ; i++) {
+            if (index < parts.size()) {
+                if (i != 0) {
+                    action.append("/");
+                }
+                action.append(parts.get(index++));
+            }
+            else {
+                break;
+            }
+        }
+        String protocol = "";
+        if (index < parts.size()) {
+            protocol = parts.get(index++);
+        }
+        StringBuffer parameter = new StringBuffer();
+        if (index < parts.size()) {
+            for (int i=index ; i<parts.size() ; i++) {
+                if (i != index) {
+                    parameter.append("/");
+                }
+                parameter.append(parts.get(i));
+            }
+        }
+
+        result.add(action.toString());
+        result.add(protocol);
+        result.add(parameter.toString());
+
         return result;
     }
-
 }
