@@ -137,10 +137,12 @@ paths:
             $ref: '#/definitions/Error'
   /message/receive/ebms:
     get:
-      summary: Get a list of unread received ebMS message
+      summary: Get a list of received ebMS message
       description: |
-        The get unread ebMS messages endpoints queries for the list of unread
+        The get unread ebMS messages endpoints queries for the list of
         messages that has been received for the specified partnership.
+        If the parameter include_read is true, only unread messages
+        will be returned.
       tags:
         - Message
         - Receive
@@ -149,13 +151,18 @@ paths:
           in: query
           required: true
           type: string
+        - name: include_read
+          in: query
+          required: false
+          type: string
       responses:
         200:
           description: |
-            A list of message IDs, which identifies a list unread received
+            A list of message IDs, which identifies a list received
             messages for the specified partnership. Note that upon query,
             the list of returned messages will be marked as read; which means
-            it will not be returned next time the same endpoint is invoked.
+            it will not be returned next time the same endpoint is invoked
+            unless include_read parameter is true.
           schema:
             type: object
             properties:
@@ -314,6 +321,9 @@ definitions:
       timestamp:
         type: integer
         description: Message timestamp (Unix timestamp)
+      status:
+        type: string
+        description: Message status
   ActionResult:
     type: object
     properties:

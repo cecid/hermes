@@ -54,7 +54,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Get received message list API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -70,7 +70,13 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
         }
 
-        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId);
+        String includeReadString = httpRequest.getParameter("include_read");
+        boolean includeRead = false;
+        if (includeReadString != null && includeReadString.equalsIgnoreCase("true")) {
+            includeRead = true;
+        }
+
+        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + ", include_read=" + includeRead);
 
         try {
             PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
@@ -89,7 +95,9 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             criteriaDVO.setService(partnershipDVO.getService());
             criteriaDVO.setAction(partnershipDVO.getAction());
             criteriaDVO.setMessageBox(MessageClassifier.MESSAGE_BOX_INBOX);
-            criteriaDVO.setStatus(MessageClassifier.INTERNAL_STATUS_PROCESSED);
+            if (!includeRead) {
+                criteriaDVO.setStatus(MessageClassifier.INTERNAL_STATUS_PROCESSED);
+            }
             List results = msgDAO.findMessagesByHistory(criteriaDVO, MAX_NUMBER, 0);
 
             MessageServerDAO messageServerDao = (MessageServerDAO) EbmsProcessor.core.dao.createDAO(MessageServerDAO.class);
@@ -101,6 +109,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
                     Map<String, Object> messageDict = new HashMap<String, Object>();
                     messageDict.put("id", message.getMessageId());
                     messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
+                    messageDict.put("status", message.getStatus());
                     messages.add(messageDict);
 
                     // save delivered status and clear message from inbox
@@ -128,7 +137,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = parseFromPathInfo(httpRequest.getPathInfo()).get(1);
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Get received message API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
