@@ -100,4 +100,22 @@ public class HermesProtocolApiListenerTest {
         Assert.assertEquals("", parts.get(1));
         Assert.assertEquals("cc/dd", parts.get(2));
     }
+
+    @Test
+    public void testGetProtocolFromPathInfo_multiple_action_parts() {
+        ArrayList<String> parts = this.listener.parseFromPathInfo("aa/bb/cc/dd", 2);
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa/bb", parts.get(0));
+        Assert.assertEquals("cc", parts.get(1));
+        Assert.assertEquals("dd", parts.get(2));
+    }
+
+    @Test
+    public void testGetProtocolFromPathInfo_multiple_action_parts_with_empty_segment() {
+        ArrayList<String> parts = this.listener.parseFromPathInfo("aa/bb/cc/dd", 3);
+        Assert.assertEquals(3, parts.size());
+        Assert.assertEquals("aa/bb/cc", parts.get(0));
+        Assert.assertEquals("dd", parts.get(1));
+        Assert.assertEquals("", parts.get(2));
+    }
 }
