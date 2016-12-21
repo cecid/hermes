@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +21,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.AttachmentPart;
 import javax.xml.soap.SOAPException;
+
+import org.apache.commons.codec.binary.Base64;
 
 import hk.hku.cecid.ebms.pkg.EbxmlMessage;
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
@@ -254,7 +255,6 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
         input.close();
         baos.close();
 
-        Base64.Encoder encoder = Base64.getEncoder();
-        return new String(encoder.encode(payload));
+        return new String(Base64.encodeBase64(payload));
     }
 }

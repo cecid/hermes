@@ -11,13 +11,14 @@ package hk.hku.cecid.hermes.api.listener;
 
 import java.io.IOException;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.SOAPException;
+
+import org.apache.commons.codec.binary.Base64;
 
 import hk.hku.cecid.ebms.spa.EbmsUtility;
 import hk.hku.cecid.ebms.pkg.EbxmlMessage;
@@ -181,8 +182,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         try {
             payloadString = (String) inputDict.get("payload");
             if (payloadString != null) {
-                Base64.Decoder decoder = Base64.getDecoder();
-                payload = decoder.decode(payloadString.getBytes());
+                payload = Base64.decodeBase64(payloadString.getBytes());
             }
         } catch (Exception e) {
             String errorMessage = "Error parsing parameter: payload";
