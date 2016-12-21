@@ -163,7 +163,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
         try {
             messageId = (String) inputDict.get("message_id");
             if (messageId == null) {
-                String errorMessage = "Missing required partinership field: message_id";
+                String errorMessage = "Missing required field: message_id";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -179,7 +179,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
             MessageDVO message = (MessageDVO) msgDAO.createDVO();
             message.setMessageId(messageId);
-            message.setMessageBox(MessageClassifier.MESSAGE_BOX_OUTBOX);
+            message.setMessageBox(MessageClassifier.MESSAGE_BOX_INBOX);
 
             if (msgDAO.findMessage(message)) {
                 EbxmlMessage ebxmlMessage = null;
