@@ -85,9 +85,9 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		this.testClassLogger = new FileLogger(log);
 		
 		// Create an anonymous partnership sender and implement the abstract method for our testing.
-		this.target = new EnvelopQuerySender(this.testClassLogger, this.kvData);		
+		this.target = new EnvelopQuerySender(this.testClassLogger, this.kvData, USER_NAME, PASSWORD); 
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
-		this.target.setBasicAuthentication(USER_NAME, PASSWORD);
+		// this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 		this.target.setMessageCriteriaToDownload("test-message-id", "INBOX");
 	}
 	
@@ -196,6 +196,7 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		// #3 Assert content.
 		String encodedContent = IOHandler.readString(monitor.getContentStream(), null);
 		StringTokenizer st = new StringTokenizer(encodedContent, "&");
+		System.out.println("  encodedContent = " + encodedContent);
 		assertTrue	("The POST content should at least has 2 parameters", (st.countTokens() >= 2));
 		
 		String[] kvPair = null;
