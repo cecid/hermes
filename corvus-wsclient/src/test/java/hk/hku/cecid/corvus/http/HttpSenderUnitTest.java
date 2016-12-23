@@ -25,12 +25,6 @@ import sun.misc.BASE64Encoder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-// import org.apache.commons.httpclient.HttpMethod;
-// import org.apache.commons.httpclient.methods.PostMethod;
-// import org.apache.commons.httpclient.methods.multipart.Part;
-// import org.apache.commons.httpclient.methods.multipart.StringPart;
-// import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 
@@ -144,12 +138,6 @@ public class HttpSenderUnitTest extends TestCase
     public void testSendWithParameter() throws Exception 
     {
 	this.target = new HttpSender(this.testClassLogger, new KVPairData(0)){
-
-		// public HttpMethod onCreateRequest() throws Exception {
-		// 	PostMethod method = new PostMethod("http://localhost:1999");
-		// 	method.addParameter("testparamName", "testparamValue");
-		// 	return method;
-		// }
 		public HttpRequestBase onCreateRequest() throws Exception {
 		    HttpPost method = new HttpPost("http://localhost:1999");
 		    List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -165,18 +153,6 @@ public class HttpSenderUnitTest extends TestCase
     public void testSendWithMultipart() throws Exception 
     {
 	this.target = new HttpSender(this.testClassLogger, new KVPairData(0)){
-
-		// public HttpMethod onCreateRequest() throws Exception 
-		// {
-		// 	PostMethod method = new PostMethod("http://localhost:1999");
-		// 	Part[] parts = {
-		// 		new StringPart("testparamName", "testparamValue")
-		// 	};
-		// 	method.setRequestEntity(
-		// 		new MultipartRequestEntity(parts, method.getParams())
-		// 	);
-		// 	return method;
-		// }
 		public HttpRequestBase onCreateRequest() throws Exception{
 		    HttpPost method = new HttpPost("http://localhost:1999");
 		    method.setEntity(MultipartEntityBuilder.create()
@@ -193,7 +169,6 @@ public class HttpSenderUnitTest extends TestCase
 	String user = "test";
 	String password = "test";
 	// Set the basic authentication.
-	// this.target.setBasicAuthentication(user, password);
 	this.assertSend();
 		
 	String auth = (String) this.monitor.getHeaders().get("Authorization");

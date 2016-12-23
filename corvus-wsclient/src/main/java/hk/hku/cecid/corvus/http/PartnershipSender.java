@@ -16,15 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Iterator;
 
-// import org.apache.commons.httpclient.HttpMethod;
-// import org.apache.commons.httpclient.methods.PostMethod;
-// import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
-// import org.apache.commons.httpclient.methods.multipart.FilePart;
-// import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-// import org.apache.commons.httpclient.methods.multipart.Part;
-// import org.apache.commons.httpclient.methods.multipart.PartSource;
-// import org.apache.commons.httpclient.methods.multipart.StringPart;
-
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -178,8 +169,6 @@ public abstract class PartnershipSender extends HttpSender implements Partnershi
 	    throw new NullPointerException("Missing partnership mapping for creating HTTP request");		
 		
 	// Create the HTTP POST method targeted to service end-point.
-	// PostMethod post 	 = new PostMethod(this.getServiceEndPoint().toExternalForm());
-	// List parts 			 = new ArrayList();	// An array for multi-part;
 	HttpPost post = new HttpPost(this.getServiceEndPoint().toExternalForm());
 	MultipartEntityBuilder mBuilder = MultipartEntityBuilder.create();
 
@@ -194,7 +183,6 @@ public abstract class PartnershipSender extends HttpSender implements Partnershi
 	Map.Entry e; 			// an entry representing the partnership data to web form name mapping.
 	String formParamName;	// a temporary pointer pointing to the value in the entry.
 	Object dataValue;		// a temporary pointer pointing to the value in the partnership data.
-	// Part newPart;			// a temporary pointer pointing to a multi-part part.
 		
 	while (itr.hasNext()){
 	    e = (Map.Entry) itr.next();
@@ -205,33 +193,21 @@ public abstract class PartnershipSender extends HttpSender implements Partnershi
 		if (dataValue == null) // Use empty string when the key is not filled.
 		    dataValue = "";				
 		if (dataValue instanceof String){	// Create literal part					
-		    // newPart = new StringPart(formParamName, (String)dataValue);
 		    mBuilder = mBuilder.addTextBody(formParamName, (String)dataValue);
 		} else if (dataValue instanceof byte[]){ // Create streaming multi-part
-		    // PartSource source = new ByteArrayPartSource((String)e.getKey(), (byte[])dataValue);
-		    // newPart = new FilePart	(formParamName, source);
 		    mBuilder = mBuilder.addBinaryBody(formParamName, (byte[])dataValue);
 		} else if (dataValue instanceof Boolean){
-		    // newPart = new StringPart(formParamName, String.valueOf((Boolean)dataValue));
 		    mBuilder = mBuilder.addTextBody(formParamName, String.valueOf((Boolean)dataValue));
 		} else {
-		    // newPart = new StringPart(formParamName, dataValue.toString());
 		    mBuilder = mBuilder.addTextBody(formParamName, dataValue.toString());
 		}
-		// Add the new part.
-		// parts.add(newPart);
 	    }
 	}
 				
 	Map partnershipOpMap = this.getPartnershipOperationMapping(); 		
 	/* Add HTTP request action to the web form parameter. */	
-	// parts.add(new StringPart("request_action", (String)partnershipOpMap.get(new Integer(this.pOp))));
 	mBuilder = mBuilder.addTextBody("request_action", (String)partnershipOpMap.get(new Integer(this.pOp)));
 		
-	// MultipartRequestEntity multipartRequest = new MultipartRequestEntity(
-	//								     (Part[])parts.toArray(new Part[]{}), post.getParams());
-	
-	// post.setRequestEntity(multipartRequest);
 	post.setEntity(mBuilder.build());
 	    
 	return post;

@@ -12,14 +12,6 @@ package hk.hku.cecid.corvus.http;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-// import org.apache.commons.httpclient.HttpClient;
-// import org.apache.commons.httpclient.HttpMethod;
-// import org.apache.commons.httpclient.HttpStatus;
-// import org.apache.commons.httpclient.HttpException;
-// import org.apache.commons.httpclient.methods.PostMethod;
-// import org.apache.commons.httpclient.auth.AuthScope;
-// import org.apache.commons.httpclient.UsernamePasswordCredentials;
-
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -342,6 +334,8 @@ public class HttpSender implements Runnable
 	
     /**
      * Set to use the basic authentication when calling the web service.
+     *
+     * Deprecated. Set username/ password with constructor.
      * 
      * @param username The user-name for basic authentication. 
      * @param password The password for basic authentication.
@@ -459,7 +453,6 @@ public class HttpSender implements Runnable
 			this.requestMethod = this.onCreateRequest();
 
 			if (this.isAuthRequired) {
-			    // this.requestMethod.setDoAuthentication(true);
 			    RequestConfig config = RequestConfig.custom()
 				.setAuthenticationEnabled(true).build();
 			    this.requestMethod.setConfig(config);
@@ -468,7 +461,6 @@ public class HttpSender implements Runnable
 													 
 			this.onBeforeRequest(this.delegationClient, this.requestMethod);
 			
-			// int responseCode = this.delegationClient.executeMethod(this.requestMethod);
 			this.response = this.delegationClient.execute(this.requestMethod);
 			int responseCode = this.getResponse().getStatusLine().getStatusCode();
 				
@@ -484,8 +476,6 @@ public class HttpSender implements Runnable
 	}				
 	finally{
 	    closeResponse(this.response);
-		
-	    // if (this.requestMethod != null)	this.requestMethod.releaseConnection();
 	}
     }
 }

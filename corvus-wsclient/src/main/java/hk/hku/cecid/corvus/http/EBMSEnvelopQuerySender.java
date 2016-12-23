@@ -92,7 +92,6 @@ public class EBMSEnvelopQuerySender extends EnvelopQuerySender  {
 	if (endpoint == null || endpoint.equals(""))
 	    throw new NullPointerException("Missing 'Envelop Partnership endpoint' in EBMS Admin Data.");		
 	this.setServiceEndPoint(endpoint);			
-	// this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
 	this.setMessageCriteriaToDownload(ad.getMessageIdCriteria(), ad.getMessageBoxCriteria());
     }
 	

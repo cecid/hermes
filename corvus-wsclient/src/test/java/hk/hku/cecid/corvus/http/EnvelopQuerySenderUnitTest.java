@@ -87,7 +87,6 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		// Create an anonymous partnership sender and implement the abstract method for our testing.
 		this.target = new EnvelopQuerySender(this.testClassLogger, this.kvData, USER_NAME, PASSWORD); 
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
-		// this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 		this.target.setMessageCriteriaToDownload("test-message-id", "INBOX");
 	}
 	

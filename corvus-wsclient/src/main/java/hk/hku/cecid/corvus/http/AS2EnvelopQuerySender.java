@@ -18,8 +18,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-// import org.apache.commons.httpclient.HttpMethod;
-// import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpPost;
 
@@ -109,7 +107,6 @@ public class AS2EnvelopQuerySender extends EnvelopQuerySender
 	if (endpoint == null || endpoint.equals(""))
 	    throw new NullPointerException("Missing 'Envelop Partnership endpoint' in AS2 Admin Data.");		
 	this.setServiceEndPoint(endpoint);			
-	// this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
 	this.setMessageCriteriaToDownload(ad.getMessageIdCriteria(), ad.getMessageBoxCriteria());
     }
 	
@@ -125,7 +122,6 @@ public class AS2EnvelopQuerySender extends EnvelopQuerySender
      */
     protected HttpRequestBase onCreateRequest() throws Exception {
 	HttpPost post = (HttpPost) super.onCreateRequest();
-	// post.setParameter(DL_RECEIPT_FORM_PARAM, String.valueOf(isDownloadReceipt));
 	HttpEntity entity = post.getEntity();
 	
 	List<NameValuePair> params = URLEncodedUtils.parse(entity);

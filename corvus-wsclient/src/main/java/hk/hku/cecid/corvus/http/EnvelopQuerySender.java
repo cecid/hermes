@@ -22,8 +22,6 @@ import java.io.FileInputStream;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Channels;
 
-// import org.apache.commons.httpclient.HttpMethod;
-// import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -209,8 +207,6 @@ public class EnvelopQuerySender extends HttpSender
 	    mappedMsgBox = (String) messageBoxMapping.get(this.messageBoxToDownload);
 	}		
 	// Assign the message_id, message_box as the post parameter.
-	// post.setParameter(MSGID_FORM_PARAM		, this.messageIdToDownload);
-	// post.setParameter(MSGBOX_FORM_PARAM		, mappedMsgBox);
 	List<NameValuePair> params = new ArrayList<NameValuePair>();
 	params.add(new BasicNameValuePair(MSGID_FORM_PARAM, this.messageIdToDownload));
 	params.add(new BasicNameValuePair(MSGBOX_FORM_PARAM, mappedMsgBox));
@@ -219,6 +215,7 @@ public class EnvelopQuerySender extends HttpSender
 	return post;
     }
 	
+
     /**
      * [@EVENT] This method is invoked when received the reply HTTP  response from the server.
      * <br/><br/>

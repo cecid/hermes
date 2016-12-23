@@ -130,7 +130,6 @@ public class AS2PartnershipSender extends PartnershipSender
 		if (endpoint == null || endpoint.equals(""))
 			throw new NullPointerException("Missing 'Manage Partnership endpoint' in AS2 Admin Data.");		
 		this.setServiceEndPoint(endpoint);			
-		// this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
 		this.setExecuteOperation(ad.getPartnershipOperation());		
 		//this.ad = ad;
 	}

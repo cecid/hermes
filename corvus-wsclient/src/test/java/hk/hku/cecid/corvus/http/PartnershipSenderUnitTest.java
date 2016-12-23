@@ -146,7 +146,6 @@ public class PartnershipSenderUnitTest extends TestCase
 			public Map getPartnershipMapping()			{ return data2webForm; }
 		};
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
-		// this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 	}
 	
 	/** Test whether the add partnership request operation perform correctly **/
