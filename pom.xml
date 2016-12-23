@@ -288,9 +288,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jboss</groupId>
-            <artifactId>jboss-j2ee</artifactId>
-            <version>3.2.3</version>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-all-7.0</artifactId>
+            <version>1.0.4.Final</version>
             <scope>provided</scope>
         </dependency>
         <!-- unit test -->
