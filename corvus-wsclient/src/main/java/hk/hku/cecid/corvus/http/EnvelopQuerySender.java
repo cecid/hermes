@@ -126,8 +126,6 @@ public class EnvelopQuerySender extends HttpSender
 	this.checkArguments(messageId, messageBox);
 	this.messageBoxToDownload = messageBox;
 	this.messageIdToDownload = messageId;
-	System.out.println("  EnvelopQuerySender:messageBoxToDownload = " + this.messageBoxToDownload);
-	System.out.println("  EnvelopQuerySender:messageIdToDownload = " + this.messageIdToDownload);
     }
 	
     /** 
@@ -217,7 +215,6 @@ public class EnvelopQuerySender extends HttpSender
 	params.add(new BasicNameValuePair(MSGID_FORM_PARAM, this.messageIdToDownload));
 	params.add(new BasicNameValuePair(MSGBOX_FORM_PARAM, mappedMsgBox));
 	post.setEntity(new UrlEncodedFormEntity(params));
-	System.out.println("  EnvelopQuerySender:post.entity = " + post.getEntity().toString());
 		    
 	return post;
     }

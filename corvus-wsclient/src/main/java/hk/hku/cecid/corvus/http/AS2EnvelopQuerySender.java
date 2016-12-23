@@ -23,9 +23,11 @@ import java.util.ArrayList;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpPost;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.utils.URLEncodedUtils;
 
 import hk.hku.cecid.corvus.util.FileLogger;
 import hk.hku.cecid.corvus.ws.data.KVPairData;
@@ -124,7 +126,9 @@ public class AS2EnvelopQuerySender extends EnvelopQuerySender
     protected HttpRequestBase onCreateRequest() throws Exception {
 	HttpPost post = (HttpPost) super.onCreateRequest();
 	// post.setParameter(DL_RECEIPT_FORM_PARAM, String.valueOf(isDownloadReceipt));
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	HttpEntity entity = post.getEntity();
+	
+	List<NameValuePair> params = URLEncodedUtils.parse(entity);
 	params.add(new BasicNameValuePair(DL_RECEIPT_FORM_PARAM, String.valueOf(isDownloadReceipt)));
 	post.setEntity(new UrlEncodedFormEntity(params));
 		

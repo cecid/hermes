@@ -196,7 +196,7 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		// #3 Assert content.
 		String encodedContent = IOHandler.readString(monitor.getContentStream(), null);
 		StringTokenizer st = new StringTokenizer(encodedContent, "&");
-		System.out.println("  encodedContent = " + encodedContent);
+
 		assertTrue	("The POST content should at least has 2 parameters", (st.countTokens() >= 2));
 		
 		String[] kvPair = null;

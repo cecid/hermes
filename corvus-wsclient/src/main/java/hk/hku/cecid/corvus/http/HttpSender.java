@@ -149,8 +149,6 @@ public class HttpSender implements Runnable
 	builder.setDefaultCredentialsProvider(credProvider);
 	this.delegationClient = builder.build();
 	this.isAuthRequired = true;
-	System.out.println("  HttpSender:client = " + this.delegationClient.toString());
-	System.out.println("  HttpSender:cred = " + creds.toString());
     }
 	
     /**
@@ -459,7 +457,7 @@ public class HttpSender implements Runnable
 			this.onEachLoopStart();									
 			// Asks child class for creating the request method;				
 			this.requestMethod = this.onCreateRequest();
-			System.out.println("HttpSender:requestMethod = " + this.requestMethod.toString());
+
 			if (this.isAuthRequired) {
 			    // this.requestMethod.setDoAuthentication(true);
 			    RequestConfig config = RequestConfig.custom()
@@ -469,20 +467,9 @@ public class HttpSender implements Runnable
 			}
 													 
 			this.onBeforeRequest(this.delegationClient, this.requestMethod);
-			System.out.println("  HttpSender:isAuthRequired = " + String.valueOf(this.isAuthRequired));
-			if (this.isAuthRequired)
-			System.out.println("  HttpSender:request.config = " + ((HttpPost)this.requestMethod).getConfig().toString());
-			
-			System.out.println("  HttpSender:request.header: "); 
-			for(Header h:((HttpPost)this.requestMethod).getAllHeaders())
-			    System.out.println("    " + h.toString());
-			System.out.println("");
 			
 			// int responseCode = this.delegationClient.executeMethod(this.requestMethod);
 			this.response = this.delegationClient.execute(this.requestMethod);
-			System.out.println("  HttpSender:response.header: ");
-			for(Header h:this.response.getAllHeaders())
-			    System.out.println("    " + h.toString());
 			int responseCode = this.getResponse().getStatusLine().getStatusCode();
 				
 			if (responseCode != HttpStatus.SC_OK)
