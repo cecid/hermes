@@ -25,11 +25,16 @@ import hk.hku.cecid.hermes.api.spa.ApiPlugin;
  *
  */
 public class HermesApiListener extends HermesAbstractApiListener {
-    protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
-    	ApiPlugin.core.log.info("Status API invoked");
+
+    protected Map<String, Object> createStatusObject() {
         HashMap<String, Object> dict = new HashMap<String, Object>();
         dict.put("status", Constants.HEALTHY);
         fillDate(dict);
         return dict;
+    }
+
+    protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
+        ApiPlugin.core.log.info("Status API invoked");
+        return createStatusObject();
     }
 }

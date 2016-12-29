@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +21,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.soap.AttachmentPart;
 import javax.xml.soap.SOAPException;
+
+import org.apache.commons.codec.binary.Base64;
 
 import hk.hku.cecid.ebms.pkg.EbxmlMessage;
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
@@ -54,7 +55,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Get received message list API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -70,7 +71,13 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
         }
 
-        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId);
+        String includeReadString = httpRequest.getParameter("include_read");
+        boolean includeRead = false;
+        if (includeReadString != null && includeReadString.equalsIgnoreCase("true")) {
+            includeRead = true;
+        }
+
+        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + ", include_read=" + includeRead);
 
         try {
             PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
@@ -89,7 +96,9 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             criteriaDVO.setService(partnershipDVO.getService());
             criteriaDVO.setAction(partnershipDVO.getAction());
             criteriaDVO.setMessageBox(MessageClassifier.MESSAGE_BOX_INBOX);
-            criteriaDVO.setStatus(MessageClassifier.INTERNAL_STATUS_PROCESSED);
+            if (!includeRead) {
+                criteriaDVO.setStatus(MessageClassifier.INTERNAL_STATUS_PROCESSED);
+            }
             List results = msgDAO.findMessagesByHistory(criteriaDVO, MAX_NUMBER, 0);
 
             MessageServerDAO messageServerDao = (MessageServerDAO) EbmsProcessor.core.dao.createDAO(MessageServerDAO.class);
@@ -101,6 +110,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
                     Map<String, Object> messageDict = new HashMap<String, Object>();
                     messageDict.put("id", message.getMessageId());
                     messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
+                    messageDict.put("status", message.getStatus());
                     messages.add(messageDict);
 
                     // save delivered status and clear message from inbox
@@ -128,7 +138,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
 
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
-        String protocol = getProtocolFromPathInfo(httpRequest.getPathInfo());
+        String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Get received message API invoked, protocol = " + protocol);
 
         if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
@@ -154,7 +164,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
         try {
             messageId = (String) inputDict.get("message_id");
             if (messageId == null) {
-                String errorMessage = "Missing required partinership field: message_id";
+                String errorMessage = "Missing required field: message_id";
                 ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
@@ -170,7 +180,7 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             MessageDAO msgDAO = (MessageDAO) EbmsProcessor.core.dao.createDAO(MessageDAO.class);
             MessageDVO message = (MessageDVO) msgDAO.createDVO();
             message.setMessageId(messageId);
-            message.setMessageBox(MessageClassifier.MESSAGE_BOX_OUTBOX);
+            message.setMessageBox(MessageClassifier.MESSAGE_BOX_INBOX);
 
             if (msgDAO.findMessage(message)) {
                 EbxmlMessage ebxmlMessage = null;
@@ -245,7 +255,6 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
         input.close();
         baos.close();
 
-        Base64.Encoder encoder = Base64.getEncoder();
-        return new String(encoder.encode(payload));
+        return new String(Base64.encodeBase64(payload));
     }
 }
