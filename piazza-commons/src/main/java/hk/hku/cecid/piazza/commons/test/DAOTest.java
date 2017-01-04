@@ -204,41 +204,44 @@ public abstract class DAOTest<T extends DataSourceDAO> extends UnitTest<T>
 		final String sql = IOHandler.readString(resourceStream, null);
 		final String canonicalizedSql = sql.replace("(?! \\S)\\s+", " ");
 		
+		if (canonicalizedSql.trim().length() > 0) {
+
 		this.containerLogger.info("Execute SQL: \n " + canonicalizedSql);
 		
 		DataSourceProcess process = new DataSourceProcess(this.target)
 		{
-			  protected void doTransaction(DataSourceTransaction tx) throws DAOException 
-			  {
-				  Statement stmt = null;
-				  try
-				  {
-					  Connection conn = tx.getConnection();
-					  stmt = conn.createStatement();
-					  Assert.assertThat(stmt.executeUpdate(sql), not(is(-1)));
-					  
-				  }
-				  catch(SQLException sqlex)
-				  {
+			protected void doTransaction(DataSourceTransaction tx) throws DAOException 
+			{
+				Statement stmt = null;
+				try
+				{
+					Connection conn = tx.getConnection();
+					stmt = conn.createStatement();
+					Assert.assertThat(stmt.executeUpdate(sql), not(is(-1)));
+					
+				}
+				catch(SQLException sqlex)
+				{
 					  throw new DAOException(sqlex);	// re-throw.
-				  }
-				  finally
-				  {
-					  if (stmt != null)
-					  {
-						  try
-						  {
-							  stmt.close();
-						  }
-						  catch(SQLException sqlex)
-						  {
-							  containerLogger.error("Unable to close statement", sqlex);
-						  }
-					  }
-				  }
-			  }
-		};
-		process.start();
+					}
+					finally
+					{
+						if (stmt != null)
+						{
+							try
+							{
+								stmt.close();
+							}
+							catch(SQLException sqlex)
+							{
+								containerLogger.error("Unable to close statement", sqlex);
+							}
+						}
+					}
+				}
+			};
+			process.start();
+		}
 	}
 	 	
 	@Override
