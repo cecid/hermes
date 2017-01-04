@@ -66,17 +66,17 @@ import hk.hku.cecid.corvus.ws.data.EBMSPartnershipData;
  */
 public class EBMSPartnershipSender extends PartnershipSender
 {
-	/*
-	 * A mapping containing the mapping from the partnership data hash key to 
-	 * the HTTP multi-part request parameters.
-	 */
-	static final Map PARTNERSHIP_DATA_2_FROM_PARAM_NAME_MAPPING = new LinkedHashMap()
+    /*
+     * A mapping containing the mapping from the partnership data hash key to 
+     * the HTTP multi-part request parameters.
+     */
+    static final Map PARTNERSHIP_DATA_2_FROM_PARAM_NAME_MAPPING = new LinkedHashMap()
 	{	
-		private static final long serialVersionUID = 8744122089368239608L;
-	{	
+	    private static final long serialVersionUID = 8744122089368239608L;
+	    {	
 		// The array containing the partnership data to HTTP request parameters
 		String [] pdata2param = 
-		{
+		    {
 			"partnership_id"		, "cpa_id"				, "service"			, 
 			"action_id"				, "disabled"			, "sync_reply_mode"	,
 			"transport_endpoint"	, null					, "ack_requested"	,
@@ -85,124 +85,123 @@ public class EBMSPartnershipSender extends PartnershipSender
 			"sign_requested"		, null					, null				,
 			"encrypt_requested"		, null					,
 			"verify_cert"			, "encrypt_cert"		, "is_hostname_verified",  
-		};
+		    };
 		
 		/* Create the partnership data to web form mapping */
 		for (int i = 0; i < EBMSPartnershipData.PARAM_KEY_SET.length; i++){
-			this.put(EBMSPartnershipData.PARAM_KEY_SET[i], pdata2param[i]);
+		    this.put(EBMSPartnershipData.PARAM_KEY_SET[i], pdata2param[i]);
 		}
-	}
+	    }
 	};
 
-	/*
-	 * A mapping containing the partnership operation to the actual action textual 
-	 * in the web form at the HTTP request.
-	 */
-	static final Map PARTNERSHIP_OP_2_WORD = new HashMap()
+    /*
+     * A mapping containing the partnership operation to the actual action textual 
+     * in the web form at the HTTP request.
+     */
+    static final Map PARTNERSHIP_OP_2_WORD = new HashMap()
 	{{
-		this.put(new Integer(PartnershipOp.ADD)	  , "add");
-		this.put(new Integer(PartnershipOp.DELETE), "delete");
-		this.put(new Integer(PartnershipOp.UPDATE), "update");		
+	    this.put(new Integer(PartnershipOp.ADD)	  , "add");
+	    this.put(new Integer(PartnershipOp.DELETE), "delete");
+	    this.put(new Integer(PartnershipOp.UPDATE), "update");		
 	}};
 	
-	// The administration data for setting the end-point and authentication
-	//private EBMSAdminData ad;
+    // The administration data for setting the end-point and authentication
+    //private EBMSAdminData ad;
 
-	/**
-	 * Explicit Constructor. Create an instance of <code>EBMSPartnershipSender</code>
-	 * 
-	 * @param logger The logger for log the sending process.
-	 * @param ad The <code>EBMSAdminData</code> for locating the HTTP end-point the request send to. 
-	 * @param p  The <code>EBMSPartnershipData</code> 
-	 */
-	public EBMSPartnershipSender(FileLogger logger, EBMSAdminData ad, EBMSPartnershipData p) 
-	{
-		super(logger, p);
-		if (p == null)
-			throw new NullPointerException("Missing 'partnershipData' for creating partnerhsip sender.");
-		String endpoint = ad.getManagePartnershipEndpoint();
-		if (endpoint == null || endpoint.equals(""))
-			throw new NullPointerException("Missing 'Manage Partnership endpoint' in EBMS Admin Data.");		
-		this.setServiceEndPoint(endpoint);			
-		this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
-		this.setExecuteOperation(ad.getPartnershipOperation());		
-		//this.ad = ad;
-	}
+    /**
+     * Explicit Constructor. Create an instance of <code>EBMSPartnershipSender</code>
+     * 
+     * @param logger The logger for log the sending process.
+     * @param ad The <code>EBMSAdminData</code> for locating the HTTP end-point the request send to. 
+     * @param p  The <code>EBMSPartnershipData</code> 
+     */
+    public EBMSPartnershipSender(FileLogger logger, EBMSAdminData ad, EBMSPartnershipData p) 
+    {
+	super(logger, p, ad.getUsername(), new String(ad.getPassword()));
+	if (p == null)
+	    throw new NullPointerException("Missing 'partnershipData' for creating partnerhsip sender.");
+	String endpoint = ad.getManagePartnershipEndpoint();
+	if (endpoint == null || endpoint.equals(""))
+	    throw new NullPointerException("Missing 'Manage Partnership endpoint' in EBMS Admin Data.");		
+	this.setServiceEndPoint(endpoint);			
+	this.setExecuteOperation(ad.getPartnershipOperation());		
+	//this.ad = ad;
+    }
 	
-	/* (non-Javadoc)
-	 * @see hk.hku.cecid.corvus.http.PartnershipSender#getPartnershipMapping()
-	 */
-	public Map getPartnershipMapping() {
-		return PARTNERSHIP_DATA_2_FROM_PARAM_NAME_MAPPING;
-	}
+    /* (non-Javadoc)
+     * @see hk.hku.cecid.corvus.http.PartnershipSender#getPartnershipMapping()
+     */
+    public Map getPartnershipMapping() {
+	return PARTNERSHIP_DATA_2_FROM_PARAM_NAME_MAPPING;
+    }
 
-	/* (non-Javadoc)
-	 * @see hk.hku.cecid.corvus.http.PartnershipSender#getPartnershipOperationMapping()
-	 */
-	public Map getPartnershipOperationMapping() {
-		return PARTNERSHIP_OP_2_WORD; 
-	}
+    /* (non-Javadoc)
+     * @see hk.hku.cecid.corvus.http.PartnershipSender#getPartnershipOperationMapping()
+     */
+    public Map getPartnershipOperationMapping() {
+	return PARTNERSHIP_OP_2_WORD; 
+    }
 
-	/**
-	 * The main method for executing the partnership operation request.
-	 * 
-	 * @see hk.hku.cecid.corvus.http.HttpSender#run()
-	 */
-	// Override to give some javadoc. 
-	public void run() {
-		super.run();
-	}
+    /**
+     * The main method for executing the partnership operation request.
+     * 
+     * @see hk.hku.cecid.corvus.http.HttpSender#run()
+     */
+    // Override to give some javadoc. 
+    public void run() {
+	super.run();
+    }
 	
-	/**
-	 * The main method is for CLI mode.
-	 */
-	public static void main(String [] args){
-		try{			
-			java.io.PrintStream out = System.out;
+    /**
+     * The main method is for CLI mode.
+     */
+    public static void main(String [] args){
+	try{			
+	    java.io.PrintStream out = System.out;
 			
-			if (args.length < 3){
-				out.println("Usage: ebms-partnership [partnership-xml] [config-xml] [log-path]");
-				out.println();
-				out.println("Example: ebms-partnership ./config/ebms-partnership.xml ./config/ebms-partnership/ebms-request.xml ./logs/ebms-partnership.log");
-				System.exit(1);
-			}			
+	    if (args.length < 3){
+		out.println("Usage: ebms-partnership [partnership-xml] [config-xml] [log-path]");
+		out.println();
+		out.println("Example: ebms-partnership ./config/ebms-partnership.xml ./config/ebms-partnership/ebms-request.xml ./logs/ebms-partnership.log");
+		System.exit(1);
+	    }			
 			
-			out.println("----------------------------------------------------");
-			out.println("      EBMS Partnership Maintainance Tool      ");
-			out.println("----------------------------------------------------");
+	    out.println("----------------------------------------------------");
+	    out.println("      EBMS Partnership Maintainance Tool      ");
+	    out.println("----------------------------------------------------");
 
-			// Initialize the logger.
-			out.println("Initialize logger .. ");
-			// The logger path is specified at the last argument.
-			FileLogger logger = new FileLogger(new java.io.File(args[args.length-1]));			
+	    // Initialize the logger.
+	    out.println("Initialize logger .. ");
+	    // The logger path is specified at the last argument.
+	    FileLogger logger = new FileLogger(new java.io.File(args[args.length-1]));			
 
-			out.println("Importing EBMS partnership parameters ...");
-			EBMSPartnershipData pd = DataFactory.getInstance()
-				.createEBMSPartnershipFromXML(
-					new PropertyTree(new java.io.File(args[0]).toURI().toURL()));			
+	    out.println("Importing EBMS partnership parameters ...");
+	    EBMSPartnershipData pd = DataFactory.getInstance()
+		.createEBMSPartnershipFromXML(
+					      new PropertyTree(new java.io.File(args[0]).toURI().toURL()));			
 			
-			// Initialize the query parameter.
-			out.println("Importing EBMS administrative sending parameters ... ");	
-			EBMSAdminData acd = DataFactory.getInstance()
-				.createEBMSAdminDataFromXML(
-					new PropertyTree(new java.io.File(args[1]).toURI().toURL()));			
+	    // Initialize the query parameter.
+	    out.println("Importing EBMS administrative sending parameters ... ");	
+	    EBMSAdminData acd = DataFactory.getInstance()
+		.createEBMSAdminDataFromXML(
+					    new PropertyTree(new java.io.File(args[1]).toURI().toURL()));			
 					
-			// Initialize the sender.
-			out.println("Initialize EBMS HTTP data service client... "); 
-			EBMSPartnershipSender sender = new EBMSPartnershipSender(logger, acd, pd);
+	    // Initialize the sender.
+	    out.println("Initialize EBMS HTTP data service client... "); 
+	    EBMSPartnershipSender sender = new EBMSPartnershipSender(logger, acd, pd);
 			
-			out.println("Sending    EBMS HTTP partnership maintenance request ... ");			
-			sender.run();			
+	    out.println("Sending    EBMS HTTP partnership maintenance request ... ");			
+	    sender.run();			
 						
-			out.println();
-			out.println("                    Sending Done:                   ");
-			out.println("----------------------------------------------------");
-			out.println("The result status : " + sender.getStatus());
-			out.println("Please view log for details .. ");			
-		}
-		catch(Exception e){
-			e.printStackTrace(System.err);
-		}		
+	    out.println();
+	    out.println("                    Sending Done:                   ");
+	    out.println("----------------------------------------------------");
+	    out.println("The result status : " + sender.getStatus());
+	    out.println("Please view log for details .. ");			
 	}
+	catch(Exception e){
+	    e.printStackTrace(System.err);
+	}		
+    }
 }
 

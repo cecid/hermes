@@ -141,12 +141,11 @@ public class PartnershipSenderUnitTest extends TestCase
 		this.testClassLogger = new FileLogger(log);
 		
 		// Create an anonymous partnership sender and implement the abstract method for our testing.
-		this.target = new PartnershipSender(this.testClassLogger, this.kvData){ 			
+		this.target = new PartnershipSender(this.testClassLogger, this.kvData, USER_NAME, PASSWORD){ 
 			public Map getPartnershipOperationMapping()	{ return partnershipOpMap; }  						
 			public Map getPartnershipMapping()			{ return data2webForm; }
 		};
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
-		this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 	}
 	
 	/** Test whether the add partnership request operation perform correctly **/

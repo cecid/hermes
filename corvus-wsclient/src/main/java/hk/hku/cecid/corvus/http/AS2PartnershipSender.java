@@ -123,14 +123,13 @@ public class AS2PartnershipSender extends PartnershipSender
 	 */
 	public AS2PartnershipSender(FileLogger logger, AS2AdminData ad, AS2PartnershipData p) 
 	{
-		super(logger, p);
+	    super(logger, p, ad.getUsername(), new String(ad.getPassword()));
 		if (p == null)
 			throw new NullPointerException("Missing 'partnershipData' for creating partnerhsip sender.");
 		String endpoint = ad.getManagePartnershipEndpoint();
 		if (endpoint == null || endpoint.equals(""))
 			throw new NullPointerException("Missing 'Manage Partnership endpoint' in AS2 Admin Data.");		
 		this.setServiceEndPoint(endpoint);			
-		this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
 		this.setExecuteOperation(ad.getPartnershipOperation());		
 		//this.ad = ad;
 	}
