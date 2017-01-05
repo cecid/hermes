@@ -28,6 +28,7 @@ import javax.mail.internet.MimeMultipart;
 import junit.framework.Assert;
 
 import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cms.AttributeTable;
 import org.bouncycastle.asn1.cms.IssuerAndSerialNumber;
 import org.bouncycastle.asn1.smime.SMIMECapabilitiesAttribute;
@@ -35,6 +36,10 @@ import org.bouncycastle.asn1.smime.SMIMECapability;
 import org.bouncycastle.asn1.smime.SMIMECapabilityVector;
 import org.bouncycastle.asn1.smime.SMIMEEncryptionKeyPreferenceAttribute;
 import org.bouncycastle.asn1.x509.X509Name;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientInfoGenerator;
+import org.bouncycastle.cms.jcajce.JceCMSContentEncryptorBuilder;
+import org.bouncycastle.cert.jcajce.JcaCertStore;
 import org.bouncycastle.mail.smime.SMIMEEnvelopedGenerator;
 import org.bouncycastle.mail.smime.SMIMESignedGenerator;
 import org.bouncycastle.util.encoders.Base64;
@@ -78,6 +83,9 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 	private AS2Message as2Message;
 	private String msgId;
 	private KeyStoreManager keyMan;
+
+        // Constants
+        private static final String SECURITY_PROVIDER = "BC";
 	
 	@Override
 	public String getSystemComponentId() {
@@ -176,6 +184,7 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 
 	@Test
 	public void testSignatureVerfication() {
+	    System.out.println("testname: testSignatureVerification");
 		try {
 
 			PartnershipDAO partnershipDAO = (PartnershipDAO) TARGET
@@ -243,6 +252,7 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 	
 	@Test
 	public void testDecryption() throws Exception{
+	    System.out.println("testname: test Decryption");
 		try{
 		// Caculate MIC value
 		String expectedMIC = calculateMIC(as2Message.getBodyPart());
@@ -285,6 +295,7 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 	
 	@Test
 	public void testDecryptionSignatureVerfication() throws Exception{
+	    System.out.println("testname: testDecryptionSignatureVerification");
 		try{
 		// Caculate MIC value
 		String expectedMIC = calculateMIC(as2Message.getBodyPart());
@@ -344,19 +355,21 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 
         SMIMESignedGenerator signer = new SMIMESignedGenerator();
         signer.setContentTransferEncoding("base64");
-        signer.addSigner(keyMan.getPrivateKey(), partnershipDVO.getVerifyX509Certificate(),
-        		SMIMESignedGenerator.DIGEST_SHA1,
-            new AttributeTable(attributes), null);
-
+	signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder().setProvider(SECURITY_PROVIDER)
+				      .setSignedAttributeGenerator(new AttributeTable(attributes))
+				      .build("SHA1withRSA",
+					     keyMan.getPrivateKey(),
+					     partnershipDVO.getVerifyX509Certificate()));
+	
         // Add the list of certs to the generator
         ArrayList certList = new ArrayList();
         certList.add(cert);
         CertStore certs = CertStore.getInstance("Collection",
                 new CollectionCertStoreParameters(certList), "BC");
-        signer.addCertificatesAndCRLs(certs);
+	signer.addCertificates(new JcaCertStore(certList));
 
         // Sign body part
-        MimeMultipart mm = signer.generate(bodyPart, "BC");
+	MimeMultipart mm = signer.generate(bodyPart);
 
         InternetHeaders headers = new InternetHeaders();
         boolean isContentTypeFolded = new Boolean(System.getProperty("mail.mime.foldtext","true")).booleanValue();
@@ -372,11 +385,14 @@ public class IncomingMessageProcessorTest extends SystemComponentTest<IncomingMe
 		 // Create Encrypter
         SMIMEEnvelopedGenerator encrypter = new SMIMEEnvelopedGenerator();
         encrypter.setContentTransferEncoding("base64");
-        encrypter.addKeyTransRecipient(partnershipDVO.getEncryptX509Certificate());
-
+	encrypter.addRecipientInfoGenerator(new JceKeyTransRecipientInfoGenerator(partnershipDVO.getEncryptX509Certificate())
+					    .setProvider(SECURITY_PROVIDER));
+		
         // Encrypt BodyPart
-        MimeBodyPart encryptedPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.DES_EDE3_CBC,
-        		"BC");
+	MimeBodyPart encryptedPart = encrypter.generate(bodyPart,
+				       new JceCMSContentEncryptorBuilder(
+					   new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.DES_EDE3_CBC))
+				       .setProvider(SECURITY_PROVIDER).build());
         return encryptedPart;
 	}
 	

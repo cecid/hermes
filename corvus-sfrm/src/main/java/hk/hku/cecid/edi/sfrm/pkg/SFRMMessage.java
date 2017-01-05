@@ -29,17 +29,31 @@ import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.smime.SMIMECapability;
 import org.bouncycastle.asn1.smime.SMIMECapabilityVector;
+import org.bouncycastle.cms.DefaultCMSSignatureAlgorithmNameGenerator;
 import org.bouncycastle.cms.RecipientId;
 import org.bouncycastle.cms.RecipientInformation;
 import org.bouncycastle.cms.RecipientInformationStore;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.SignerInformationVerifier;
+import org.bouncycastle.cms.bc.BcRSASignerInfoVerifierBuilder;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JceCMSContentEncryptorBuilder;
+import org.bouncycastle.cms.jcajce.JceKeyTransEnvelopedRecipient;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientId;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientInfoGenerator;
+import org.bouncycastle.cert.jcajce.JcaCertStore;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.mail.smime.SMIMEEnveloped;
 import org.bouncycastle.mail.smime.SMIMEEnvelopedGenerator;
 import org.bouncycastle.mail.smime.SMIMESigned;
 import org.bouncycastle.mail.smime.SMIMESignedGenerator;
+import org.bouncycastle.operator.DefaultSignatureAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.bc.BcDigestCalculatorProvider;
 
 import hk.hku.cecid.edi.sfrm.activation.FileRegionDataSource;
 import hk.hku.cecid.edi.sfrm.spa.SFRMException;
@@ -86,6 +100,8 @@ public class SFRMMessage implements Cloneable {
 	public static final String ALG_SIGN_SHA1 = "sha1";
 	
 	private static final int BUFFER_SIZE = 8192;
+
+        private static final String SECURITY_PROVIDER = "BC";
 	
 	/**
 	 * The InternetHeaders used for managing RFC822 style headers.
@@ -833,23 +849,30 @@ public class SFRMMessage implements Cloneable {
             SMIMESignedGenerator signer = new SMIMESignedGenerator();
             
             signer.setContentTransferEncoding("binary");
-            
-            if (digestAlg.equalsIgnoreCase(ALG_SIGN_MD5))
-            	signer.addSigner(privateKey, cert, SMIMESignedGenerator.DIGEST_MD5);
-            else if (digestAlg.equalsIgnoreCase(ALG_SIGN_SHA1))
-            	signer.addSigner(privateKey, cert, SMIMESignedGenerator.DIGEST_SHA1);
-            else
-            	throw new SFRMException("Encryption algorithm error - " + digestAlg);
+
+	    String signerDigestAlg = "";
+	    
+	    if (digestAlg.equalsIgnoreCase(ALG_SIGN_MD5))
+		signerDigestAlg = "MD5withRSA";
+	    else if (digestAlg.equalsIgnoreCase(ALG_SIGN_SHA1))
+		signerDigestAlg = "SHA1withRSA";
+	    else
+		throw new SFRMException("Encryption algorihtm error - " + digestAlg);
+
+	    signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder()
+		    .setProvider(SECURITY_PROVIDER)
+		    .build(signerDigestAlg, privateKey, cert));
 
             /* Add the list of certs to the generator */
             ArrayList<X509Certificate> certList = new ArrayList<X509Certificate>();
             certList.add(cert);
             CertStore certs = CertStore.getInstance("Collection",
                     new CollectionCertStoreParameters(certList), "BC");
-            signer.addCertificatesAndCRLs(certs);
+            // signer.addCertificatesAndCRLs(certs);
+	    signer.addCertificates(new JcaCertStore(certList));
 
             /* Sign the body part */
-            MimeMultipart mm = signer.generate(bodyPart, "BC");
+            MimeMultipart mm = signer.generate(bodyPart);
 
             InternetHeaders headers = new InternetHeaders();
             headers.setHeader("Content-Type", mm.getContentType());
@@ -876,7 +899,13 @@ public class SFRMMessage implements Cloneable {
         
             while (signerInfos.hasNext()) {
                 SignerInformation signerInfo = (SignerInformation)signerInfos.next();
-                if (!signerInfo.verify(cert, "BC")) {
+		SignerInformationVerifier verifier =
+		    new BcRSASignerInfoVerifierBuilder(new DefaultCMSSignatureAlgorithmNameGenerator(),
+						  new DefaultSignatureAlgorithmIdentifierFinder(),
+						  new DefaultDigestAlgorithmIdentifierFinder(), 
+						  new BcDigestCalculatorProvider())
+		    .build(new JcaX509CertificateHolder(cert));
+                if (!signerInfo.verify(verifier)) {
                     throw new SFRMMessageException("Verification failed");
                 }
             }
@@ -902,13 +931,20 @@ public class SFRMMessage implements Cloneable {
             /* Create the encrypter */
             SMIMEEnvelopedGenerator encrypter = new SMIMEEnvelopedGenerator();
             encrypter.setContentTransferEncoding("binary");
-            encrypter.addKeyTransRecipient(cert);
+	    encrypter.addRecipientInfoGenerator(
+		new JceKeyTransRecipientInfoGenerator(cert).setProvider(SECURITY_PROVIDER));
     
             /* Encrypt the body part */
         	if (encryptAlg.equalsIgnoreCase(ALG_ENCRYPT_RC2))
-        		this.bodyPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.RC2_CBC, "BC");
+		    this.bodyPart = encrypter.generate(bodyPart,
+				        new JceCMSContentEncryptorBuilder(
+					    new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.RC2_CBC))
+				        .setProvider(SECURITY_PROVIDER).build());
         	else if (encryptAlg.equalsIgnoreCase(ALG_ENCRYPT_3DES))
-        		this.bodyPart = encrypter.generate(bodyPart, SMIMEEnvelopedGenerator.DES_EDE3_CBC, "BC");
+		    this.bodyPart = encrypter.generate(bodyPart,
+				        new JceCMSContentEncryptorBuilder(
+					    new ASN1ObjectIdentifier(SMIMEEnvelopedGenerator.DES_EDE3_CBC))
+				        .setProvider(SECURITY_PROVIDER).build());
         	else
         		throw new SFRMException("Encryption algorithm error - " + encryptAlg);
             
@@ -924,18 +960,20 @@ public class SFRMMessage implements Cloneable {
     public void decrypt(X509Certificate cert, PrivateKey privateKey) throws SFRMException {
         try {
             SMIMEEnveloped m = new SMIMEEnveloped(bodyPart);
-            RecipientId recId = new RecipientId();
+
+	    RecipientId recId = new JceKeyTransRecipientId(cert);
+
+	    RecipientInformationStore  recipientsInfo = m.getRecipientInfos();	
+	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
     
-            recId.setSerialNumber(cert.getSerialNumber());
-            recId.setIssuer(cert.getIssuerX500Principal().getEncoded());
-    
-            RecipientInformationStore  recipients = m.getRecipientInfos();
-            RecipientInformation       recipient = recipients.get(recId);
-    
-            if (recipient == null) {
+            if (recipientInfo == null) {
                 throw new SFRMMessageException("Invalid encrypted content");
             }
-            this.bodyPart = new MimeBodyPart(new ByteArrayInputStream(recipient.getContent(privateKey, "BC")));
+
+	    JceKeyTransEnvelopedRecipient recipient = new JceKeyTransEnvelopedRecipient(privateKey);
+	    recipient.setProvider(SECURITY_PROVIDER);							
+	    
+            this.bodyPart = new MimeBodyPart(new ByteArrayInputStream(recipientInfo.getContent(recipient)));
             this.setIsEncrypted(true);
     	} catch (org.bouncycastle.cms.CMSException ex) {
     		throw new SFRMException("Unable to decrypt body part", ex.getUnderlyingException());

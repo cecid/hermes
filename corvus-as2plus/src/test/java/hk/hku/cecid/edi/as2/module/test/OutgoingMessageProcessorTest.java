@@ -29,10 +29,20 @@ import org.bouncycastle.cms.RecipientInformation;
 import org.bouncycastle.cms.RecipientInformationStore;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.SignerInformationVerifier;
+import org.bouncycastle.cms.DefaultCMSSignatureAlgorithmNameGenerator;
+import org.bouncycastle.cms.bc.BcRSASignerInfoVerifierBuilder;
+import org.bouncycastle.cms.jcajce.JceKeyTransRecipientId;
+import org.bouncycastle.cms.jcajce.JceKeyTransEnvelopedRecipient;
+import org.bouncycastle.cms.jcajce.ZlibExpanderProvider;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.mail.smime.SMIMECompressed;
 import org.bouncycastle.mail.smime.SMIMEEnveloped;
 import org.bouncycastle.mail.smime.SMIMESigned;
 import org.bouncycastle.mail.smime.SMIMEUtil;
+import org.bouncycastle.operator.DefaultSignatureAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
+import org.bouncycastle.operator.bc.BcDigestCalculatorProvider;
 import org.bouncycastle.util.encoders.Base64;
 
 import hk.hku.cecid.edi.as2.dao.MessageDAO;
@@ -62,6 +72,8 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 	static final String DROP_TABLE_SQL = "drop.sql";
 	
 	private static String MOCK_AS2_MSG = "mock.as2";
+
+        private static final String SECURITY_PROVIDER = "BC"; 
 	
 	@Override
 	public String getSystemComponentId() {
@@ -175,7 +187,15 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 			Iterator signerInfos = signers.getSigners().iterator();
 			while (signerInfos.hasNext()) {
 				SignerInformation   signerInfo = (SignerInformation)signerInfos.next();
-				if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
+
+				SignerInformationVerifier verifier =
+				    new BcRSASignerInfoVerifierBuilder(new DefaultCMSSignatureAlgorithmNameGenerator(),
+								       new DefaultSignatureAlgorithmIdentifierFinder(),
+								       new DefaultDigestAlgorithmIdentifierFinder(), 
+								       new BcDigestCalculatorProvider())
+				    .build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
+				
+				if (!signerInfo.verify(verifier)) {
 					Assert.fail("Signature Verfifcation Failed");
 				}
 			}
@@ -215,7 +235,7 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 				new InputStreamDataSource(bIns, "xml", MOCK_AS2_MSG));
 		
 		SMIMECompressed compressed = new SMIMECompressed(as2Msg.getBodyPart());
-		MimeBodyPart decompressedPart = SMIMEUtil.toMimeBodyPart(compressed.getContent());
+		MimeBodyPart decompressedPart = SMIMEUtil.toMimeBodyPart(compressed.getContent(new ZlibExpanderProvider()));
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		IOHandler.pipe( decompressedPart.getDataHandler().getInputStream(), baos);
@@ -241,92 +261,109 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 	
 	@Test
 	public void testEncrytedAS2Message() throws Exception{
-		InputStream ins = FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG);
-		ByteArrayInputStream bIns = new ByteArrayInputStream(IOHandler.readBytes(ins));
-		String mid = RANDOM.toString();
+	    InputStream ins = FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG);
+	    ByteArrayInputStream bIns = new ByteArrayInputStream(IOHandler.readBytes(ins));
+	    String mid = RANDOM.toString();
+	    
+	    partnershipDVO.setIsOutboundEncryptRequired(true);
+	    AS2Message as2Msg = TARGET.storeOutgoingMessage(
+							    mid, //MessageID
+							    "xml", 
+							    partnershipDVO,
+							    new InputStreamDataSource(bIns, "xml", MOCK_AS2_MSG));
 		
-		partnershipDVO.setIsOutboundEncryptRequired(true);
-		AS2Message as2Msg = TARGET.storeOutgoingMessage(
-				mid, //MessageID
-				"xml", 
-				partnershipDVO,
-				new InputStreamDataSource(bIns, "xml", MOCK_AS2_MSG));
 		
-		
-		// Decrypt Message
-		SMIMEEnveloped crypted = new SMIMEEnveloped(as2Msg.getBodyPart());
-		RecipientId recId = new RecipientId();
-		recId.setSerialNumber(partnershipDVO.getEncryptX509Certificate().getSerialNumber());
-        recId.setIssuer(partnershipDVO.getEncryptX509Certificate().getIssuerX500Principal().getEncoded());
-        
-        RecipientInformationStore recipients = crypted.getRecipientInfos();
-        RecipientInformation recipient = recipients.get(recId);
-        
-        KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
-        MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipient.getContent( keyMan.getPrivateKey(), "BC"));
-        
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        IOHandler.pipe( decrpted.getDataHandler().getInputStream(), baos);
-        byte[] decrptedBA = baos.toByteArray();
-        byte[] originalBA = IOHandler.readBytes(FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG));
-        
-        Assert.assertTrue(Arrays.equals(decrptedBA, originalBA));
-        
-        //Assert the filename
-        String filenameHdr = decrpted.getHeader("Content-Disposition")[0];
-        Assert.assertEquals("Filename value lost in BodyPartHeader",
-        		MOCK_AS2_MSG, getFileName(filenameHdr));
+	    // Decrypt Message
+	    SMIMEEnveloped crypted = new SMIMEEnveloped(as2Msg.getBodyPart());
+	    
+	    // RecipientId recId = new RecipientId();
+	    RecipientId recId = new JceKeyTransRecipientId(partnershipDVO.getEncryptX509Certificate());
 
-        //Verify MIC
-        ByteArrayOutputStream contentStream = new ByteArrayOutputStream();
-        decrpted.writeTo(contentStream);
-        byte[] content = (contentStream.toByteArray());
-        String mic = calculateMIC(content);
-        Assert.assertEquals( "MIC Value is not valid.", mic, getStoredMessage(mid).getMicValue());
+	    RecipientInformationStore  recipientsInfo = crypted.getRecipientInfos();	
+	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
+
+	    KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
+
+	    JceKeyTransEnvelopedRecipient recipient = new JceKeyTransEnvelopedRecipient(keyMan.getPrivateKey());	
+	    recipient.setProvider(SECURITY_PROVIDER);							
+	    
+	    MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipientInfo.getContent(recipient));
+        
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    IOHandler.pipe( decrpted.getDataHandler().getInputStream(), baos);
+	    byte[] decrptedBA = baos.toByteArray();
+	    byte[] originalBA = IOHandler.readBytes(FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG));
+        
+	    Assert.assertTrue(Arrays.equals(decrptedBA, originalBA));
+        
+	    //Assert the filename
+	    String filenameHdr = decrpted.getHeader("Content-Disposition")[0];
+	    Assert.assertEquals("Filename value lost in BodyPartHeader",
+				MOCK_AS2_MSG, getFileName(filenameHdr));
+
+	    //Verify MIC
+	    ByteArrayOutputStream contentStream = new ByteArrayOutputStream();
+	    decrpted.writeTo(contentStream);
+	    byte[] content = (contentStream.toByteArray());
+	    String mic = calculateMIC(content);
+	    Assert.assertEquals( "MIC Value is not valid.", mic, getStoredMessage(mid).getMicValue());
 	}
 	
 	@Test
 	public void testSignedEncryptedAS2Message() throws Exception {
-		InputStream ins = FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG);
-		ByteArrayInputStream bIns = new ByteArrayInputStream(IOHandler.readBytes(ins));
+	    InputStream ins = FIXTURE_LOADER.getResourceAsStream(MOCK_AS2_MSG);
+	    ByteArrayInputStream bIns = new ByteArrayInputStream(IOHandler.readBytes(ins));
 		
-		// Prepare Data
-		String mid = RANDOM.toString();
-		partnershipDVO.setIsOutboundEncryptRequired(true);
-		partnershipDVO.setIsOutboundSignRequired(true);
-		//Encrypt message
-		AS2Message as2Msg = TARGET.storeOutgoingMessage(
-				mid, //MessageID
-				"xml", 
-				partnershipDVO,
-				new InputStreamDataSource(bIns, "xml", MOCK_AS2_MSG));
+	    // Prepare Data
+	    String mid = RANDOM.toString();
+	    partnershipDVO.setIsOutboundEncryptRequired(true);
+	    partnershipDVO.setIsOutboundSignRequired(true);
+	    //Encrypt message
+	    AS2Message as2Msg = TARGET.storeOutgoingMessage(
+							    mid, //MessageID
+							    "xml", 
+							    partnershipDVO,
+							    new InputStreamDataSource(bIns, "xml", MOCK_AS2_MSG));
 		
-		// Decrypt Message
-		SMIMEEnveloped crypted = new SMIMEEnveloped(as2Msg.getBodyPart());
-		RecipientId recId = new RecipientId();
-		recId.setSerialNumber(partnershipDVO.getEncryptX509Certificate().getSerialNumber());
-        recId.setIssuer(partnershipDVO.getEncryptX509Certificate().getIssuerX500Principal().getEncoded());
-        
-        RecipientInformationStore recipients = crypted.getRecipientInfos();
-        RecipientInformation recipient = recipients.get(recId);
-        
-        KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
-        MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipient.getContent( keyMan.getPrivateKey(), "BC"));
+	    // Decrypt Message
+	    SMIMEEnveloped crypted = new SMIMEEnveloped(as2Msg.getBodyPart());
+
+	    RecipientId recId = new JceKeyTransRecipientId(partnershipDVO.getEncryptX509Certificate());
+	    
+	    RecipientInformationStore  recipientsInfo = crypted.getRecipientInfos();	
+	    RecipientInformation       recipientInfo = recipientsInfo.get(recId);
+
+	    KeyStoreManager keyMan = (KeyStoreManager)TARGET.getSystemModule().getComponent("keystore-manager");
+
+	    JceKeyTransEnvelopedRecipient recipient = new JceKeyTransEnvelopedRecipient(keyMan.getPrivateKey());	
+	    recipient.setProvider(SECURITY_PROVIDER);							
+	    
+	    MimeBodyPart  decrpted = SMIMEUtil.toMimeBodyPart(recipientInfo.getContent(recipient));
 		
-        //Verify Signature
-		try{
-			SMIMESigned signed = new SMIMESigned((MimeMultipart)decrpted.getContent());
-			SignerInformationStore  signers = signed.getSignerInfos();
-			Iterator signerInfos = signers.getSigners().iterator();
-			while (signerInfos.hasNext()) {
-				SignerInformation   signerInfo = (SignerInformation)signerInfos.next();
-				if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
-					Assert.fail("Signature Verfifcation Failed");
-				}
-			}
+	    //Verify Signature
+	    try{
+		SMIMESigned signed = new SMIMESigned((MimeMultipart)decrpted.getContent());
+		SignerInformationStore  signers = signed.getSignerInfos();
+		Iterator signerInfos = signers.getSigners().iterator();
+
+		while (signerInfos.hasNext()) {
+		    SignerInformation   signerInfo = (SignerInformation)signerInfos.next();
+
+		    SignerInformationVerifier verifier =
+			new BcRSASignerInfoVerifierBuilder(new DefaultCMSSignatureAlgorithmNameGenerator(),
+							   new DefaultSignatureAlgorithmIdentifierFinder(),
+							   new DefaultDigestAlgorithmIdentifierFinder(), 
+							   new BcDigestCalculatorProvider())
+			.build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
+		    if (!signerInfo.verify(verifier)) {
+			Assert.fail("Signature Verfifcation Failed");
+		    }
+		}
+
+		
 			
-			//Assert the filename value
-			MimeBodyPart signedPart = signed.getContent();
+		//Assert the filename value
+		MimeBodyPart signedPart = signed.getContent();
 	        String filenameHdr = signedPart.getHeader("Content-Disposition")[0];
 	        Assert.assertEquals("Lost Filename Header Information", MOCK_AS2_MSG, getFileName(filenameHdr));
 	        
@@ -334,16 +371,16 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 	        // Verify MIC Value
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        signedPart.writeTo(baos);
-            byte[] content = (baos.toByteArray());
-            String mic = calculateMIC(content);
+		byte[] content = (baos.toByteArray());
+		String mic = calculateMIC(content);
             
-            MessageDVO msgDVO = getStoredMessage(mid);
-            Assert.assertEquals("MIC Value is not valid.", mic, msgDVO.getMicValue());
+		MessageDVO msgDVO = getStoredMessage(mid);
+		Assert.assertEquals("MIC Value is not valid.", mic, msgDVO.getMicValue());
 	        
-		}catch(Exception exp){
-			Assert.fail("Signature Verfifcation Failed");
-		}
-        Assert.assertTrue(true);
+	    }catch(Exception exp){
+		Assert.fail("Signature Verfifcation Failed");
+	    }
+	    Assert.assertTrue(true);
 	}
 	
 	@Test
@@ -369,7 +406,15 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 			Iterator signerInfos = signers.getSigners().iterator();
 			while (signerInfos.hasNext()) {
 				SignerInformation   signerInfo = (SignerInformation)signerInfos.next();
-				if (!signerInfo.verify(partnershipDVO.getEffectiveVerifyCertificate(), "BC")) {
+
+				SignerInformationVerifier verifier =
+				    new BcRSASignerInfoVerifierBuilder(new DefaultCMSSignatureAlgorithmNameGenerator(),
+								       new DefaultSignatureAlgorithmIdentifierFinder(),
+								       new DefaultDigestAlgorithmIdentifierFinder(), 
+								       new BcDigestCalculatorProvider())
+				    .build(new JcaX509CertificateHolder(partnershipDVO.getEffectiveVerifyCertificate()));
+				
+				if (!signerInfo.verify(verifier)) {
 					Assert.fail("Signature Verfifcation Failed");
 				}
 			}
@@ -385,7 +430,7 @@ public class OutgoingMessageProcessorTest extends SystemComponentTest<OutgoingMe
 			
 			//Decompress Message
 			SMIMECompressed compressed = new SMIMECompressed(signedPart);
-			MimeBodyPart decompressedPart = SMIMEUtil.toMimeBodyPart(compressed.getContent());
+			MimeBodyPart decompressedPart = SMIMEUtil.toMimeBodyPart(compressed.getContent(new ZlibExpanderProvider()));
 			
 			//Assert the filename value
 	        String filenameHdr = decompressedPart.getHeader("Content-Disposition")[0];
