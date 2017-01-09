@@ -11,7 +11,9 @@ package hk.hku.cecid.hermes.api.listener;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.activation.DataHandler;
@@ -177,22 +179,37 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
-        String payloadString = null;
-        byte[] payload = null;
-        try {
-            payloadString = (String) inputDict.get("payload");
-            if (payloadString != null) {
-                payload = Base64.decodeBase64(payloadString.getBytes());
+        ArrayList<byte[]> payloads = new ArrayList<byte[]>();
+        if (inputDict.containsKey("payload")) {
+            String payloadString = (String) inputDict.get("payload");
+            try {
+                payloads.add(Base64.decodeBase64(payloadString.getBytes()));
+            } catch (Exception e) {
+                String errorMessage = "Error parsing parameter: payload";
+                ApiPlugin.core.log.error(errorMessage, e);
+                return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
             }
-        } catch (Exception e) {
-            String errorMessage = "Error parsing parameter: payload";
-            ApiPlugin.core.log.error(errorMessage, e);
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        else if (inputDict.containsKey("payloads")) {
+            try {
+                List<Object> payloadStrings = (List<Object>) inputDict.get("payloads");
+                for (Object payloadObj : payloadStrings) {
+                    Map<String,Object> payloadMap = (Map<String,Object>) payloadObj;
+                    if (payloadMap.containsKey("payload")) {
+                    	String payloadString = (String) payloadMap.get("payload");
+                    	payloads.add(Base64.decodeBase64(payloadString.getBytes()));
+                    }
+                }
+            } catch (Exception e) {
+                String errorMessage = "Error parsing parameter: payloads";
+                ApiPlugin.core.log.error(errorMessage, e);
+                return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+            }
         }
 
         ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + ", from_party_id=" + fromPartyId +
                                  ", to_party_id=" + toPartyId + ", conversation_id=" + conversationId +
-                                 ", payload=" + payload);
+                                 ", number of payloads=" + payloads.size());
 
         EbmsRequest ebmsRequest;
         String messageId = Generator.generateMessageID();
@@ -216,10 +233,14 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             msgHeader.setMessageId(messageId);
             msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
 
-            if (payload != null) {
-                ByteArrayDataSource bads = new ByteArrayDataSource(payload, "application/octet");
-                DataHandler dh = new DataHandler(bads);
-                ebxmlMessage.addPayloadContainer(dh, "payload-1", null);
+            if (payloads.size() > 0) {
+                int i = 1;
+                for (byte[] payload : payloads) {
+                    ByteArrayDataSource bads = new ByteArrayDataSource(payload, "application/octet");
+                    DataHandler dh = new DataHandler(bads);
+                    ebxmlMessage.addPayloadContainer(dh, "payload-" + i, null);
+                    i++;
+                }
             }
 
             ebmsRequest = new EbmsRequest(request);
