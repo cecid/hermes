@@ -110,9 +110,9 @@ the installer script should put the locations of these resources on the classpat
 			property="DBMS"
 			displayText="JDBC Driver:"
 			defaultValue="postgresDriver">
-			<option text="Postgres 8.3-604 JDBC 3" value="postgresDriver"/>
-			<option text="Oracle 10g Release 2 (10.2.0.4)" value="oracleDriver"/>
-			<option text="MySQL Connector J 5.0.8" value="mysqlDriver"/>
+			<option text="Postgres 9.4.1212 JDBC 42" value="postgresDriver"/>
+			<option text="Oracle 12c Release 1 (12.1.0.1)" value="oracleDriver"/>
+			<option text="MySQL Connector J 5.1.40" value="mysqlDriver"/>
 		</large-select>
 
 		<comment
