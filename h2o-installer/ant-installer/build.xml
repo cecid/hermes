@@ -42,7 +42,7 @@ input in the page to choose components to install
 		<property name="as2DBMSDriverStr" value="org.postgresql.Driver"/>
 		<property name="as2ConnStr" value="jdbc:postgresql://${as2Host}/${as2Database}"/>
 		<property name="as2ValidationQuery" value="SELECT now()"/>
-		<property name="as2JDBCFile" value="postgresql-8.3-604.jdbc3.jar"/>
+		<property name="as2JDBCFile" value="postgresql-9.4.1212.jar"/>
 		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2.sql.file_prefix" value=""/>
@@ -51,7 +51,7 @@ input in the page to choose components to install
 		<property name="as2PlusDBMSDriverStr" value="org.postgresql.Driver"/>
 		<property name="as2PlusConnStr" value="jdbc:postgresql://${as2PlusHost}/${as2PlusDatabase}"/>
 		<property name="as2PlusValidationQuery" value="SELECT now()"/>
-		<property name="as2PlusJDBCFile" value="postgresql-8.3-604.jdbc3.jar"/>
+		<property name="as2PlusJDBCFile" value="postgresql-9.4.1212.jar"/>
 		<property name="as2PlusDAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PlusPageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2Plus.sql.file_prefix" value=""/>
@@ -60,7 +60,7 @@ input in the page to choose components to install
 		<property name="ebmsDBMSDriverStr" value="org.postgresql.Driver"/>
 		<property name="ebmsConnStr" value="jdbc:postgresql://${ebmsHost}/${ebmsDatabase}"/>
 		<property name="ebmsValidationQuery" value="SELECT now()"/>
-		<property name="ebmsJDBCFile" value="postgresql-8.3-604.jdbc3.jar"/>
+		<property name="ebmsJDBCFile" value="postgresql-9.4.1212.jar"/>
 		<property name="ebms.sql.dir" value="${basedir}/temp/sql"/>
 		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.dao.xml"/>
 		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor"/>
@@ -156,11 +156,11 @@ input in the page to choose components to install
 		<property name="as2DBMSDriverStr" value="org.postgresql.Driver"/>
 		<property name="as2ConnStr" value="jdbc:postgresql://${as2Host}/${as2Database}"/>
 		<property name="as2ValidationQuery" value="SELECT now()"/>
-		<property name="as2JDBCFile" value="postgresql-8.3-604.jdbc3.jar"/>
+		<property name="as2JDBCFile" value="postgresql-9.4.1212.jar"/>
 		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2.sql.file_prefix" value=""/>
-		<property name="as2JDBCDriverFile" value="postgresql-8.2-508.jdbc3.jar"/>
+		<property name="as2JDBCDriverFile" value="postgresql-9.4.1212.jar"/>
 	</target>
 
 	<target if="as2_mysql" name="check-as2-mysql-setting">
