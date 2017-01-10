@@ -101,7 +101,7 @@ input in the page to choose components to install
 		<property name="as2DBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="as2ConnStr" value="jdbc:mysql://${as2Host}/${as2Database}"/>
 		<property name="as2ValidationQuery" value="SELECT now()"/>
-		<property name="as2JDBCFile" value="mysql-connector-java-5.0.8-bin.jar"/>
+		<property name="as2JDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2.sql.file_prefix" value="mysql_"/>
@@ -110,7 +110,7 @@ input in the page to choose components to install
 		<property name="as2PlusDBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="as2PlusConnStr" value="jdbc:mysql://${as2PlusHost}/${as2PlusDatabase}"/>
 		<property name="as2PlusValidationQuery" value="SELECT now()"/>
-		<property name="as2PlusJDBCFile" value="mysql-connector-java-5.0.8-bin.jar"/>
+		<property name="as2PlusJDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="as2PlusDAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PlusPageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2Plus.sql.file_prefix" value="mysql_"/>
@@ -119,7 +119,7 @@ input in the page to choose components to install
 		<property name="ebmsDBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="ebmsConnStr" value="jdbc:mysql://${ebmsHost}/${ebmsDatabase}"/>
 		<property name="ebmsValidationQuery" value="SELECT now()"/>
-		<property name="ebmsJDBCFile" value="mysql-connector-java-5.0.8-bin.jar"/>
+		<property name="ebmsJDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.mysql.dao.xml"/>
 		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="ebms.sql.file_prefix" value="mysql_"/>
