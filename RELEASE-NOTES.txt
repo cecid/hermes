@@ -1,5 +1,68 @@
 H2O Release Notes
 ========================================
+Jan ?, 2017
+[What is new]
+- Official support for JDK 1.8
+- Introduced Vagrant for development
+- Introduced Docker for deployment
+- Introduced REST API
+
+[Upgrades and improvments]
+- Updated thrid party libraries to latest version
+    *ant (1.7.1 -> 1.9.7)
+    *ant-contrib (20020829 -> 1.0b3)
+    *bouncycastle (bcmail-jdk15 1.43 -> bcmail-jdk15on 1.55)
+    *commons-dbcp (commons-dbcp:commons-dbcp 1.2.2 -> org.apache.commons:commons-dbcp2 2.1.1)
+    *commons-fileupload (1 -> 1.3.2)
+    *commons-httpclient (commons-httpclient:commons-httpclient 3.1 -> org.apache.httpcomponents:httpclient 4.5.2)
+    *commons-io (1.4 -> 2.5)
+    *commons-logging (1.0.4 -> 1.2)
+    *jaxen (1.1.1 -> 1.1.6)        
+    *javax.mail (javax.mail:mail 1.4.1 -> com.sun.mail:javax.mail 1.5.6)
+    *jboxx (jboss:jboss-j2ee 3.2.3 -> jboss-javaee-7.0 1.0.3.Final)
+    *servlet-api (javax.servlet:servlet-api 2.5 -> javax.servlet:javax.servlet-api 3.1.0)
+    *ojdbc (oracle:ojdbc14 10.2.0.1.0 -> com.oraclejdbc:ojdbc7 12.1.0.1)
+    *saaj-impl (1.3.2 -> 1.3.25)
+    *wrapper (3.3.7 -> 3.5.30)
+    *xalan (2.7.1 -> 2.7.2)
+    *xmlsec (1.4.2 ->2.0.7)
+    *Oracle JDBC driver
+    *mySQL JDBC driver (5.0.8 -> 5.1.40)
+    *PostgreSQL JDBC driver (8.3-604.jdbc3 -> 9.4.1212)
+    
+- Updated libraries for testing
+    *jmock (2.5.1 -> 2.8.2)
+    *junit (4.8.1 -> 4.12)
+    *hsqldb (hsqldb:hsqldb 1.8.0.10 -> org.hsqldb:hsqldb 2.3.4)
+
+- Added new library for json processing
+    *javax.json 1.0.4
+
+- Updated Maven plugins as listed below:
+    *maven-assembly-plugin (2.2-beta-5 -> 2.6)
+    *maven-compiler-plugin (3.1 -> 3.6)
+    *maven-dependency-plugin (2.8 -> 2.10)
+    *maven-ejb-plugin (null -> 2.5.1)
+    *maven-install-plugin (2.4 -> 2.5.2)
+    *maven-javadoc-plugin (null ->2.10.4)
+    *maven-jar-plugin (2.4 -> 2.5)
+    *maven-resources-plugin (null -> 2.7)
+    *maven-surefire-plugin (2.12.4 -> 2.19.1)
+    *maven-war-plugin (null -> 2.6)
+    *jacoco-maven-plugin (0.7.6.201602180812 -> 0.7.7.201606060606)
+    *jetty-maven-plugin (org.mortbay.jetty:maven-jetty-plugin 6.1.24 -> org.eclipse.jetty:jetty-maven-plugin 9.4.0.RC2)
+
+- Removed saaj-api as the library is integrated into JDK after JDK 1.6
+- Updated documentations and instructions
+
+- Added functional tests for sending/ receiving messages in ebMS and AS2
+- Changed authentication method to api servlet to digest
+- Refactored WS client
+
+[Bug Fixes]
+- Fixed various issues in test cases
+
+========================================
 
 Jan 21, 2009
 - Add jar files to enable ebMS to query mailbox with POP3 and IMAP
@@ -8,14 +71,14 @@ Jan 21, 2009
 
 Jan 08, 2009
 - Refactored AS2 to insert message directly to database
-- Correct wrong spelling of ¡§application/octet-stream¡¨ in WSClient
+- Correct wrong spelling of "application/octet-stream" in WSClient
 - Remove the usage of Message Repository.
-- Implemented to preserve filename of AS2 Message. The Filename value will added on MIMEHeader ¡§Content-Disposition¡¨ field. The Client will put the filename value to the MIME Header, and Retrieve the filename value from the header.
+- Implemented to preserve filename of AS2 Message. The Filename value will be added to the MIMEHeader as "Content-Disposition" field. The Client will put the filename value to the MIME Header, and retrieve the filename value from the header.
 - Add new framework classes PluginProcessor, SystemComponent and SystemComponentTest to Piazza Commons
-- Remove abandon field ¡§principal-id¡¨
+- Remove abandoned field "principal-id"
 - Remove SystemModule static reference AS2Procssor.core, AS2Processor.log, AS2Processor.dao
 - Move the getPayloadContentType() from PayloadRepository to OutgoingMessageProcessor.
-- Cleanup all trace of PayloadRepository from spa conf
+- Clean up all trace of PayloadRepository from spa conf
 - Updated Ant Installer Script to build installer with AS2 Plus Plugin
 - Updated installation guide
 
@@ -64,16 +127,16 @@ Aug 29, 2008
 - Fixed mySQL schema to add transaction support to tables by setting TYPE = INNODB
 - Fixed mySQL schema to set default value for timestamp columns to avoid mySQL set current timestamp automatically
 - Added DB transaction to Retry button for failed message in admin page which also remove corresponding acknowledgement
-- Added Hermes 2 Administration Tool User Guide reference as popup message when passing the Retry button
+- Added Hermes 2 Administration Tool User Guide reference as popup message when pressing the Retry button
 - Fixed library not found in project Corvus.WSClient
 
 ========================================
 Aug 01, 2008
 - Modified UI of installer to select oracle and mysql as database for as2 and ebms
-- Modified ant installer. Now will copy necessary module only by the user selected choose. e.g. ebms or as2 module or both.
+- Modified ant installer. Now it will copy necessary module according to the user's choice. e.g. ebms or as2 module or both.
 - Added RELEASE-NOTES.txt
 - Added SQL scripts for different databases for adding as2 and ebms database.
-- Cleaned up DB schema to consistence format.
+- Cleaned up DB schema to consistent format.
 - Updated H2O installation guide
 - Updated postgres JDBC driver to 8.2 JDBC3
 - Added web service usage sample /sample to replace old loopback test.
