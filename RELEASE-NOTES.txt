@@ -8,56 +8,58 @@ Jan ?, 2017
 - Introduced Docker for deployment
 - Introduced REST API
 
-[Upgrades and improvments]
-- Updated thrid party libraries to latest version
-    *ant (1.7.1 -> 1.9.7)
-    *ant-contrib (20020829 -> 1.0b3)
-    *bouncycastle (bcmail-jdk15 1.43 -> bcmail-jdk15on 1.55)
-    *commons-dbcp (commons-dbcp:commons-dbcp 1.2.2 -> org.apache.commons:commons-dbcp2 2.1.1)
-    *commons-fileupload (1 -> 1.3.2)
-    *commons-httpclient (commons-httpclient:commons-httpclient 3.1 -> org.apache.httpcomponents:httpclient 4.5.2)
-    *commons-io (1.4 -> 2.5)
-    *commons-logging (1.0.4 -> 1.2)
-    *jaxen (1.1.1 -> 1.1.6)        
-    *javax.mail (javax.mail:mail 1.4.1 -> com.sun.mail:javax.mail 1.5.6)
-    *jboxx (jboss:jboss-j2ee 3.2.3 -> jboss-javaee-7.0 1.0.3.Final)
-    *servlet-api (javax.servlet:servlet-api 2.5 -> javax.servlet:javax.servlet-api 3.1.0)
-    *ojdbc (oracle:ojdbc14 10.2.0.1.0 -> com.oraclejdbc:ojdbc7 12.1.0.1)
-    *saaj-impl (1.3.2 -> 1.3.25)
-    *wrapper (3.3.7 -> 3.5.30)
-    *xalan (2.7.1 -> 2.7.2)
-    *xmlsec (1.4.2 ->2.0.7)
+[Upgrades and improvements]
+- Updated 3rd party libraries to latest version
+    *ant (1.7.1 to 1.9.7)
+    *ant-contrib (20020829 to 1.0b3)
+    *bouncycastle (bcmail-jdk15 1.43 to bcmail-jdk15on 1.55)
+    *commons-dbcp (commons-dbcp:commons-dbcp 1.2.2 to org.apache.commons:commons-dbcp2 2.1.1)
+    *commons-fileupload (1 to 1.3.2)
+    *commons-httpclient (commons-httpclient:commons-httpclient 3.1 to org.apache.httpcomponents:httpclient 4.5.2)
+    *commons-io (1.4 to 2.5)
+    *commons-logging (1.0.4 to 1.2)
+    *jaxen (1.1.1 to 1.1.6)        
+    *javax.mail (javax.mail:mail 1.4.1 to com.sun.mail:javax.mail 1.5.6)
+    *jboxx (jboss:jboss-j2ee 3.2.3 to jboss-javaee-7.0 1.0.3.Final)
+    *servlet-api (javax.servlet:servlet-api 2.5 to javax.servlet:javax.servlet-api 3.1.0)
+    *ojdbc (oracle:ojdbc14 10.2.0.1.0 to com.oraclejdbc:ojdbc7 12.1.0.1)
+    *saaj-impl (1.3.2 to 1.3.25)
+    *wrapper (3.3.7 to 3.5.30)
+    *xalan (2.7.1 to 2.7.2)
+    *xmlsec (1.4.2 to 2.0.7)
     *Oracle JDBC driver
-    *mySQL JDBC driver (5.0.8 -> 5.1.40)
-    *PostgreSQL JDBC driver (8.3-604.jdbc3 -> 9.4.1212)
+    *mySQL JDBC driver (5.0.8 to 5.1.40)
+    *PostgreSQL JDBC driver (8.3-604.jdbc3 to 9.4.1212)
     
 - Updated libraries for testing
-    *jmock (2.5.1 -> 2.8.2)
-    *junit (4.8.1 -> 4.12)
-    *hsqldb (hsqldb:hsqldb 1.8.0.10 -> org.hsqldb:hsqldb 2.3.4)
+    *jmock (2.5.1 to 2.8.2)
+    *junit (4.8.1 to 4.12)
+    *hsqldb (hsqldb:hsqldb 1.8.0.10 to org.hsqldb:hsqldb 2.3.4)
 
 - Added new library for json processing
     *javax.json 1.0.4
 
 - Updated Maven plugins as listed below:
-    *maven-assembly-plugin (2.2-beta-5 -> 2.6)
-    *maven-compiler-plugin (3.1 -> 3.6)
-    *maven-dependency-plugin (2.8 -> 2.10)
-    *maven-ejb-plugin (null -> 2.5.1)
-    *maven-install-plugin (2.4 -> 2.5.2)
-    *maven-javadoc-plugin (null ->2.10.4)
-    *maven-jar-plugin (2.4 -> 2.5)
-    *maven-resources-plugin (null -> 2.7)
-    *maven-surefire-plugin (2.12.4 -> 2.19.1)
-    *maven-war-plugin (null -> 2.6)
-    *jacoco-maven-plugin (0.7.6.201602180812 -> 0.7.7.201606060606)
-    *jetty-maven-plugin (org.mortbay.jetty:maven-jetty-plugin 6.1.24 -> org.eclipse.jetty:jetty-maven-plugin 9.4.0.RC2)
+    *maven-assembly-plugin (2.2-beta-5 to 2.6)
+    *maven-compiler-plugin (3.1 to 3.6)
+    *maven-dependency-plugin (2.8 to 2.10)
+    *maven-ejb-plugin (null to 2.5.1)
+    *maven-install-plugin (2.4 to 2.5.2)
+    *maven-javadoc-plugin (null to2.10.4)
+    *maven-jar-plugin (2.4 to 2.5)
+    *maven-resources-plugin (null to 2.7)
+    *maven-surefire-plugin (2.12.4 to 2.19.1)
+    *maven-war-plugin (null to 2.6)
+    *jacoco-maven-plugin (0.7.6.201602180812 to 0.7.7.201606060606)
+    *jetty-maven-plugin (org.mortbay.jetty:maven-jetty-plugin 6.1.24 to org.eclipse.jetty:jetty-maven-plugin 9.4.0.RC2)
 
-- Removed saaj-api as the library is integrated into JDK after JDK 1.6
+- Removed 3rd party library saaj-api which is integrated into JDK 1.6 or later
 - Updated documentation and instructions
 
-- Changed authentication method to api servlet to digest
+- Changed api servlet authentication method to digest
 - Refactored Corvus WS client
+
+- Renew all public and private certifications (sample) for message signing and encryption
 
 [Bug Fixes]
 - Fixed various issues in test cases
@@ -98,22 +100,22 @@ Jan 30, 2009
 - Added official support for JDK1.6
 - Removed force saveChanges in all EbxmlMessage.saveChanges() and SOAPMessage.saveChanges() calls to avoid lose of SOAP attachment in JDK1.6
 - Updated third party libraries to latest version
-    *commons-collections (3.1 -> 3.2.1)
-    *commons-pool (1.2 -> 1.4)
-    *dom4j (1.4 -> 1.6.1)
-    *log4j (1.2.8 -> 1.2.15)
-    *xalan (2.7.0 -> 2.7.1)
-    *serializer (2.7.0 -> 2.7.1)
-    *xmlsec (1.4.1 -> 1.4.2)
-    *saaj-api (1.2 -> 1.3)
-    *saaj-impl (1.2 -> 1.3.2)
-    *mail (1.1 -> mailapi & smtp 1.4.1)
-    *postgresql (8.2 508 -> 8.3 604)
+    *commons-collections (3.1 to 3.2.1)
+    *commons-pool (1.2 to 1.4)
+    *dom4j (1.4 to 1.6.1)
+    *log4j (1.2.8 to 1.2.15)
+    *xalan (2.7.0 to 2.7.1)
+    *serializer (2.7.0 to 2.7.1)
+    *xmlsec (1.4.1 to 1.4.2)
+    *saaj-api (1.2 to 1.3)
+    *saaj-impl (1.2 to 1.3.2)
+    *mail (1.1 to mailapi & smtp 1.4.1)
+    *postgresql (8.2 508 to 8.3 604)
 - Added libraries to /WEB-INF/lib
     *commons-logging-1.1.1.jar
     *jaxen-1.1-beta-6.jar (for dom4j 1.6.1)
 - Updated jmock library for unit test
- 	*jmock (2.3.0-RC2 -> 2.5.1)
+ 	*jmock (2.3.0-RC2 to 2.5.1)
 
 - Updated Installation Guide to include Tomcat basic authentication and partnership configuration
 - Remove runtime parameter SSL truststore example in corvus.properties.xml. It is recommended to define in corvus.module.xml
