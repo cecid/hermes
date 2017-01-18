@@ -15,7 +15,7 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <version>2.5.2</version>
                 <executions>
-                    <execution>
+                    <!--execution>
                         <id>wrapper</id>
                         <phase>pre-clean</phase>
                         <goals>
@@ -28,7 +28,7 @@
                             <version>3.5.30</version>
                             <packaging>jar</packaging>
                         </configuration>
-                    </execution>
+                    </execution-->
                     <execution>
                         <id>oracle</id>
                         <phase>pre-clean</phase>
@@ -103,11 +103,11 @@
             <artifactId>javax.mail</artifactId>
             <version>1.5.6</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper</artifactId>
             <version>3.5.30</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
