@@ -35,8 +35,8 @@
         <module>corvus-api</module>
         <module>loopback</module>
         <module>h2o-installer</module>
-        <module>h2o-embedded</module>
-        <module>h2o-maven</module>
+        <!--module>h2o-embedded</module>
+        <module>h2o-maven</module-->
     </modules>
     <!-- Build Configuration -->
     <build>
