@@ -185,6 +185,11 @@ input in the page to choose components to install
 			<fileset dir="${basedir}/temp/plugins/corvus-main-admin"/>
 		</copy>
 
+		<echo message="Copy module ${coreDir}/plugins/corvus-api"/>
+        <copy todir="${coreDir}/plugins/corvus-api">
+            <fileset dir="${basedir}/temp/plugins/corvus-api"/>
+        </copy>
+		
 		<copy todir="${coreDir}/sql">
 			<fileset dir="${basedir}/temp/sql" />
 		</copy>
