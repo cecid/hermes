@@ -22,9 +22,7 @@ Jan ?, 2017
     *javax.mail (javax.mail:mail 1.4.1 to com.sun.mail:javax.mail 1.5.6)
     *jboxx (jboss:jboss-j2ee 3.2.3 to jboss-javaee-7.0 1.0.3.Final)
     *servlet-api (javax.servlet:servlet-api 2.5 to javax.servlet:javax.servlet-api 3.1.0)
-    *ojdbc (oracle:ojdbc14 10.2.0.1.0 to com.oraclejdbc:ojdbc7 12.1.0.1)
     *saaj-impl (1.3.2 to 1.3.25)
-    *wrapper (3.3.7 to 3.5.30)
     *xalan (2.7.1 to 2.7.2)
     *xmlsec (1.4.2 to 2.0.7)
     *Oracle JDBC driver
@@ -53,7 +51,12 @@ Jan ?, 2017
     *jacoco-maven-plugin (0.7.6.201602180812 to 0.7.7.201606060606)
     *jetty-maven-plugin (org.mortbay.jetty:maven-jetty-plugin 6.1.24 to org.eclipse.jetty:jetty-maven-plugin 9.4.0.RC2)
 
-- Removed 3rd party library saaj-api which is integrated into JDK 1.6 or later
+- Removed 3rd party libraries/ drivers
+    *saaj-api (library is integrated into JDK 1.6 or later)
+    *wrapper
+    *ojdbc
+    *Oracle JDBC driver, mySQL JDBC driver (not shipped with release, but still fully supported)
+
 - Updated documentation and instructions
 
 - Changed api servlet authentication method to digest
