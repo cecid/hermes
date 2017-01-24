@@ -100,7 +100,7 @@ the installer script should put the locations of these resources on the classpat
 				defaultValueWin="${env.ProgramFiles}\Apache Software Foundation\Tomcat 8.5\webapps"
 				create="true"
 				checkExists="true"/>
-		<!-- <comment displayText="                                            e.g. &lt;TOMCAT_HOME&gt;/webapps"/> -->
+		<!-- <comment displayText="e.g. &lt;TOMCAT_HOME&gt;/webapps"/> -->
 		<directory
 				property="coreDir"
 				defaultValue="/home/hermes2"
@@ -116,7 +116,7 @@ the installer script should put the locations of these resources on the classpat
 			<option text="Postgres 9.4.1212 JDBC 42" value="postgresDriver"/>
 			<option text="Oracle (Download manually)" value="oracleDriver"/>
 			<option text="MySQL (Download manually)" value="mysqlDriver"/> 
-			-->
+		
 		</large-select>
 
 		<comment
