@@ -40,7 +40,7 @@ input in the page to choose components to install
 	<target name="set-postgres-db" if="check-postgres">
 
 		<property name="DriverFN" value="postgresql-9.4.1212.jar"/>
-		<echo message="DB Driver Path: ${DBdriverloc}, Driver File: ${DriverFN}"/>
+		<echo message="Installing DB Driver: ${DriverFN}"/>
 
 		<!-- Set Postgres Databsae Property for AS2 -->
 		<property name="as2DBMSDriverStr" value="org.postgresql.Driver"/>
@@ -75,7 +75,7 @@ input in the page to choose components to install
 
 		<basename property="DriverFN" file="${DBdriverloc}"/>
 		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
-	    <echo message="DB Driver Path: ${DBdriverloc}, Driver File: ${DriverFN}"/>
+	    <echo message="Installing DB Driver: ${DriverFN}"/>
 
 		<!-- Check if the jar file has the required drivers -->
 		<available classname="oracle.jdbc.driver.OracleDriver" classpath="${DBdriverloc}" property="OracleDriverPresent"/>
@@ -113,7 +113,7 @@ input in the page to choose components to install
 
 		<basename property="DriverFN" file="${DBdriverloc}"/>
 		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
-	    <echo message="DB Driver Path: ${DBdriverloc}, Driver File: ${DriverFN}"/>
+	    <echo message="Installing DB Driver: ${DriverFN}"/>
 
 		<!-- Check if the jar file has the required drivers -->
 		<available classname="com.mysql.jdbc.Driver" classpath="${DBdriverloc}" property="MySQLDriverPresent"/>
