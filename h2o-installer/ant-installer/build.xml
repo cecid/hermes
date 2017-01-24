@@ -79,7 +79,7 @@ input in the page to choose components to install
 
 		<!-- Check if the jar file has the required drivers -->
 		<available classname="oracle.jdbc.driver.OracleDriver" classpath="${DBdriverloc}" property="OracleDriverPresent"/>
-		<fail message="Oracle Driver not found in ${DBdriverloc}" unless="OracleDriverPresent"/>
+		<fail message="${DBdriverloc} is not a valid Oracle Driver." unless="OracleDriverPresent"/>
 
 		<!-- Set Oracle Databsae Property for AS2 -->
 		<property name="as2DBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
@@ -117,7 +117,7 @@ input in the page to choose components to install
 
 		<!-- Check if the jar file has the required drivers -->
 		<available classname="com.mysql.jdbc.Driver" classpath="${DBdriverloc}" property="MySQLDriverPresent"/>
-		<fail message="MySQL Driver not found in ${DBdriverloc}" unless="MySQLDriverPresent"/>
+		<fail message="${DBdriverloc} is not a valid MySQL Driver." unless="MySQLDriverPresent"/>
 
 		<!-- Set MySQL property for AS2 -->
 		<property name="as2DBMSDriverStr" value="com.mysql.jdbc.Driver"/>
