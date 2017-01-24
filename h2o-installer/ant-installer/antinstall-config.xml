@@ -51,7 +51,7 @@ the installer script should put the locations of these resources on the classpat
 				displayText="- JDK 1.8+ (with JCE Unlimited Strength Jusrisdiction Policy Files)"
 				bold="true"/>
 		<comment
-				displayText="- Tomcat8.5.9+, MySQL|Postgres|Oracle"
+				displayText="- Tomcat8.5.9+, DB Server (MySQL / Postgres / Oracle)"
 				bold="true"/>
 		<comment
 				displayText="The following items will be installed."
