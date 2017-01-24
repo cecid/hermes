@@ -77,6 +77,10 @@ input in the page to choose components to install
 		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
 	    <echo message="DB Driver Path: ${DBdriverloc}, Driver File: ${DriverFN}"/>
 
+		<!-- Check if the jar file has the required drivers -->
+		<available classname="oracle.jdbc.driver.OracleDriver" classpath="${DBdriverloc}" property="OracleDriverPresent"/>
+		<fail message="Oracle Driver not found in ${DBdriverloc}" unless="OracleDriverPresent"/>
+
 		<!-- Set Oracle Databsae Property for AS2 -->
 		<property name="as2DBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="as2ConnStr" value="jdbc:oracle:thin:@${as2Host}:${as2Database}"/>
@@ -110,6 +114,10 @@ input in the page to choose components to install
 		<basename property="DriverFN" file="${DBdriverloc}"/>
 		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
 	    <echo message="DB Driver Path: ${DBdriverloc}, Driver File: ${DriverFN}"/>
+
+		<!-- Check if the jar file has the required drivers -->
+		<available classname="com.mysql.jdbc.Driver" classpath="${DBdriverloc}" property="MySQLDriverPresent"/>
+		<fail message="MySQL Driver not found in ${DBdriverloc}" unless="MySQLDriverPresent"/>
 
 		<!-- Set MySQL property for AS2 -->
 		<property name="as2DBMSDriverStr" value="com.mysql.jdbc.Driver"/>
