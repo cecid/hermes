@@ -147,15 +147,27 @@ the installer script should put the locations of these resources on the classpat
 			displayText="Step 1.1 - Configure Database Driver"
 			ifProperty="${DBMS}!=postgresDriver">
 
+		<conditional ifProperty="${DBMS}=oracleDriver">
+			<hidden property="dbName" value="Oracle"/>
+			<hidden property="defaultDriverPath" value="~/ojdbc7.jar"/>	
+			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\ojdbc7.jar"/>	
+		</conditional>
+
+		<conditional ifProperty="${DBMS}=mysqlDriver">
+			<hidden property="dbName" value="MySQL"/>
+			<hidden property="defaultDriverPath" value="~/mysql-connector-java-5.1.40-bin.jar"/>
+			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\mysql-connector-java-5.1.40\mysql-connector-java-5.1.40-bin.jar"/>		
+		</conditional>
+
 		<comment
-		displayText="Please specify the location of JDBC Driver."
+		displayText="Please specify the location of ${dbName} JDBC Driver."
 		bold="true"/>	
 
 		<file
 				property="DBdriverloc"
-				displayText="JDBC Driver Folder:"
-				defaultValue="~/mysql-connector-java-5.1.40-bin.jar"
-				defaultValueWin="${env.UserProfile}\Downloads\mysql-connector-java-5.1.40\mysql-connector-java-5.1.40-bin.jar"
+				displayText="JDBC Driver Folder (.jar):"
+				defaultValue="${defaultDriverPath}"
+				defaultValueWin="${defaultDriverPathWin}"
 				checkExists="true"/>
 	</page>
 
