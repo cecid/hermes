@@ -30,6 +30,8 @@ RUN mkdir -p /hermes_home/logs
 RUN mkdir -p /tmp/h
 RUN cd /tmp/h && unzip /build/target/hermes2_bin.zip
 RUN rm -rf /tmp/h/plugins/corvus-sfrm
+RUN rm -rf /tmp/h/plugins/corvus-sfrm-admin
+RUN rm -rf /tmp/h/plugins/corvus-as2plus
 RUN rm -rf /tmp/h/plugins/corvus-as2plus-admin
 RUN find /tmp/h -name *.xml -exec sed -i 's/@h2\.home@/\/hermes_home/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2PageletAdaptor@/hk\.hku\.cecid\.edi\.as2\.admin\.listener\.MessageHistoryPageletAdaptor/g' {} \;
