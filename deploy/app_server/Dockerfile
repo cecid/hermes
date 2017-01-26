@@ -55,6 +55,8 @@ RUN chown -R tomcat8:tomcat8 /hermes_home
 RUN rm -rf /tmp/h
 RUN rm -rf /build
 
+ENV CATALINA_BASE /var/lib/tomcat8
 EXPOSE 8080
 
-CMD service tomcat8 start && tail -f /var/log/tomcat8/catalina.out
+# CMD service tomcat8 start && tail -f /var/log/tomcat8/catalina.out
+CMD ["/usr/share/tomcat8/bin/catalina.sh", "run"]
