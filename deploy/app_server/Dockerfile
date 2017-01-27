@@ -49,6 +49,8 @@ RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmspw@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsValidationQuery@/SELECT now\(\)/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/spa\/conf\/ebms.mysql.dao.xml/g' {} \;
 RUN mv /tmp/h/plugins /hermes_home
+RUN mv /tmp/h/sample /hermes_home
+RUN mv /tmp/h/sql /hermes_home
 RUN cp /usr/share/java/mysql.jar /tmp/h/webapps/corvus/WEB-INF/lib/
 RUN rm -rf /var/lib/tomcat8/webapps/corvus
 RUN mv /tmp/h/webapps/corvus /var/lib/tomcat8/webapps
