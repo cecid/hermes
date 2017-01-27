@@ -38,10 +38,6 @@ input in the page to choose components to install
 	</condition>
 
 	<target name="set-postgres-db" if="check-postgres">
-
-		<property name="DriverFN" value="postgresql-9.4.1212.jar"/>
-		<echo message="Installing DB Driver: ${DriverFN}"/>
-
 		<!-- Set Postgres Databsae Property for AS2 -->
 		<property name="as2DBMSDriverStr" value="org.postgresql.Driver"/>
 		<property name="as2ConnStr" value="jdbc:postgresql://${as2Host}/${as2Database}"/>
@@ -72,20 +68,11 @@ input in the page to choose components to install
 	</target>
 
 	<target name="set-oracle-db" if="check-oracle">
-
-		<basename property="DriverFN" file="${DBdriverloc}"/>
-		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
-	    <echo message="Installing DB Driver: ${DriverFN}"/>
-
-		<!-- Check if the jar file has the required drivers -->
-		<available classname="oracle.jdbc.driver.OracleDriver" classpath="${DBdriverloc}" property="OracleDriverPresent"/>
-		<fail message="${DBdriverloc} is not a valid Oracle Driver." unless="OracleDriverPresent"/>
-
 		<!-- Set Oracle Databsae Property for AS2 -->
 		<property name="as2DBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="as2ConnStr" value="jdbc:oracle:thin:@${as2Host}:${as2Database}"/>
 		<property name="as2ValidationQuery" value="SELECT sysdate from dual"/>
-		<property name="as2JDBCFile" value="${DriverFN}"/>
+		<property name="as2JDBCFile" value="ojdbc7.jar"/>
 		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.oracle.dao.xml"/>
 		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryOraclePageletAdaptor"/>
 		<property name="as2.sql.file_prefix" value="oracle_"/>
@@ -94,7 +81,7 @@ input in the page to choose components to install
 		<property name="as2PlusDBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="as2PlusConnStr" value="jdbc:oracle:thin:@${as2PlusHost}:${as2PlusDatabase}"/>
 		<property name="as2PlusValidationQuery" value="SELECT sysdate from dual"/>
-		<property name="as2PlusJDBCFile" value="${DriverFN}"/>
+		<property name="as2PlusJDBCFile" value="ojdbc7.jar"/>
 		<property name="as2PlusDAOFile" value="hk/hku/cecid/edi/as2/conf/as2.oracle.dao.xml"/>
 		<property name="as2PlusPageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2Plus.sql.file_prefix" value="oracle_"/>
@@ -103,27 +90,18 @@ input in the page to choose components to install
 		<property name="ebmsDBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="ebmsConnStr" value="jdbc:oracle:thin:@${ebmsHost}:${ebmsDatabase}"/>
 		<property name="ebmsValidationQuery" value="SELECT sysdate from dual"/>
-		<property name="ebmsJDBCFile" value="${DriverFN}"/>
+		<property name="ebmsJDBCFile" value="ojdbc7.jar"/>
 		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.oracle.dao.xml"/>
 		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryOraclePageletAdaptor"/>
 		<property name="ebms.sql.file_prefix" value="oracle_"/>
 	</target>
 
 	<target name="set-mysql-db" if="check-mysql">
-
-		<basename property="DriverFN" file="${DBdriverloc}"/>
-		<copy todir="${basedir}/resources/lib" file="${DBdriverloc}"/>	
-	    <echo message="Installing DB Driver: ${DriverFN}"/>
-
-		<!-- Check if the jar file has the required drivers -->
-		<available classname="com.mysql.jdbc.Driver" classpath="${DBdriverloc}" property="MySQLDriverPresent"/>
-		<fail message="${DBdriverloc} is not a valid MySQL Driver." unless="MySQLDriverPresent"/>
-
 		<!-- Set MySQL property for AS2 -->
 		<property name="as2DBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="as2ConnStr" value="jdbc:mysql://${as2Host}/${as2Database}"/>
 		<property name="as2ValidationQuery" value="SELECT now()"/>
-		<property name="as2JDBCFile" value="${DriverFN}"/>
+		<property name="as2JDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2.sql.file_prefix" value="mysql_"/>
@@ -132,25 +110,126 @@ input in the page to choose components to install
 		<property name="as2PlusDBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="as2PlusConnStr" value="jdbc:mysql://${as2PlusHost}/${as2PlusDatabase}"/>
 		<property name="as2PlusValidationQuery" value="SELECT now()"/>
-		<property name="as2PlusJDBCFile" value="${DriverFN}"/>
+		<property name="as2PlusJDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="as2PlusDAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
 		<property name="as2PlusPageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="as2Plus.sql.file_prefix" value="mysql_"/>
 		
-		<!-- Set MySQL property for EbMS -->
+		<!-- Set MySQL property for E -->
 		<property name="ebmsDBMSDriverStr" value="com.mysql.jdbc.Driver"/>
 		<property name="ebmsConnStr" value="jdbc:mysql://${ebmsHost}/${ebmsDatabase}"/>
 		<property name="ebmsValidationQuery" value="SELECT now()"/>
-		<property name="ebmsJDBCFile" value="${DriverFN}"/>
+		<property name="ebmsJDBCFile" value="mysql-connector-java-5.1.40-bin.jar"/>
 		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.mysql.dao.xml"/>
 		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor"/>
 		<property name="ebms.sql.file_prefix" value="mysql_"/>
 	</target>
 
 
-	<target name="core" depends="set-postgres-db,set-mysql-db,set-oracle-db">
+	<!--
+	<condition property="as2_postgres" value="true">
+		<equals arg1="${as2DBMS}" arg2="postgresDriver"/>
+	</condition>
 
-		<echo message="Installing Hermes core"/>		
+	<condition property="as2_mysql" value="true">
+		<equals arg1="${as2DBMS}" arg2="mysqlDriver"/>
+	</condition>
+
+	<condition property="as2_oracle" value="true">
+		<equals arg1="${as2DBMS}" arg2="oracleDriver"/>
+	</condition>
+	
+	<condition property="ebms_postgres" value="true">
+		<equals arg1="${ebmsDBMS}" arg2="postgresDriver"/>
+	</condition>
+
+	<condition property="ebms_mysql" value="true">
+		<equals arg1="${ebmsDBMS}" arg2="mysqlDriver"/>
+	</condition>
+
+	<condition property="ebms_oracle" value="true">
+		<equals arg1="${ebmsDBMS}" arg2="oracleDriver"/>
+	</condition>
+	
+	
+	<target if="as2_postgres" name="check-as2-postgres-setting">
+		<property name="as2DBMSDriverStr" value="org.postgresql.Driver"/>
+		<property name="as2ConnStr" value="jdbc:postgresql://${as2Host}/${as2Database}"/>
+		<property name="as2ValidationQuery" value="SELECT now()"/>
+		<property name="as2JDBCFile" value="postgresql-9.4.1212.jar"/>
+		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
+		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
+		<property name="as2.sql.file_prefix" value=""/>
+		<property name="as2JDBCDriverFile" value="postgresql-9.4.1212.jar"/>
+	</target>
+
+	<target if="as2_mysql" name="check-as2-mysql-setting">
+		<property name="as2DBMSDriverStr" value="com.mysql.jdbc.Driver"/>
+		<property name="as2ConnStr" value="jdbc:mysql://${as2Host}/${as2Database}"/>
+		<property name="as2ValidationQuery" value="SELECT now()"/>
+		<property name="as2JDBCFile" value="mysql-connector-java-3.1.14-bin.jar"/>
+		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.dao.xml"/>
+		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryPageletAdaptor"/>
+		<property name="as2.sql.file_prefix" value="mysql_"/>
+		<property name="as2JDBCDriverFile" value="mysql-connector-java-5.0.8-bin.jar"/>
+	</target>
+
+	<target if="as2_oracle" name="check-as2-oracle-setting">
+		<property name="as2DBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="as2ConnStr" value="jdbc:oracle:thin:@${as2Host}:${as2Database}"/>
+		<property name="as2ValidationQuery" value="SELECT sysdate from dual"/>
+		<property name="as2JDBCFile" value="ojdbc7.jar"/>
+		<property name="as2DAOFile" value="hk/hku/cecid/edi/as2/conf/as2.oracle.dao.xml"/>
+		<property name="as2PageletAdaptor" value="hk.hku.cecid.edi.as2.admin.listener.MessageHistoryOraclePageletAdaptor"/>
+		<property name="as2.sql.file_prefix" value="oracle_"/>
+		<property name="as2JDBCDriverFile" value="ojdbc7.jar"/>
+	</target>
+
+	<target if="ebms_postgres" name="check-ebms-postgres-setting">
+		<property name="ebmsDBMSDriverStr" value="org.postgresql.Driver"/>
+		<property name="ebmsConnStr" value="jdbc:postgresql://${ebmsHost}/${ebmsDatabase}"/>
+		<property name="ebmsValidationQuery" value="SELECT now()"/>
+		<property name="ebmsJDBCFile" value="postgresql-8.3-604.jdbc3.jar"/>
+		<property name="ebms.sql.dir" value="${basedir}/temp/sql"/>
+		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.dao.xml"/>
+		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor"/>
+		<property name="ebms.sql.file_prefix" value=""/>
+		<property name="ebmsJDBCDriverFile" value="postgresql-8.2-508.jdbc3.jar"/>
+	</target>
+
+	<target if="ebms_mysql" name="check-ebms-mysql-setting">
+		<property name="ebmsDBMSDriverStr" value="com.mysql.jdbc.Driver"/>
+		<property name="ebmsConnStr" value="jdbc:mysql://${ebmsHost}/${ebmsDatabase}"/>
+		<property name="ebmsValidationQuery" value="SELECT now()"/>
+		<property name="ebmsJDBCFile" value="mysql-connector-java-3.1.14-bin.jar"/>
+		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.mysql.dao.xml"/>
+		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryPageletAdaptor"/>
+		<property name="ebms.sql.file_prefix" value="mysql_"/>
+		<property name="ebmsJDBCDriverFile" value="mysql-connector-java-5.0.8-bin.jar"/>
+	</target>
+
+	<target if="ebms_oracle" name="check-ebms-oracle-setting">
+		<property name="ebmsDBMSDriverStr" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="ebmsConnStr" value="jdbc:oracle:thin:@${ebmsHost}:${ebmsDatabase}"/>
+		<property name="ebmsValidationQuery" value="SELECT sysdate from dual"/>
+		<property name="ebmsJDBCFile" value="ojdbc7.jar"/>
+		<property name="ebmsDAOFile" value="hk/hku/cecid/ebms/spa/conf/ebms.oracle.dao.xml"/>
+		<property name="ebmsPageletAdaptor" value="hk.hku.cecid.ebms.admin.listener.MessageHistoryOraclePageletAdaptor"/>
+		<property name="ebms.sql.file_prefix" value="oracle_"/>
+		<property name="ebmsJDBCDriverFile" value="ojdbc7.jar"/>
+	</target>
+	-->
+
+
+	<target name="core" depends="set-postgres-db,set-mysql-db,set-oracle-db">
+		<echo message="Installing Hermes 2 core"/>		
+				
+		<!-- this is an exagerated example 
+		  clearly 
+			<unzip src="installpack.zip" dest="${basedir}/temp"/>
+			<replace ...
+			would be sufficient
+		-->
 		
 		<mkdir dir="${basedir}/temp"/>
 		<unzip src="${basedir}/hermes2_bin.zip" dest="${basedir}/temp"/>	
@@ -193,11 +272,6 @@ input in the page to choose components to install
 			<fileset dir="${basedir}/temp/plugins/corvus-main-admin"/>
 		</copy>
 
-		<echo message="Copy module ${coreDir}/plugins/corvus-api"/>
-        <copy todir="${coreDir}/plugins/corvus-api">
-            <fileset dir="${basedir}/temp/plugins/corvus-api"/>
-        </copy>
-		
 		<copy todir="${coreDir}/sql">
 			<fileset dir="${basedir}/temp/sql" />
 		</copy>
@@ -207,8 +281,76 @@ input in the page to choose components to install
 		</copy>
 	</target>
 
+<!--
+	<target name="loopback-test" depends="">
+		<echo message="Installing loopback test"/>
+		
+		<echo message="Copy loopback test"/>
+		<copy todir="${coreDir}/test">
+			<fileset dir="${basedir}/temp/test"/>
+		</copy>
+
+		<condition property="ebmsuser" value="corvus">
+			<isfalse value="${install_ebms}"/>
+		</condition>
+		<condition property="ebmspwd" value="corvus">
+			<isfalse value="${install_ebms}"/>
+		</condition>
+		<condition property="ebmsConnStr" value="jdbc:postgresql://localhost:5432/ebms">
+			<isfalse value="${install_ebms}"/>
+		</condition>
+		<condition property="ebmsDBMSDriverStr" value="org.postgresql.Driver">
+			<isfalse value="${install_ebms}"/>
+		</condition>
+		<condition property="ebmsValidationQuery" value="SELECT now()">
+			<isfalse value="${install_ebms}"/>
+		</condition>
+
+		<condition property="as2user" value="corvus">
+			<isfalse value="${install_as2}"/>
+		</condition>
+		<condition property="as2pwd" value="corvus">
+			<isfalse value="${install_as2}"/>
+		</condition>
+		<condition property="as2ConnStr" value="jdbc:postgresql://localhost:5432/as2">
+			<isfalse value="${install_as2}"/>
+		</condition>
+		<condition property="as2DBMSDriverStr" value="org.postgresql.Driver">
+			<isfalse value="${install_as2}"/>
+		</condition>
+		<condition property="as2ValidationQuery" value="SELECT now()">
+			<isfalse value="${install_as2}"/>
+		</condition>
+
+		<echo message="Configure loopback test properties"/>
+      	<replace file="${coreDir}/test/conf/partnership.log.properties.xml" 
+			token="@h2.home@" value="${convert}"/>
+		
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@ebmsDriverClass@" value="${ebmsDBMSDriverStr}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@ebmsConnStr@" value="${ebmsConnStr}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@ebmsuser@" value="${ebmsuser}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@ebmspw@" value="${ebmspwd}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@ebmsValidationQuery@" value="${ebmsValidationQuery}"/>
+
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@as2DriverClass@" value="${as2DBMSDriverStr}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@as2ConnStr@" value="${as2ConnStr}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@as2user@" value="${as2user}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@as2pw@" value="${as2pwd}"/>
+		<replace file="${coreDir}/test/conf/partnership.module.core.xml"
+			token="@as2ValidationQuery@" value="${as2ValidationQuery}"/>
+	</target>
+-->	
 	<target name="web-service-usage-sample" depends="">
-		<echo message="Clean up temp files"/>		
+		<echo message="Installing web service usage sample"/>		
 		<copy todir="${coreDir}/sample">
 			<fileset dir="${basedir}/temp/sample"/>
 		</copy>
@@ -216,13 +358,13 @@ input in the page to choose components to install
 
 	<!-- Clean up the mess before exit -->	
 	<target name="cleanup" depends="">
-		<echo message="Installing web service usage sample"/>
+		<echo message="Clean up temp files"/>
 		<delete dir="${basedir}" failonerror="true" />
 	</target>
 
 	<target name="recreate-ebms-tables">
 		<echo message="Recreating ebMS tables"/>
-		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${DriverFN}"/>	
+		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${ebmsJDBCFile}"/>	
 		<echo message="Drop existing ebMS tables" />
 		<!-- Drop ebms tables -->
 		<sql
@@ -233,7 +375,7 @@ input in the page to choose components to install
 			onerror="continue"
 			showheaders="false">
   		  <classpath>
-			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${DriverFN}"/>
+			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${ebmsJDBCFile}"/>
 		  </classpath>
 		  <transaction src="${coreDir}/sql/${ebms.sql.file_prefix}dropebms.sql"/>
 		</sql>	
@@ -247,7 +389,7 @@ input in the page to choose components to install
 			password="${ebmspwd}"
 			showheaders="false">
   		  <classpath>
-			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${DriverFN}"/>
+			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${ebmsJDBCFile}"/>
 		  </classpath>			
 		  <transaction  src="${coreDir}/sql/${ebms.sql.file_prefix}ebms.sql"/>
 		</sql>
@@ -255,7 +397,7 @@ input in the page to choose components to install
 
 	<target name="install_ebms">
 		<echo message="Installing ebMS modules"/>
-		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${DriverFN}"/>
+		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${ebmsJDBCFile}"/>
 
 		<echo message="Copy module ${coreDir}/plugins/corvus-ebms"/>
 		<copy todir="${coreDir}/plugins/corvus-ebms">
@@ -289,7 +431,7 @@ input in the page to choose components to install
 	<!-- Receate Database Tables -->
 	<target name="recreate-as2-tables">
 		<echo message="Recreating AS2 tables"/>
-		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${DriverFN}"/>
+		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${as2JDBCFile}"/>
 		
 		<!-- Determinate to use AS2 SQL or AS2Plus SQL -->
 		<condition property="as2_sql" value="as2.sql">
@@ -309,7 +451,7 @@ input in the page to choose components to install
 			onerror="continue"
 			showheaders="false">
   		  <classpath>
-			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${DriverFN}"/>
+			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${as2JDBCFile}"/>
 		  </classpath>			
 		  <transaction src="${coreDir}/sql/${as2.sql.file_prefix}drop${as2_sql}"/>
 		</sql>	
@@ -323,7 +465,7 @@ input in the page to choose components to install
 			password="${as2pwd}"
 			showheaders="false">
   		  <classpath>
-			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${DriverFN}"/>
+			  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${as2JDBCFile}"/>
 		  </classpath>			
 	  	  <transaction  src="${coreDir}/sql/${as2.sql.file_prefix}${as2_sql}"/>
 		</sql>
@@ -337,7 +479,7 @@ input in the page to choose components to install
 		<available property="IsAS2PlusInstalled" type="dir" file="${coreDir}/plugins/hk.hku.cecid.edi.as2plus/" />
 		<fail if="IsAS2PlusInstalled" message="A different version of AS2 plugins was found." >A different version of AS2 plugins was found.</fail>
 		
-		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${DriverFN}"/>
+		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${as2JDBCFile}"/>
 		
 		<echo message="Copy module ${coreDir}/plugins/corvus-as2"/>
 		<copy todir="${coreDir}/plugins/corvus-as2">
@@ -376,7 +518,7 @@ input in the page to choose components to install
 		<available property="IsAS2Installed" type="dir" file="${coreDir}/plugins/hk.hku.cecid.edi.as2/" />
 		<fail if="IsAS2Installed" message="A different version of AS2 plugins was found.">A different version of AS2 plugins was found.</fail>
 		
-		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${DriverFN}"/>
+		<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${as2JDBCFile}"/>
 			
 		<echo message="Copy module ${coreDir}/plugins/corvus-as2plus"/>
 		<copy todir="${coreDir}/plugins/corvus-as2plus">
@@ -406,5 +548,39 @@ input in the page to choose components to install
 			token="@as2PageletAdaptor@" value="${as2PageletAdaptor}"/>
 	</target>
 	
+	<!-- The Determination of create AS2 table or AS2Plus table will be handle by 
+	"recreate-as2-tables" target
+	<target name="recreate-as2plus-tables">
+			<echo message="Recreating AS2 Plus tables"/>
+			<copy todir="${webappDir}/corvus/WEB-INF/lib" file="${basedir}/resources/lib/${as2PlusJDBCFile}"/>
+				
+			<echo message="Drop existing AS2 tables"/>
+			<sql
+				driver="${as2DBMSDriverStr}"
+				url="${as2ConnStr}"
+				userid="${as2user}"
+				password="${as2pwd}" 
+				onerror="continue"
+				showheaders="false">
+				<classpath>
+				  <pathelement location="${webappDir}/corvus/WEB-INF/lib/${as2JDBCFile}"/>
+				</classpath>			
+				<transaction src="${coreDir}/sql/${as2Plus.sql.file_prefix}dropas2plus.sql"/>
+			</sql>	
+				
+			<echo message="Execute AS2 SQL script"/>
+			<sql
+				driver="${as2DBMSDriverStr}"
+				url="${as2ConnStr}"
+				userid="${as2user}"
+				password="${as2pwd}"
+				showheaders="false">
+	  		  <classpath>
+	  		  	<pathelement location="${webappDir}/corvus/WEB-INF/lib/${as2JDBCFile}"/>
+			  </classpath>			
+		  	  <transaction  src="${coreDir}/sql/${as2Plus.sql.file_prefix}as2plus.sql"/>
+		</sql>
+	</target>
+	-->
 </project>
 
