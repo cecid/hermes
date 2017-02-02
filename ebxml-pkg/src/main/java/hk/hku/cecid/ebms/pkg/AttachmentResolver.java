@@ -22,6 +22,8 @@ import org.apache.xml.security.utils.resolver.ResourceResolverException;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 import org.apache.xml.security.utils.resolver.ResourceResolverContext;
 import org.w3c.dom.Attr;
+
+import org.apache.log4j.Logger;
 /**
  * A <code>ResourceResolver</code> implementation used by Apache Security
  * library. The URI in the <code>Reference</code> element of a digital
@@ -37,6 +39,8 @@ class AttachmentResolver extends ResourceResolverSpi {
 
     private final EbxmlMessage ebxmlMessage;
 
+    protected static Logger logger = Logger.getLogger(AttachmentResolver.class);
+
     AttachmentResolver(EbxmlMessage ebxmlMessage) {
         super();
         this.ebxmlMessage = ebxmlMessage;
@@ -46,6 +50,8 @@ class AttachmentResolver extends ResourceResolverSpi {
         throws ResourceResolverException {
         final String href = context.attr.getNodeValue();
 
+        logger.debug("href="+href+", uri="+context.uriToResolve);
+        
         if (!href.startsWith(PayloadContainer.HREF_PREFIX)) {
             final Object exArgs[] = { "Reference URI does not start with "
                                       + PayloadContainer.HREF_PREFIX };
@@ -77,6 +83,7 @@ class AttachmentResolver extends ResourceResolverSpi {
 
     public boolean engineCanResolveURI(ResourceResolverContext context) {
         final String href = context.attr.getNodeValue();
+
         if (href.startsWith(PayloadContainer.HREF_PREFIX)) {
             final String contentId = href.substring(PayloadContainer.
                                                     HREF_PREFIX.length());

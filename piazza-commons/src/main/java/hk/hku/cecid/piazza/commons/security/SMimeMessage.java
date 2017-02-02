@@ -239,9 +239,7 @@ public class SMimeMessage {
 		// 	  String digestOID, org.bouncycastle.asn1.cms.AttributeTable signedAttr,
 		// 	  org.bouncycastle.asn1.cms.AttributeTable unsignedAttr);
                 // signer.addSigner(privateKey, cert, getDigestAlgorithm(),
-                //     new AttributeTable(attributes), null);
-
-		// System.out.println("$$$ Security provider = " + SECURITY_PROVIDER);
+                //     new AttributeTable(attributes), null);		
 
 		String digestAlgmName = MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm();
 		String digestAlgm = "";
@@ -255,10 +253,6 @@ public class SMimeMessage {
 		default:
 		    throw new SMimeException("Unsupported digest algorithm: " + digestAlgmName);
 		}
-		
-		// System.out.println("$$$ Digest algorithm = " + getDigestAlgorithm() + ", " +					
-		// 		   (MessageDigest.getInstance(getDigestAlgorithm(), SECURITY_PROVIDER).getAlgorithm()) + " / " +
-		// 		   digestAlgm);
 				   
 		signer.addSignerInfoGenerator(new JcaSimpleSignerInfoGeneratorBuilder()
 		    .setProvider(SECURITY_PROVIDER)

@@ -25,6 +25,8 @@ import org.apache.xml.security.utils.resolver.ResourceResolverException;
 import org.apache.xml.security.utils.resolver.ResourceResolverSpi;
 import org.apache.xml.security.utils.resolver.ResourceResolverContext;
 import org.w3c.dom.Attr;
+
+import org.apache.log4j.Logger;
 /**
  * This class is needed by the Apache XML Security library for locating
  * and loading the document attachments.
@@ -38,6 +40,8 @@ public class DocumentResolver extends ResourceResolverSpi {
      * Internal variable for holding the document parameters.
      */
     protected DocumentDetail[] docs;
+
+    protected static Logger logger = Logger.getLogger(DocumentResolver.class);
 
     /** 
      * Construct with an array of document parameters.
@@ -64,6 +68,8 @@ public class DocumentResolver extends ResourceResolverSpi {
         // String href = uri.getNodeValue();
         String href = context.attr.getNodeValue();
 
+        logger.debug("href="+href+", uri="+context.uriToResolve);
+        
         if (!href.startsWith("cid:")) {
             Object exArgs[] = {"Reference URI does not start with 'cid:'"};
             // throw new ResourceResolverException(href, exArgs, uri, baseUri);
@@ -112,9 +118,9 @@ public class DocumentResolver extends ResourceResolverSpi {
      */
     // public boolean engineCanResolveURI(Attr uri, String baseUri) {
         public boolean engineCanResolveURI(ResourceResolverContext context) {
-        // String href = uri.getNodeValue();
-        String href = context.attr.getNodeValue();
 
+        String href = context.attr.getNodeValue();
+        logger.debug("DocumentResolver.engineCanResolveURI(): href="+href);
         if (href.startsWith("cid:")) {
             for (int i=0 ; i<docs.length ; i++) {
                 if (docs[i].uri != null && docs[i].uri.equals(href)) {
