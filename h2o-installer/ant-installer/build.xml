@@ -350,7 +350,7 @@ input in the page to choose components to install
 	</target>
 -->	
 	<target name="web-service-usage-sample" depends="">
-		<echo message="Clean up temp files"/>		
+		<echo message="Installing web service usage sample"/>		
 		<copy todir="${coreDir}/sample">
 			<fileset dir="${basedir}/temp/sample"/>
 		</copy>
@@ -358,7 +358,7 @@ input in the page to choose components to install
 
 	<!-- Clean up the mess before exit -->	
 	<target name="cleanup" depends="">
-		<echo message="Installing web service usage sample"/>
+		<echo message="Clean up temp files"/>
 		<delete dir="${basedir}" failonerror="true" />
 	</target>
 
