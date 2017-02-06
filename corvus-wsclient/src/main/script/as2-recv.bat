@@ -26,6 +26,6 @@ set ARGS=%ARGS% ./output/as2-recv/
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ReceiverSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ReceiverSender %ARGS%
 
 PAUSE

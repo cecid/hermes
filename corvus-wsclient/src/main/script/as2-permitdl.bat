@@ -18,6 +18,6 @@ set ARGS=%ARGS% ./logs/as2-permitdl.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2PermitRedownloadSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2PermitRedownloadSender %ARGS%
 
 PAUSE

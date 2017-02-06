@@ -18,7 +18,7 @@ set ARGS=%ARGS% ./logs/as2-config.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ConfigSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ConfigSender %ARGS%
 
 PAUSE
 

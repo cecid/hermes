@@ -18,6 +18,6 @@ set ARGS=%ARGS% ./logs/ebms-envelop.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.EBMSEnvelopQuerySender %ARGS%
+java -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.EBMSEnvelopQuerySender %ARGS%
 
 PAUSE

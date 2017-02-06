@@ -25,6 +25,6 @@ fi
 
 echo $ARGS
 
-EXEC="$JAVA_HOME/bin/java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.AS2ReceiverSender $ARGS"
+EXEC="java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.AS2ReceiverSender $ARGS"
 echo $EXEC
 exec $EXEC

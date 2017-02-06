@@ -26,6 +26,6 @@ set ARGS=%ARGS% ./config/as2-send/testpayload
 :execCmd
 @echo on
  
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2MessageSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2MessageSender %ARGS%
 
 PAUSE

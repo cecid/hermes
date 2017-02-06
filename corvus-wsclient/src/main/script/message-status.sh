@@ -17,6 +17,6 @@ if [ $# -lt 2 ]; then
 	fi
 fi
 
-EXEC="$JAVA_HOME/bin/java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.MessageStatusSender $ARGS"
+EXEC="java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.MessageStatusSender $ARGS"
 echo $EXEC
 exec $EXEC

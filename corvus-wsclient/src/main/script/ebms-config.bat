@@ -18,7 +18,7 @@ set ARGS=%ARGS% ./logs/ebms-config.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSConfigSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSConfigSender %ARGS%
 
 PAUSE
 

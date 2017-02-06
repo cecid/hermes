@@ -18,6 +18,6 @@ set ARGS=%ARGS% ./logs/ebms-permitdl.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSPermitRedownloadSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSPermitRedownloadSender %ARGS%
 
 PAUSE

@@ -19,6 +19,6 @@ set ARGS=%ARGS% ./logs/message-status.log
 @echo on
 echo %ARGS%
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.MessageStatusSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.MessageStatusSender %ARGS%
 
 PAUSE

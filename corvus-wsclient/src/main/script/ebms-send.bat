@@ -27,6 +27,6 @@ set ARGS=%ARGS% ./config/ebms-send/testpayload
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSMessageSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSMessageSender %ARGS%
 
 PAUSE

@@ -20,6 +20,6 @@ if [ $# -lt 3 ]; then
 	fi
 fi
 
-EXEC="$JAVA_HOME/bin/java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.AS2ReceiverListSender $ARGS"
+EXEC="java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.ws.AS2ReceiverListSender $ARGS"
 echo $EXEC
 exec $EXEC

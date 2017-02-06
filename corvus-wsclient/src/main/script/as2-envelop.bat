@@ -18,6 +18,6 @@ set ARGS=%ARGS% ./logs/as2-envelop.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java"  -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.AS2EnvelopQuerySender %ARGS%
+"java"  -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.AS2EnvelopQuerySender %ARGS%
 
 PAUSE
