@@ -1,3 +1,12 @@
+/* 
+ * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
+ * University of Hong Kong (HKU). All Rights Reserved.
+ *
+ * This software is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.0 [1]
+ * 
+ * [1] http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+ */
+
 package hk.hku.cecid.corvus.http;
 
 import java.util.HashMap;
@@ -114,13 +123,14 @@ public class AS2PartnershipSender extends PartnershipSender
 	 */
 	public AS2PartnershipSender(FileLogger logger, AS2AdminData ad, AS2PartnershipData p) 
 	{
-	    super(logger, p, ad.getUsername(), new String(ad.getPassword()));
+		super(logger, p);
 		if (p == null)
 			throw new NullPointerException("Missing 'partnershipData' for creating partnerhsip sender.");
 		String endpoint = ad.getManagePartnershipEndpoint();
 		if (endpoint == null || endpoint.equals(""))
 			throw new NullPointerException("Missing 'Manage Partnership endpoint' in AS2 Admin Data.");		
 		this.setServiceEndPoint(endpoint);			
+		this.setBasicAuthentication(ad.getUsername(), new String(ad.getPassword()));
 		this.setExecuteOperation(ad.getPartnershipOperation());		
 		//this.ad = ad;
 	}

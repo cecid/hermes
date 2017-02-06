@@ -1,3 +1,12 @@
+/* 
+ * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
+ * University of Hong Kong (HKU). All Rights Reserved.
+ *
+ * This software is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.0 [1]
+ * 
+ * [1] http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+ */
+
 package hk.hku.cecid.corvus.http;
 
 import java.io.File;
@@ -76,8 +85,9 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		this.testClassLogger = new FileLogger(log);
 		
 		// Create an anonymous partnership sender and implement the abstract method for our testing.
-		this.target = new EnvelopQuerySender(this.testClassLogger, this.kvData, USER_NAME, PASSWORD); 
+		this.target = new EnvelopQuerySender(this.testClassLogger, this.kvData);		
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
+		this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 		this.target.setMessageCriteriaToDownload("test-message-id", "INBOX");
 	}
 	
@@ -186,7 +196,6 @@ public class EnvelopQuerySenderUnitTest extends TestCase
 		// #3 Assert content.
 		String encodedContent = IOHandler.readString(monitor.getContentStream(), null);
 		StringTokenizer st = new StringTokenizer(encodedContent, "&");
-
 		assertTrue	("The POST content should at least has 2 parameters", (st.countTokens() >= 2));
 		
 		String[] kvPair = null;

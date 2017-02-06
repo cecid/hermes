@@ -1,3 +1,12 @@
+/* 
+ * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
+ * University of Hong Kong (HKU). All Rights Reserved.
+ *
+ * This software is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.0 [1]
+ * 
+ * [1] http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
+ */
+
 package hk.hku.cecid.corvus.http;
 
 import java.io.File;
@@ -132,11 +141,12 @@ public class PartnershipSenderUnitTest extends TestCase
 		this.testClassLogger = new FileLogger(log);
 		
 		// Create an anonymous partnership sender and implement the abstract method for our testing.
-		this.target = new PartnershipSender(this.testClassLogger, this.kvData, USER_NAME, PASSWORD){ 
+		this.target = new PartnershipSender(this.testClassLogger, this.kvData){ 			
 			public Map getPartnershipOperationMapping()	{ return partnershipOpMap; }  						
 			public Map getPartnershipMapping()			{ return data2webForm; }
 		};
 		this.target.setServiceEndPoint(TEST_ENDPOINT);
+		this.target.setBasicAuthentication(USER_NAME, PASSWORD);
 	}
 	
 	/** Test whether the add partnership request operation perform correctly **/
