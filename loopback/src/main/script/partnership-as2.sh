@@ -10,4 +10,4 @@ do
        CLASSPATH=$CLASSPATH$LIB_PATH"/"$i":"
 done
 
-exec $JAVA_HOME/bin/java -classpath $CLASSPATH "hk.hku.cecid.corvus.partnership.AS2Partnership" "$1" "$2"
+exec java -classpath $CLASSPATH "hk.hku.cecid.corvus.partnership.AS2Partnership" "$1" "$2"
