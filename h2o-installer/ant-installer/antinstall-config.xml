@@ -1,29 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.7.dtd">
 <!--
-
 This is an example installer from which you can start a project
 Edit this file to select the properties you want decided, at the end
 of the installation screen the properties will be available in a file
 in the current directory for your ant script
-
-
 lookAndFeel="com.jgoodies.plaf.windows.ExtWindowsLookAndFeel"  - not recommended since it is not linux compatible due to Micro$oft License restrictions
-
 lookAndFeel="net.sourceforge.mlf.metouia.MetouiaLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.Plastic3DLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.PlasticXPLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.PlasticLookAndFeel" - good but flat, and cross platform
 -->
-
 <!--
-
 defaultImageResource,windowIcon,resource and imageResource load from the classpath
 the installer script should put the locations of these resources on the classpath
-
 -->
 <installer
 			ui="swing,text"
@@ -70,13 +60,11 @@ the installer script should put the locations of these resources on the classpat
 		<comment 
 				displayText="- Web Service Usage Sample"
 				bold="true"/>
-
 		<comment displayText="" title="true"/>
 		
 		<comment displayText="Please refer to Hermes Installation Guide for details :"/>
 		<comment displayText="- http://hermes.cecid.org/en/latest/installation.html"/>
 	</page>
-
 	<!--  type="license" shows a license page to click through -->
 	<page
 			type="license"
@@ -85,14 +73,12 @@ the installer script should put the locations of these resources on the classpat
 			resource="/resources/BSD.txt"
 			imageResource="/resources/rockstiles.png">
 	</page>
-
 	<!--  type="input" shows a list of editable options for the installer -->
 	<page
 			type="input"
 			name="core"
 			displayText="Step 1 - Configure Hermes"
 			target="core">
-
 		<directory
 				property="webappDir"
 				displayText="Web Application Folder:"
@@ -108,7 +94,6 @@ the installer script should put the locations of these resources on the classpat
 				displayText="Hermes Home:"
 				create="true"
 				checkExists="true"/>
-
 		<large-select
 			property="DBMS"
 			displayText="JDBC Driver:"
@@ -118,11 +103,9 @@ the installer script should put the locations of these resources on the classpat
 			<option text="MySQL (Download manually)" value="mysqlDriver"/> 
 		
 		</large-select>
-
 		<comment
 				displayText=""
 				title="true"/>					
-
 		<target
 			displayText="Hermes ebMS Plugin"
 			defaultValue="true"
@@ -140,29 +123,24 @@ the installer script should put the locations of these resources on the classpat
 			defaultValue="true"/>
 			
 	</page>
-
 	<page
 			type="input"
 			name="DBdriver"
 			displayText="Step 1.1 - Configure Database Driver"
 			ifProperty="${DBMS}!=postgresDriver">
-
 		<conditional ifProperty="${DBMS}=oracleDriver">
 			<hidden property="dbName" value="Oracle"/>
 			<hidden property="defaultDriverPath" value="~/ojdbc7.jar"/>	
 			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\ojdbc7.jar"/>	
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=mysqlDriver">
 			<hidden property="dbName" value="MySQL"/>
 			<hidden property="defaultDriverPath" value="~/mysql-connector-java-5.1.40-bin.jar"/>
 			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\mysql-connector-java-5.1.40\mysql-connector-java-5.1.40-bin.jar"/>		
 		</conditional>
-
 		<comment
 		displayText="Please specify the location of ${dbName} JDBC Driver."
 		bold="true"/>	
-
 		<file
 				property="DBdriverloc"
 				displayText="JDBC Driver Folder (.jar):"
@@ -170,15 +148,12 @@ the installer script should put the locations of these resources on the classpat
 				defaultValueWin="${defaultDriverPathWin}"
 				checkExists="true"/>
 	</page>
-
-
 	<!-- type="input" to configure the ebms database related setting -->
 	<page 
 			type="input"
 			name="data_src_setting_ebms"
 			displayText="Step 2 - Configure Database for ebMS Plugin"
 			ifTarget="install_ebms">
-
 		<conditional ifProperty="${DBMS}=postgresDriver">
 			<hidden property="port" value="5432"/>			
 		</conditional>
@@ -186,7 +161,6 @@ the installer script should put the locations of these resources on the classpat
 		<conditional ifProperty="${DBMS}=oracleDriver">
 			<hidden property="port" value="1521"/>			
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=mysqlDriver">
 			<hidden property="port" value="3306"/>			
 		</conditional>
@@ -212,34 +186,27 @@ the installer script should put the locations of these resources on the classpat
 			displayText="Password:"/>
 		
 		<comment displayText="" title="true"/>
-
 		<target 
 			displayText="Re-create Tables"
 			property="recreate-ebms-tables"
 			target="recreate-ebms-tables"
 			defaultValue="false"/>
 		<comment displayText="Note: All database tables and data will be deleted."/>
-
 		<comment displayText="" title="true"/>
 		<comment displayText="Database script is located in folder &lt;HERMES_HOME&gt;/sql."/>
-
 	</page>
-
 	<!-- type="input" to configure the as2 database related setting -->
 	<page 
 			type="input"
 			name="data_src_setting_as2"
 			displayText="Step 3 - Configure Database for AS2 Plugin"
 			ifProperty="${install_as2}==true" overflow="true">
-
 		<conditional ifProperty="${DBMS}=postgresDriver">
 			<hidden property="port" value="5432"/>
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=oracleDriver">
 			<hidden property="port" value="1521"/>
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=mysqlDriver">
 			<hidden property="port" value="3306"/>
 		</conditional>
@@ -288,7 +255,6 @@ the installer script should put the locations of these resources on the classpat
 		<comment displayText="" title="true"/>
 		<comment displayText="Database script is located in folder &lt;HERMES_HOME&gt;/sql."/>
 	</page>
-
 	<!--  page type="progress" shows a progress page with the install button 
 				Its target is set to cleanup since it is the last page this target will be run last-->
 	<page
@@ -299,5 +265,3 @@ the installer script should put the locations of these resources on the classpat
 			target="cleanup">
 	</page>
 </installer>
-
-
