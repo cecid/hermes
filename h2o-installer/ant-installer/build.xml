@@ -130,6 +130,9 @@ input in the page to choose components to install
 		<unzip src="${basedir}/hermes2_bin.zip" dest="${basedir}/temp"/>	
 		<mkdir dir="${coreDir}"/>
 		<mkdir dir="${coreDir}/logs"/>			
+		<mkdir dir="${coreDir}/repository"/>
+		<mkdir dir="${coreDir}/repository/as2-incoming-repository"/>
+		<mkdir dir="${coreDir}/repository/as2-outgoing-repository"/>
 		
     	<path id="the_path" path="${coreDir}"/>
     	<pathconvert property="convert" dirsep="/" refid="the_path"/>
@@ -148,7 +151,7 @@ input in the page to choose components to install
    			includes="admin.logger.xml" token="@h2.home@" value="${convert}"/>
 		<replace dir="${basedir}/temp/plugins/corvus-api/conf/hk/hku/cecid/hermes/api/conf"
             includes="log4j.properties.xml" token="@h2.home@" value="${convert}"/>
-			
+
 	    <echo message="Copy web application ${webappDir}"/>
 		<copy todir="${webappDir}">
 			<fileset dir="${basedir}/temp/webapps"/>
