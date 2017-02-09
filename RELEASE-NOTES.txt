@@ -1,7 +1,7 @@
 H2O Release Notes
 ========================================
 
-Jan ?, 2017
+Feb 10, 2017
 [What is new]
 - Official support for JDK 1.8
 - Introduced Vagrant for development
