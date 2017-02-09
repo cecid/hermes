@@ -49,11 +49,11 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
 
         String messageId = httpRequest.getParameter("message_id");
         String messageBox = httpRequest.getParameter("message_box");
-        if (messsgeBox != null) {
+        if (messageBox != null) {
             if (!messageBox.equalsIgnoreCase(MessageClassifier.MESSAGE_BOX_INBOX) &&
                 !messageBox.equalsIgnoreCase(MessageClassifier.MESSAGE_BOX_OUTBOX)) {
                 String errorMessage = "Error parsing parameter: message_box";
-                ApiPlugin.core.log.error(errorMessage, e);
+                ApiPlugin.core.log.error(errorMessage);
                 return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
             }
         }
@@ -62,6 +62,19 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
         String service = httpRequest.getParameter("service");
         String action = httpRequest.getParameter("action");
         String status = httpRequest.getParameter("status");
+        if (status != null) {
+            if (!status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_RECEIVED) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_PENDING) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_PROCESSING) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_PROCESSED) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_PROCESSED_ERROR) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_DELIVERED) &&
+                !status.equalsIgnoreCase(MessageClassifier.INTERNAL_STATUS_DELIVERY_FAILURE)) {
+                String errorMessage = "Error parsing parameter: status";
+                ApiPlugin.core.log.error(errorMessage);
+                return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+            }
+        }
         String limitString = httpRequest.getParameter("limit");
         int limit = MAX_NUMBER;
         if (limitString != null) {
@@ -87,7 +100,7 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
             criteriaDVO.setCpaId(cpaId);
             criteriaDVO.setService(service);
             criteriaDVO.setAction(action);
-            criteriaDVO.setStatus(checkMessageStatus(status));
+            criteriaDVO.setStatus(status);
 
             List results = msgDAO.findMessagesByHistory(criteriaDVO, limit, 0);
 
@@ -101,6 +114,7 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
                     messageDict.put("id", message.getMessageId());
                     messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
                     messageDict.put("status", message.getStatus());
+                    messageDict.put("message_box", message.getMessageBox());
                     messages.add(messageDict);
 
                     // save delivered status and clear message from inbox
@@ -187,8 +201,8 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
 
         try {
             EbmsMessageStatusReverser msgReverser = new EbmsMessageStatusReverser();
-            msgReverser.updateToDownload(msgId);
-        } catch (DAOException e) {
+            msgReverser.updateToDownload(messageId);
+        } catch (Exception e) {
             String errorMessage = "Error loading message status";
             ApiPlugin.core.log.error(errorMessage, e);
             return createError(ErrorCode.ERROR_READING_DATABASE, errorMessage);
