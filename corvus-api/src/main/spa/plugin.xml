@@ -40,4 +40,9 @@
         <parameter name="context" value="/message/receive/*" />
     </extension>
 
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message History Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageHistoryApiListener"/>
+        <parameter name="context" value="/message/history/*" />
+    </extension>
+
 </plugin>
