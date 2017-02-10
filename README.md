@@ -1,10 +1,13 @@
+## Documentations
+Quick start and full installation guide are available at [cecid.org](http://hermes.cecid.org/).
+
 ## H2O Development Environment
 
 1. Install [Vagrant](https://www.vagrantup.com)
 1. Install [Virtualbox](https://www.virtualbox.org)
 1. Clone repository (if not already cloned)
    ```
-   git clone git@gitlab.com:cecid/hermes.git
+   git clone git@github.com:cecid/hermes.git
    ```
 1. Start vagrant box
    ```
@@ -24,7 +27,7 @@
 1. Install [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose/)
 1. Clone repository (if not already cloned)
    ```
-   git clone git@gitlab.com:cecid/hermes.git
+   git clone git@github.com:cecid/hermes.git
    ```
 1. Set environment variable
    ```
@@ -44,7 +47,7 @@
 1. Install [Docker](https://www.docker.com)
 1. Clone repository (if not already cloned)
    ```
-   git clone git@gitlab.com:cecid/hermes.git
+   git clone git@github.com:cecid/hermes.git
    ```
 1. Set environment variable
    ```
@@ -74,7 +77,7 @@
 1. Install [Docker](https://www.docker.com)
 1. Clone repository (if not already cloned)
    ```
-   git clone git@gitlab.com:cecid/hermes.git
+   git clone git@github.com:cecid/hermes.git
    ```
 1. Set environment variable
    ```
