@@ -18,7 +18,7 @@ set ARGS=%ARGS% ./logs/sfrm-status.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.SFRMStatusQuerySender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.SFRMStatusQuerySender %ARGS%
 
 PAUSE
 

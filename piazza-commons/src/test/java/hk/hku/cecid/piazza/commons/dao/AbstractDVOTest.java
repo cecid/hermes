@@ -1,12 +1,3 @@
-/* 
- * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
- * University of Hong Kong (HKU). All Rights Reserved.
- *
- * This software is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.0 [1]
- * 
- * [1] http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
-
 package hk.hku.cecid.piazza.commons.dao;
 
 import java.math.BigDecimal;
@@ -111,10 +102,10 @@ public class AbstractDVOTest extends TestCase {
 		dvo.setDate("date2", date2);
 		TestCase.assertTrue(today.equals(dvo.getTimestamp("date2")));
 		TestCase.assertTrue(today.equals(dvo.getDate("date2")));
-
-		dvo.getData().put("date3", new oracle.sql.TIMESTAMP(date2));
-		TestCase.assertTrue(today.equals(dvo.getTimestamp("date3")));
-		TestCase.assertTrue(today.equals(dvo.getDate("date3")));
+		
+		//dvo.getData().put("date3", new oracle.sql.TIMESTAMP(date2));
+		//TestCase.assertTrue(today.equals(dvo.getTimestamp("date3")));
+		//TestCase.assertTrue(today.equals(dvo.getDate("date3")));
 		
 		java.sql.Date date4 = new java.sql.Date(today.getTime());
 		dvo.setDate("date4", date4);

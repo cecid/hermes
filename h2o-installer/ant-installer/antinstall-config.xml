@@ -1,40 +1,30 @@
 <?xml version="1.0"?>
 <!DOCTYPE installer PUBLIC "-//tp23 //DTD Ant Installer Config//EN" "http://antinstaller.sf.net/dtd/antinstall-config-0.7.dtd">
 <!--
-
 This is an example installer from which you can start a project
 Edit this file to select the properties you want decided, at the end
 of the installation screen the properties will be available in a file
 in the current directory for your ant script
-
-
 lookAndFeel="com.jgoodies.plaf.windows.ExtWindowsLookAndFeel"  - not recommended since it is not linux compatible due to Micro$oft License restrictions
-
 lookAndFeel="net.sourceforge.mlf.metouia.MetouiaLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.Plastic3DLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.PlasticXPLookAndFeel"  - good, and cross platform
-
 lookAndFeel="com.jgoodies.plaf.plastic.PlasticLookAndFeel" - good but flat, and cross platform
 -->
-
 <!--
-
 defaultImageResource,windowIcon,resource and imageResource load from the classpath
 the installer script should put the locations of these resources on the classpath
-
 -->
 <installer
 			ui="swing,text"
 			icons="eclipse"
 			verbose="false"
 			debug="false"
-			name="H2O Installer"
+			name="Hermes2+ Installer"
 			lookAndFeel="org.tp23.jgoodies.plaf.plastic.PlasticXPLookAndFeel"
 			windowIcon="/resources/gkmain_inv.png"
 			defaultImageResource="/resources/greens.png"
-			minJavaVersion="1.5">
+			minJavaVersion="1.8">
 	<!--  each page element represents a page of the installer -->
 	<page
 			type="input"
@@ -42,137 +32,139 @@ the installer script should put the locations of these resources on the classpat
 			displayText="Centre for E-Commerce Infrastructure Development"
 			imageResource="/resources/greens.png">
 		<comment
-				displayText="Welcome to Hermes Message Gateway 2 (H2O)"
-				title="true"/>		
+				displayText="Welcome to Hermes Messaging Gateway 2.1 (Hermes 2+)"
+				bold="true"/>		
 		<comment
-				displayText="Installation (J2SE 5.0 or above)"
-				title="true"/>
-		
+				displayText="Pre-requisite :"
+				bold="true"/>
 		<comment
-				displayText=""
-				title="true"/>					
+				displayText="- JDK 1.8+ (with JCE Unlimited Strength Jusrisdiction Policy Files)"
+				bold="true"/>
+		<comment
+				displayText="- Tomcat8.5.9+, DB Server (MySQL / Postgres / Oracle)"
+				bold="true"/>
 		<comment
 				displayText="The following items will be installed."
 				bold="true"/>
 		<comment
-				displayText="- Hermes 2 Core"
+				displayText="- Hermes Core"
 				bold="true"/>
 		<comment
-				displayText="- Hermes 2 Plugins (AS2 / AS2 Plus / ebMS)"
+				displayText="- Hermes Plugins (AS2 / AS2 Plus / ebMS)"
 				bold="true"/>
 		<!--
 		<comment 
-				displayText="- Hermes 2 Loopback Test"
+				displayText="- Hermes Loopback Test"
 				bold="true"/>
 		-->
 		<comment 
 				displayText="- Web Service Usage Sample"
 				bold="true"/>
-
 		<comment displayText="" title="true"/>
 		
-		<comment displayText="Please refer to Hermes 2 Installation Guide for detail."/>
+		<comment displayText="Please refer to Hermes Installation Guide for details :"/>
+		<comment displayText="- http://hermes.cecid.org/en/latest/installation.html"/>
 	</page>
-
 	<!--  type="license" shows a license page to click through -->
 	<page
 			type="license"
 			name="license"
 			displayText="License Conditions"
-			resource="/resources/GPL.txt"
+			resource="/resources/BSD.txt"
 			imageResource="/resources/rockstiles.png">
 	</page>
-
 	<!--  type="input" shows a list of editable options for the installer -->
 	<page
 			type="input"
 			name="core"
-			displayText="Step 1 - Configure Hermes 2"
+			displayText="Step 1 - Configure Hermes"
 			target="core">
-
 		<directory
 				property="webappDir"
 				displayText="Web Application Folder:"
 				defaultValue="/usr/local/tomcat/webapps"
-				defaultValueWin="${env.ProgramFiles}\Apache Software Foundation\Tomcat 5.5\webapps"
+				defaultValueWin="${env.ProgramFiles}\Apache Software Foundation\Tomcat 8.5\webapps"
 				create="true"
 				checkExists="true"/>
-		<!-- <comment displayText="                                            e.g. &lt;TOMCAT_HOME&gt;/webapps"/> -->
+		<!-- <comment displayText="e.g. &lt;TOMCAT_HOME&gt;/webapps"/> -->
 		<directory
 				property="coreDir"
 				defaultValue="/home/hermes2"
 				defaultValueWin="${env.ProgramFiles}\hermes2"
-				displayText="Hermes 2 Home:"
+				displayText="Hermes Home:"
 				create="true"
 				checkExists="true"/>
-
 		<large-select
 			property="DBMS"
 			displayText="JDBC Driver:"
 			defaultValue="postgresDriver">
-			<option text="Postgres 8.3-604 JDBC 3" value="postgresDriver"/>
-			<option text="Oracle 10g Release 2 (10.2.0.4)" value="oracleDriver"/>
-			<option text="MySQL Connector J 5.0.8" value="mysqlDriver"/>
+			<option text="Postgres 9.4.1212 JDBC 42" value="postgresDriver"/>
+			<option text="Oracle (Download manually)" value="oracleDriver"/>
+			<option text="MySQL (Download manually)" value="mysqlDriver"/> 
+		
 		</large-select>
-
 		<comment
 				displayText=""
 				title="true"/>					
-
 		<target
-			displayText="Hermes2 ebMS Plugin"
+			displayText="Hermes ebMS Plugin"
 			defaultValue="true"
 			target="install_ebms"/>
 			
 		<!-- A special handling for AS2 -->
 		<checkbox
 			property="install_as2"
-			displayText="Hermes2 AS2 Plugin"
+			displayText="Hermes AS2 Plugin"
 			defaultValue="true"/>
 			
-		<!-- 
-		<target-select
-			property="AS2"
-			displayText="Hermes2 AS2 Plugin"
-			defaultValue="install_as2_plus">
-				<option text="AS2 (Drummond Certified)" value="install_as2"/>
-				<option text="AS2 Plus (CECID Enhanced)" value="install_as2_plus"/>
-		</target-select>
- 		-->
- 		
-		<!--
-		<target
-			displayText="Loopback Test"
-			target="loopback-test"
-			defaultValue="true"
-			force="false"/>
-		-->
 		<target
 			displayText="Web Service Usage Sample"
 			target="web-service-usage-sample"
 			defaultValue="true"/>
 			
 	</page>
-
+	<page
+			type="input"
+			name="DBdriver"
+			displayText="Step 1.1 - Configure Database Driver"
+			ifProperty="${DBMS}!=postgresDriver">
+		<conditional ifProperty="${DBMS}=oracleDriver">
+			<hidden property="dbName" value="Oracle"/>
+			<hidden property="defaultDriverPath" value="~/ojdbc7.jar"/>	
+			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\ojdbc7.jar"/>	
+		</conditional>
+		<conditional ifProperty="${DBMS}=mysqlDriver">
+			<hidden property="dbName" value="MySQL"/>
+			<hidden property="defaultDriverPath" value="~/mysql-connector-java-5.1.40-bin.jar"/>
+			<hidden property="defaultDriverPathWin" value="${env.USERPROFILE}\Downloads\mysql-connector-java-5.1.40\mysql-connector-java-5.1.40-bin.jar"/>		
+		</conditional>
+		<comment
+		displayText="Please specify the location of ${dbName} JDBC Driver."
+		bold="true"/>	
+		<file
+				property="DBdriverloc"
+				displayText="JDBC Driver Folder (.jar):"
+				defaultValue="${defaultDriverPath}"
+				defaultValueWin="${defaultDriverPathWin}"
+				checkExists="true"/>
+	</page>
 	<!-- type="input" to configure the ebms database related setting -->
 	<page 
 			type="input"
 			name="data_src_setting_ebms"
 			displayText="Step 2 - Configure Database for ebMS Plugin"
 			ifTarget="install_ebms">
-
 		<conditional ifProperty="${DBMS}=postgresDriver">
-			<hidden property="port" value="5432"/>
+			<hidden property="port" value="5432"/>			
 		</conditional>
-
+		
 		<conditional ifProperty="${DBMS}=oracleDriver">
-			<hidden property="port" value="1521"/>
+			<hidden property="port" value="1521"/>			
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=mysqlDriver">
-			<hidden property="port" value="3306"/>
+			<hidden property="port" value="3306"/>			
 		</conditional>
-
+		
 		<validated
 			property="ebmsHost"
 			defaultValue="127.0.0.1:${port}"
@@ -194,38 +186,31 @@ the installer script should put the locations of these resources on the classpat
 			displayText="Password:"/>
 		
 		<comment displayText="" title="true"/>
-
 		<target 
 			displayText="Re-create Tables"
 			property="recreate-ebms-tables"
 			target="recreate-ebms-tables"
 			defaultValue="false"/>
 		<comment displayText="Note: All database tables and data will be deleted."/>
-
 		<comment displayText="" title="true"/>
-		<comment displayText="Database script is located in folder &lt;HERMES2_HOME&gt;/sql."/>
-
+		<comment displayText="Database script is located in folder &lt;HERMES_HOME&gt;/sql."/>
 	</page>
-
 	<!-- type="input" to configure the as2 database related setting -->
 	<page 
 			type="input"
 			name="data_src_setting_as2"
 			displayText="Step 3 - Configure Database for AS2 Plugin"
 			ifProperty="${install_as2}==true" overflow="true">
-
 		<conditional ifProperty="${DBMS}=postgresDriver">
 			<hidden property="port" value="5432"/>
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=oracleDriver">
 			<hidden property="port" value="1521"/>
 		</conditional>
-
 		<conditional ifProperty="${DBMS}=mysqlDriver">
 			<hidden property="port" value="3306"/>
 		</conditional>
-
+		
 		<validated
 		
 			property="as2Host"
@@ -268,61 +253,8 @@ the installer script should put the locations of these resources on the classpat
 		<comment displayText="Suggest to re-create table if you are upgrading to AS2Plus from AS2"/>
 		-->
 		<comment displayText="" title="true"/>
-		<comment displayText="Database script is located in folder &lt;HERMES2_HOME&gt;/sql."/>
+		<comment displayText="Database script is located in folder &lt;HERMES_HOME&gt;/sql."/>
 	</page>
-	<!-- 
-	<page 
-			type="input"
-			name="data_src_setting_as2plus"
-			displayText="Step 3 - Configure Database for AS2 Plus Plugin"
-			ifTarget="install_as2_plus">
-
-		<conditional ifProperty="${DBMS}=postgresDriver">
-			<hidden property="port" value="5432"/>
-		</conditional>
-
-		<conditional ifProperty="${DBMS}=oracleDriver">
-			<hidden property="port" value="1521"/>
-		</conditional>
-
-		<conditional ifProperty="${DBMS}=mysqlDriver">
-			<hidden property="port" value="3306"/>
-		</conditional>
-
-		<validated
-			property="as2PlusHost"
-			defaultValue="127.0.0.1:${port}"
-			displayText="Database URL:"
-			regex="[-a-zA-Z0-9.]+(:)?(\d)+"/>
-		<validated 
-			property="as2PlusDatabase"
-			displayText="Database Name / SID:"
-			defaultValue="as2"
-			regex=".+"/>
-		<validated
-			property="as2PlusUser"
-			defaultValue="corvus"
-			displayText="Username:"
-			regex=".+"/>
-		<text
-			property="as2PlusPwd" 
-			defaultValue=""
-			displayText="Password:"/>
-		<comment displayText="" title="true"/>
-
-		<target 
-			displayText="Re-create Tables"
-			property="recreate-as2plus-tables"
-			target="recreate-as2plus-tables"
-			defaultValue="false"/>
-		<comment displayText="Note: All database tables and data will be deleted."/>
-			
-		<comment displayText="" title="true"/>
-		<comment displayText="Database script is located in folder &lt;HERMES2_HOME&gt;/sql."/>
-
-	</page>
- -->
-
 	<!--  page type="progress" shows a progress page with the install button 
 				Its target is set to cleanup since it is the last page this target will be run last-->
 	<page
@@ -333,5 +265,3 @@ the installer script should put the locations of these resources on the classpat
 			target="cleanup">
 	</page>
 </installer>
-
-

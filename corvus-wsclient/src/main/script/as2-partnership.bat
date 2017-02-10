@@ -23,6 +23,6 @@ set ARGS=%ARGS% ./logs/as2-partnership.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.AS2PartnershipSender %ARGS%
+java -cp  "%WSC_CLASSPATH%" hk.hku.cecid.corvus.http.AS2PartnershipSender %ARGS%
 
 PAUSE

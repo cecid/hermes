@@ -22,6 +22,6 @@ set ARGS=%ARGS% ./logs/ebms-recvlist.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSReceiverListSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.EBMSReceiverListSender %ARGS%
 
 PAUSE

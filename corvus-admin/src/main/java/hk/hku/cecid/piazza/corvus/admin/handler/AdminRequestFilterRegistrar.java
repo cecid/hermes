@@ -1,10 +1,3 @@
-/*
- * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
- * University of Hong Kong (HKU). All Rights Reserved.
- *
- * This software is licensed under the Academic Free License Version 1.0
- */
-
 package hk.hku.cecid.piazza.corvus.admin.handler;
 
 import hk.hku.cecid.piazza.commons.servlet.http.HttpDispatcherContext;

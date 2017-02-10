@@ -19,6 +19,6 @@ fi
 
 echo $ARGS
 
-EXEC="$JAVA_HOME/bin/java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.http.EBMSEnvelopQuerySender $ARGS"
+EXEC="java -cp $WSC_CLASSPATH hk.hku.cecid.corvus.http.EBMSEnvelopQuerySender $ARGS"
 echo $EXEC
 exec $EXEC

@@ -22,6 +22,6 @@ set ARGS=%ARGS% ./logs/as2-recvlist.log
 :execCmd
 @echo on
 
-"%JAVA_HOME%\bin\java" -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ReceiverListSender %ARGS%
+java -cp "%WSC_CLASSPATH%" hk.hku.cecid.corvus.ws.AS2ReceiverListSender %ARGS%
 
 PAUSE

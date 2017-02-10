@@ -30,6 +30,8 @@ RUN mkdir -p /hermes_home/logs
 RUN mkdir -p /tmp/h
 RUN cd /tmp/h && unzip /build/target/hermes2_bin.zip
 RUN rm -rf /tmp/h/plugins/corvus-sfrm
+RUN rm -rf /tmp/h/plugins/corvus-sfrm-admin
+RUN rm -rf /tmp/h/plugins/corvus-as2plus
 RUN rm -rf /tmp/h/plugins/corvus-as2plus-admin
 RUN find /tmp/h -name *.xml -exec sed -i 's/@h2\.home@/\/hermes_home/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2PageletAdaptor@/hk\.hku\.cecid\.edi\.as2\.admin\.listener\.MessageHistoryPageletAdaptor/g' {} \;
@@ -47,6 +49,8 @@ RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmspw@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsValidationQuery@/SELECT now\(\)/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/spa\/conf\/ebms.mysql.dao.xml/g' {} \;
 RUN mv /tmp/h/plugins /hermes_home
+RUN mv /tmp/h/sample /hermes_home
+RUN mv /tmp/h/sql /hermes_home
 RUN cp /usr/share/java/mysql.jar /tmp/h/webapps/corvus/WEB-INF/lib/
 RUN rm -rf /var/lib/tomcat8/webapps/corvus
 RUN mv /tmp/h/webapps/corvus /var/lib/tomcat8/webapps
@@ -55,6 +59,8 @@ RUN chown -R tomcat8:tomcat8 /hermes_home
 RUN rm -rf /tmp/h
 RUN rm -rf /build
 
+ENV CATALINA_BASE /var/lib/tomcat8
 EXPOSE 8080
 
-CMD service tomcat8 start && tail -f /var/log/tomcat8/catalina.out
+# CMD service tomcat8 start && tail -f /var/log/tomcat8/catalina.out
+CMD ["/usr/share/tomcat8/bin/catalina.sh", "run"]

@@ -10,4 +10,4 @@ do
        CLASSPATH=$CLASSPATH$LIB_PATH"/"$i":"
 done
 
-exec $JAVA_HOME/bin/java -classpath $CLASSPATH "hk.hku.cecid.corvus.test.EbMSLoopback"
+exec java -classpath $CLASSPATH "hk.hku.cecid.corvus.test.EbMSLoopback"

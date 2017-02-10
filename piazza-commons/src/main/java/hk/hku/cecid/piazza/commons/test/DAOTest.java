@@ -1,12 +1,3 @@
-/* 
- * Copyright(c) 2005 Center for E-Commerce Infrastructure Development, The
- * University of Hong Kong (HKU). All Rights Reserved.
- *
- * This software is licensed under the GNU GENERAL PUBLIC LICENSE Version 2.0 [1]
- * 
- * [1] http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
- */
-
 package hk.hku.cecid.piazza.commons.test;
 
 import java.io.InputStream;
@@ -204,41 +195,44 @@ public abstract class DAOTest<T extends DataSourceDAO> extends UnitTest<T>
 		final String sql = IOHandler.readString(resourceStream, null);
 		final String canonicalizedSql = sql.replace("(?! \\S)\\s+", " ");
 		
+		if (canonicalizedSql.trim().length() > 0) {
+
 		this.containerLogger.info("Execute SQL: \n " + canonicalizedSql);
 		
 		DataSourceProcess process = new DataSourceProcess(this.target)
 		{
-			  protected void doTransaction(DataSourceTransaction tx) throws DAOException 
-			  {
-				  Statement stmt = null;
-				  try
-				  {
-					  Connection conn = tx.getConnection();
-					  stmt = conn.createStatement();
-					  Assert.assertThat(stmt.executeUpdate(sql), not(is(-1)));
-					  
-				  }
-				  catch(SQLException sqlex)
-				  {
+			protected void doTransaction(DataSourceTransaction tx) throws DAOException 
+			{
+				Statement stmt = null;
+				try
+				{
+					Connection conn = tx.getConnection();
+					stmt = conn.createStatement();
+					Assert.assertThat(stmt.executeUpdate(sql), not(is(-1)));
+					
+				}
+				catch(SQLException sqlex)
+				{
 					  throw new DAOException(sqlex);	// re-throw.
-				  }
-				  finally
-				  {
-					  if (stmt != null)
-					  {
-						  try
-						  {
-							  stmt.close();
-						  }
-						  catch(SQLException sqlex)
-						  {
-							  containerLogger.error("Unable to close statement", sqlex);
-						  }
-					  }
-				  }
-			  }
-		};
-		process.start();
+					}
+					finally
+					{
+						if (stmt != null)
+						{
+							try
+							{
+								stmt.close();
+							}
+							catch(SQLException sqlex)
+							{
+								containerLogger.error("Unable to close statement", sqlex);
+							}
+						}
+					}
+				}
+			};
+			process.start();
+		}
 	}
 	 	
 	@Override
