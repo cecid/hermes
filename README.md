@@ -13,8 +13,8 @@ guarantee every message is delivered once and only once, and in the right order.
 **[Quick Start](#quick-start)** <br/>
 **[Development](#development)**
 
-## Documentations
-Full documentations are available at [hermes.cecid.org](http://hermes.cecid.org/).
+## Documentation
+Full documentation is available at [hermes.cecid.org](http://hermes.cecid.org/).
 
 ## Quick Start
 ### Install Hermes with Docker
