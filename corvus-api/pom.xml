@@ -55,6 +55,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-as2</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>corvus-ebms</artifactId>
             <scope>provided</scope>
         </dependency>
