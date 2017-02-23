@@ -14,7 +14,6 @@ import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.util.EbmsMessageStatusReverser;
 import hk.hku.cecid.ebms.spa.dao.MessageDAO;
 import hk.hku.cecid.ebms.spa.dao.MessageDVO;
-import hk.hku.cecid.ebms.spa.dao.MessageServerDAO;
 import hk.hku.cecid.ebms.spa.handler.MessageClassifier;
 import hk.hku.cecid.piazza.commons.dao.DAOException;
 import hk.hku.cecid.piazza.commons.json.JsonParseException;
@@ -104,8 +103,6 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
 
             List results = msgDAO.findMessagesByHistory(criteriaDVO, limit, 0);
 
-            MessageServerDAO messageServerDao = (MessageServerDAO) EbmsProcessor.core.dao.createDAO(MessageServerDAO.class);
-
             if (results != null) {
                 ArrayList<Object> messages = new ArrayList<Object>();
                 for (Iterator i=results.iterator(); i.hasNext() ; ) {
@@ -114,13 +111,12 @@ public class HermesMessageHistoryApiListener extends HermesProtocolApiListener {
                     messageDict.put("id", message.getMessageId());
                     messageDict.put("timestamp", message.getTimeStamp().getTime() / 1000);
                     messageDict.put("status", message.getStatus());
+                    messageDict.put("cpa_id", message.getCpaId());
+                    messageDict.put("service", message.getService());
+                    messageDict.put("action", message.getAction());
+                    messageDict.put("conversation_id", message.getConvId());
                     messageDict.put("message_box", message.getMessageBox());
                     messages.add(messageDict);
-
-                    // save delivered status and clear message from inbox
-                    message.setStatus(MessageClassifier.INTERNAL_STATUS_DELIVERED);
-                    message.setStatusDescription("Message is delivered");
-                    messageServerDao.clearMessage(message);
                 }
                 Map<String, Object> returnObj = new HashMap<String, Object>();
                 returnObj.put("message_ids", messages);
