@@ -18,6 +18,7 @@
 
     <requires>
       <import plugin="hk.hku.cecid.ebms" />
+      <import plugin="hk.hku.cecid.edi.as2" />
     </requires>
 
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
