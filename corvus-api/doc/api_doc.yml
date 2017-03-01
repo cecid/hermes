@@ -180,7 +180,7 @@ paths:
       responses:
         200:
           description: |
-            A list of message IDs, which identifies a list of messages
+            A list of messages, which identifies a list of messages
             matching the passed in query parameters.
           schema:
             type: object
@@ -188,7 +188,7 @@ paths:
               message_ids:
                 type: array
                 items:
-                  $ref: '#/definitions/ReceivedMessageIdentifier'
+                  $ref: '#/definitions/MessageHistoryIdentifier'
         500:
           description: Unexpected error
           schema:
@@ -408,6 +408,36 @@ definitions:
       id:
         type: string
         description: Message ID
+      timestamp:
+        type: integer
+        description: Message timestamp (Unix timestamp)
+      status:
+        type: string
+        description: Message status
+  MessageHistoryIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Message ID
+      cpa_id:
+        type: string
+        description: CPA ID of the message
+      service:
+        type: string
+        description: Service of the message
+      action:
+        type: string
+        description: Action of the message
+      conversation_id:
+        type: string
+        description: Conversation ID of the message
+      cpa_id:
+        type: string
+        description: CPA ID of the message
+      message_box:
+        type: string
+        description: Message box of the message
       timestamp:
         type: integer
         description: Message timestamp (Unix timestamp)
