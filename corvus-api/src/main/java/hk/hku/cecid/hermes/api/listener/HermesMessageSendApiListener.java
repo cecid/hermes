@@ -49,12 +49,6 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Get message sending status API invoked, protocol = " + protocol);
 
-        if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            String errorMessage = "Protocol unknown";
-            ApiPlugin.core.log.error(errorMessage);
-            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
-        }
-
         String messageId = httpRequest.getParameter("id");
         if (messageId == null) {
             String errorMessage = "Missing required field: id";
@@ -62,6 +56,20 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
         }
 
+        if (protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+            return getEbmsMessageStatus(messageId);
+        }
+        else if (protocol.equalsIgnoreCase(Constants.AS2_PROTOCOL)) {
+            return getAs2MessageStatus(messageId);
+        }
+        else {
+            String errorMessage = "Protocol unknown";
+            ApiPlugin.core.log.error(errorMessage);
+            return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
+        }
+    }
+
+    protected Map<String, Object> getEbmsMessageStatus(String messageId) {
         ApiPlugin.core.log.debug("Parameters: id=" + messageId);
 
         try {
@@ -90,17 +98,29 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         }
     }
 
+    protected Map<String, Object> getAs2MessageStatus(String messageId) {
+        return null;
+    }
+
     protected Map<String, Object> processPostRequest(RestRequest request) throws RequestListenerException {
         HttpServletRequest httpRequest = (HttpServletRequest) request.getSource();
         String protocol = parseFromPathInfo(httpRequest.getPathInfo(), 2).get(1);
         ApiPlugin.core.log.info("Send message API invoked, protocol = " + protocol);
 
-        if (!protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+        if (protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
+            return sendEbmsMessage(httpRequest);
+        }
+        else if (protocol.equalsIgnoreCase(Constants.AS2_PROTOCOL)) {
+            return sendAs2Message(httpRequest);
+        }
+        else {
             String errorMessage = "Protocol unknown";
             ApiPlugin.core.log.error(errorMessage);
             return createError(ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, errorMessage);
         }
+    }
 
+    protected Map<String, Object> sendEbmsMessage(HttpServletRequest httpRequest) {
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
@@ -234,7 +254,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 }
             }
 
-            ebmsRequest = new EbmsRequest(request);
+            ebmsRequest = new EbmsRequest(httpRequest);
             ebmsRequest.setMessage(ebxmlMessage);
         }
         catch (DAOException e) {
@@ -261,5 +281,9 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         Map<String, Object> returnObj = new HashMap<String, Object>();
         returnObj.put("id", messageId);
         return returnObj;
+    }
+
+    protected Map<String, Object> sendAs2Message(HttpServletRequest httpRequest) {
+        return null;
     }
 }
