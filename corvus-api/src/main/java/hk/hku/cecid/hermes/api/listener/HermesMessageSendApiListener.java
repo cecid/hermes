@@ -139,10 +139,10 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         ApiPlugin.core.log.info("Send message API invoked, protocol = " + protocol);
 
         if (protocol.equalsIgnoreCase(Constants.EBMS_PROTOCOL)) {
-            return sendEbmsMessage(httpRequest);
+            return sendEbmsMessage(request, httpRequest);
         }
         else if (protocol.equalsIgnoreCase(Constants.AS2_PROTOCOL)) {
-            return sendAs2Message(httpRequest);
+            return sendAs2Message(request, httpRequest);
         }
         else {
             String errorMessage = "Protocol unknown";
@@ -151,7 +151,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         }
     }
 
-    protected Map<String, Object> sendEbmsMessage(HttpServletRequest httpRequest) {
+    protected Map<String, Object> sendEbmsMessage(RestRequest request, HttpServletRequest httpRequest) {
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
@@ -285,7 +285,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
                 }
             }
 
-            ebmsRequest = new EbmsRequest(httpRequest);
+            ebmsRequest = new EbmsRequest(request);
             ebmsRequest.setMessage(ebxmlMessage);
         }
         catch (DAOException e) {
@@ -314,7 +314,7 @@ public class HermesMessageSendApiListener extends HermesProtocolApiListener {
         return returnObj;
     }
 
-    protected Map<String, Object> sendAs2Message(HttpServletRequest httpRequest) {
+    protected Map<String, Object> sendAs2Message(RestRequest request, HttpServletRequest httpRequest) {
         Map<String, Object> inputDict = null;
         try {
             inputDict = getDictionaryFromRequest(httpRequest);
