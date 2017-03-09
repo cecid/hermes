@@ -43,3 +43,17 @@ following the [installation guide](http://hermes.cecid.org/en/latest/installatio
 The Java API Documentations are available at
 [javadocs.hermes.cecid.org](http://javadoc.hermes.cecid.org/)
 
+## Digital Signature Setup
+### Prepare key
+1. Generate key <br/>
+`keytool -genkey -alias <alias> -keystore <JKS keystore filename>`
+2. Convert to PKCS12 keystore <br/>
+`keytool -importkeystore -srckeystore <JKS keystore filename> -destkeystore <P12 keystore filename> -srcstoretype JKS -deststoretype PKCS12 -srcstorepass <password> -deststorepass <password> -srcalias <alias> -destalias <alias> -srckeypass <password> -destkeypass <password> -noprompt`
+3. View certificate (note the part with ---BEGIN CERTIFICATE---)<br/>
+`openssl pkcs12 -info -in hermes.p12`
+4. Copy the certificate in step 3 and save it as `<certificate.cer>`.
+
+### Update Hermes
+1. Edit `<hermes_home>/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml` and fill in the details of the p12 keystore created above.
+2. In the "sending" partnership, set "Signing Required?" as yes.
+3. In the "receiving" partnership, upload the certificate as "Certificate For Verification".
