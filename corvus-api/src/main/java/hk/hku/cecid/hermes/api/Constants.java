@@ -7,8 +7,8 @@ public class Constants {
     public static final String METHOD_GET = "GET";
     public static final String METHOD_POST = "POST";
     public static final String METHOD_DELETE = "DELETE";
-    public static final String EBMS_PROTOCOL = "ebms";
-    public static final String AS2_PROTOCOL = "as2";
+    public static final String EBMS_PROTOCOL = "ebms".toLowerCase();
+    public static final String AS2_PROTOCOL = "as2".toLowerCase();
     public static final String DEFAULT_EBMS_PARTNERSHIP_DISABLED = "false";
     public static final int DEFAULT_EBMS_PARTNERSHIP_RETRY_INTERVAL = 60000;
     public static final int DEFAULT_EBMS_PARTNERSHIP_RETRY_COUNT = 3;

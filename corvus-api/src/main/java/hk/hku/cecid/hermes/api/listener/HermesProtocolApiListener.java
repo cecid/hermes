@@ -1,6 +1,7 @@
 package hk.hku.cecid.hermes.api.listener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * HermesProtocolApiListener
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class HermesProtocolApiListener extends HermesAbstractApiListener {
 
-    protected ArrayList<String> parseFromPathInfo(String pathInfo) {
+    protected List<String> parseFromPathInfo(String pathInfo) {
         return parseFromPathInfo(pathInfo, 1);
     }
 
@@ -18,10 +19,10 @@ public class HermesProtocolApiListener extends HermesAbstractApiListener {
      * Returns a list of three strings:
      * [ action, protocol, parameter ]
      */
-    protected ArrayList<String> parseFromPathInfo(String pathInfo, int numActionParts) {
+    protected List<String> parseFromPathInfo(String pathInfo, int numActionParts) {
         final int NUM_PARTS = 3;
 
-        ArrayList<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
 
         if (pathInfo == null || pathInfo.equals("")) {
             for (int i=0 ; i<NUM_PARTS ; i++) {
@@ -40,7 +41,7 @@ public class HermesProtocolApiListener extends HermesAbstractApiListener {
 
         int searchFrom = 0;
         int index;
-        ArrayList<String> parts = new ArrayList<String>();
+        List<String> parts = new ArrayList<String>();
         while (searchFrom != -1) {
             index = pathInfo.indexOf("/", searchFrom);
             if (index != -1) {

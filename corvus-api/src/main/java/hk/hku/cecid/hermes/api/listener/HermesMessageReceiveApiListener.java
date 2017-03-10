@@ -151,18 +151,10 @@ public class HermesMessageReceiveApiListener extends HermesProtocolApiListener {
             return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
 
-        String messageId = null;
-        try {
-            messageId = (String) inputDict.get("message_id");
-            if (messageId == null) {
-                String errorMessage = "Missing required field: message_id";
-                ApiPlugin.core.log.error(errorMessage);
-                return createError(ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
-            }
-        } catch (Exception e) {
-            String errorMessage = "Error parsing parameter: message_id";
-            ApiPlugin.core.log.error(errorMessage, e);
-            return createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        Map<String, Object> errorObject = new HashMap<String, Object>();
+        String messageId = getStringFromInput(inputDict, "message_id", errorObject);
+        if (messageId == null) {
+            return errorObject;
         }
 
         ApiPlugin.core.log.debug("Parameters: message_id=" + messageId);
