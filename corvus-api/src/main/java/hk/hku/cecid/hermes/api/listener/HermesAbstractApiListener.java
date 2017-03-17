@@ -17,6 +17,8 @@ import hk.hku.cecid.piazza.commons.rest.RestRequest;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 import hk.hku.cecid.piazza.commons.servlet.http.HttpRequestAdaptor;
 import hk.hku.cecid.hermes.api.Constants;
+import hk.hku.cecid.hermes.api.ErrorCode;
+import hk.hku.cecid.hermes.api.spa.ApiPlugin;
 
 
 /**
@@ -34,14 +36,18 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
         dictionary.put("server_time", new Long((new Date()).getTime() / 1000));
     }
 
-    protected Map<String, Object> createError(int code, String message) {
-        Map<String, Object> dictionary = new HashMap<String, Object>();
-        dictionary.put("code", new Integer(code));
-        dictionary.put("message", message);
-        return dictionary;
+    public void fillError(Map<String, Object> error, int code, String message) {
+        error.put("code", new Integer(code));
+        error.put("message", message);
     }
 
-    protected Map<String, Object> createActionResult(String id, boolean success) {
+    public Map<String, Object> createError(int code, String message) {
+        Map<String, Object> error = new HashMap<String, Object>();
+        fillError(error, code, message);
+        return error;
+    }
+
+    public Map<String, Object> createActionResult(String id, boolean success) {
         Map<String, Object> dictionary = new HashMap<String, Object>();
         dictionary.put("id", id);
         dictionary.put("success", success);
@@ -108,6 +114,23 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
         } catch (UnsupportedOperationException e) {
             throw new RequestListenerException("Request method not supported");
         }
+    }
+
+    public String getStringFromInput(Map<String, Object> inputDict, String key, Map<String, Object> error) {
+        String value = null;
+        try {
+            value = (String) inputDict.get(key);
+            if (value == null) {
+                String errorMessage = "Missing required input field: " + key;
+                ApiPlugin.core.log.error(errorMessage);
+                fillError(error, ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
+            }
+        } catch (Exception e) {
+            String errorMessage = "Error parsing parameter: " + key;
+            ApiPlugin.core.log.error(errorMessage, e);
+            fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        return value;
     }
 
     protected Map<String, Object> processGetRequest(RestRequest request) throws RequestListenerException {
