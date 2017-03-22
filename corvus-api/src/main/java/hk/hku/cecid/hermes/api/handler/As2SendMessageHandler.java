@@ -28,7 +28,6 @@ import org.apache.commons.codec.binary.Base64;
 
 
 public class As2SendMessageHandler extends MessageHandler implements SendMessageHandler {
-    public static int MAX_NUMBER = 2147483647;
 
     public As2SendMessageHandler(HermesAbstractApiListener listener) {
         super(listener);
