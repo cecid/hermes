@@ -9,7 +9,7 @@
 	<fileSets>
 		<fileSet>
 			<directory>src/main/spa</directory>			
-			<outputDirectory>/</outputDirectory>	
+			<outputDirectory>${file.separator}</outputDirectory>
 			<excludes>
 				<exclude>plugin.xml</exclude>
 			</excludes>		
@@ -19,7 +19,7 @@
 	<files>
 		<file>
 			<source>src/main/spa/plugin.xml</source>			
-			<outputDirectory>/</outputDirectory>			
+			<outputDirectory>${file.separator}</outputDirectory>
 			<filtered>true</filtered> 
 		</file>
 	</files>			

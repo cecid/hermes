@@ -1,324 +1,324 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>hk.hku.cecid</groupId>
-		<artifactId>h2o</artifactId>
-		<version>1.0</version>
-	</parent>
-	<artifactId>h2o-installer</artifactId>
-	<version>1.0</version>
-	<name>H2O Installer</name>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.10</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/embedded/plugins</outputDirectory>							
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-webapp</artifactId>
-									<version>${project.version}</version>
-									<type>war</type>								
-									<outputDirectory>${project.build.directory}/embedded/webapps/corvus</outputDirectory>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-as2</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-as2-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>																								
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-as2plus</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-as2plus-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-ebms</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-ebms-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-main</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-main-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-sfrm</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-sfrm-admin</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-api</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>corvus-wsclient</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<outputDirectory>${project.build.directory}/embedded/sample</outputDirectory>
-								</artifactItem>											
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<appendAssemblyId>false</appendAssemblyId>
-							<outputDirectory>${project.parent.build.directory}</outputDirectory>							
-							<finalName>hermes2_bin</finalName>
-							<descriptors>
-								<descriptor>installer.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.3</version>
-				<executions>
-					<!-- build classdigram javadoc -->
-					<!--					
-					<execution>
-						<id>javadoc-classdiagram</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-								<delete>
-									<fileset dir="${project.parent.build.directory}/javadoc" includes="**/*.dot"/>
-								</delete>
-								<copy todir="${project.parent.build.directory}/javadoc-classdiagram">
-									<fileset dir="${project.parent.build.directory}/javadoc" excludes="**/*.dot"/>
-								</copy>
-								<property name="maven.compile.classpath" refid="maven.compile.classpath"/>
-								<echo message="maven.compile.classpath: ${maven.compile.classpath}"/>
-								<javadoc classpathref="maven.compile.classpath" packagenames="*" package="true" destdir="${project.parent.build.directory}/javadoc-classdiagram">
-									<fileset dir="${project.parent.basedir}" defaultexcludes="yes">
-										<include name="**/src/main/java/**/*.java"/>
-										<exclude name="**/hk/hku/cecid/edi/sfrm/**"/>
-										<exclude name="**/ws/SFRMStatusQuerySender.java"/>
-										<exclude name="**/ws/data/MessageStatusRequestData.java"/>
-										<exclude name="**/ws/data/MessageStatusResponseData.java"/>
-										<exclude name="**/ws/data/SFRMStatusQueryData.java"/>
-										<exclude name="**/ws/data/SFRMStatusQueryResponseData.java"/>
-									</fileset>
-									<doclet name="hk.hku.cecid.classdiagram.ClassDiagramDoclet" path="classDiagram.jar">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>hk.hku.cecid</groupId>
+        <artifactId>h2o</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>h2o-installer</artifactId>
+    <version>1.0</version>
+    <name>H2O Installer</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}${file.separator}embedded${file.separator}plugins</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-webapp</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>war</type>
+                                    <outputDirectory>${project.build.directory}${file.separator}embedded${file.separator}webapps${file.separator}corvus</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-as2</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-as2-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-as2plus</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-as2plus-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-ebms</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-ebms-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-main</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-main-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-sfrm</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-sfrm-admin</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-api</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>corvus-wsclient</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>zip</type>
+                                    <outputDirectory>${project.build.directory}${file.separator}embedded${file.separator}sample</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <outputDirectory>${project.parent.build.directory}</outputDirectory>
+                            <finalName>hermes2_bin</finalName>
+                            <descriptors>
+                                <descriptor>installer.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <!-- build classdigram javadoc -->
+                    <!--
+                    <execution>
+                        <id>javadoc-classdiagram</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+                                <delete>
+                                    <fileset dir="${project.parent.build.directory}/javadoc" includes="**/*.dot"/>
+                                </delete>
+                                <copy todir="${project.parent.build.directory}/javadoc-classdiagram">
+                                    <fileset dir="${project.parent.build.directory}/javadoc" excludes="**/*.dot"/>
+                                </copy>
+                                <property name="maven.compile.classpath" refid="maven.compile.classpath"/>
+                                <echo message="maven.compile.classpath: ${maven.compile.classpath}"/>
+                                <javadoc classpathref="maven.compile.classpath" packagenames="*" package="true" destdir="${project.parent.build.directory}/javadoc-classdiagram">
+                                    <fileset dir="${project.parent.basedir}" defaultexcludes="yes">
+                                        <include name="**/src/main/java/**/*.java"/>
+                                        <exclude name="**/hk/hku/cecid/edi/sfrm/**"/>
+                                        <exclude name="**/ws/SFRMStatusQuerySender.java"/>
+                                        <exclude name="**/ws/data/MessageStatusRequestData.java"/>
+                                        <exclude name="**/ws/data/MessageStatusResponseData.java"/>
+                                        <exclude name="**/ws/data/SFRMStatusQueryData.java"/>
+                                        <exclude name="**/ws/data/SFRMStatusQueryResponseData.java"/>
+                                    </fileset>
+                                    <doclet name="hk.hku.cecid.classdiagram.ClassDiagramDoclet" path="classDiagram.jar">
 -->
-										<!-- 
-										<param name="-allclasses" /> 
-										<param name="-filename" value="allClasses"/> 
-										-->
+                                        <!--
+                                        <param name="-allclasses" />
+                                        <param name="-filename" value="allClasses"/>
+                                        -->
 <!--
-										<param name="-externalContent"/>
-										<param name="-external"/>
-										<param name="-externalQualifyClassName"/>
-										<param name="-externalColor" value="#eeeeee"/>
-										<param name="-currentColor" value="#ffffdd"/>
-										<param name="-color" value="#ffffff"/>
-										<param name="-constructors"/>
-										<param name="-attributes"/>
-										<param name="-visibility"/>
-										<param name="-operations"/>
-										<param name="-types"/>
-										<param name="-fontsize" value="10.0"/>
+                                        <param name="-externalContent"/>
+                                        <param name="-external"/>
+                                        <param name="-externalQualifyClassName"/>
+                                        <param name="-externalColor" value="#eeeeee"/>
+                                        <param name="-currentColor" value="#ffffdd"/>
+                                        <param name="-color" value="#ffffff"/>
+                                        <param name="-constructors"/>
+                                        <param name="-attributes"/>
+                                        <param name="-visibility"/>
+                                        <param name="-operations"/>
+                                        <param name="-types"/>
+                                        <param name="-fontsize" value="10.0"/>
 -->
-										<!-- <param name="-qualify" /> -->
+                                        <!-- <param name="-qualify" /> -->
 <!--
-									</doclet>
-								</javadoc>
-								<apply executable="dot" parallel="false" logError="true">
-									<fileset dir="${project.parent.build.directory}/javadoc-classdiagram" includes="**/*.dot"/>
-									<arg value="-Tpng"/>
-									<srcfile/>
-									<redirector>
-										<outputmapper id="out" type="glob" from="*.dot" to="${project.parent.build.directory}/javadoc-classdiagram/*.png"/>
-									</redirector>
-								</apply>
-								<delete>
-									<fileset dir="${project.parent.build.directory}/javadoc-classdiagram" includes="**/*.dot"/>
-								</delete>
-							</tasks>
-						</configuration>
-					</execution>
+                                    </doclet>
+                                </javadoc>
+                                <apply executable="dot" parallel="false" logError="true">
+                                    <fileset dir="${project.parent.build.directory}/javadoc-classdiagram" includes="**/*.dot"/>
+                                    <arg value="-Tpng"/>
+                                    <srcfile/>
+                                    <redirector>
+                                        <outputmapper id="out" type="glob" from="*.dot" to="${project.parent.build.directory}/javadoc-classdiagram/*.png"/>
+                                    </redirector>
+                                </apply>
+                                <delete>
+                                    <fileset dir="${project.parent.build.directory}/javadoc-classdiagram" includes="**/*.dot"/>
+                                </delete>
+                            </tasks>
+                        </configuration>
+                    </execution>
 -->
-					<execution>
-						<id>ant-installer</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<!-- add the ant tasks from ant installer -->
-								<taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer">
-									<classpath>
-									    <pathelement location="ant-installer/lib/ant-installer.jar"/>
-									    <pathelement location="ant-installer/lib/ant-installer-ext.jar"/>									
-									  </classpath>
-								</taskdef>
-																	
-								<!-- configure the installer task -->
-								<installer file="${project.parent.build.directory}/hermes2_installer.jar" compress="true" validateConfig="true" failOnError="true" extractType="SelfExtractor" buildFile="ant-installer/build.xml" installConfig="ant-installer/antinstall-config.xml" antInstallLib="ant-installer/lib" antLib="ant-installer/antlib">
-									<fileset dir="${project.parent.build.directory}" includes="hermes2_bin.zip"/>
-									<fileset dir="ant-installer" includes="resources/*"/>
-									<fileset dir="ant-installer" includes="resources/lib/*"/>
-									<fileset dir="ant-installer" includes="resources/icons/*"/>
-								</installer>
-								<delete dir="${project.parent.build.directory}/hermes2-bin"/>
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	<!-- for javadoc -->
-<!--	
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>piazza-commons</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-main</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-webapp</artifactId>
-			<version>${project.version}</version>
-			<classifier>classes</classifier>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-main-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>ebxml-pkg</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-ebms</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-ebms-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-as2</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-as2-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-as2plus</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-as2plus-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-sfrm</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-sfrm-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-sfrm-admin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>corvus-wsclient</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
--->	
+                    <execution>
+                        <id>ant-installer</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!-- add the ant tasks from ant installer -->
+                                <taskdef name="installer" classname="org.tp23.antinstaller.taskdefs.Installer">
+                                    <classpath>
+                                        <pathelement location="ant-installer/lib/ant-installer.jar"/>
+                                        <pathelement location="ant-installer/lib/ant-installer-ext.jar"/>
+                                      </classpath>
+                                </taskdef>
+
+                                <!-- configure the installer task -->
+                                <installer file="${project.parent.build.directory}/hermes2_installer.jar" compress="true" validateConfig="true" failOnError="true" extractType="SelfExtractor" buildFile="ant-installer/build.xml" installConfig="ant-installer/antinstall-config.xml" antInstallLib="ant-installer/lib" antLib="ant-installer/antlib">
+                                    <fileset dir="${project.parent.build.directory}" includes="hermes2_bin.zip"/>
+                                    <fileset dir="ant-installer" includes="resources/*"/>
+                                    <fileset dir="ant-installer" includes="resources/lib/*"/>
+                                    <fileset dir="ant-installer" includes="resources/icons/*"/>
+                                </installer>
+                                <delete dir="${project.parent.build.directory}/hermes2-bin"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- for javadoc -->
+<!--
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>piazza-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-main</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-webapp</artifactId>
+            <version>${project.version}</version>
+            <classifier>classes</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-main-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ebxml-pkg</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-ebms</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-ebms-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-as2</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-as2-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-as2plus</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-as2plus-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-sfrm</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-sfrm-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-sfrm-admin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>corvus-wsclient</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+-->
 </project>
