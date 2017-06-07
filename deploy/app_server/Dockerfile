@@ -17,7 +17,7 @@ COPY . /build
 RUN cd /build && \
 	mvn pre-clean && \
 	mvn compile && \
-	mvn package -Dmaven.test.failure.ignore=true
+	mvn package -Dmaven.test.skip=true
 
 # Set up Tomcat
 COPY deploy/app_server/tomcat-users.xml /etc/tomcat8/tomcat-users.xml
