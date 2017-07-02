@@ -1,5 +1,7 @@
 package hk.hku.cecid.hermes.api.handler;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -102,6 +104,13 @@ public class As2PartnershipHandler extends MessageHandler implements Partnership
         }
         String recipient_address = listener.getStringFromInput(inputDict, "recipient_address", errorObject);
         if (recipient_address == null) {
+            return errorObject;
+        }
+        // check transport endpoint as URL
+        try {
+            URL url = new URL(recipient_address);
+        } catch (MalformedURLException e) {
+            listener.fillError(errorObject, ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Unknown URL: " + recipient_address);
             return errorObject;
         }
         boolean disabled = listener.getOptionalBooleanFromInput(inputDict, "disabled",
