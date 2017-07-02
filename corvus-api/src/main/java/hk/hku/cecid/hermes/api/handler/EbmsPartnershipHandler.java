@@ -42,9 +42,12 @@ public class EbmsPartnershipHandler extends MessageHandler implements Partnershi
                     partnershipDict.put("disabled", new Boolean(false));
                 }
                 partnershipDict.put("transport_endpoint", partnershipDVO.getTransportEndpoint());
+                partnershipDict.put("transport_protocol", partnershipDVO.getTransportProtocol());
+                partnershipDict.put("is_hostname_verified", partnershipDVO.getIsHostnameVerified());
                 partnershipDict.put("ack_requested", partnershipDVO.getAckRequested());
                 partnershipDict.put("signed_ack_requested", partnershipDVO.getAckSignRequested());
                 partnershipDict.put("duplicate_elimination", partnershipDVO.getDupElimination());
+                partnershipDict.put("sync_reply_mode", partnershipDVO.getSyncReplyMode());
                 partnershipDict.put("message_order", partnershipDVO.getMessageOrder());
                 partnershipDict.put("retries", new Integer(partnershipDVO.getRetries()));
                 partnershipDict.put("retry_interval", new Integer(partnershipDVO.getRetryInterval()));
@@ -100,6 +103,54 @@ public class EbmsPartnershipHandler extends MessageHandler implements Partnershi
         if (transport_endpoint == null) {
             return errorObject;
         }
+        boolean disabled = listener.getOptionalBooleanFromInput(inputDict, "disabled",
+                                Boolean.valueOf(Constants.DEFAULT_EBMS_PARTNERSHIP_DISABLED),
+                                errorObject);
+        Long retryIntervalObj = listener.getOptionalLongFromInput(inputDict, "retry_interval",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_INTERVAL,
+                                errorObject);
+        int retryInterval = Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_INTERVAL;
+        if (retryIntervalObj != null) {
+            retryInterval = retryIntervalObj.intValue();
+        }
+        Long retriesObj = listener.getOptionalLongFromInput(inputDict, "retries",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_COUNT,
+                                errorObject);
+        int retries = Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_COUNT;
+        if (retriesObj != null) {
+            retries = retriesObj.intValue();
+        }
+        String transportProtocol = listener.getOptionalStringFromInput(inputDict, "transport_protocol",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_TRANSPORT_PROTOCOL,
+                                errorObject);
+        String isHostNameVerified = listener.getOptionalStringFromInput(inputDict, "is_hostname_verified",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_HOSTNAME_VERIFY,
+                                errorObject);
+        String syncReplyMode = listener.getOptionalStringFromInput(inputDict, "sync_reply_mode",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_SYNC_REPLY_MODE,
+                                errorObject);
+        String ackRequested = listener.getOptionalStringFromInput(inputDict, "ack_requested",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_ACK_REQUESTED,
+                                errorObject);
+        String signedAckRequested = listener.getOptionalStringFromInput(inputDict, "signed_ack_requested",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_ACK_SIGN_REQUESTED,
+                                errorObject);
+        String dupElimination = listener.getOptionalStringFromInput(inputDict, "duplicate_elimination",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_DUPLICATE_ELIMINATION,
+                                errorObject);
+        String messageOrder = listener.getOptionalStringFromInput(inputDict, "message_order",
+                                Constants.DEFAULT_EBMS_PARTNERSHIP_MESSAGE_ORDER,
+                                errorObject);
+        boolean isSignRequested = listener.getOptionalBooleanFromInput(inputDict, "sign_requested",
+                                Boolean.valueOf(Constants.DEFAULT_EBMS_PARTNERSHIP_SIGN_REQUESTED),
+                                errorObject);
+        boolean isEncryptRequested = listener.getOptionalBooleanFromInput(inputDict, "encrypt_requested",
+                                Boolean.valueOf(Constants.DEFAULT_EBMS_PARTNERSHIP_ENCRYPT_REQUESTED),
+                                errorObject);
+        String cert = listener.getOptionalStringFromInput(inputDict, "sign_certicate", "", errorObject);
+        if (errorObject.size() > 0) {
+            return errorObject;
+        }
 
         ApiPlugin.core.log.debug("Parameters: id=" + id + ", cpa_id=" + cpa_id +
                                  ", service=" + service + ", action=" + action +
@@ -110,43 +161,57 @@ public class EbmsPartnershipHandler extends MessageHandler implements Partnershi
             PartnershipDAO partnershipDAO = (PartnershipDAO) EbmsProcessor.core.dao.createDAO(PartnershipDAO.class);
             PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
             partnershipDVO.setPartnershipId(id);
+            boolean editMode = false;
             if (partnershipDAO.retrieve(partnershipDVO)) {
-                String errorMessage = "Partnership [" + id + "] already exists";
-                ApiPlugin.core.log.error(errorMessage);
-                return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+                String message = "Partnership [" + id + "] already exists. Edit the existing partnership.";
+                ApiPlugin.core.log.info(message);
+                editMode = true;
             }
 
-            partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
-            partnershipDVO.setCpaId(cpa_id);
-            partnershipDVO.setService(service);
-            partnershipDVO.setAction(action);
+            if (!editMode) {
+                partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+                partnershipDVO.setCpaId(cpa_id);
+                partnershipDVO.setService(service);
+                partnershipDVO.setAction(action);
 
-            if (partnershipDAO.findPartnershipByCPA(partnershipDVO)) {
-                String errorMessage = "Partnership with same CPA parameters already exists";
-                ApiPlugin.core.log.error(errorMessage);
-                return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+                if (partnershipDAO.findPartnershipByCPA(partnershipDVO)) {
+                    String errorMessage = "Partnership with same CPA parameters already exists";
+                    ApiPlugin.core.log.error(errorMessage);
+                    return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+                }
+
+                // create a brand new object for setting
+                partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+                partnershipDVO.setPartnershipId(id);
             }
 
-            partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
-            partnershipDVO.setDisabled(Constants.DEFAULT_EBMS_PARTNERSHIP_DISABLED);
-            partnershipDVO.setPartnershipId(id);
+            partnershipDVO.setDisabled(disabled ? "true" : "false");
             partnershipDVO.setCpaId(cpa_id);
             partnershipDVO.setService(service);
             partnershipDVO.setAction(action);
             partnershipDVO.setTransportEndpoint(transport_endpoint);
-            partnershipDVO.setRetryInterval(Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_INTERVAL);
-            partnershipDVO.setRetries(Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_COUNT);
-            partnershipDVO.setTransportProtocol(Constants.DEFAULT_EBMS_PARTNERSHIP_TRANSPORT_PROTOCOL);
-            partnershipDVO.setIsHostnameVerified(Constants.DEFAULT_EBMS_PARTNERSHIP_HOSTNAME_VERIFY);
-            partnershipDVO.setSyncReplyMode(Constants.DEFAULT_EBMS_PARTNERSHIP_SYNC_REPLY_MODE);
-            partnershipDVO.setAckRequested(Constants.DEFAULT_EBMS_PARTNERSHIP_ACK_REQUESTED);
-            partnershipDVO.setAckSignRequested(Constants.DEFAULT_EBMS_PARTNERSHIP_ACK_SIGN_REQUESTED);
-            partnershipDVO.setDupElimination(Constants.DEFAULT_EBMS_PARTNERSHIP_DUPLICATE_ELIMINATION);
-            partnershipDVO.setMessageOrder(Constants.DEFAULT_EBMS_PARTNERSHIP_MESSAGE_ORDER);
-            partnershipDVO.setSignRequested(Constants.DEFAULT_EBMS_PARTNERSHIP_SIGN_REQUESTED);
-            partnershipDVO.setEncryptRequested(Constants.DEFAULT_EBMS_PARTNERSHIP_ENCRYPT_REQUESTED);
+            partnershipDVO.setRetryInterval(retryInterval);
+            partnershipDVO.setRetries(retries);
+            partnershipDVO.setTransportProtocol(transportProtocol);
+            partnershipDVO.setIsHostnameVerified(isHostNameVerified);
+            partnershipDVO.setSyncReplyMode(syncReplyMode);
+            partnershipDVO.setAckRequested(ackRequested);
+            partnershipDVO.setAckSignRequested(signedAckRequested);
+            partnershipDVO.setDupElimination(dupElimination);
+            partnershipDVO.setMessageOrder(messageOrder);
+            partnershipDVO.setSignRequested(isSignRequested ? "true" : "false");
+            partnershipDVO.setEncryptRequested(isEncryptRequested ? "true" : "false");
+            if (!cert.equals("")) {
+                partnershipDVO.setSignCert(Base64.decodeBase64(cert));
+            }
 
-            partnershipDAO.create(partnershipDVO);
+            if (!editMode) {
+                partnershipDAO.create(partnershipDVO);
+            }
+            else {
+                partnershipDAO.persist(partnershipDVO);
+            }
+
             Map<String, Object> returnObj = new HashMap<String, Object>();
             returnObj.put("id", id);
             return returnObj;

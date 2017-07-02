@@ -67,10 +67,11 @@ paths:
           schema:
             $ref: '#/definitions/Error'
     post:
-      summary: Create an ebMS partnership
+      summary: Create or edit an ebMS partnership
       description: |
-        The create ebMS partnership endpoint creates a partnership in Hermes
-        server using the parameters.
+        The create or edit ebMS partnership endpoint creates a partnership in Hermes
+        server using the parameters if the partnership ID does not exist yet. Otherwise,
+        the parameters will be used to update the existing partnerhsip.
       tags:
         - Partnership
       parameters:
@@ -300,6 +301,12 @@ definitions:
       transport_endpoint:
         type: string
         description: Transport endpoint of the partnership.
+      transport_protocol:
+        type: string
+        description: Transport protocol of the partnership.
+      is_hostname_verified:
+        type: string
+        description: Whether hostname is verified.
       ack_requested:
         type: string
         description: Whether acknowledgement is required.
@@ -312,6 +319,9 @@ definitions:
       message_order:
         type: string
         description: Whether message order is guaranteed.
+      sync_reply_mode:
+        type: string
+        description: Whether sync reply mode is used.
       retries:
         type: integer
         description: Number of retries for delivery.
