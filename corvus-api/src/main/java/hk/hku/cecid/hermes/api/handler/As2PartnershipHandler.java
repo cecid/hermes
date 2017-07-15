@@ -1,5 +1,7 @@
 package hk.hku.cecid.hermes.api.handler;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -104,6 +106,74 @@ public class As2PartnershipHandler extends MessageHandler implements Partnership
         if (recipient_address == null) {
             return errorObject;
         }
+        // check transport endpoint as URL
+        try {
+            URL url = new URL(recipient_address);
+        } catch (MalformedURLException e) {
+            listener.fillError(errorObject, ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Unknown URL: " + recipient_address);
+            return errorObject;
+        }
+        boolean disabled = listener.getOptionalBooleanFromInput(inputDict, "disabled",
+                                Boolean.valueOf(Constants.DEFAULT_AS2_PARTNERSHIP_DISABLED),
+                                errorObject);
+        boolean syncReply = listener.getOptionalBooleanFromInput(inputDict, "sync_reply",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_SYNC_REPLY,
+                                errorObject);
+        boolean isHostnameVerified = listener.getOptionalBooleanFromInput(inputDict, "hostname_verified",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_HOSTNAME_VERIFY,
+                                errorObject);
+        String receiptAddress = listener.getOptionalStringFromInput(inputDict, "receipt_address",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_ADDRESS,
+                                errorObject);
+        boolean isReceiptRequired = listener.getOptionalBooleanFromInput(inputDict, "receipt_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_REQUIRED,
+                                errorObject);
+        boolean isOutboundSignRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_sign_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_SIGN_REQUIRED,
+                                errorObject);
+        boolean isOutboundEncryptRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_encrypt_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_ENCRYPT_REQUIRED,
+                                errorObject);
+        boolean isOutboundCompressRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_compress_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_COMPRESS_REQUIRED,
+                                errorObject);
+        boolean isReceiptSignRequired = listener.getOptionalBooleanFromInput(inputDict, "receipt_sign_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_RECEIPT_SIGN_REQUIRED,
+                                errorObject);
+        boolean isInboundSignRequired = listener.getOptionalBooleanFromInput(inputDict, "inbound_sign_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_SIGN_REQUIRED,
+                                errorObject);
+        boolean isInboundEncryptRequired = listener.getOptionalBooleanFromInput(inputDict, "inbound_encrypt_required",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_ENCRYPT_REQUIRED,
+                                errorObject);
+        Long retryIntervalObj = listener.getOptionalLongFromInput(inputDict, "retry_interval",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_INTERVAL,
+                                errorObject);
+        int retryInterval = Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_INTERVAL;
+        if (retryIntervalObj != null) {
+            retryInterval = retryIntervalObj.intValue();
+        }
+        Long retriesObj = listener.getOptionalLongFromInput(inputDict, "retries",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_COUNT,
+                                errorObject);
+        int retries = Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_COUNT;
+        if (retriesObj != null) {
+            retries = retriesObj.intValue();
+        }
+        String signAlgorithm = listener.getOptionalStringFromInput(inputDict, "sign_algorithm",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_SIGN_ALGORITHM,
+                                errorObject);
+        String encryptAlgorithm = listener.getOptionalStringFromInput(inputDict, "encrypt_algorithm",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_ENCRYPT_ALGORITHM,
+                                errorObject);
+        String micAlgorithm = listener.getOptionalStringFromInput(inputDict, "mic_algorithm",
+                                Constants.DEFAULT_AS2_PARTNERSHIP_MIC_ALGORITHM,
+                                errorObject);
+        String encryptCert = listener.getOptionalStringFromInput(inputDict, "encrypt_certicate", "", errorObject);
+        String verifyCert = listener.getOptionalStringFromInput(inputDict, "verify_certicate", "", errorObject);
+        if (errorObject.size() > 0) {
+            return errorObject;
+        }
 
         ApiPlugin.core.log.debug("Parameters: id=" + id + ", as2_from=" + as2_from +
                                  ", as2_to=" + as2_to + ", subject=" + subject +
@@ -114,42 +184,59 @@ public class As2PartnershipHandler extends MessageHandler implements Partnership
             PartnershipDAO partnershipDAO = (PartnershipDAO) AS2Processor.core.dao.createDAO(PartnershipDAO.class);
             PartnershipDVO partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
             partnershipDVO.setPartnershipId(id);
+            boolean editMode = false;
             if (partnershipDAO.retrieve(partnershipDVO)) {
-                String errorMessage = "Partnership [" + id + "] already exists";
-                ApiPlugin.core.log.error(errorMessage);
-                return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+                String message = "Partnership [" + id + "] already exists. Edit the existing partnership.";
+                ApiPlugin.core.log.info(message);
+                editMode = true;
             }
 
-            if (partnershipDAO.findPartnershipsByPartyID(as2_from, as2_to).size() > 0) {
-                String errorMessage = "Partnership with same from/to parameters already exists";
-                ApiPlugin.core.log.error(errorMessage);
-                return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+            if (!editMode) {
+                if (partnershipDAO.findPartnershipsByPartyID(as2_from, as2_to).size() > 0) {
+                    String errorMessage = "Partnership with same from/to parameters already exists";
+                    ApiPlugin.core.log.error(errorMessage);
+                    return listener.createError(ErrorCode.ERROR_RECORD_ALREADY_EXIST, errorMessage);
+                }
+
+                // create a brand new object for setting
+                partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
+                partnershipDVO.setPartnershipId(id);
             }
 
-            partnershipDVO = (PartnershipDVO) partnershipDAO.createDVO();
-            partnershipDVO.setPartnershipId(id);
             partnershipDVO.setAs2From(as2_from);
             partnershipDVO.setAs2To(as2_to);
             partnershipDVO.setSubject(subject);
             partnershipDVO.setRecipientAddress(recipient_address);
-            partnershipDVO.setIsDisabled(Constants.DEFAULT_AS2_PARTNERSHIP_DISABLED);
-            partnershipDVO.setIsSyncReply(Constants.DEFAULT_AS2_PARTNERSHIP_SYNC_REPLY);
-            partnershipDVO.setIsHostnameVerified(Constants.DEFAULT_AS2_PARTNERSHIP_HOSTNAME_VERIFY);
-            partnershipDVO.setReceiptAddress(Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_ADDRESS);
-            partnershipDVO.setIsReceiptRequired(Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_REQUIRED);
-            partnershipDVO.setIsOutboundSignRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_SIGN_REQUIRED);
-            partnershipDVO.setIsOutboundEncryptRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_ENCRYPT_REQUIRED);
-            partnershipDVO.setIsOutboundCompressRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_COMPRESS_REQUIRED);
-            partnershipDVO.setIsReceiptSignRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_RECEIPT_SIGN_REQUIRED);
-            partnershipDVO.setIsInboundSignRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_SIGN_REQUIRED);
-            partnershipDVO.setIsInboundEncryptRequired(Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_ENCRYPT_REQUIRED);
-            partnershipDVO.setRetries(Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_COUNT);
-            partnershipDVO.setRetryInterval(Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_INTERVAL);
-            partnershipDVO.setSignAlgorithm(Constants.DEFAULT_AS2_PARTNERSHIP_SIGN_ALGORITHM);
-            partnershipDVO.setEncryptAlgorithm(Constants.DEFAULT_AS2_PARTNERSHIP_ENCRYPT_ALGORITHM);
-            partnershipDVO.setMicAlgorithm(Constants.DEFAULT_AS2_PARTNERSHIP_MIC_ALGORITHM);
+            partnershipDVO.setIsDisabled(disabled);
+            partnershipDVO.setIsSyncReply(syncReply);
+            partnershipDVO.setIsHostnameVerified(isHostnameVerified);
+            partnershipDVO.setReceiptAddress(receiptAddress);
+            partnershipDVO.setIsReceiptRequired(isReceiptRequired);
+            partnershipDVO.setIsOutboundSignRequired(isOutboundSignRequired);
+            partnershipDVO.setIsOutboundEncryptRequired(isOutboundEncryptRequired);
+            partnershipDVO.setIsOutboundCompressRequired(isOutboundCompressRequired);
+            partnershipDVO.setIsReceiptSignRequired(isReceiptSignRequired);
+            partnershipDVO.setIsInboundSignRequired(isInboundSignRequired);
+            partnershipDVO.setIsInboundEncryptRequired(isInboundEncryptRequired);
+            partnershipDVO.setRetries(retries);
+            partnershipDVO.setRetryInterval(retryInterval);
+            partnershipDVO.setSignAlgorithm(signAlgorithm);
+            partnershipDVO.setEncryptAlgorithm(encryptAlgorithm);
+            partnershipDVO.setMicAlgorithm(micAlgorithm);
+            if (!encryptCert.equals("")) {
+                partnershipDVO.setEncryptCert(Base64.decodeBase64(encryptCert));
+            }
+            if (!verifyCert.equals("")) {
+                partnershipDVO.setVerifyCert(Base64.decodeBase64(verifyCert));
+            }
 
-            partnershipDAO.create(partnershipDVO);
+            if (!editMode) {
+                partnershipDAO.create(partnershipDVO);
+            }
+            else {
+                partnershipDAO.persist(partnershipDVO);
+            }
+
             Map<String, Object> returnObj = new HashMap<String, Object>();
             returnObj.put("id", id);
             return returnObj;

@@ -66,6 +66,20 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
         return JsonUtil.toDictionary(baos.toString());
     }
 
+    protected void logError(String message, Throwable e) {
+        if (ApiPlugin.core != null) {
+            if (e == null) {
+                ApiPlugin.core.log.error(message);
+            } else {
+                ApiPlugin.core.log.error(message, e);
+            }
+        }
+    }
+
+    protected void logError(String message) {
+        logError(message, null);
+    }
+
     /**
      * processRequest
      * @param request
@@ -122,12 +136,76 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
             value = (String) inputDict.get(key);
             if (value == null) {
                 String errorMessage = "Missing required input field: " + key;
-                ApiPlugin.core.log.error(errorMessage);
+                logError(errorMessage);
                 fillError(error, ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
             }
         } catch (Exception e) {
             String errorMessage = "Error parsing parameter: " + key;
-            ApiPlugin.core.log.error(errorMessage, e);
+            logError(errorMessage, e);
+            fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        return value;
+    }
+
+    public Long getLongFromInput(Map<String, Object> inputDict, String key, Map<String, Object> error) {
+        Long value = null;
+        try {
+            Object valueObj = inputDict.get(key);
+            if (valueObj == null) {
+                String errorMessage = "Missing required input field: " + key;
+                logError(errorMessage);
+                fillError(error, ErrorCode.ERROR_MISSING_REQUIRED_PARAMETER, errorMessage);
+            } else {
+                value = (Long) valueObj;
+            }
+        } catch (Exception e) {
+            String errorMessage = "Error parsing parameter: " + key;
+            logError(errorMessage, e);
+            fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        return value;
+    }
+
+    public String getOptionalStringFromInput(Map<String, Object> inputDict, String key, String defaultValue, Map<String, Object> error) {
+        String value = null;
+        try {
+            value = (String) inputDict.get(key);
+            if (value == null) {
+                value = defaultValue;
+            }
+        } catch (Exception e) {
+            String errorMessage = "Error parsing parameter: " + key;
+            logError(errorMessage, e);
+            fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        return value;
+    }
+
+    public Long getOptionalLongFromInput(Map<String, Object> inputDict, String key, long defaultValue, Map<String, Object> error) {
+        Long value = null;
+        try {
+            value = (Long) inputDict.get(key);
+            if (value == null) {
+                value = defaultValue;
+            }
+        } catch (Exception e) {
+            String errorMessage = "Error parsing parameter: " + key;
+            logError(errorMessage, e);
+            fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
+        }
+        return value;
+    }
+
+    public Boolean getOptionalBooleanFromInput(Map<String, Object> inputDict, String key, boolean defaultValue, Map<String, Object> error) {
+        Boolean value = null;
+        try {
+            value = (Boolean) inputDict.get(key);
+            if (value == null) {
+                value = defaultValue;
+            }
+        } catch (Exception e) {
+            String errorMessage = "Error parsing parameter: " + key;
+            logError(errorMessage, e);
             fillError(error, ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
         }
         return value;
