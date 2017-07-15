@@ -112,9 +112,13 @@ public class EbmsPartnershipHandler extends MessageHandler implements Partnershi
             listener.fillError(errorObject, ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Unknown URL: " + transport_endpoint);
             return errorObject;
         }
-        boolean disabled = listener.getOptionalBooleanFromInput(inputDict, "disabled",
+        Boolean disabledObj = listener.getOptionalBooleanFromInput(inputDict, "disabled",
                                 Boolean.valueOf(Constants.DEFAULT_EBMS_PARTNERSHIP_DISABLED),
                                 errorObject);
+        boolean disabled = Boolean.valueOf(Constants.DEFAULT_EBMS_PARTNERSHIP_DISABLED);
+        if (disabledObj != null) {
+            disabled = disabledObj.booleanValue();
+        }
         Long retryIntervalObj = listener.getOptionalLongFromInput(inputDict, "retry_interval",
                                 Constants.DEFAULT_EBMS_PARTNERSHIP_RETRY_INTERVAL,
                                 errorObject);
