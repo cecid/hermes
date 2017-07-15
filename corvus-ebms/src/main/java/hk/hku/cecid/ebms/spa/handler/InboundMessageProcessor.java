@@ -446,10 +446,10 @@ public class InboundMessageProcessor {
                 // acknowledgement missing (internal error) or
                 // the acknowledgement is generating
                 EbmsProcessor.core.log
-                        .error("Acknowldegement missed. Internal server error or the acknowledgement is generating for message: "
+                        .error("Acknowledgement missed. Internal server error or the acknowledgement is generating for message: "
                                 + ebxmlRequestMessage.getMessageId());
                 throw new MessageServiceHandlerException(
-                        "Acknowldegement missed. Internal server error or the acknowledgement is generating for message: "
+                        "Acknowledgement missed. Internal server error or the acknowledgement is generating for message: "
                                 + ebxmlRequestMessage.getMessageId());
             }
         } catch (DAOException e) {
