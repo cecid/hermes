@@ -113,39 +113,80 @@ public class As2PartnershipHandler extends MessageHandler implements Partnership
             listener.fillError(errorObject, ErrorCode.ERROR_PROTOCOL_UNSUPPORTED, "Unknown URL: " + recipient_address);
             return errorObject;
         }
-        boolean disabled = listener.getOptionalBooleanFromInput(inputDict, "disabled",
+        Boolean booleanObj;
+        boolean disabled = Constants.DEFAULT_AS2_PARTNERSHIP_DISABLED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "disabled",
                                 Boolean.valueOf(Constants.DEFAULT_AS2_PARTNERSHIP_DISABLED),
                                 errorObject);
-        boolean syncReply = listener.getOptionalBooleanFromInput(inputDict, "sync_reply",
+        if (booleanObj != null) {
+            disabled = booleanObj.booleanValue();
+        }
+        boolean syncReply = Constants.DEFAULT_AS2_PARTNERSHIP_SYNC_REPLY;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "sync_reply",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_SYNC_REPLY,
                                 errorObject);
-        boolean isHostnameVerified = listener.getOptionalBooleanFromInput(inputDict, "hostname_verified",
+        if (booleanObj != null) {
+            syncReply = booleanObj.booleanValue();
+        }
+        boolean isHostnameVerified = Constants.DEFAULT_AS2_PARTNERSHIP_HOSTNAME_VERIFY;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "hostname_verified",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_HOSTNAME_VERIFY,
                                 errorObject);
+        if (booleanObj != null) {
+            isHostnameVerified = booleanObj.booleanValue();
+        }
         String receiptAddress = listener.getOptionalStringFromInput(inputDict, "receipt_address",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_ADDRESS,
                                 errorObject);
-        boolean isReceiptRequired = listener.getOptionalBooleanFromInput(inputDict, "receipt_required",
+        boolean isReceiptRequired = Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "receipt_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_RECEIPT_REQUIRED,
                                 errorObject);
-        boolean isOutboundSignRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_sign_required",
+        if (booleanObj != null) {
+            isReceiptRequired = booleanObj.booleanValue();
+        }
+        boolean isOutboundSignRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_SIGN_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "outbound_sign_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_SIGN_REQUIRED,
                                 errorObject);
-        boolean isOutboundEncryptRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_encrypt_required",
+        if (booleanObj != null) {
+            isOutboundSignRequired = booleanObj.booleanValue();
+        }
+        boolean isOutboundEncryptRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_ENCRYPT_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "outbound_encrypt_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_ENCRYPT_REQUIRED,
                                 errorObject);
-        boolean isOutboundCompressRequired = listener.getOptionalBooleanFromInput(inputDict, "outbound_compress_required",
+        if (booleanObj != null) {
+            isOutboundEncryptRequired = booleanObj.booleanValue();
+        }
+        boolean isOutboundCompressRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_COMPRESS_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "outbound_compress_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_OUTBOUND_COMPRESS_REQUIRED,
                                 errorObject);
-        boolean isReceiptSignRequired = listener.getOptionalBooleanFromInput(inputDict, "receipt_sign_required",
+        if (booleanObj != null) {
+            isOutboundCompressRequired = booleanObj.booleanValue();
+        }
+        boolean isReceiptSignRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_RECEIPT_SIGN_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "receipt_sign_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_RECEIPT_SIGN_REQUIRED,
                                 errorObject);
-        boolean isInboundSignRequired = listener.getOptionalBooleanFromInput(inputDict, "inbound_sign_required",
+        if (booleanObj != null) {
+            isReceiptSignRequired = booleanObj.booleanValue();
+        }
+        boolean isInboundSignRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_SIGN_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "inbound_sign_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_SIGN_REQUIRED,
                                 errorObject);
-        boolean isInboundEncryptRequired = listener.getOptionalBooleanFromInput(inputDict, "inbound_encrypt_required",
+        if (booleanObj != null) {
+            isInboundSignRequired = booleanObj.booleanValue();
+        }
+        boolean isInboundEncryptRequired = Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_ENCRYPT_REQUIRED;
+        booleanObj = listener.getOptionalBooleanFromInput(inputDict, "inbound_encrypt_required",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_IS_INBOUND_ENCRYPT_REQUIRED,
                                 errorObject);
+        if (booleanObj != null) {
+            isInboundEncryptRequired = booleanObj.booleanValue();
+        }
         Long retryIntervalObj = listener.getOptionalLongFromInput(inputDict, "retry_interval",
                                 Constants.DEFAULT_AS2_PARTNERSHIP_RETRY_INTERVAL,
                                 errorObject);

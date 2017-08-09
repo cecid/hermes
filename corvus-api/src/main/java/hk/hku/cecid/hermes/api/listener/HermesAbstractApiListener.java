@@ -95,7 +95,12 @@ public class HermesAbstractApiListener extends HttpRequestAdaptor {
             Map<String, Object> dictionaryResponse = processApi(restRequest);
             String jsonResponse = JsonUtil.fromDictionary(dictionaryResponse);
 
-            response.setStatus(HttpServletResponse.SC_OK);
+            if (dictionaryResponse.containsKey("code") &&
+                ((int) dictionaryResponse.get("code")) == ErrorCode.ERROR_PARSING_REQUEST) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            } else {
+                response.setStatus(HttpServletResponse.SC_OK);
+            }
             response.setContentType(Constants.CONTENT_TYPE);
 
             OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream());
