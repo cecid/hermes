@@ -91,28 +91,32 @@ public class EbmsSendMessageHandler extends MessageHandler implements SendMessag
         List<byte[]> payloads = new ArrayList<byte[]>();
         if (inputDict.containsKey("payload")) {
             String payloadString = (String) inputDict.get("payload");
-            try {
-                payloads.add(Base64.decodeBase64(payloadString.getBytes()));
-            } catch (Exception e) {
+            byte[] decoded = Base64.decodeBase64(payloadString.getBytes());
+            if (decoded != null && decoded.length > 0) {
+                payloads.add(decoded);
+            }
+            else {
                 String errorMessage = "Error parsing parameter: payload";
-                ApiPlugin.core.log.error(errorMessage, e);
+                ApiPlugin.core.log.error(errorMessage);
                 return listener.createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
             }
         }
         else if (inputDict.containsKey("payloads")) {
-            try {
-                List<Object> payloadStrings = (List<Object>) inputDict.get("payloads");
-                for (Object payloadObj : payloadStrings) {
-                    Map<String,Object> payloadMap = (Map<String,Object>) payloadObj;
-                    if (payloadMap.containsKey("payload")) {
-                        String payloadString = (String) payloadMap.get("payload");
-                        payloads.add(Base64.decodeBase64(payloadString.getBytes()));
+            List<Object> payloadStrings = (List<Object>) inputDict.get("payloads");
+            for (Object payloadObj : payloadStrings) {
+                Map<String,Object> payloadMap = (Map<String,Object>) payloadObj;
+                if (payloadMap.containsKey("payload")) {
+                    String payloadString = (String) payloadMap.get("payload");
+                    byte[] decoded = Base64.decodeBase64(payloadString.getBytes());
+                    if (decoded != null && decoded.length > 0) {
+                        payloads.add(decoded);
+                    }
+                    else {
+                        String errorMessage = "Error parsing parameter: payloads";
+                        ApiPlugin.core.log.error(errorMessage);
+                        return listener.createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
                     }
                 }
-            } catch (Exception e) {
-                String errorMessage = "Error parsing parameter: payloads";
-                ApiPlugin.core.log.error(errorMessage, e);
-                return listener.createError(ErrorCode.ERROR_PARSING_REQUEST, errorMessage);
             }
         }
 
