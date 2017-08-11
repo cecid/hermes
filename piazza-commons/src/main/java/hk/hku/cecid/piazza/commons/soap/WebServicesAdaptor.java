@@ -318,8 +318,13 @@ public abstract class WebServicesAdaptor extends SOAPHttpAdaptor {
     protected SOAPElement[] getChildElementArray(SOAPElement element) {
     	ArrayList<SOAPElement> arrayList = new ArrayList<SOAPElement>();
     	Iterator<SOAPElement> iter1 = element.getChildElements();
-		while (iter1.hasNext()) 
-			arrayList.add(iter1.next());
+		while (iter1.hasNext()) {
+            Node node = (Node)iter1.next();
+
+            // Kenneth Wong [20170811] : Only add the ELEMENT_NODE to the childArray, and discard the TEXT_NODE.
+            if (node.getNodeType()==Node.ELEMENT_NODE)
+			    arrayList.add((SOAPElement)node);
+        }   
 
 		SOAPElement[] childArray = (SOAPElement[])arrayList.toArray(new SOAPElement[]{});
 		return childArray;
