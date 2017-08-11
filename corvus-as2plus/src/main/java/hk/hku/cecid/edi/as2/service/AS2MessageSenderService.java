@@ -52,7 +52,8 @@ public class AS2MessageSenderService extends WebServicesAdaptor {
 	    if (bodies != null && bodies.length > 0 && 
 	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
         	
-	    	AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
+			// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
 	    	
 	    	wsi = true;
 	    	
@@ -62,7 +63,8 @@ public class AS2MessageSenderService extends WebServicesAdaptor {
 			type = getText(childElement, "type");
 		
 	    } else {
-	    	AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
+			// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
 	    	
 			as2From = getText(bodies, "as2_from");
 			as2To = getText(bodies, "as2_to");
@@ -159,7 +161,8 @@ public class AS2MessageSenderService extends WebServicesAdaptor {
 			SOAPElement messageIdElement = createElement("message_id", NAMESPACE, messageId);
 
 			if (wsi) {
-        		AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in as2.log
+        		// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
         		
 	            SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
 	            SOAPMessage soapResponseMessage = soapResponse.getMessage();
@@ -171,7 +174,8 @@ public class AS2MessageSenderService extends WebServicesAdaptor {
 	            responseElement.addChildElement(messageIdElement);            
 	            response.setBodies(new SOAPElement[] { responseElement });
 			} else {
-				AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in as2.log
+				// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
 				
 				response.setBodies(new SOAPElement[] { messageIdElement });
 			}

@@ -40,8 +40,8 @@ public class AS2MessageReceiverListService extends WebServicesAdaptor {
       	// WS-I <RequestElement> 
 	    if (bodies != null && bodies.length == 1 && 
 	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	    	
-	    	AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
+	    	// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
 	    	
 	    	wsi = true;
 	    	
@@ -50,7 +50,8 @@ public class AS2MessageReceiverListService extends WebServicesAdaptor {
 	        as2To = getText(childElement, "as2To");
 	        strNumOfMessages = getText(childElement, "numOfMessages");
 	    } else {
-	    	AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
+            // Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
 	    	
 	    	as2From = getText(bodies, "as2From");
 	    	as2To = getText(bodies, "as2To");
@@ -111,13 +112,15 @@ public class AS2MessageReceiverListService extends WebServicesAdaptor {
             }
             
         	if (wsi) {
-        		AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
+                // Kenneth Wong [20170811] : To reduce the noise in as2.log
+        		// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
         		
         		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
                 responseElement.addChildElement(messageIdsElement);
                 response.setBodies(new SOAPElement[] { responseElement });        		
         	} else {
-        		AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
+                // Kenneth Wong [20170811] : To reduce the noise in as2.log
+        		// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
         		
                 response.setBodies(new SOAPElement[] { messageIdsElement });        		        		
         	}

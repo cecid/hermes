@@ -54,14 +54,16 @@ public class AS2MessageReceiverService extends WebServicesAdaptor {
 	    if (bodies != null && bodies.length == 1 && 
 	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
 	        
-	    	AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
+			// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
 
 	    	wsi = true;
 	    	
 	    	SOAPElement[] childElement = getChildElementArray(bodies[0]);
 	    	messageId = getText(childElement, "messageId");
 	    } else {
-	    	AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
+			// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request");
 	    	
 	    	messageId = getText(bodies, "messageId");
 	    }
@@ -186,7 +188,8 @@ public class AS2MessageReceiverService extends WebServicesAdaptor {
             boolean isReturned, boolean wsi, String messageId) throws SOAPRequestException {
         try {
         	if (wsi) {
-        		AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in as2.log
+        		// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
         		
                 SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
                 SOAPMessage soapResponseMessage = soapResponse.getMessage();
@@ -210,7 +213,8 @@ public class AS2MessageReceiverService extends WebServicesAdaptor {
 	            
 	            response.setBodies(new SOAPElement[] { responseElement });
         	} else {
-        		AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in as2.log
+        		// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
         		
         		SOAPElement responseElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
                 response.setBodies(new SOAPElement[] { responseElement });

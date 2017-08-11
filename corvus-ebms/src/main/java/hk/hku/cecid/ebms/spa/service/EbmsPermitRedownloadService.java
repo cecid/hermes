@@ -29,14 +29,16 @@ public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
 	      // WS-I <RequestElement> 
 	      if (bodies != null && bodies.length == 1 && 
 	    		  isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	    	  
-	    	 EbmsProcessor.core.log.debug("WS-I Request");
+
+			 // Kenneth Wong [20170811] : To reduce the noise in ebms.log 
+	    	 // EbmsProcessor.core.log.debug("WS-I Request");
 			 wsi = true;
 			  
 			 SOAPElement[] childElement = getChildElementArray(bodies[0]);
 			 msgId = getText(childElement, "messageId");
 	      }else {
-	    	  EbmsProcessor.core.log.debug("Non WS-I Request"); 
+			  // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+	    	  // EbmsProcessor.core.log.debug("Non WS-I Request"); 
 	    	  msgId = getText(bodies, "messageId");		
 	      }
 	      
@@ -75,13 +77,15 @@ public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
 		try {	   
         	SOAPElement messageIdElement = createElement("messageId", NAMESPACE, messageId);
         	if (wsi) {
-        		EbmsProcessor.core.log.debug("WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+        		// EbmsProcessor.core.log.debug("WS-I Response");
         		
         		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
                 responseElement.addChildElement(messageIdElement);
                 response.setBodies(new SOAPElement[] { responseElement });        		
         	} else {
-        		EbmsProcessor.core.log.debug("Non WS-I Response");
+				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+        		// EbmsProcessor.core.log.debug("Non WS-I Response");
         		
                 response.setBodies(new SOAPElement[] { messageIdElement });        		        		
         	}

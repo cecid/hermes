@@ -40,26 +40,29 @@ public class EbmsMessageReceiverService extends WebServicesAdaptor {
             WebServicesResponse response) throws SOAPRequestException,
             DAOException, SOAPException {
 
-    	String messageId = null;
-    	
-    	boolean wsi = false;
-    	
-		SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-		// WS-I <RequestElement> 
-	    if (bodies != null && bodies.length == 1 && 
-	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	        
-	    	EbmsProcessor.core.log.debug("WS-I Request");
 
-	    	wsi = true;
-	    	
-	    	SOAPElement[] childElement = getChildElementArray(bodies[0]);
-	    	messageId = getText(childElement, "messageId");
-	    } else {
-	    	EbmsProcessor.core.log.debug("Non WS-I Request");
-	    	
-			messageId = getText(bodies, "messageId");
-	    }
+        String messageId = null;
+
+        boolean wsi = false;
+
+        SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
+        // WS-I <RequestElement>
+        if (bodies != null && bodies.length == 1 &&
+                isElement(bodies[0], "RequestElement", NAMESPACE)) {
+
+            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+            // EbmsProcessor.core.log.debug("WS-I Request");
+
+            wsi = true;
+
+            SOAPElement[] childElement = getChildElementArray(bodies[0]);
+            messageId = getText(childElement, "messageId");
+        } else {
+            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+            // EbmsProcessor.core.log.debug("Non WS-I Request");
+
+            messageId = getText(bodies, "messageId");
+        }
 
         if (messageId == null) {
             throw new SOAPFaultException(SOAPFaultException.SOAP_FAULT_CLIENT,
@@ -123,34 +126,36 @@ public class EbmsMessageReceiverService extends WebServicesAdaptor {
     private void generateReply(WebServicesResponse response, boolean isReturned, boolean wsi)
             throws SOAPRequestException {
         try {
-        	if (wsi) {
-        		EbmsProcessor.core.log.debug("WS-I Response");
-        		
+            if (wsi) {
+                // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+                //EbmsProcessor.core.log.debug("WS-I Response");
+
                 SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
                 SOAPMessage soapResponseMessage = soapResponse.getMessage();
                 soapResponseMessage.getMimeHeaders().setHeader("Content-Type", 
                 		"application/xop+xml; charset=UTF-8; type=\"text/xml\"");
                 soapResponseMessage.getSOAPPart().addMimeHeader("Content-ID", "<SOAPBody>");
                 soapResponseMessage.getSOAPPart().addMimeHeader("Content-Transfer-Encoding", "binary");
-                
-	    		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
-	    		SOAPElement hasMessageElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
-	    		responseElement.addChildElement(hasMessageElement);
-	            
-	    		for (int i=0; i < soapResponseMessage.countAttachments(); i++) {
-		    		SOAPElement payloadElement = createElement("payload", NAMESPACE);
-		    		SOAPElement xopElement = soapFactory.createElement("Include", "xop", 
-		    				"http://www.w3.org/2004/08/xop/include");
-		    		xopElement.addAttribute(new QName("href"), "cid:Payload-" + i);
-		            payloadElement.addChildElement(xopElement);
-		            responseElement.addChildElement(payloadElement);
-	    		}
-	            
-	            response.setBodies(new SOAPElement[] { responseElement });
-        	} else {
-        		EbmsProcessor.core.log.debug("Non WS-I Response");
-        		
-        		SOAPElement responseElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
+
+                SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
+                SOAPElement hasMessageElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
+                responseElement.addChildElement(hasMessageElement);
+
+                for (int i=0; i < soapResponseMessage.countAttachments(); i++) {
+                    SOAPElement payloadElement = createElement("payload", NAMESPACE);
+                    SOAPElement xopElement = soapFactory.createElement("Include", "xop",
+                            "http://www.w3.org/2004/08/xop/include");
+                    xopElement.addAttribute(new QName("href"), "cid:Payload-" + i);
+                    payloadElement.addChildElement(xopElement);
+                    responseElement.addChildElement(payloadElement);
+                }
+
+                response.setBodies(new SOAPElement[] { responseElement });
+            } else {
+                // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+                // EbmsProcessor.core.log.debug("Non WS-I Response");
+
+                SOAPElement responseElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
                 response.setBodies(new SOAPElement[] { responseElement });
             }
         } catch (Exception e) {

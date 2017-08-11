@@ -59,15 +59,16 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
         boolean wsi = false;
         
         SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-		// WS-I <RequestElement> 
-	    if (bodies != null && bodies.length > 0 && 
-	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-        	
-	    	EbmsProcessor.core.log.debug("WS-I Request");
-	    	
-	    	wsi = true;
-	    	
-	    	SOAPElement[] childElement = getChildElementArray(bodies[0]);
+        // WS-I <RequestElement>
+        if (bodies != null && bodies.length > 0 &&
+                isElement(bodies[0], "RequestElement", NAMESPACE)) {
+
+            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+            // EbmsProcessor.core.log.debug("WS-I Request");
+
+            wsi = true;
+
+            SOAPElement[] childElement = getChildElementArray(bodies[0]);
             cpaId = getText(childElement, "cpaId");
             service = getText(childElement, "service");
             serviceType = getText(childElement, "serviceType");
@@ -82,23 +83,24 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
             toPartyType = getText(childElement, "toPartyType");
             toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
             refToMessageId = getText(childElement, "refToMessageId");
-    	} else {
-    		EbmsProcessor.core.log.debug("Non WS-I Request");
-    		
-	        cpaId = getText(bodies, "cpaId");
-	        service = getText(bodies, "service");
-	        serviceType = getText(bodies, "serviceType");
-	        action = getText(bodies, "action");        
-	        convId = getText(bodies, "convId");
-	        fromPartyId = getText(bodies, "fromPartyId");
-	        fromPartyIds = StringUtilities.tokenize(fromPartyId, ",");
-	        fromPartyType = getText(bodies, "fromPartyType");
-	        fromPartyTypes = StringUtilities.tokenize(fromPartyType, ",");
-	        toPartyId = getText(bodies, "toPartyId");
-	        toPartyIds = StringUtilities.tokenize(toPartyId, ",");
-	        toPartyType = getText(bodies, "toPartyType");
-	        toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
-	        refToMessageId = getText(bodies, "refToMessageId");
+        } else {
+            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+            // EbmsProcessor.core.log.debug("Non WS-I Request");
+
+            cpaId = getText(bodies, "cpaId");
+            service = getText(bodies, "service");
+            serviceType = getText(bodies, "serviceType");
+            action = getText(bodies, "action");
+            convId = getText(bodies, "convId");
+            fromPartyId = getText(bodies, "fromPartyId");
+            fromPartyIds = StringUtilities.tokenize(fromPartyId, ",");
+            fromPartyType = getText(bodies, "fromPartyType");
+            fromPartyTypes = StringUtilities.tokenize(fromPartyType, ",");
+            toPartyId = getText(bodies, "toPartyId");
+            toPartyIds = StringUtilities.tokenize(toPartyId, ",");
+            toPartyType = getText(bodies, "toPartyType");
+            toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
+            refToMessageId = getText(bodies, "refToMessageId");
         }
         
         if (cpaId == null || service == null || action == null
@@ -236,25 +238,27 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
     private void generateReply(WebServicesResponse response, String messageId, boolean wsi)
             throws SOAPRequestException {
         try {
-        	if (wsi) {
-        		EbmsProcessor.core.log.debug("WS-I Response");
-        		
-	            SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
-	            SOAPMessage soapResponseMessage = soapResponse.getMessage();
-	            soapResponseMessage.getMimeHeaders().setHeader("Content-Type", "application/xop+xml; type=\"text/xml\"");
-	            soapResponseMessage.getSOAPPart().addMimeHeader("Content-ID", "<SOAPBody>");
-	            soapResponseMessage.getSOAPPart().addMimeHeader("Content-Transfer-Encoding", "binary");
+            if (wsi) {
+                // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+                // EbmsProcessor.core.log.debug("WS-I Response");
 
-	            SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);	            
-	            SOAPElement messageIdElement = createElement("message_id", NAMESPACE, messageId);
-	            responseElement.addChildElement(messageIdElement);            
-	            response.setBodies(new SOAPElement[] { responseElement });
-        	} else {
-        		EbmsProcessor.core.log.debug("Non WS-I Response");
-        		
-        		SOAPElement responseElement = createElement("message_id", NAMESPACE, messageId);
+                SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
+                SOAPMessage soapResponseMessage = soapResponse.getMessage();
+                soapResponseMessage.getMimeHeaders().setHeader("Content-Type", "application/xop+xml; type=\"text/xml\"");
+                soapResponseMessage.getSOAPPart().addMimeHeader("Content-ID", "<SOAPBody>");
+                soapResponseMessage.getSOAPPart().addMimeHeader("Content-Transfer-Encoding", "binary");
+
+                SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
+                SOAPElement messageIdElement = createElement("message_id", NAMESPACE, messageId);
+                responseElement.addChildElement(messageIdElement);
                 response.setBodies(new SOAPElement[] { responseElement });
-        	}
+            } else {
+                // Kenneth Wong [20170811] : To reduce the noise in ebms.log
+                // EbmsProcessor.core.log.debug("Non WS-I Response");
+
+                SOAPElement responseElement = createElement("message_id", NAMESPACE, messageId);
+                response.setBodies(new SOAPElement[] { responseElement });
+            }
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",
                     e);

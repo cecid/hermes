@@ -40,7 +40,8 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 		    if (bodies != null && bodies.length == 1 && 
 		    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
 		    	
-		    	EbmsProcessor.core.log.debug("WS-I Request");
+				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+		    	// EbmsProcessor.core.log.debug("WS-I Request");
 		    	
 		    	wsi = true;
 		    	
@@ -54,7 +55,8 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 		      	status = getText(childElement, "status");
 		      	limit = getText(childElement, "limit");
 			} else {
-				EbmsProcessor.core.log.debug("Non WS-I Request");
+				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+				// EbmsProcessor.core.log.debug("Non WS-I Request");
 			
 			  	msgId = getText(bodies, "messageId");
 			  	msgBox = getText(bodies, "messageBox");
@@ -164,13 +166,15 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	            }
 
 	        	if (wsi) {
-	        		EbmsProcessor.core.log.debug("WS-I Response");
+					// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+	        		// EbmsProcessor.core.log.debug("WS-I Response");
 	        		
 		    		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE); 
 		            responseElement.addChildElement(listElement);
 		            response.setBodies(new SOAPElement[] { responseElement });
 	        	} else {
-	        		EbmsProcessor.core.log.debug("Non WS-I Response");
+					// Kenneth Wong [20170811] : To reduce the noise in ebms.log
+					// EbmsProcessor.core.log.debug("Non WS-I Response");
 	        		
 		            response.setBodies(new SOAPElement[] { listElement }); 	        		
 	        	}
