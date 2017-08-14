@@ -61,7 +61,7 @@ public class OutboundMessageProcessor {
 			if (ebxmlMsg.getMessageHeader().getMessageId() == null) {
 				String messageId = Generator.generateMessageID();
 				ebxmlMsg.getMessageHeader().setMessageId(messageId);
-				EbmsProcessor.core.log.info("Genereating message id: " + messageId);
+				EbmsProcessor.core.log.info("Generating message id: " + messageId);
 			}
 
 			// classify where the message come from
@@ -451,7 +451,7 @@ public class OutboundMessageProcessor {
 
 			String messageId = Generator.generateMessageID();
 			msgHeader.setMessageId(messageId);
-			EbmsProcessor.core.log.info("Genereating message id: " + messageId);
+			EbmsProcessor.core.log.info("Generating message id: " + messageId);
 
 			msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
 

@@ -156,7 +156,7 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
             
             messageId = Generator.generateMessageID();
             ebxmlMessage.getMessageHeader().setMessageId(messageId);
-            EbmsProcessor.core.log.info("Genereating message id: " + messageId);
+            EbmsProcessor.core.log.info("Generating message id: " + messageId);
 
             msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
             
