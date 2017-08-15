@@ -3,8 +3,9 @@ package hk.hku.cecid.ebms.spa.service;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
+
+import org.w3c.dom.Element;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.MessageDAO;
@@ -24,50 +25,16 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	  public void serviceRequested(WebServicesRequest request, WebServicesResponse response) 
 	  		throws SOAPRequestException, DAOException{
 		  
-	      String msgId = null;
-	      String msgBox = null;
-	      String convId = null;
-	      String cpaId = null;
-	      String service = null;
-	      String action = null;
-	      String status = null;
-	      String limit = null;
-	      
-	      boolean wsi = false;
-	      	      
-	      SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-	      	// WS-I <RequestElement> 
-		    if (bodies != null && bodies.length == 1 && 
-		    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-		    	
-				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
-		    	// EbmsProcessor.core.log.debug("WS-I Request");
-		    	
-		    	wsi = true;
-		    	
-	    		SOAPElement[] childElement = getChildElementArray(bodies[0]);	  
-	  	      	msgId = getText(childElement, "messageId");
-		      	msgBox = getText(childElement, "messageBox");
-		      	convId = getText(childElement, "conversationId");
-		      	cpaId = getText(childElement, "cpaId");
-		      	service = getText(childElement, "service");
-		      	action = getText(childElement, "action");
-		      	status = getText(childElement, "status");
-		      	limit = getText(childElement, "limit");
-			} else {
-				// Kenneth Wong [20170811] : To reduce the noise in ebms.log
-				// EbmsProcessor.core.log.debug("Non WS-I Request");
-			
-			  	msgId = getText(bodies, "messageId");
-			  	msgBox = getText(bodies, "messageBox");
-			  	convId = getText(bodies, "conversationId");
-			  	cpaId = getText(bodies, "cpaId");
-			  	service = getText(bodies, "service");
-			  	action = getText(bodies, "action");
-			  	status = getText(bodies, "status");
-			  	limit = getText(bodies, "limit");
-			}
-	        		
+		  Element[] bodies = request.getBodies();
+	      String msgId = getText(bodies, "messageId");
+	      String msgBox = getText(bodies, "messageBox");
+	      String convId = getText(bodies, "conversationId");
+	      String cpaId = getText(bodies, "cpaId");
+	      String service = getText(bodies, "service");
+	      String action = getText(bodies, "action");
+	      String status = getText(bodies, "status");
+	      String limit = getText(bodies, "limit");
+        
 		  EbmsProcessor.core.log
           .info("Message History Query received request - "+
         		  "MessageID : " + (msgId ==null?"NULL":msgId)
@@ -103,7 +70,7 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 			  
 			  List results = msgDAO.findMessagesByHistory(criteriaDVO, resultLimit, 0);
 			  
-			  generateReply(response, results, wsi);
+			  generateReply(response, results);
 			  
 		  }catch(DAOException daoExp){
 			  throw new DAOException("Unable to query the repository", daoExp);
@@ -147,37 +114,27 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	     * @throws SOAPRequestException
 	     */
 	    private void generateReply(WebServicesResponse response,
-	    	List  messageList, boolean wsi) throws SOAPRequestException {
+	    	List  messageList) throws SOAPRequestException {
 	        try {
-	    		SOAPElement listElement = createElement("messageList", NAMESPACE); 
-	        	
+	            SOAPElement rootElement = createElement("messageList", "",
+	            		NAMESPACE, "MessageList");
+
 	            Iterator messagesIterator = messageList.iterator();
+
 	            for (int i = 0; messagesIterator.hasNext(); i++) {
 	                MessageDVO currentMessage = (MessageDVO) messagesIterator.next();
 
 	                // Create Message Element and append Value of MessageID and MessageBox 
-		            SOAPElement msgElement = createElement("messageElement", NAMESPACE);
-	                SOAPElement childElement_MsgId = createElement("messageId", NAMESPACE, currentMessage.getMessageId());                	               
-	                SOAPElement childElement_MsgBox = createElement("messageBox", NAMESPACE, currentMessage.getMessageBox());
+	                SOAPElement msgElement = createElement("messageElement", "", NAMESPACE, "MessageElement")	;                
+	                SOAPElement childElement_MsgId = createText("messageId", currentMessage.getMessageId(), NAMESPACE);                	               
+	                SOAPElement childElement_MsgBox = createText("messageBox", currentMessage.getMessageBox(), NAMESPACE);
 	                msgElement.addChildElement(childElement_MsgId);
 	                msgElement.addChildElement(childElement_MsgBox);
 	                
-	                listElement.addChildElement(msgElement);
+	                rootElement.addChildElement(msgElement);
 	            }
 
-	        	if (wsi) {
-					// Kenneth Wong [20170811] : To reduce the noise in ebms.log
-	        		// EbmsProcessor.core.log.debug("WS-I Response");
-	        		
-		    		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE); 
-		            responseElement.addChildElement(listElement);
-		            response.setBodies(new SOAPElement[] { responseElement });
-	        	} else {
-					// Kenneth Wong [20170811] : To reduce the noise in ebms.log
-					// EbmsProcessor.core.log.debug("Non WS-I Response");
-	        		
-		            response.setBodies(new SOAPElement[] { listElement }); 	        		
-	        	}
+	            response.setBodies(new SOAPElement[] { rootElement });
 	        } catch (Exception e) {
 	            throw new SOAPRequestException("Unable to generate reply message", e);
 	        }
