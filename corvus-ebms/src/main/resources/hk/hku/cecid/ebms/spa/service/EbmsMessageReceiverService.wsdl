@@ -1,62 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<definitions targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
-	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-	<types>
-		<schema xmlns="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
-			elementFormDefault="qualified">
-			<element name="RequestElement">
-				<complexType>
-					<sequence>
-						<element name="messageId" type="string" minOccurs="1"/>
-					</sequence>
-				</complexType>
-			</element>
-			<element name="ResponseElement">
-				<complexType>
-					<sequence>
-						<element name="hasMessage" type="string" minOccurs="1"/>
-						<element name="payload" type="base64Binary" minOccurs="0" maxOccurs="unbounded"/>
-					</sequence>
-				</complexType>
-			</element>
-		</schema>
-	</types>
-
-	<message name="EbmsRequestMsg">
-		<part name="EbmsRequestMsg" element="tns:RequestElement" />
-	</message>
-	<message name="EbmsResponseMsg">
-		<part name="EbmsResponseMsg" element="tns:ResponseElement" />
-	</message>
-
-	<portType name="EbmsReceiverDownload">
-		<operation name="Request">
-			<input message="tns:EbmsRequestMsg" />
-			<output message="tns:EbmsResponseMsg" />
-		</operation>
-	</portType>
-
-	<binding name="EbmsSoapHttpReceiverDownload" type="tns:EbmsReceiverDownload">
-		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
-			style="document" />
-		<operation name="Request">
-			<soap:operation soapAction="Ebmsreceiverdownload"
-				style="document" />
-			<input>
-				<soap:body use="literal" />
-			</input>
-			<output>
-				<soap:body use="literal" />
-			</output>
-		</operation>
-	</binding>
-
-	<service name="EbmsMessageReceiverDownload">
-		<documentation>Documentation not available.</documentation>
-		<port name="EbmsReceiverDownload" binding="tns:EbmsSoapHttpReceiverDownload">
-			<soap:address location="http://127.0.0.1:8080/corvus/httpd/ebms/receiver" />
-		</port>
-	</service>
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:p="http://service.ebms.edi.cecid.hku.hk/" 
+	targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
+>
+<types>
+</types>
+<message name="EbmsRequestMsg">
+  <part name="messageId" type="s:string" /> 
+</message>
+<message name="EbmsResponseMsg">
+  <part name="hasMessage" type="s:string" /> 
+</message>
+<portType name="EbmsReceiverDownload">
+  <operation name="Request">
+    <input message="p:EbmsRequestMsg" /> 
+    <output message="p:EbmsResponseMsg" /> 
+  </operation>
+</portType>
+<binding name="EbmsSoapHttpReceiverDownload" type="p:EbmsReceiverDownload">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Request">
+    <soap:operation soapAction="Ebmsreceiverdownload" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="EbmsMessageReceiverDownload">
+  <documentation>Documentation not available.</documentation> 
+  <port name="EbmsReceiverDownload" binding="p:EbmsSoapHttpReceiverDownload">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/ebms/receiver" /> 
+  </port>
+</service>
 </definitions>
