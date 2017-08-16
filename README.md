@@ -34,7 +34,7 @@ to check if Hermes is up and running.
 1. Install [Apache Maven](http://maven.apache.org/install.html)
 2. Execute processes needed prior to actual project build. <br/>
 `mvn pre-clean`
-3. Compile Hermes.<br/>
+3. Compile Hermes and build JAR installer file.<br/>
 `mvn install`
 4. Locate `hermes2_installer.jar` under the `target/` directory. Install Hermes 
 following the [installation guide](http://hermes.cecid.org/en/latest/installation.html).
