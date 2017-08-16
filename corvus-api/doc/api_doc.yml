@@ -28,6 +28,30 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /message/redownload/ebms:
+    post:
+      summary: Reset message status from DL to PS
+      description: |
+        The status of ebms message being downloaded is reset to PS,
+        then the message will become ready to download again.
+      tags:
+        - Message
+        - ebms
+      parameters:
+        - name: message_id
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Message_Identifier'
+      responses:
+        200:
+          description: Message ID
+          schema:
+            $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /partnership/ebms:
     get:
       summary: Query ebMS partnership
@@ -36,6 +60,7 @@ paths:
         in Hermes ebMS plugin.
       tags:
         - Partnership
+        - ebms
       responses:
         200:
           description: An array of partnership objects
@@ -50,22 +75,6 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-    delete:
-      summary: Delete an ebMS partnership
-      description: |
-        The delete ebMS partnership endpoint remove the specified partnership
-        in Hermes ebMS plugin.
-      tags:
-        - Partnership
-      responses:
-        200:
-          description: Whether the deletion is successful or not
-          schema:
-            $ref: '#/definitions/ActionResult'
-        500:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
     post:
       summary: Create or edit an ebMS partnership
       description: |
@@ -74,6 +83,7 @@ paths:
         the parameters will be used to update the existing partnerhsip.
       tags:
         - Partnership
+        - ebms
       parameters:
         - name: partnership
           in: body
@@ -89,6 +99,101 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /partnership/ebms/{partnershipId}:
+    delete:
+      summary: Delete an ebMS partnership
+      description: |
+        The delete ebMS partnership endpoint remove the specified partnership
+        in Hermes ebMS plugin.
+      tags:
+        - Partnership
+        - ebms
+      parameters:
+        - in: path
+          name: partnershipId
+          type: string
+          description: id of the partnership to be removed
+          required: true
+      responses:
+        200:
+          description: Whether the deletion is successful or not
+          schema:
+            $ref: '#/definitions/ActionResult'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /partnership/as2:
+    get:
+      summary: Query AS2 partnership
+      description: |
+        The query AS2 partnership endpoint returns all partnerships set up
+        in Hermes AS2 plugin.
+      tags:
+        - Partnership
+        - as2
+      responses:
+        200:
+          description: An array of partnership objects
+          schema:
+            type: object
+            properties:
+              partnerships:
+                type: array
+                items:
+                  $ref: '#/definitions/As2_Partnership'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create or edit an AS2 partnership
+      description: |
+        The create or edit AS2 partnership endpoint creates a partnership in Hermes
+        server using the parameters if the partnership ID does not exist yet. Otherwise,
+        the parameters will be used to update the existing partnerhsip.
+      tags:
+        - Partnership
+        - as2
+      parameters:
+        - name: partnership
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/As2_Partnership'
+      responses:
+        200:
+          description: A partnership ID
+          schema:
+            $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /partnership/as2/{partnershipId}:
+    delete:
+      summary: Delete an AS2 partnership
+      description: |
+        The delete AS2 partnership endpoint remove the specified partnership
+        in Hermes AS2 plugin.
+      tags:
+        - Partnership
+        - as2
+      parameters:
+        - in: path
+          name: partnershipId
+          type: string
+          description: id of the partnership to be removed
+          required: true
+      responses:
+        200:
+          description: Whether the deletion is successful or not
+          schema:
+            $ref: '#/definitions/ActionResult'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /message/send/ebms:
     post:
       summary: Send an ebMS message
@@ -99,6 +204,7 @@ paths:
       tags:
         - Message
         - Send
+        - ebms
       parameters:
         - name: message
           in: body
@@ -107,7 +213,7 @@ paths:
             $ref: '#/definitions/EbmsMessageSendRequest'
       responses:
         200:
-          description: The same message ID that is passed in with the message.
+          description: The message ID generated by Hermes.
           schema:
             $ref: '#/definitions/Identifier'
         500:
@@ -122,6 +228,56 @@ paths:
       tags:
         - Message
         - Send
+        - ebms
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: Message ID and status
+          schema:
+            $ref: '#/definitions/MessageSendStatus'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /message/send/as2:
+    post:
+      summary: Send an AS2 message
+      description: |
+        The send AS2 message endpoint requests Hermes server to send a message.
+        The message should have its parameters fitting a valid partnership configured
+        at Hermes server before sending.
+      tags:
+        - Message
+        - Send
+        - as2
+      parameters:
+        - name: message
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/As2MessageSendRequest'
+      responses:
+        200:
+          description: The message ID generated by Hermes.
+          schema:
+            $ref: '#/definitions/Identifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Query for the status of a AS2 message sending request
+      description: |
+        The query AS2 message status endpoints queries for the status of a previous
+        message sending request.
+      tags:
+        - Message
+        - Send
+        - as2
       parameters:
         - name: id
           in: query
@@ -145,6 +301,7 @@ paths:
       tags:
         - Message
         - History
+        - ebms
       parameters:
         - name: message_id
           in: query
@@ -189,7 +346,7 @@ paths:
               message_ids:
                 type: array
                 items:
-                  $ref: '#/definitions/MessageHistoryIdentifier'
+                  $ref: '#/definitions/EbmsMessageHistoryIdentifier'
         500:
           description: Unexpected error
           schema:
@@ -202,6 +359,82 @@ paths:
       tags:
         - Message
         - History
+        - ebms
+      parameters:
+        - name: request
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/MessageStatusReset'
+      responses:
+        200:
+          description: Whether the deletion is successful or not
+          schema:
+            $ref: '#/definitions/ActionResult'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /message/history/as2:
+    get:
+      summary: Get AS2 message history
+      description: |
+        The get AS2 message history API queries for messages which
+        match the passed in query parameters.
+      tags:
+        - Message
+        - History
+        - as2
+      parameters:
+        - name: message_id
+          in: query
+          required: false
+          type: string
+        - name: message_box
+          in: query
+          required: false
+          type: string
+        - name: as2_from
+          in: query
+          required: false
+          type: string
+        - name: as2_to
+          in: query
+          required: false
+          type: string
+        - name: status
+          in: query
+          required: false
+          type: string
+        - name: limit
+          in: query
+          required: false
+          type: integer
+      responses:
+        200:
+          description: |
+            A list of messages, which identifies a list of messages
+            matching the passed in query parameters.
+          schema:
+            type: object
+            properties:
+              message_ids:
+                type: array
+                items:
+                  $ref: '#/definitions/As2MessageHistoryIdentifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Reset message delivery status
+      description: |
+        The reset message status API resets a message's status to
+        undelivered. Note that the only support action is 'reset'.
+      tags:
+        - Message
+        - History
+        - as2
       parameters:
         - name: request
           in: body
@@ -228,6 +461,7 @@ paths:
       tags:
         - Message
         - Receive
+        - ebms
       parameters:
         - name: partnership_id
           in: query
@@ -264,6 +498,7 @@ paths:
       tags:
         - Message
         - Receive
+        - ebms
       parameters:
         - name: message_id
           in: body
@@ -275,6 +510,70 @@ paths:
           description: The message identified by the specified identifier
           schema:
             $ref: '#/definitions/EbmsReceivedMessage'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /message/receive/as2:
+    get:
+      summary: Get a list of received AS2 message
+      description: |
+        The get unread AS2 messages endpoints queries for the list of
+        messages that has been received for the specified partnership.
+        If the parameter include_read is true, only unread messages
+        will be returned.
+      tags:
+        - Message
+        - Receive
+        - as2
+      parameters:
+        - name: partnership_id
+          in: query
+          required: true
+          type: string
+        - name: include_read
+          in: query
+          required: false
+          type: string
+      responses:
+        200:
+          description: |
+            A list of message IDs, which identifies a list received
+            messages for the specified partnership. Note that upon query,
+            the list of returned messages will be marked as read; which means
+            it will not be returned next time the same endpoint is invoked
+            unless include_read parameter is true.
+          schema:
+            type: object
+            properties:
+              message_ids:
+                type: array
+                items:
+                  $ref: '#/definitions/ReceivedMessageIdentifier'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Get AS2 message by identifier
+      description: |
+        The get AS2 message by identifier endpoint queries Hermes server for the AS2 
+        message identified by the specified identifier.
+      tags:
+        - Message
+        - Receive
+        - as2
+      parameters:
+        - name: message_id
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Identifier'
+      responses:
+        200:
+          description: The message identified by the specified identifier
+          schema:
+            $ref: '#/definitions/As2ReceivedMessage'
         500:
           description: Unexpected error
           schema:
@@ -301,9 +600,6 @@ definitions:
       transport_endpoint:
         type: string
         description: Transport endpoint of the partnership.
-      transport_protocol:
-        type: string
-        description: Transport protocol of the partnership.
       is_hostname_verified:
         type: string
         description: Whether hostname is verified.
@@ -335,12 +631,92 @@ definitions:
         type: string
         format: byte
         description: Base64 encoded string of the signing certificate.
+  As2_Partnership:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique ID of partnership.
+      as2_from:
+        type: string
+        description: From field in AS2 contract.
+      as2_to:
+        type: string
+        description: From field in AS2 contract.
+      disabled:
+        type: boolean
+        description: Whether this partnership is disabled.
+      sync_reply:
+        type: string
+        description: Whether sync reply mode is used.
+      subject:
+        type: string
+        description: Subject field in AS2 contract.
+      recipient_address:
+        type: string
+        description: Transport endpoint of the partnership.
+      hostname_verified:
+        type: string
+        description: Whether hostname is verified.
+      receipt_address:
+        type: string
+        description: Endpoint for sending receipt.
+      receipt_requested:
+        type: string
+        description: Whether receipt is required.
+      outbound_sign_required:
+        type: string
+        description: Whether digital signature is required for outbound message.
+      outbound_encrypt_required:
+        type: string
+        description: Whether encryption is required for outbound message.
+      outbound_compress_required:
+        type: string
+        description: Whether compression is required for outbound message.
+      receipt_sign_required:
+        type: string
+        description: Whether digital signature is required for receipt.
+      inbound_sign_required:
+        type: string
+        description: Whether digital signature is required for inbound message.
+      inbound_encrypt_required:
+        type: string
+        description: Whether encryption is required for inbound message.
+      retries:
+        type: integer
+        description: Number of retries for delivery.
+      retry_interval:
+        type: integer
+        description: Number of seconds to wait until retry.
+      sign_algorithm:
+        type: string
+        description: Digital signature algorithm.
+      encrypt_algorithm:
+        type: string
+        description: Encryption algorithm.
+      mic_algorithm:
+        type: string
+        description: Algorithm for generating MIC value.
+      encrypt_certicate:
+        type: string
+        format: byte
+        description: Base64 encoded string of the encryption certificate.
+      verify_certicate:
+        type: string
+        format: byte
+        description: Base64 encoded string of the signing certificate.
   Identifier:
     type: object
     properties:
       id:
         type: string
         description: Unique identifier
+  Message_Identifier:
+    type: object
+    properties:
+      message_id:
+        type: string
+        description: Message identifier
   EbmsMessageSendRequest:
     type: object
     properties:
@@ -394,6 +770,44 @@ definitions:
         items:
           $ref: '#/definitions/Payload'
         description: Payload to be attached with the message, should be Base64 encoded.
+  As2MessageSendRequest:
+    type: object
+    properties:
+      as2_from:
+        type: string
+        description: From field in AS2 contract.
+      as2_to:
+        type: string
+        description: To field in AS2 contract.
+      type:
+        type: string
+        description: Type of payload to be sent.
+      payload:
+        type: string
+        description: Payload to be attached with the message, should be Base64 encoded.
+  As2ReceivedMessage:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Message ID of the message received.
+      as2_from:
+        type: string
+        description: From field in AS2 contract.
+      as2_to:
+        type: string
+        description: To field in AS2 contract.
+      timestamp:
+        type: integer
+        description: Message timestamp (Unix timestamp).
+      status:
+        type: string
+        description: Status of the message received.
+      payloads:
+        type: array
+        items:
+          $ref: '#/definitions/Payload'
+        description: Payload to be attached with the message, should be Base64 encoded.
   MessageSendStatus:
     type: object
     properties:
@@ -424,7 +838,7 @@ definitions:
       status:
         type: string
         description: Message status
-  MessageHistoryIdentifier:
+  EbmsMessageHistoryIdentifier:
     type: object
     properties:
       id:
@@ -442,9 +856,27 @@ definitions:
       conversation_id:
         type: string
         description: Conversation ID of the message
-      cpa_id:
+      message_box:
         type: string
-        description: CPA ID of the message
+        description: Message box of the message
+      timestamp:
+        type: integer
+        description: Message timestamp (Unix timestamp)
+      status:
+        type: string
+        description: Message status
+  As2MessageHistoryIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Message ID
+      as2_from:
+        type: string
+        description: From field in AS2 contract
+      as2_to:
+        type: string
+        description: To field in AS2 contract
       message_box:
         type: string
         description: Message box of the message
