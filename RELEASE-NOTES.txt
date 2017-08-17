@@ -24,7 +24,6 @@ Introduced REST API for AS2 messaging (For details, pls refer to https://app.swa
 - Update documentation and secure message signing instructions in hermes.cecid.org.
 - Add partnership Restful API is implemented.
 
-
 [Bug Fixes]
 - "Corvus Kernel has been shutdown successfully " in corvus.log is changed to log type "INFO" instead of "ERROR".
 - Add deregistration and shutdown logic for Hermes running in Tomcat, to avoid memory leak if Tomcat is shutdown abnormally.
