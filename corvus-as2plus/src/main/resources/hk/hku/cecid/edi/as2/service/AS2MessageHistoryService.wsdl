@@ -1,77 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<definitions targetNamespace="http://service.as2.edi.cecid.hku.hk/"
-	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.as2.edi.cecid.hku.hk/"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-	<types>
-		<schema xmlns="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="http://service.as2.edi.cecid.hku.hk/"
-			elementFormDefault="qualified">
-			<element name="RequestElement">
-				<complexType>
-					<sequence>
-						<element name="messageId" type="string" minOccurs="0"/>
-						<element name="messageBox" type="string" minOccurs="0"/>
-						<element name="as2From" type="string" minOccurs="0"/>
-						<element name="as2To" type="string" minOccurs="0"/>
-						<element name="status" type="string" minOccurs="0"/>
-						<element name="limit" type="int" minOccurs="0"/>
-					</sequence>
-				</complexType>
-			</element>
-			<element name="ResponseElement">
-				<complexType>
-					<sequence>
-						<element name="messageList" minOccurs="1" maxOccurs="1">
-							<complexType>
-								<sequence>
-									<element name="messageElement" minOccurs="0" maxOccurs="unbounded">
-										<complexType>
-											<sequence>
-												<element name="messageId" type="string" minOccurs="1" />
-												<element name="messageBox" type="string" minOccurs="1" />
-											</sequence>
-										</complexType>
-									</element>
-								</sequence>
-							</complexType>
-						</element>
-					</sequence>
-				</complexType>
-			</element>
-		</schema>
-	</types>
-
-	<message name="AS2RequestMsg">
-		<part name="AS2RequestMsg" element="tns:RequestElement"/>
-	</message>
-	<message name="AS2ResponseMsg">
-		<part name="AS2ResponseMsg" element="tns:ResponseElement"/>
-	</message>
-	
-	<portType name="AS2MessageHistoryPortType">
-		<operation name="Request">
-			<input message="tns:AS2RequestMsg" />
-			<output message="tns:AS2ResponseMsg" />
-		</operation>
-	</portType>
-	
-	<binding name="AS2SoapHttpMessageHistory" type="tns:AS2MessageHistoryPortType">
-		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
-			style="document" />
-		<operation name="Request">
-			<soap:operation soapAction="as2msghistory" style="document" />
-			<input>
-				<soap:body use="literal" />
-			</input>
-			<output>
-				<soap:body use="literal" />
-			</output>
-		</operation>
-	</binding>
-	<service name="AS2MessageHistory">
-		<documentation>Documentation not available.</documentation>
-		<port name="AS2MessageHistory" binding="tns:AS2SoapHttpMessageHistory">
-			<soap:address location="http://127.0.0.1:8080/corvus/httpd/as2/msg_history" />
-		</port>
-	</service>
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"    
+	xmlns:p="http://service.as2.edi.cecid.hku.hk/" 
+	targetNamespace="http://service.as2.edi.cecid.hku.hk/"
+>
+<types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+        <xs:complexType name="MessageList">
+            <xs:sequence>
+                <xs:complexType name="messageElement" type="xs:MessageElement" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+        
+        <xs:complexType name="MessageElement">
+            <xs:sequence>
+                <xs:element name="messageId" type="xs:string" maxOccurs="unbounded"/>
+                <xs:element name="messageBox" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:schema>
+</types>
+<message name="As2RequestMsg">
+  <part name="messageId" type="s:string" />
+  <part name="messageBox" type="s:string" />
+  <part name="as2From" type="s:string" />
+  <part name="as2To" type="s:string" />
+  <part name="status" type="s:string" />  
+  <part name="limit" type="s:int" /> 
+</message>
+<message name="As2ResponseMsg">
+  <part name="msg_list" type="p:MessageList" /> 
+</message>
+<portType name="As2MessageHistory">
+  <operation name="Request">
+    <input message="p:As2RequestMsg" /> 
+    <output message="p:As2ResponseMsg" /> 
+  </operation>
+</portType>
+<binding name="As2SoapHttpMessageHistory" type="p:As2MessageHistory">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Request">
+    <soap:operation soapAction="As2msghistory" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="As2MessageHistory">
+  <documentation>Documentation not available.</documentation> 
+  <port name="As2MessageHistory" binding="p:As2SoapHttpMessageHistory">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/as2/msg_history" /> 
+  </port>
+</service>
 </definitions>
