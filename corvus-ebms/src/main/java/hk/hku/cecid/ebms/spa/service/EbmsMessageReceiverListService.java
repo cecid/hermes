@@ -13,8 +13,9 @@ import hk.hku.cecid.piazza.commons.soap.WebServicesResponse;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
+
+import org.w3c.dom.Element;
 
 /**
  * EbmsMessageReceiverListService
@@ -32,52 +33,16 @@ public class EbmsMessageReceiverListService extends WebServicesAdaptor {
             WebServicesResponse response) throws SOAPRequestException,
             DAOException {
 
-        String cpaId = null;
-        String service = null;
-        String action = null;
-        String convId = null;
-        String fromPartyId = null;
-        String fromPartyType = null;
-        String toPartyId = null;
-        String toPartyType = null;
-        String strNumOfMessages = null;       
-        
-        boolean wsi = false;
-
-		SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-      	// WS-I <RequestElement> 
-	    if (bodies != null && bodies.length == 1 && 
-	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	    	
-            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
-	    	// EbmsProcessor.core.log.debug("WS-I Request");
-	    	
-	    	wsi = true;
-	    	
-	    	SOAPElement[] childElement = getChildElementArray(bodies[0]);
-	        cpaId = getText(childElement, "cpaId");
-	        service = getText(childElement, "service");
-	        action = getText(childElement, "action");
-	        convId = getText(childElement, "convId");
-	        fromPartyId = getText(childElement, "fromPartyId");
-	        fromPartyType = getText(childElement, "fromPartyType");
-	        toPartyId = getText(childElement, "toPartyId");
-	        toPartyType = getText(childElement, "toPartyType");
-	        strNumOfMessages = getText(childElement, "numOfMessages");
-	    } else {
-            // Kenneth Wong [20170811] : To reduce the noise in ebms.log
-	    	// EbmsProcessor.core.log.debug("Non WS-I Request");
-	    	
-	        cpaId = getText(bodies, "cpaId");
-	        service = getText(bodies, "service");
-	        action = getText(bodies, "action");
-	        convId = getText(bodies, "convId");
-	        fromPartyId = getText(bodies, "fromPartyId");
-	        fromPartyType = getText(bodies, "fromPartyType");
-	        toPartyId = getText(bodies, "toPartyId");
-	        toPartyType = getText(bodies, "toPartyType");
-	        strNumOfMessages = getText(bodies, "numOfMessages");
-	    }
+        Element[] bodies = request.getBodies();
+        String cpaId = getText(bodies, "cpaId");
+        String service = getText(bodies, "service");
+        String action = getText(bodies, "action");
+        String convId = getText(bodies, "convId");
+        String fromPartyId = getText(bodies, "fromPartyId");
+        String fromPartyType = getText(bodies, "fromPartyType");
+        String toPartyId = getText(bodies, "toPartyId");
+        String toPartyType = getText(bodies, "toPartyType");
+        String strNumOfMessages = getText(bodies, "numOfMessages");
         
         if (cpaId == null || service == null || action == null) {
             throw new SOAPFaultException(SOAPFaultException.SOAP_FAULT_CLIENT,
@@ -132,33 +97,22 @@ public class EbmsMessageReceiverListService extends WebServicesAdaptor {
             throw new SOAPRequestException("Unable to query the repository", e);
         }
 
-        generateReply(response, messageIds, wsi);
+        generateReply(response, messageIds);
     }
 
     private void generateReply(WebServicesResponse response,
-            String[] message_ids, boolean wsi) throws SOAPRequestException {
+            String[] message_ids) throws SOAPRequestException {
         try {
-    		SOAPElement messageIdsElement = createElement("messageIds", NAMESPACE);
+            SOAPElement rootElement = createElement("messageIds", "",
+                    "http://service.ebms.edi.cecid.hku.hk/", "MessageIDs");
 
             for (int i = 0; i < message_ids.length; i++) {
-                SOAPElement childElement = createElement("messageId", NAMESPACE, message_ids[i]);
-                messageIdsElement.addChildElement(childElement);
+                SOAPElement childElement = createText("messageId",
+                        message_ids[i], "http://service.ebms.edi.cecid.hku.hk/");
+                rootElement.addChildElement(childElement);
             }
-            
-        	if (wsi) {
-        		// Kenneth Wong [20170811] : To reduce the noise in ebms.log
-                // EbmsProcessor.core.log.debug("WS-I Response");
-        		
-        		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
-                responseElement.addChildElement(messageIdsElement);
-                response.setBodies(new SOAPElement[] { responseElement });        		
-        	} else {
-                // Kenneth Wong [20170811] : To reduce the noise in ebms.log
-                // EbmsProcessor.core.log.debug("Non WS-I Response");
-        		
-                response.setBodies(new SOAPElement[] { messageIdsElement });        		        		
-        	}
 
+            response.setBodies(new SOAPElement[] { rootElement });
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",
                     e);
