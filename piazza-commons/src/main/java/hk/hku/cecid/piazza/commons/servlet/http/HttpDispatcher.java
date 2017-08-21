@@ -4,8 +4,13 @@ import hk.hku.cecid.piazza.commons.Sys;
 import hk.hku.cecid.piazza.commons.servlet.RequestListenerException;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -60,6 +65,27 @@ public class HttpDispatcher extends HttpServlet {
      */
     public void destroy() {
         super.destroy();
+
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
+            try {
+                DriverManager.deregisterDriver(driver);
+                Sys.main.log.debug("Deregistering jdbc driver: " + driver);
+            } catch (SQLException e) {
+                Sys.main.log.error("Error deregistering jdbc driver: " + driver);
+            }
+        }
+
+        try {
+            Class<?> clazz = Class.forName("com.mysql.jdbc.AbandonedConnectionCleanupThread");
+            Method method = (clazz == null ? null : clazz.getMethod("shutdown"));
+            if (method != null) {
+                method.invoke(null);
+            }
+        }
+        catch (Throwable t) {}
+
         dispatcherContext.unregisterAll();
         Sys.main.log.info(servletConfig.getServletName()
                 + " destroyed successfully");
