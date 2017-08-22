@@ -15,6 +15,8 @@ import hk.hku.cecid.piazza.commons.soap.WebServicesRequest;
 import hk.hku.cecid.piazza.commons.soap.WebServicesResponse;
 
 public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
+
+	public static String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
 	
 	public void serviceRequested(WebServicesRequest request,
             WebServicesResponse response) throws SOAPException,
@@ -57,9 +59,8 @@ public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
 	private void generateReply(WebServicesResponse response, String messageId)
 		throws SOAPRequestException{
 		try {	   
-        	SOAPElement messageIdElement = createText("message_id", messageId,
-                    "http://service.ebms.edi.cecid.hku.hk/");
-            response.setBodies(new SOAPElement[] { messageIdElement });        		        		
+        	SOAPElement messageIdElement = createElement("messageId", NAMESPACE, messageId);
+			response.setBodies(new SOAPElement[] { messageIdElement });          		        		
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",e);
         }

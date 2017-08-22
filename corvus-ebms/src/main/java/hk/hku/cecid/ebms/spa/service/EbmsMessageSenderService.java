@@ -13,6 +13,7 @@ import hk.hku.cecid.piazza.commons.dao.DAOException;
 import hk.hku.cecid.piazza.commons.soap.SOAPFaultException;
 import hk.hku.cecid.piazza.commons.soap.SOAPRequest;
 import hk.hku.cecid.piazza.commons.soap.SOAPRequestException;
+import hk.hku.cecid.piazza.commons.soap.SOAPResponse;
 import hk.hku.cecid.piazza.commons.soap.WebServicesAdaptor;
 import hk.hku.cecid.piazza.commons.soap.WebServicesRequest;
 import hk.hku.cecid.piazza.commons.soap.WebServicesResponse;
@@ -22,6 +23,7 @@ import hk.hku.cecid.piazza.commons.util.StringUtilities;
 import java.util.Iterator;
 
 import javax.xml.soap.AttachmentPart;
+import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
 
@@ -35,6 +37,8 @@ import org.w3c.dom.Element;
  */
 public class EbmsMessageSenderService extends WebServicesAdaptor {
 
+	public static final String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
+    
     public void serviceRequested(WebServicesRequest request,
             WebServicesResponse response) throws SOAPRequestException,
             DAOException {
@@ -190,8 +194,7 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
     private void generateReply(WebServicesResponse response, String messageId)
             throws SOAPRequestException {
         try {
-            SOAPElement responseElement = createText("message_id", messageId,
-                    "http://service.ebms.edi.cecid.hku.hk/");
+            SOAPElement responseElement = createElement("message_id", NAMESPACE, messageId);
             response.setBodies(new SOAPElement[] { responseElement });
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",

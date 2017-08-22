@@ -13,9 +13,8 @@ import hk.hku.cecid.piazza.commons.soap.WebServicesResponse;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
-
-import org.w3c.dom.Element;
 
 /**
  * EbmsMessageReceiverListService
@@ -33,7 +32,7 @@ public class EbmsMessageReceiverListService extends WebServicesAdaptor {
             WebServicesResponse response) throws SOAPRequestException,
             DAOException {
 
-        Element[] bodies = request.getBodies();
+		SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
         String cpaId = getText(bodies, "cpaId");
         String service = getText(bodies, "service");
         String action = getText(bodies, "action");
@@ -103,16 +102,14 @@ public class EbmsMessageReceiverListService extends WebServicesAdaptor {
     private void generateReply(WebServicesResponse response,
             String[] message_ids) throws SOAPRequestException {
         try {
-            SOAPElement rootElement = createElement("messageIds", "",
-                    "http://service.ebms.edi.cecid.hku.hk/", "MessageIDs");
+    		SOAPElement messageIdsElement = createElement("messageIds", NAMESPACE);
 
             for (int i = 0; i < message_ids.length; i++) {
-                SOAPElement childElement = createText("messageId",
-                        message_ids[i], "http://service.ebms.edi.cecid.hku.hk/");
-                rootElement.addChildElement(childElement);
+                SOAPElement childElement = createElement("messageId", NAMESPACE, message_ids[i]);
+                messageIdsElement.addChildElement(childElement);
             }
 
-            response.setBodies(new SOAPElement[] { rootElement });
+            response.setBodies(new SOAPElement[] { messageIdsElement }); 
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",
                     e);

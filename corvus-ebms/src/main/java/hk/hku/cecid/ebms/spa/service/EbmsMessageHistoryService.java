@@ -3,9 +3,8 @@ package hk.hku.cecid.ebms.spa.service;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
-
-import org.w3c.dom.Element;
 
 import hk.hku.cecid.ebms.spa.EbmsProcessor;
 import hk.hku.cecid.ebms.spa.dao.MessageDAO;
@@ -25,7 +24,7 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	  public void serviceRequested(WebServicesRequest request, WebServicesResponse response) 
 	  		throws SOAPRequestException, DAOException{
 		  
-		  Element[] bodies = request.getBodies();
+		  SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
 	      String msgId = getText(bodies, "messageId");
 	      String msgBox = getText(bodies, "messageBox");
 	      String convId = getText(bodies, "conversationId");
@@ -116,25 +115,24 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	    private void generateReply(WebServicesResponse response,
 	    	List  messageList) throws SOAPRequestException {
 	        try {
-	            SOAPElement rootElement = createElement("messageList", "",
-	            		NAMESPACE, "MessageList");
-
+	    		SOAPElement listElement = createElement("messageList", NAMESPACE); 
+	        	
 	            Iterator messagesIterator = messageList.iterator();
 
 	            for (int i = 0; messagesIterator.hasNext(); i++) {
 	                MessageDVO currentMessage = (MessageDVO) messagesIterator.next();
 
 	                // Create Message Element and append Value of MessageID and MessageBox 
-	                SOAPElement msgElement = createElement("messageElement", "", NAMESPACE, "MessageElement")	;                
-	                SOAPElement childElement_MsgId = createText("messageId", currentMessage.getMessageId(), NAMESPACE);                	               
-	                SOAPElement childElement_MsgBox = createText("messageBox", currentMessage.getMessageBox(), NAMESPACE);
+		            SOAPElement msgElement = createElement("messageElement", NAMESPACE);
+	                SOAPElement childElement_MsgId = createElement("messageId", NAMESPACE, currentMessage.getMessageId());                	               
+	                SOAPElement childElement_MsgBox = createElement("messageBox", NAMESPACE, currentMessage.getMessageBox());
 	                msgElement.addChildElement(childElement_MsgId);
 	                msgElement.addChildElement(childElement_MsgBox);
 	                
-	                rootElement.addChildElement(msgElement);
+	                listElement.addChildElement(msgElement);
 	            }
 
-	            response.setBodies(new SOAPElement[] { rootElement });
+		        response.setBodies(new SOAPElement[] { listElement });
 	        } catch (Exception e) {
 	            throw new SOAPRequestException("Unable to generate reply message", e);
 	        }

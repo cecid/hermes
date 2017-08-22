@@ -31,7 +31,8 @@ import org.w3c.dom.Element;
  */
 public class EbmsMessageReceiverService extends WebServicesAdaptor {
 	
-
+	public static String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
+    
     public void serviceRequested(WebServicesRequest request,
             WebServicesResponse response) throws SOAPRequestException,
             DAOException {
@@ -98,9 +99,7 @@ public class EbmsMessageReceiverService extends WebServicesAdaptor {
     private void generateReply(WebServicesResponse response, boolean isReturned)
             throws SOAPRequestException {
         try {
-            SOAPElement responseElement = createText("hasMessage", Boolean
-                    .toString(isReturned),
-                    "http://service.ebms.edi.cecid.hku.hk/");
+            SOAPElement responseElement = createElement("hasMessage", NAMESPACE, Boolean.toString(isReturned));
             response.setBodies(new SOAPElement[] { responseElement });
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",
