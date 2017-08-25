@@ -26,13 +26,13 @@ Introduced REST API for AS2 messaging (For details, pls refer to https://app.swa
 
 [Bug Fixes]
 - "Corvus Kernel has been shutdown successfully " in corvus.log is changed to log type "INFO" instead of "ERROR".
-- Add deregistration and shutdown logic for Hermes running in Tomcat, to avoid memory leak if Tomcat is shutdown abnormally.
+- Add de-registration and shutdown logic for Hermes running in Tomcat, to avoid memory leak if Tomcat is shutdown abnormally.
 - Fix error message logged in tomcat.log about security constraint due to the misconfiguration in web.xml.
 - In Restful API /message/send/ebms, if payload is corrupted and cannot base64 decoded, an error response with error-code 10006 will be returned instead of a success response.
 - In all Restful API, HTTP code of 400 will be returned instead of 200 for illegal request value. 
 - In add parthernship API, the endpoint URL will be validated.
 - Fix several typo error in log message.
-- Solve the warning message in log file by handling the both file separator of Linux and Windows properly.
+- Solve the warning message issue in log file by handling the both file separator of Linux and Windows properly.
 - Various minor bug fixes
 
 
