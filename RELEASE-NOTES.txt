@@ -13,7 +13,7 @@ Sep 8, 2017
     POST /message/history/as2 :       Reset message delivery status
     GET /message/receive/as2 :        Get a list of received AS2 message
     POST /message/receive/as2 :       Get AS2 message by identifier
-- Add new restful API /message/redownload/ebms to change the incoming message status from DL to PS for redownload.
+- Added new restful API /message/redownload/ebms to change the incoming message status from DL to PS for redownload.
 
 [Upgrades and improvements]
 - Disabled the SOAP Fault in SOAP response, return a HTTP/500 error code instead.
