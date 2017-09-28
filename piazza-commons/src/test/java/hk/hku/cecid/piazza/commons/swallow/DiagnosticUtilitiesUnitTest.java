@@ -55,7 +55,7 @@ public class DiagnosticUtilitiesUnitTest
 		{
 			DiagnosticUtilities.getInstance().dumpAllThread();	
 		}
-		catch(IOException ioex)
+		catch(Exception ioex)
 		{
 			ioex.printStackTrace();
 		}

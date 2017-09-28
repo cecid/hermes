@@ -15,45 +15,31 @@ import hk.hku.cecid.piazza.commons.soap.WebServicesRequest;
 import hk.hku.cecid.piazza.commons.soap.WebServicesResponse;
 
 public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
-	
-	public static String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
 
+	public static String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
+	
 	public void serviceRequested(WebServicesRequest request,
             WebServicesResponse response) throws SOAPException,
             DAOException, SOAPFaultException {
 		 
-		 String msgId = null;
-		 boolean wsi = false;
+		  String msgId = null;
 		 
-		 SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-	      // WS-I <RequestElement> 
-	      if (bodies != null && bodies.length == 1 && 
-	    		  isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	    	  
-	    	 EbmsProcessor.core.log.debug("WS-I Request");
-			 wsi = true;
-			  
-			 SOAPElement[] childElement = getChildElementArray(bodies[0]);
-			 msgId = getText(childElement, "messageId");
-	      }else {
-	    	  EbmsProcessor.core.log.debug("Non WS-I Request"); 
-	    	  msgId = getText(bodies, "messageId");		
-	      }
+		  SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
+   	      msgId = getText(bodies, "messageId");		
 	      
 	      if (msgId == null) {
 	            throw new SOAPFaultException(SOAPFaultException.SOAP_FAULT_CLIENT,
 	                    "Missing request information");
-	        }
+	      }
 	      
 	      EbmsProcessor.core.log.debug("Permit redownload request - Message ID: "
 	                + msgId);
 	      
-	      EbmsMessageStatusReverser 
-		  	msgReverser = new EbmsMessageStatusReverser();
+	      EbmsMessageStatusReverser msgReverser = new EbmsMessageStatusReverser();
 	      
 	      try{
 			  msgReverser.updateToDownload(msgId);
-			  generateReply(response, wsi,  msgId);
+			  generateReply(response, msgId);
 		  }catch(SOAPRequestException soapReqExp){
 			  // This is unexpected exception may cause during
 			  // generating response back to client
@@ -70,21 +56,11 @@ public class EbmsPermitRedownloadService  extends WebServicesAdaptor{
 		  }
 	}
 	
-	private void generateReply(WebServicesResponse response, boolean wsi, String messageId)
+	private void generateReply(WebServicesResponse response, String messageId)
 		throws SOAPRequestException{
 		try {	   
         	SOAPElement messageIdElement = createElement("messageId", NAMESPACE, messageId);
-        	if (wsi) {
-        		EbmsProcessor.core.log.debug("WS-I Response");
-        		
-        		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
-                responseElement.addChildElement(messageIdElement);
-                response.setBodies(new SOAPElement[] { responseElement });        		
-        	} else {
-        		EbmsProcessor.core.log.debug("Non WS-I Response");
-        		
-                response.setBodies(new SOAPElement[] { messageIdElement });        		        		
-        	}
+			response.setBodies(new SOAPElement[] { messageIdElement });          		        		
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",e);
         }

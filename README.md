@@ -20,10 +20,10 @@ Full documentation is available at [hermes.cecid.org](http://hermes.cecid.org/).
 ### Install Hermes with Docker
 1. Install the [Docker Engine](https://docs.docker.com/engine/installation/).
 2. Run the Docker container for Hermes database (MySQL). <br/>
-`docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.1`
+`docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.2`
 
 3. Run the Docker container for Hermes application server (Tomcat). <br/>
-`docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.1`
+`docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.2`
 
 4. Log in to the Hermes administration console at
 `http://localhost:8080/corvus/admin/home` (username:`corvus`, password:`corvus`)
@@ -34,7 +34,7 @@ to check if Hermes is up and running.
 1. Install [Apache Maven](http://maven.apache.org/install.html)
 2. Execute processes needed prior to actual project build. <br/>
 `mvn pre-clean`
-3. Compile Hermes.<br/>
+3. Compile Hermes and build JAR installer file.<br/>
 `mvn install`
 4. Locate `hermes2_installer.jar` under the `target/` directory. Install Hermes 
 following the [installation guide](http://hermes.cecid.org/en/latest/installation.html).
@@ -43,3 +43,5 @@ following the [installation guide](http://hermes.cecid.org/en/latest/installatio
 The Java API Documentations are available at
 [javadocs.hermes.cecid.org](http://javadoc.hermes.cecid.org/)
 
+## Digital Signature Setup
+Please refer to [How to send messages using Self Signed Certificate](http://hermes.cecid.org/en/latest/message_signing.html#how-to-send-messages-using-self-signed-certificate).

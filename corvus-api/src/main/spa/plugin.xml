@@ -18,6 +18,7 @@
 
     <requires>
       <import plugin="hk.hku.cecid.ebms" />
+      <import plugin="hk.hku.cecid.edi.as2" />
     </requires>
 
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Greeting Listener">
@@ -38,6 +39,16 @@
     <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message Receive Listener">
         <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageReceiveApiListener"/> 
         <parameter name="context" value="/message/receive/*" />
+    </extension>
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message Redownload Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageRedownloadApiListener"/> 
+        <parameter name="context" value="/message/redownload/*" />
+    </extension>
+
+    <extension point="hk.hku.cecid.piazza.corvus.api.httpd.listener" name="API Plugin Message History Listener">
+        <parameter name="class" value="hk.hku.cecid.hermes.api.listener.HermesMessageHistoryApiListener"/>
+        <parameter name="context" value="/message/history/*" />
     </extension>
 
 </plugin>

@@ -7,8 +7,8 @@
 	<includeBaseDirectory>false</includeBaseDirectory>		
 	<fileSets>
 		<fileSet>
-			<directory>${project.build.directory}/embedded</directory>
-			<outputDirectory>/</outputDirectory>
+			<directory>${project.build.directory}${file.separator}embedded</directory>
+			<outputDirectory>${file.separator}</outputDirectory>
 			<excludes>
 <!--				
 				<exclude>plugins/corvus-sfrm/**</exclude>
@@ -18,8 +18,8 @@
 			</excludes>
 		</fileSet>
 		<fileSet>
-			<directory>${project.build.directory}/embedded/sample</directory>
-			<outputDirectory>/sample</outputDirectory> 		
+			<directory>${project.build.directory}${file.separator}embedded${file.separator}sample</directory>
+			<outputDirectory>${file.separator}sample</outputDirectory>
 			<excludes>
 				<exclude>*</exclude>				
 				<exclude>config/as2-config/**</exclude>																															
@@ -35,8 +35,8 @@
 			</excludes>			
 		</fileSet>	
 		<fileSet>
-			<directory>${project.build.directory}/embedded/sample</directory>
-			<outputDirectory>/sample</outputDirectory> 		
+			<directory>${project.build.directory}${file.separator}embedded${file.separator}sample</directory>
+			<outputDirectory>${file.separator}sample</outputDirectory>
 			<fileMode>0755</fileMode>	
 			<includes>
 				<include>*.sh</include>
@@ -56,8 +56,8 @@
 			</excludes>						
 		</fileSet>		
 		<fileSet>
-			<directory>${project.basedir}/sql</directory>
-			<outputDirectory>/sql</outputDirectory>
+			<directory>${project.basedir}${file.separator}sql</directory>
+			<outputDirectory>${file.separator}sql</outputDirectory>
 			<excludes>
 				<exclude>*sfrm.sql</exclude>
 			</excludes>
@@ -65,8 +65,8 @@
 	</fileSets>
 	<files>
 		<file>
-			<source>${project.parent.basedir}/RELEASE-NOTES.txt</source>
-			<outputDirectory>/</outputDirectory>
+			<source>${project.parent.basedir}${file.separator}RELEASE-NOTES.txt</source>
+			<outputDirectory>${file.separator}</outputDirectory>
 		</file>
 	</files>
 </assembly>

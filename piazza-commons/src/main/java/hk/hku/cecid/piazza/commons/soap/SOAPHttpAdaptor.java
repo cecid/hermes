@@ -23,9 +23,9 @@ import javax.xml.soap.SOAPMessage;
 /**
  * SOAPHttpAdaptor is both an HttpRequestListener and SOAPRequestListener. It is
  * an adaptor for handling SOAP on Http requests.
- * 
+ *
  * @author Hugo Y. K. Lam
- *  
+ *
  */
 public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
         SOAPRequestListener {
@@ -42,7 +42,7 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
 
     /**
      * Creates a new instance of MessageFactory.
-     * 
+     *
      * @throws RequestListenerException if unable to create MessageFactory.
      * @see hk.hku.cecid.piazza.commons.servlet.RequestListener#listenerCreated()
      */
@@ -59,7 +59,7 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
 
     /**
      * Cleans up resources.
-     * 
+     *
      * @see hk.hku.cecid.piazza.commons.servlet.RequestListener#listenerDestroyed()
      */
     public void listenerDestroyed() throws RequestListenerException {
@@ -68,7 +68,7 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
 
     /**
      * Processes the HTTP request and transforms it into a SOAP request.
-     * 
+     *
      * @see hk.hku.cecid.piazza.commons.servlet.http.HttpRequestListener#processRequest(javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
@@ -76,7 +76,7 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
             HttpServletResponse response) throws RequestListenerException {
         try {
             Headers headers = new Headers(request, response);
-            
+
             /*
              * Create a SOAP response object.
              */
@@ -89,10 +89,10 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
                  * Create a SOAP request object.
                  */
                 MimeHeaders mimeHeaders = headers.getMimeHeaders();
-                
+
                 byte[] requestBytes;
                 InputStream requestStream;
-                
+
                 if (isCacheEnabled()) {
                     requestBytes = IOHandler.readBytes(request.getInputStream());
                     requestStream = new ByteArrayInputStream(requestBytes);
@@ -101,7 +101,7 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
                     requestBytes = null;
                     requestStream = request.getInputStream();
                 }
-                
+
                 SOAPMessage soapMessage;
                 try {
                     soapMessage = msgFactory.createMessage(mimeHeaders,
@@ -159,34 +159,34 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
                 else {
                     response.setContentType(null);
                 }
-                
+
                 MimeHeaders replyHeaders = replyMessage.getMimeHeaders();
                 Iterator iter = replyHeaders.getAllHeaders();
                 while (iter.hasNext()) {
-                	MimeHeader header = (MimeHeader)iter.next();
-                	
-        			// .Net only supports Multipart/Related MIME type in small letter 
-                	String newValue = "";
-                	if ("Content-Type".equals(header.getName())) {
-                		String value = header.getValue();
-                		
-                		String[] values = value.split(";");
-                		for (String s: values) {
-                			s = s.trim();
-                			
-                			if (s.toLowerCase().startsWith("multipart")) 
-                				s = s.toLowerCase();
-                			
-            				if ("".equals(newValue))
-            					newValue = s;
-            				else
-            					newValue += "; " + s;	
-                		}
+                    MimeHeader header = (MimeHeader)iter.next();
 
-                		replyMessage.getMimeHeaders().setHeader("Content-Type", newValue);
-                	}
+                    // .Net only supports Multipart/Related MIME type in small letter
+                    String newValue = "";
+                    if ("Content-Type".equals(header.getName())) {
+                        String value = header.getValue();
+
+                        String[] values = value.split(";");
+                        for (String s: values) {
+                            s = s.trim();
+
+                            if (s.toLowerCase().startsWith("multipart"))
+                                s = s.toLowerCase();
+
+                            if ("".equals(newValue))
+                                newValue = s;
+                            else
+                                newValue += "; " + s;
+                        }
+
+                        replyMessage.getMimeHeaders().setHeader("Content-Type", newValue);
+                    }
                 }
-                
+
                 headers.putMimeHeaders(replyMessage.getMimeHeaders());
 
                 /*
@@ -213,18 +213,20 @@ public abstract class SOAPHttpAdaptor extends HttpRequestAdaptor implements
     /**
      * Checks if errors in the request process should be reported as a SOAP
      * fault to the client.
-     * 
+     *
      * @return true if SOAP fault reporting is enabled.
      */
     protected boolean isSOAPFaultEnabled() {
-        return true;
+        // START Gets CUSTOMIZATION CHANGE#007
+        return false;
+        // END Gets CUSTOMIZATION CHANGE#007
     }
-    
+
     /**
-     * Checks if cache in memory should be enabled. If this method returns 
+     * Checks if cache in memory should be enabled. If this method returns
      * false, it indicates that the SOAP request object will not provide a byte
      * array cache of the original SOAP request.
-     * 
+     *
      * @return true if cache in memory should be enabled.
      */
     protected boolean isCacheEnabled() {

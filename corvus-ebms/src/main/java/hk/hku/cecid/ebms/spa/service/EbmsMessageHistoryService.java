@@ -24,48 +24,16 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	  public void serviceRequested(WebServicesRequest request, WebServicesResponse response) 
 	  		throws SOAPRequestException, DAOException{
 		  
-	      String msgId = null;
-	      String msgBox = null;
-	      String convId = null;
-	      String cpaId = null;
-	      String service = null;
-	      String action = null;
-	      String status = null;
-	      String limit = null;
-	      
-	      boolean wsi = false;
-	      	      
-	      SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-	      	// WS-I <RequestElement> 
-		    if (bodies != null && bodies.length == 1 && 
-		    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-		    	
-		    	EbmsProcessor.core.log.debug("WS-I Request");
-		    	
-		    	wsi = true;
-		    	
-	    		SOAPElement[] childElement = getChildElementArray(bodies[0]);	  
-	  	      	msgId = getText(childElement, "messageId");
-		      	msgBox = getText(childElement, "messageBox");
-		      	convId = getText(childElement, "conversationId");
-		      	cpaId = getText(childElement, "cpaId");
-		      	service = getText(childElement, "service");
-		      	action = getText(childElement, "action");
-		      	status = getText(childElement, "status");
-		      	limit = getText(childElement, "limit");
-			} else {
-				EbmsProcessor.core.log.debug("Non WS-I Request");
-			
-			  	msgId = getText(bodies, "messageId");
-			  	msgBox = getText(bodies, "messageBox");
-			  	convId = getText(bodies, "conversationId");
-			  	cpaId = getText(bodies, "cpaId");
-			  	service = getText(bodies, "service");
-			  	action = getText(bodies, "action");
-			  	status = getText(bodies, "status");
-			  	limit = getText(bodies, "limit");
-			}
-	        		
+		  SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
+	      String msgId = getText(bodies, "messageId");
+	      String msgBox = getText(bodies, "messageBox");
+	      String convId = getText(bodies, "conversationId");
+	      String cpaId = getText(bodies, "cpaId");
+	      String service = getText(bodies, "service");
+	      String action = getText(bodies, "action");
+	      String status = getText(bodies, "status");
+	      String limit = getText(bodies, "limit");
+        
 		  EbmsProcessor.core.log
           .info("Message History Query received request - "+
         		  "MessageID : " + (msgId ==null?"NULL":msgId)
@@ -101,7 +69,7 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 			  
 			  List results = msgDAO.findMessagesByHistory(criteriaDVO, resultLimit, 0);
 			  
-			  generateReply(response, results, wsi);
+			  generateReply(response, results);
 			  
 		  }catch(DAOException daoExp){
 			  throw new DAOException("Unable to query the repository", daoExp);
@@ -145,11 +113,12 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	     * @throws SOAPRequestException
 	     */
 	    private void generateReply(WebServicesResponse response,
-	    	List  messageList, boolean wsi) throws SOAPRequestException {
+	    	List  messageList) throws SOAPRequestException {
 	        try {
 	    		SOAPElement listElement = createElement("messageList", NAMESPACE); 
 	        	
 	            Iterator messagesIterator = messageList.iterator();
+
 	            for (int i = 0; messagesIterator.hasNext(); i++) {
 	                MessageDVO currentMessage = (MessageDVO) messagesIterator.next();
 
@@ -163,17 +132,7 @@ public class EbmsMessageHistoryService extends WebServicesAdaptor{
 	                listElement.addChildElement(msgElement);
 	            }
 
-	        	if (wsi) {
-	        		EbmsProcessor.core.log.debug("WS-I Response");
-	        		
-		    		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE); 
-		            responseElement.addChildElement(listElement);
-		            response.setBodies(new SOAPElement[] { responseElement });
-	        	} else {
-	        		EbmsProcessor.core.log.debug("Non WS-I Response");
-	        		
-		            response.setBodies(new SOAPElement[] { listElement }); 	        		
-	        	}
+		        response.setBodies(new SOAPElement[] { listElement });
 	        } catch (Exception e) {
 	            throw new SOAPRequestException("Unable to generate reply message", e);
 	        }

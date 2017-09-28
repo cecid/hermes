@@ -39,11 +39,11 @@
     <files>
         <file>
           <source>spa.xml</source>
-          <outputDirectory>/</outputDirectory>
+          <outputDirectory>${file.separator}</outputDirectory>
         </file>
         <file>
           <source>pom-public.xml</source>
-          <outputDirectory>/</outputDirectory>
+          <outputDirectory>${file.separator}</outputDirectory>
           <destName>pom.xml</destName>
         </file> 
     </files>

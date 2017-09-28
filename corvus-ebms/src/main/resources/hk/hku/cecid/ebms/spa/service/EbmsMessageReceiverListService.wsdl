@@ -1,74 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
-<definitions targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
-	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-	<types>
-		<schema xmlns="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
-			elementFormDefault="qualified">
-			<element name="RequestElement">
-				<complexType>
-					<sequence>
-						<element name="cpaId" type="string" minOccurs="1"/>
-						<element name="service" type="string" minOccurs="1"/>
-						<element name="action" type="string" minOccurs="1"/>
-						<element name="convId" type="string" minOccurs="0"/>
-						<element name="fromPartyId" type="string" minOccurs="0"/>
-						<element name="fromPartyType" type="string" minOccurs="0"/>
-						<element name="toPartyId" type="string" minOccurs="0"/>
-						<element name="toPartyType" type="string" minOccurs="0"/>
-						<element name="numOfMessages" type="int" minOccurs="0"/>
-					</sequence>
-				</complexType>
-			</element>
-			<element name="ResponseElement">
-				<complexType>
-					<sequence>
-						<element name="messageIds">
-							<complexType>
-								<sequence>
-									<element name="messageId" type="string" minOccurs="0" maxOccurs="unbounded" />
-								</sequence>
-							</complexType>
-						</element>
-					</sequence>
-				</complexType>
-			</element>
-		</schema>
-	</types>
-
-	<message name="EbmsRequestMsg">
-		<part name="EbmsRequestMsg" element="tns:RequestElement" />
-	</message>
-	<message name="EbmsResponseMsg">
-		<part name="EbmsResponseMsg" element="tns:ResponseElement" />
-	</message>
-
-	<portType name="EbmsReceiverList">
-		<operation name="Request">
-			<input message="tns:EbmsRequestMsg" />
-			<output message="tns:EbmsResponseMsg" />
-		</operation>
-	</portType>
-
-	<binding name="EbmsSoapHttpReceiverList" type="tns:EbmsReceiverList">
-		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
-			style="document" />
-		<operation name="Request">
-			<soap:operation soapAction="ebmsreceivelist" style="document" />
-			<input>
-				<soap:body use="literal" />
-			</input>
-			<output>
-				<soap:body use="literal" />
-			</output>
-		</operation>
-	</binding>
-
-	<service name="EbmsMessageReceiverList">
-		<documentation>Documentation not available.</documentation>
-		<port name="EbmsReceiverList" binding="tns:EbmsSoapHttpReceiverList">
-			<soap:address location="http://127.0.0.1:8080/corvus/httpd/ebms/receiver_list" />
-		</port>
-	</service>
+<?xml version="1.0" encoding="utf-8"?> 
+<definitions 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:s="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"    
+	xmlns:p="http://service.ebms.edi.cecid.hku.hk/" 
+	targetNamespace="http://service.ebms.edi.cecid.hku.hk/"
+>
+<types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+        <xs:complexType name="MessageIDs">
+            <xs:sequence>
+                <xs:element name="messageId" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:schema>
+</types>
+<message name="EbmsRequestMsg">
+  <part name="cpaId" type="s:string" /> 
+  <part name="service" type="s:string" /> 
+  <part name="action" type="s:string" />
+  <part name="convId" type="s:string" />
+  <part name="fromPartyId" type="s:string" />
+  <part name="fromPartyType" type="s:string" />
+  <part name="toPartyId" type="s:string" />
+  <part name="toPartyType" type="s:string" />
+  <part name="numOfMessages" type="s:int" /> 
+</message>
+<message name="EbmsResponseMsg">
+  <part name="messageIds" type="p:MessageIDs" /> 
+</message>
+<portType name="EbmsReceiverList">
+  <operation name="Request">
+    <input message="p:EbmsRequestMsg" /> 
+    <output message="p:EbmsResponseMsg" /> 
+  </operation>
+</portType>
+<binding name="EbmsSoapHttpReceiverList" type="p:EbmsReceiverList">
+  <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" /> 
+  <operation name="Request">
+    <soap:operation soapAction="ebmsreceivelist" style="document" /> 
+    <input>
+      <soap:body use="literal" /> 
+    </input>
+    <output>
+      <soap:body use="literal" /> 
+    </output>
+  </operation>
+</binding>
+<service name="EbmsMessageReceiverList">
+  <documentation>Documentation not available.</documentation> 
+  <port name="EbmsReceiverList" binding="p:EbmsSoapHttpReceiverList">
+    <soap:address location="http://127.0.0.1:8080/corvus/httpd/ebms/receiver_list" /> 
+  </port>
+</service>
 </definitions>

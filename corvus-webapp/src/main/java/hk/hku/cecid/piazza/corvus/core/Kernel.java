@@ -12,9 +12,9 @@ import hk.hku.cecid.piazza.commons.Sys;
  * Kernel is the nucleus of Piazza Corvus. It initializes the basic configuration and
  * sets up the plugin registry. After setting up the plugin registry, it
  * activates the plugins and extension points and then Corvus is started.
- * 
+ *
  * @author Hugo Y. K. Lam
- *  
+ *
  */
 public class Kernel {
 
@@ -23,7 +23,7 @@ public class Kernel {
     private PluginRegistry pluginRegistry;
 
     private boolean        hasErrors;
-    
+
     private Date           startupTime;
 
     /**
@@ -32,17 +32,17 @@ public class Kernel {
     private Kernel() {
         try {
             startupTime = new Date();
-    
+
             /*
              * Set the default system module group descriptor
              */
             String sysModuleGroupProp = "sys.module.group";
             if (System.getProperty(sysModuleGroupProp) == null) {
-                System.setProperty(sysModuleGroupProp, 
-                        getClass().getPackage().getName().replace('.', '/') + 
+                System.setProperty(sysModuleGroupProp,
+                        getClass().getPackage().getName().replace('.', '/') +
                         "/conf/corvus.module-group.xml");
             }
-            
+
             /*
              * Create the home directory, if it does not exist.
              */
@@ -54,14 +54,14 @@ public class Kernel {
                     home.mkdirs();
                 }
             }
-            
+
             /*
              * Set the environment properties.
              */
             Properties env = Sys.main.properties
                     .createProperties("/corvus/environment/properties/*");
             System.getProperties().putAll(env);
-    
+
             /*
              * Set the default servlet encoding.
              */
@@ -73,7 +73,7 @@ public class Kernel {
                     requestEncoding);
             HttpDispatcherContext.getDefaultContext().setResponseEncoding(
                     responseEncoding);
-    
+
             /*
              * Construct and activate the plugin registry.
              */
@@ -87,7 +87,7 @@ public class Kernel {
                     pluginDescriptorName);
 
             pluginRegistry.activate();
-            
+
             if (pluginRegistry.hasErrors()) {
                 hasErrors = true;
             } else {
@@ -108,12 +108,14 @@ public class Kernel {
         if (pluginRegistry != null) {
             pluginRegistry.deactivate();
         }
-        Sys.main.log.error("Corvus Kernel has been shutdown successfully");
+        // START Gets Customization CHANGE #011
+        Sys.main.log.info("Corvus Kernel has been shutdown successfully");
+        // END Gets Customization CHANGE #011
     }
-    
+
     /**
      * Retrieves the plugin registry managed by this kernel.
-     * 
+     *
      * @return the plugin registry.
      */
     public PluginRegistry getPluginRegistry() {
@@ -121,18 +123,18 @@ public class Kernel {
     }
 
     /**
-     * Retrieves the startup time of this kernel. 
-     * 
+     * Retrieves the startup time of this kernel.
+     *
      * @return the startup time.
      */
     public Date getStartupTime() {
         return startupTime;
     }
-    
+
     /**
      * Checks whether there were any errors in the start up process of this
      * kernel.
-     * 
+     *
      * @return true if there were any errors in the start up process.
      */
     public boolean hasErrors() {
@@ -141,7 +143,7 @@ public class Kernel {
 
     /**
      * Gets the single kernel instance.
-     * 
+     *
      * @return the kernel instance.
      */
     public static Kernel getInstance() {

@@ -30,14 +30,16 @@ public class AS2PermitRedownloadService extends WebServicesAdaptor {
 	      // WS-I <RequestElement> 
 	      if (bodies != null && bodies.length == 1 && 
 	    		  isElement(bodies[0], "RequestElement", NAMESPACE)) {
-	    	  
-	    	 AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
+
+			 // Kenneth Wong [20170811] : To reduce the noise in as2.log 
+	    	 // AS2PlusProcessor.getInstance().getLogger().debug("WS-I Request");
 			 wsi = true;
 			  
 			 SOAPElement[] childElement = getChildElementArray(bodies[0]);
 			 msgId = getText(childElement, "messageId");
 	      }else {
-	    	  AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request"); 
+			  // Kenneth Wong [20170811] : To reduce the noise in as2.log
+	    	  // AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Request"); 
 	    	  msgId = getText(bodies, "messageId");		
 	      }
 	      
@@ -77,13 +79,15 @@ public class AS2PermitRedownloadService extends WebServicesAdaptor {
 	        try {	   
 	        	SOAPElement messageIdElement = createElement("messageId", NAMESPACE, messageId);
 	        	if (wsi) {
-	        		AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
+					// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	        		// AS2PlusProcessor.getInstance().getLogger().debug("WS-I Response");
 	        		
 	        		SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);
 	                responseElement.addChildElement(messageIdElement);
 	                response.setBodies(new SOAPElement[] { responseElement });        		
 	        	} else {
-	        		AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
+					// Kenneth Wong [20170811] : To reduce the noise in as2.log
+	        		// AS2PlusProcessor.getInstance().getLogger().debug("Non WS-I Response");
 	        		
 	                response.setBodies(new SOAPElement[] { messageIdElement });        		        		
 	        	}

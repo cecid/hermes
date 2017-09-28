@@ -27,6 +27,8 @@ import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPMessage;
 
+import org.w3c.dom.Element;
+
 /**
  * EbmsMessageSenderService
  * 
@@ -36,70 +38,26 @@ import javax.xml.soap.SOAPMessage;
 public class EbmsMessageSenderService extends WebServicesAdaptor {
 
 	public static final String NAMESPACE = "http://service.ebms.edi.cecid.hku.hk/";
-	
+    
     public void serviceRequested(WebServicesRequest request,
             WebServicesResponse response) throws SOAPRequestException,
             DAOException {
 
-        String cpaId = null;
-        String service = null;
-        String serviceType = null;
-        String action = null;        
-        String convId = null;
-        String fromPartyId = null;
-        String[] fromPartyIds = null;
-        String fromPartyType = null;
-        String[] fromPartyTypes = null;
-        String toPartyId = null;
-        String[] toPartyIds = null;
-        String toPartyType = null;
-        String[] toPartyTypes = null;
-        String refToMessageId = null;            
-        
-        boolean wsi = false;
-        
-        SOAPBodyElement[] bodies = (SOAPBodyElement[]) request.getBodies();
-		// WS-I <RequestElement> 
-	    if (bodies != null && bodies.length > 0 && 
-	    		isElement(bodies[0], "RequestElement", NAMESPACE)) {
-        	
-	    	EbmsProcessor.core.log.debug("WS-I Request");
-	    	
-	    	wsi = true;
-	    	
-	    	SOAPElement[] childElement = getChildElementArray(bodies[0]);
-            cpaId = getText(childElement, "cpaId");
-            service = getText(childElement, "service");
-            serviceType = getText(childElement, "serviceType");
-            action = getText(childElement, "action");        
-            convId = getText(childElement, "convId");
-            fromPartyId = getText(childElement, "fromPartyId");
-            fromPartyIds = StringUtilities.tokenize(fromPartyId, ",");
-            fromPartyType = getText(childElement, "fromPartyType");
-            fromPartyTypes = StringUtilities.tokenize(fromPartyType, ",");
-            toPartyId = getText(childElement, "toPartyId");
-            toPartyIds = StringUtilities.tokenize(toPartyId, ",");
-            toPartyType = getText(childElement, "toPartyType");
-            toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
-            refToMessageId = getText(childElement, "refToMessageId");
-    	} else {
-    		EbmsProcessor.core.log.debug("Non WS-I Request");
-    		
-	        cpaId = getText(bodies, "cpaId");
-	        service = getText(bodies, "service");
-	        serviceType = getText(bodies, "serviceType");
-	        action = getText(bodies, "action");        
-	        convId = getText(bodies, "convId");
-	        fromPartyId = getText(bodies, "fromPartyId");
-	        fromPartyIds = StringUtilities.tokenize(fromPartyId, ",");
-	        fromPartyType = getText(bodies, "fromPartyType");
-	        fromPartyTypes = StringUtilities.tokenize(fromPartyType, ",");
-	        toPartyId = getText(bodies, "toPartyId");
-	        toPartyIds = StringUtilities.tokenize(toPartyId, ",");
-	        toPartyType = getText(bodies, "toPartyType");
-	        toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
-	        refToMessageId = getText(bodies, "refToMessageId");
-        }
+        Element[] bodies = request.getBodies();
+        String cpaId = getText(bodies, "cpaId");
+        String service = getText(bodies, "service");
+        String serviceType = getText(bodies, "serviceType");
+        String action = getText(bodies, "action");        
+        String convId = getText(bodies, "convId");
+        String fromPartyId = getText(bodies, "fromPartyId");
+        String[] fromPartyIds = StringUtilities.tokenize(fromPartyId, ",");
+        String fromPartyType = getText(bodies, "fromPartyType");
+        String[] fromPartyTypes = StringUtilities.tokenize(fromPartyType, ",");
+        String toPartyId = getText(bodies, "toPartyId");
+        String[] toPartyIds = StringUtilities.tokenize(toPartyId, ",");
+        String toPartyType = getText(bodies, "toPartyType");
+        String[] toPartyTypes = StringUtilities.tokenize(toPartyType, ",");
+        String refToMessageId = getText(bodies, "refToMessageId");            
         
         if (cpaId == null || service == null || action == null
                 || convId == null || fromPartyId == null
@@ -154,7 +112,7 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
             
             messageId = Generator.generateMessageID();
             ebxmlMessage.getMessageHeader().setMessageId(messageId);
-            EbmsProcessor.core.log.info("Genereating message id: " + messageId);
+            EbmsProcessor.core.log.info("Generating message id: " + messageId);
 
             msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
             
@@ -223,7 +181,7 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
                     "Error in passing ebms Request to msh outbound", e);
         }
 
-        generateReply(response, messageId, wsi);
+        generateReply(response, messageId);
 
         EbmsProcessor.core.log.info("Outbound payload processed - cpaId: "
                 + cpaId + ", service: " + service + ", action: " + action
@@ -233,28 +191,11 @@ public class EbmsMessageSenderService extends WebServicesAdaptor {
                 + ", refToMessageId: " + refToMessageId);
     }
 
-    private void generateReply(WebServicesResponse response, String messageId, boolean wsi)
+    private void generateReply(WebServicesResponse response, String messageId)
             throws SOAPRequestException {
         try {
-        	if (wsi) {
-        		EbmsProcessor.core.log.debug("WS-I Response");
-        		
-	            SOAPResponse soapResponse = (SOAPResponse) response.getTarget();
-	            SOAPMessage soapResponseMessage = soapResponse.getMessage();
-	            soapResponseMessage.getMimeHeaders().setHeader("Content-Type", "application/xop+xml; type=\"text/xml\"");
-	            soapResponseMessage.getSOAPPart().addMimeHeader("Content-ID", "<SOAPBody>");
-	            soapResponseMessage.getSOAPPart().addMimeHeader("Content-Transfer-Encoding", "binary");
-
-	            SOAPElement responseElement = createElement("ResponseElement", NAMESPACE);	            
-	            SOAPElement messageIdElement = createElement("message_id", NAMESPACE, messageId);
-	            responseElement.addChildElement(messageIdElement);            
-	            response.setBodies(new SOAPElement[] { responseElement });
-        	} else {
-        		EbmsProcessor.core.log.debug("Non WS-I Response");
-        		
-        		SOAPElement responseElement = createElement("message_id", NAMESPACE, messageId);
-                response.setBodies(new SOAPElement[] { responseElement });
-        	}
+            SOAPElement responseElement = createElement("message_id", NAMESPACE, messageId);
+            response.setBodies(new SOAPElement[] { responseElement });
         } catch (Exception e) {
             throw new SOAPRequestException("Unable to generate reply message",
                     e);

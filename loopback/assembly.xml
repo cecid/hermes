@@ -8,7 +8,7 @@
 	<fileSets>
 		<fileSet>
 			<directory>src/main/script</directory>
-			<outputDirectory>/</outputDirectory> 			
+			<outputDirectory>${file.separator}</outputDirectory>
 			<fileMode>0755</fileMode>
 			<includes>
 				<include>*.sh</include>
@@ -17,7 +17,7 @@
 		</fileSet>
 		<fileSet>
 			<directory>src/main/script</directory>
-			<outputDirectory>/</outputDirectory> 			
+			<outputDirectory>${file.separator}</outputDirectory>
 			<excludes>
 				<exclude>*.sh</exclude>
 				<exclude>*.bat</exclude>								
@@ -25,18 +25,18 @@
 		</fileSet>
 		<fileSet>
 			<directory>src/main/conf</directory>
-			<outputDirectory>/conf</outputDirectory> 
+			<outputDirectory>${file.separator}conf</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/data</directory>
-			<outputDirectory>/data</outputDirectory> 
+			<outputDirectory>${file.separator}data</outputDirectory>
 		</fileSet>
 	</fileSets>
   	<dependencySets>
     	<dependencySet>	
 			<outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
 			<useProjectArtifact>true</useProjectArtifact>
-			<outputDirectory>/lib</outputDirectory> 
+			<outputDirectory>${file.separator}lib</outputDirectory>
 		</dependencySet>
 	</dependencySets>
 </assembly>

@@ -1,0 +1,1302 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hermes RESTful API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>Hermes RESTful API</h1>
+    <div class="app-desc">Access Hermes functionalities using RESTful API.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/corvus/api</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#History">History</a></h4>
+  <ul>
+  <li><a href="#messageHistoryEbmsGet"><code><span class="http-method">get</span> /message/history/ebms</code></a></li>
+  <li><a href="#messageHistoryEbmsPost"><code><span class="http-method">post</span> /message/history/ebms</code></a></li>
+  </ul>
+  <h4><a href="#Message">Message</a></h4>
+  <ul>
+  <li><a href="#messageHistoryEbmsGet"><code><span class="http-method">get</span> /message/history/ebms</code></a></li>
+  <li><a href="#messageHistoryEbmsPost"><code><span class="http-method">post</span> /message/history/ebms</code></a></li>
+  <li><a href="#messageReceiveEbmsGet"><code><span class="http-method">get</span> /message/receive/ebms</code></a></li>
+  <li><a href="#messageReceiveEbmsPost"><code><span class="http-method">post</span> /message/receive/ebms</code></a></li>
+  <li><a href="#messageSendEbmsGet"><code><span class="http-method">get</span> /message/send/ebms</code></a></li>
+  <li><a href="#messageSendEbmsPost"><code><span class="http-method">post</span> /message/send/ebms</code></a></li>
+  </ul>
+  <h4><a href="#Partnership">Partnership</a></h4>
+  <ul>
+  <li><a href="#partnershipEbmsDelete"><code><span class="http-method">delete</span> /partnership/ebms</code></a></li>
+  <li><a href="#partnershipEbmsGet"><code><span class="http-method">get</span> /partnership/ebms</code></a></li>
+  <li><a href="#partnershipEbmsPost"><code><span class="http-method">post</span> /partnership/ebms</code></a></li>
+  </ul>
+  <h4><a href="#Receive">Receive</a></h4>
+  <ul>
+  <li><a href="#messageReceiveEbmsGet"><code><span class="http-method">get</span> /message/receive/ebms</code></a></li>
+  <li><a href="#messageReceiveEbmsPost"><code><span class="http-method">post</span> /message/receive/ebms</code></a></li>
+  </ul>
+  <h4><a href="#Send">Send</a></h4>
+  <ul>
+  <li><a href="#messageSendEbmsGet"><code><span class="http-method">get</span> /message/send/ebms</code></a></li>
+  <li><a href="#messageSendEbmsPost"><code><span class="http-method">post</span> /message/send/ebms</code></a></li>
+  </ul>
+  <h4><a href="#Status">Status</a></h4>
+  <ul>
+  <li><a href="#statusGet"><code><span class="http-method">get</span> /status</code></a></li>
+  </ul>
+
+  <h1><a name="History">History</a></h1>
+  <div class="method"><a name="messageHistoryEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/history/ebms</code></pre></div>
+    <div class="method-summary">Get ebMS message history (<span class="nickname">messageHistoryEbmsGet</span>)</div>
+    <div class="method-notes">The get ebMS message history API queries for messages which
+match the passed in query parameters.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">message_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">message_box (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">conversation_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">cpa_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">service (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">action (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_ids" : [ {
+    "id" : "aeiou",
+    "timestamp" : 123,
+    "status" : "aeiou"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A list of message IDs, which identifies a list of messages
+matching the passed in query parameters.
+
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageHistoryEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/history/ebms</code></pre></div>
+    <div class="method-summary">Reset message delivery status (<span class="nickname">messageHistoryEbmsPost</span>)</div>
+    <div class="method-notes">The reset message status API resets a message&#39;s status to
+undelivered. Note that the only support action is &#39;reset&#39;.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">request <a href="#MessageStatusReset">MessageStatusReset</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ActionResult">ActionResult</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "success" : true,
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Whether the deletion is successful or not
+        <a href="#ActionResult">ActionResult</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Message">Message</a></h1>
+  <div class="method"><a name="messageHistoryEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/history/ebms</code></pre></div>
+    <div class="method-summary">Get ebMS message history (<span class="nickname">messageHistoryEbmsGet</span>)</div>
+    <div class="method-notes">The get ebMS message history API queries for messages which
+match the passed in query parameters.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">message_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">message_box (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">conversation_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">cpa_id (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">service (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">action (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">limit (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_ids" : [ {
+    "id" : "aeiou",
+    "timestamp" : 123,
+    "status" : "aeiou"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A list of message IDs, which identifies a list of messages
+matching the passed in query parameters.
+
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageHistoryEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/history/ebms</code></pre></div>
+    <div class="method-summary">Reset message delivery status (<span class="nickname">messageHistoryEbmsPost</span>)</div>
+    <div class="method-notes">The reset message status API resets a message&#39;s status to
+undelivered. Note that the only support action is &#39;reset&#39;.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">request <a href="#MessageStatusReset">MessageStatusReset</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ActionResult">ActionResult</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "success" : true,
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Whether the deletion is successful or not
+        <a href="#ActionResult">ActionResult</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageReceiveEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/receive/ebms</code></pre></div>
+    <div class="method-summary">Get a list of received ebMS message (<span class="nickname">messageReceiveEbmsGet</span>)</div>
+    <div class="method-notes">The get unread ebMS messages endpoints queries for the list of
+messages that has been received for the specified partnership.
+If the parameter include_read is true, only unread messages
+will be returned.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">partnership_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">include_read (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_ids" : [ {
+    "id" : "aeiou",
+    "timestamp" : 123,
+    "status" : "aeiou"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A list of message IDs, which identifies a list received
+messages for the specified partnership. Note that upon query,
+the list of returned messages will be marked as read; which means
+it will not be returned next time the same endpoint is invoked
+unless include_read parameter is true.
+
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageReceiveEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/receive/ebms</code></pre></div>
+    <div class="method-summary">Get ebMS message by identifier (<span class="nickname">messageReceiveEbmsPost</span>)</div>
+    <div class="method-notes">The get ebMS message by identifier endpoint queries Hermes server for the ebMS 
+message identified by the specified identifier.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">message_id <a href="#Identifier">Identifier</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#EbmsReceivedMessage">EbmsReceivedMessage</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "cpa_id" : "aeiou",
+  "payloads" : [ {
+    "payload" : "aeiou"
+  } ],
+  "service" : "aeiou",
+  "conversation_id" : "aeiou",
+  "action" : "aeiou",
+  "to_party_id" : "aeiou",
+  "id" : "aeiou",
+  "from_party_id" : "aeiou",
+  "timestamp" : 123,
+  "status" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The message identified by the specified identifier
+        <a href="#EbmsReceivedMessage">EbmsReceivedMessage</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageSendEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/send/ebms</code></pre></div>
+    <div class="method-summary">Query for the status of a ebMS message sending request (<span class="nickname">messageSendEbmsGet</span>)</div>
+    <div class="method-notes">The query ebMS message status endpoints queries for the status of a previous
+message sending request.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MessageSendStatus">MessageSendStatus</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_id" : "aeiou",
+  "status" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Message ID and status
+        <a href="#MessageSendStatus">MessageSendStatus</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageSendEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/send/ebms</code></pre></div>
+    <div class="method-summary">Send an ebMS message (<span class="nickname">messageSendEbmsPost</span>)</div>
+    <div class="method-notes">The send ebMS message endpoint requests Hermes server to send a message.
+The message should have its parameters fitting a valid partnership configured
+at Hermes server before sending.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">message <a href="#EbmsMessageSendRequest">EbmsMessageSendRequest</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Identifier">Identifier</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The same message ID that is passed in with the message.
+        <a href="#Identifier">Identifier</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Partnership">Partnership</a></h1>
+  <div class="method"><a name="partnershipEbmsDelete"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /partnership/ebms</code></pre></div>
+    <div class="method-summary">Delete an ebMS partnership (<span class="nickname">partnershipEbmsDelete</span>)</div>
+    <div class="method-notes">The delete ebMS partnership endpoint remove the specified partnership
+in Hermes ebMS plugin.
+</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ActionResult">ActionResult</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "success" : true,
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Whether the deletion is successful or not
+        <a href="#ActionResult">ActionResult</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="partnershipEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /partnership/ebms</code></pre></div>
+    <div class="method-summary">Query ebMS partnership (<span class="nickname">partnershipEbmsGet</span>)</div>
+    <div class="method-notes">The query ebMS partnership endpoint returns all partnerships set up
+in Hermes ebMS plugin.
+</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "partnerships" : [ {
+    "cpa_id" : "aeiou",
+    "sign_certicate" : "",
+    "duplicate_elimination" : "aeiou",
+    "retries" : 123,
+    "message_order" : "aeiou",
+    "ack_requested" : "aeiou",
+    "signed_ack_requested" : "aeiou",
+    "service" : "aeiou",
+    "sign_requested" : true,
+    "action" : "aeiou",
+    "transport_endpoint" : "aeiou",
+    "disabled" : true,
+    "id" : "aeiou",
+    "retry_interval" : 123
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of partnership objects
+        <a href="#inline_response_200">inline_response_200</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="partnershipEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /partnership/ebms</code></pre></div>
+    <div class="method-summary">Create an ebMS partnership (<span class="nickname">partnershipEbmsPost</span>)</div>
+    <div class="method-notes">The create ebMS partnership endpoint creates a partnership in Hermes
+server using the parameters.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">partnership <a href="#Ebms_Partnership">Ebms_Partnership</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Identifier">Identifier</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A partnership ID
+        <a href="#Identifier">Identifier</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Receive">Receive</a></h1>
+  <div class="method"><a name="messageReceiveEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/receive/ebms</code></pre></div>
+    <div class="method-summary">Get a list of received ebMS message (<span class="nickname">messageReceiveEbmsGet</span>)</div>
+    <div class="method-notes">The get unread ebMS messages endpoints queries for the list of
+messages that has been received for the specified partnership.
+If the parameter include_read is true, only unread messages
+will be returned.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">partnership_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div><div class="param">include_read (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_ids" : [ {
+    "id" : "aeiou",
+    "timestamp" : 123,
+    "status" : "aeiou"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A list of message IDs, which identifies a list received
+messages for the specified partnership. Note that upon query,
+the list of returned messages will be marked as read; which means
+it will not be returned next time the same endpoint is invoked
+unless include_read parameter is true.
+
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageReceiveEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/receive/ebms</code></pre></div>
+    <div class="method-summary">Get ebMS message by identifier (<span class="nickname">messageReceiveEbmsPost</span>)</div>
+    <div class="method-notes">The get ebMS message by identifier endpoint queries Hermes server for the ebMS 
+message identified by the specified identifier.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">message_id <a href="#Identifier">Identifier</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#EbmsReceivedMessage">EbmsReceivedMessage</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "cpa_id" : "aeiou",
+  "payloads" : [ {
+    "payload" : "aeiou"
+  } ],
+  "service" : "aeiou",
+  "conversation_id" : "aeiou",
+  "action" : "aeiou",
+  "to_party_id" : "aeiou",
+  "id" : "aeiou",
+  "from_party_id" : "aeiou",
+  "timestamp" : 123,
+  "status" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The message identified by the specified identifier
+        <a href="#EbmsReceivedMessage">EbmsReceivedMessage</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Send">Send</a></h1>
+  <div class="method"><a name="messageSendEbmsGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /message/send/ebms</code></pre></div>
+    <div class="method-summary">Query for the status of a ebMS message sending request (<span class="nickname">messageSendEbmsGet</span>)</div>
+    <div class="method-notes">The query ebMS message status endpoints queries for the status of a previous
+message sending request.
+</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#MessageSendStatus">MessageSendStatus</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message_id" : "aeiou",
+  "status" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Message ID and status
+        <a href="#MessageSendStatus">MessageSendStatus</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="messageSendEbmsPost"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /message/send/ebms</code></pre></div>
+    <div class="method-summary">Send an ebMS message (<span class="nickname">messageSendEbmsPost</span>)</div>
+    <div class="method-notes">The send ebMS message endpoint requests Hermes server to send a message.
+The message should have its parameters fitting a valid partnership configured
+at Hermes server before sending.
+</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">message <a href="#EbmsMessageSendRequest">EbmsMessageSendRequest</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Identifier">Identifier</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "id" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The same message ID that is passed in with the message.
+        <a href="#Identifier">Identifier</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Status">Status</a></h1>
+  <div class="method"><a name="statusGet"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /status</code></pre></div>
+    <div class="method-summary">Query API server status (<span class="nickname">statusGet</span>)</div>
+    <div class="method-notes">The status endpoint returns the health status of the API server.
+It also returns the current timestamp and current version of the
+API server. No parameters are needed.
+</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Status">Status</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "server_time" : 123,
+  "status" : "aeiou"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/vnd.api+json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Hermes API server status
+        <a href="#Status">Status</a>
+    <h4 class="field-label">500</h4>
+    Unexpected error
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <div class="up"><a href="#__Models">Up</a></div>
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#ActionResult"><code>ActionResult</code></a></li>
+    <li><a href="#EbmsMessageSendRequest"><code>EbmsMessageSendRequest</code></a></li>
+    <li><a href="#EbmsReceivedMessage"><code>EbmsReceivedMessage</code></a></li>
+    <li><a href="#Ebms_Partnership"><code>Ebms_Partnership</code></a></li>
+    <li><a href="#Error"><code>Error</code></a></li>
+    <li><a href="#Identifier"><code>Identifier</code></a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code></a></li>
+    <li><a href="#inline_response_200_1"><code>inline_response_200_1</code></a></li>
+    <li><a href="#MessageSendStatus"><code>MessageSendStatus</code></a></li>
+    <li><a href="#MessageStatusReset"><code>MessageStatusReset</code></a></li>
+    <li><a href="#Payload"><code>Payload</code></a></li>
+    <li><a href="#ReceivedMessageIdentifier"><code>ReceivedMessageIdentifier</code></a></li>
+    <li><a href="#Status"><code>Status</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3 class="field-label"><a name="ActionResult">ActionResult - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID </div>
+<div class="param">success (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether the action requested is success </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="EbmsMessageSendRequest">EbmsMessageSendRequest - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">partnership_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> ID of partnership to refer to for the message to be sent. </div>
+<div class="param">from_party_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> From Party ID of the message to be sent. </div>
+<div class="param">to_party_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> From Party ID of the message to be sent. </div>
+<div class="param">conversation_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Conversation ID of the message to be sent. </div>
+<div class="param">payload (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Payload to be attached with the message, should be Base64 encoded. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="EbmsReceivedMessage">EbmsReceivedMessage - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Message ID of the message received. </div>
+<div class="param">cpa_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> CPA ID of the message received. </div>
+<div class="param">service (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Service of the message received. </div>
+<div class="param">action (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Action of the message received. </div>
+<div class="param">from_party_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> From Party ID of the message received. </div>
+<div class="param">to_party_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> From Party ID of the message received. </div>
+<div class="param">conversation_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Conversation ID of the message received. </div>
+<div class="param">timestamp (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Message timestamp (Unix timestamp). </div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Status of the message received. </div>
+<div class="param">payloads (optional)</div><div class="param-desc"><span class="param-type"><a href="#Payload">array[Payload]</a></span> Payload to be attached with the message, should be Base64 encoded. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Ebms_Partnership">Ebms_Partnership - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique ID of partnership. </div>
+<div class="param">cpa_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> CPA ID field in ebMS contract. </div>
+<div class="param">service (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Service field in ebMS contract. </div>
+<div class="param">action (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Action field in ebMS contract. </div>
+<div class="param">disabled (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether this partnership is disabled. </div>
+<div class="param">transport_endpoint (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Transport endpoint of the partnership. </div>
+<div class="param">ack_requested (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Whether acknowledgement is required. </div>
+<div class="param">signed_ack_requested (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Whether signed acknowledgement is required. </div>
+<div class="param">duplicate_elimination (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Whether duplicate elimination is required. </div>
+<div class="param">message_order (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Whether message order is guaranteed. </div>
+<div class="param">retries (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of retries for delivery. </div>
+<div class="param">retry_interval (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Number of seconds to wait until retry. </div>
+<div class="param">sign_requested (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span> Whether digital signature is required. </div>
+<div class="param">sign_certicate (optional)</div><div class="param-desc"><span class="param-type"><a href="#ByteArray">byte[]</a></span> Base64 encoded string of the signing certificate. format: byte</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Error">Error - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Identifier">Identifier - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Unique identifier </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="inline_response_200">inline_response_200 - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">partnerships (optional)</div><div class="param-desc"><span class="param-type"><a href="#Ebms_Partnership">array[Ebms_Partnership]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="inline_response_200_1">inline_response_200_1 - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">message_ids (optional)</div><div class="param-desc"><span class="param-type"><a href="#ReceivedMessageIdentifier">array[ReceivedMessageIdentifier]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="MessageSendStatus">MessageSendStatus - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">message_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Message ID </div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Send status of the message </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="MessageStatusReset">MessageStatusReset - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">message_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Message ID </div>
+<div class="param">action (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Action to be taken to the message (only support &#39;reset&#39; now) </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Payload">Payload - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">payload (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Payload to attached with the message, Base64 encoded. </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="ReceivedMessageIdentifier">ReceivedMessageIdentifier - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Message ID </div>
+<div class="param">timestamp (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Message timestamp (Unix timestamp) </div>
+<div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Message status </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3 class="field-label"><a name="Status">Status - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">status (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Current status of Hermes API server. </div>
+<div class="param">server_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Current datetime in Hermes server (Unix timestamp) </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

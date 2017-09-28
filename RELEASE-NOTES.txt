@@ -1,12 +1,45 @@
 H2O Release Notes
 ========================================
+Sep 8, 2017
+
+[What is new]
+- Introduced REST API for AS2 messaging (For details, pls refer to https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0)
+    GET /partnership/as2 :            Query AS2 partnership
+    POST /partnership/as2 :           Create or edit an AS2 partnership
+    DELETE /partnership/as2/{pid} :   Delete an AS2 partnership
+    POST /message/send/as2 :          Send an AS2 message
+    GET /message/send/as2 :           Query for the status of a AS2 message sending request
+    GET /message/history/as2 :        Get AS2 message history
+    POST /message/history/as2 :       Reset message delivery status
+    GET /message/receive/as2 :        Get a list of received AS2 message
+    POST /message/receive/as2 :       Get AS2 message by identifier
+- Added new restful API /message/redownload/ebms to change the incoming message status from DL to PS for redownload.
+
+[Upgrades and improvements]
+- Disabled the SOAP Fault in SOAP response, return a HTTP/500 error code instead.
+- Removed the "Non WS-I request" and "Non WS-I response" debug message in ebms.log to reduce noise.
+- Enhanced the add ebms partnership API to edit the partnership if partnership ID already exists.
+- Significantly reduced Hermes_app docker image build time by skiping the test cases in Dockerfile.
+- Updated documentation and secure message signing instructions in hermes.cecid.org.
+
+[Bug Fixes]
+- Changed the log type of message "Corvus Kernel has been shutdown successfully" in corvus.log to "INFO" instead of "ERROR".
+- Added de-registration and shutdown logic for Hermes running in Tomcat to avoid memory leak if Tomcat is shut down abnormally.
+- Fixed error messages logged in tomcat.log about security constraint due to the misconfiguration in web.xml.
+- Changed the behavior of restful API /message/send/ebms to return an error response with error-code 10006 instead of a success response when payload is corrupted and cannot be base64 encoded.
+- Changed the response HTTP status code of all restful API to 400 instead of 200 for illegal request value. 
+- Added endpoint URL validation to add parthernship API.
+- Fixed several typo errors in log message.
+- Solved the warning message issue in log file by handling the both file separator of Linux and Windows properly.
+- Fixed various minor bugs.
+
 
 Feb 10, 2017
 [What is new]
 - Official support for JDK 1.8
 - Introduced Vagrant for development
 - Introduced Docker for deployment
-- Introduced REST API
+- Introduced REST API for EBMS messaging
 
 [Upgrades and improvements]
 - Updated 3rd party libraries to latest version
@@ -148,8 +181,8 @@ Aug 01, 2008
 - Fixed wrong warning message when add ebMS partnership with same CPA ID, Service and Action
 - Fixed partnership ID duplication problem when uploading multiple agreement from CPA
 - Fixed ebMS InboxDataSouceDAO.findInboxNextOrderNo() to return 1 when there is no record in inbox table.
-- Fixed find_inbox_pending_messages_by_timestamp to remove message_type = 'Order' filter to solve messsage & acknowledgement status synchronization problem. (Reported by Martin KalŽn)
-- Added ebMS UTC conversion support for datetime without 'Z' as timezone substitution (Reported by Tao & Martin KalŽn)
+- Fixed find_inbox_pending_messages_by_timestamp to remove message_type = 'Order' filter to solve messsage & acknowledgement status synchronization problem. (Reported by Martin Kalï¿½n)
+- Added ebMS UTC conversion support for datetime without 'Z' as timezone substitution (Reported by Tao & Martin Kalï¿½n)
 - Added InboundMessageProcessorTest to test checkExpiredMessage method
 - Added display of party type for each message in EBMS Message History Page detail.
 - Removed ebMS principle Id from message, partnership DVO, dao.xml and schema
@@ -186,8 +219,8 @@ May 02, 2008
 Apr 01, 2008
 - Added MessageHistoryQueryService (ebms/msg_history), a new web service to look up message ID, works the same as message history page.
 - Modified Loopback batch scripts. The batch program will look for libraries in lib folder itself and append to classpath.
-- Change H2O webapp context path to be determined during runtime instead of fixed name ÔcorvusÕ.
-- Performance tuning in ebMS MessageDataSourceDAO and MessageHistoryPageletAdaptor to query message history by dynamic SQL. SQL Òfind_message_by_historyÓ and Òfind_no_of_messages_by_historyÓ in DAOMessage.xml are modified.
+- Change H2O webapp context path to be determined during runtime instead of fixed name ï¿½corvusï¿½.
+- Performance tuning in ebMS MessageDataSourceDAO and MessageHistoryPageletAdaptor to query message history by dynamic SQL. SQL ï¿½find_message_by_historyï¿½ and ï¿½find_no_of_messages_by_historyï¿½ in DAOMessage.xml are modified.
 - Bug fix in ebMS of nonstopping retry when acknowledgement is requested and recipient failed.
 - Remove principal ID as searching criteria in AS2 and ebMS message history admin page.
 
@@ -199,11 +232,11 @@ Mar 18, 2008
 ========================================
 Feb 28, 2008
 - Add parameters testOnBorrow , testOnReturn, testWhileIdle to DAOFactory parameters to enable these parameters in DBCP connection pool in order to enhance DB connection stability.
-- Fix ÒRetryÓ button bug in admin page for failed message.
+- Fix ï¿½Retryï¿½ button bug in admin page for failed message.
 - Change SQL name in EbMS inbox DAO from find_next_inbox_order_no to find_inbox_next_order_no
-- Add parameter Òwait-for-listÓ to EbMS InboxCollector to make sure all InboxTask are executed before next iteration.
+- Add parameter ï¿½wait-for-listï¿½ to EbMS InboxCollector to make sure all InboxTask are executed before next iteration.
 - Fix concurrent problem of inbox order no. by using DB sequence instead of max() by SQL to generate inbox order no., it will prevent multiple ActiveTask from using same order no.
-- Modify SQL find_inbox_pending_messages_by_timestamp only query message_type = ÔOrderÕ to filter other message type like acknowledge from being executed by InboxTask.
+- Modify SQL find_inbox_pending_messages_by_timestamp only query message_type = ï¿½Orderï¿½ to filter other message type like acknowledge from being executed by InboxTask.
 
 ========================================
 Jan 28, 2008
@@ -222,7 +255,7 @@ e.g. <parameter type="filter" name="find_message_by_cpa_filter_conv_id" value="m
 
 ========================================
 Jan 10, 2008
-- Fix SQL escape character Ò%Ó & Ò_Ó bug in AS2 & EbMS MessageHistoryPageletAdaptor. (Reported by Charles)
+- Fix SQL escape character ï¿½%ï¿½ & ï¿½_ï¿½ bug in AS2 & EbMS MessageHistoryPageletAdaptor. (Reported by Charles)
 - Add test cases for MessageHistoryPageletAdaptor and corresponding ant scripts.
 - Modify H2O installer to configure JDBC connection in Loopback test. (Reported by anescu)
 - Fix syntax problem in web.xml (Reported by BorgmM)
@@ -238,11 +271,11 @@ Jan 10, 2008
 - Change exception handling in SOAPHttpConnector.send() to throw exception when exception occurs rather than trying to read error input stream. (Reported by phil.owen)
 - Add SQL find_inbox_ready_max_sequence_no_by_cpa in EbMS to fix message pending problem when apply message ordering.
 - Simplify SQL find_max_sequence_no_by_message_box_and_cpa by removing status clause.
-- Change SOAPAction HTTP header to ebXML in ebxml-pkg (Reported by Per J¿rgen)
-- Remove soap-env:actor from eb:MessageHeader (Reported by Per J¿rgen)
+- Change SOAPAction HTTP header to ebXML in ebxml-pkg (Reported by Per Jï¿½rgen)
+- Remove soap-env:actor from eb:MessageHeader (Reported by Per Jï¿½rgen)
 - Add SQL find_inbox_ready_max_sequence_no_by_cpa in EbMS to fix message pending problem when apply message ordering.
 - Add DAOTest for ebMS MessageDataSourceDAO and DAOTest libraries
-- Patch for robust JDBC pooling in Hermes H2O SimpleDSDAOFactory (Reported by Martin KalŽn)
+- Patch for robust JDBC pooling in Hermes H2O SimpleDSDAOFactory (Reported by Martin Kalï¿½n)
 
 ========================================
 Nov 10, 2007
