@@ -9,8 +9,8 @@ retransmit a message when it is dropped in the network while the receiver can
 guarantee every message is delivered once and only once, and in the right order.
 
 ## Table of Contents
-**[Documentations](#documentations)** <br/>
-**[Quick Start](#quick-start)** <br/>
+**[Documentations](#documentations)**<br/>
+**[Quick Start](#quick-start)**<br/>
 **[Development](#development)**
 
 ## Documentation
@@ -19,10 +19,10 @@ Full documentation is available at [hermes.cecid.org](http://hermes.cecid.org/).
 ## Quick Start
 ### Install Hermes with Docker
 1. Install the [Docker Engine](https://docs.docker.com/engine/installation/).
-2. Run the Docker container for Hermes database (MySQL). <br/>
+2. Run the Docker container for Hermes database (MySQL).<br/>
 `docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.2`
 
-3. Run the Docker container for Hermes application server (Tomcat). <br/>
+3. Run the Docker container for Hermes application server (Tomcat).<br/>
 `docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.2`
 
 4. Log in to the Hermes administration console at
@@ -32,7 +32,7 @@ to check if Hermes is up and running.
 ## Development
 ### Compile
 1. Install [Apache Maven](http://maven.apache.org/install.html)
-2. Execute processes needed prior to actual project build. <br/>
+2. Execute processes needed prior to actual project build.<br/>
 `mvn pre-clean`
 3. Compile Hermes and build JAR installer file.<br/>
 `mvn install`
