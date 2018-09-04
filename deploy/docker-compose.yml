@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   db:
     container_name: h2o_db
