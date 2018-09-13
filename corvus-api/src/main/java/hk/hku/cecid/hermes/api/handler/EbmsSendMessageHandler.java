@@ -149,7 +149,7 @@ public class EbmsSendMessageHandler extends MessageHandler implements SendMessag
             if (payloads.size() > 0) {
                 int i = 1;
                 for (byte[] payload : payloads) {
-                    ByteArrayDataSource bads = new ByteArrayDataSource(payload, "application/octet");
+                    ByteArrayDataSource bads = new ByteArrayDataSource(payload, "application/octet-stream");
                     DataHandler dh = new DataHandler(bads);
                     ebxmlMessage.addPayloadContainer(dh, "payload-" + i, null);
                     i++;
