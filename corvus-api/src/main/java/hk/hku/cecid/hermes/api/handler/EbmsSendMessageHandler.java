@@ -79,14 +79,26 @@ public class EbmsSendMessageHandler extends MessageHandler implements SendMessag
         if (fromPartyId == null) {
             return errorObject;
         }
+        String fromRole = listener.getStringFromInput(inputDict, "from_role", errorObject);
+        if (fromRole == null) {
+            fromRole = "";
+        }
         String toPartyId = listener.getStringFromInput(inputDict, "to_party_id", errorObject);
         if (toPartyId == null) {
             return errorObject;
+        }
+        String toRole = listener.getStringFromInput(inputDict, "to_role", errorObject);
+        if (toRole == null) {
+            toRole = "";
         }
         String conversationId = listener.getStringFromInput(inputDict, "conversation_id", errorObject);
         if (conversationId == null) {
             return errorObject;
         }
+        String serviceType = listener.getOptionalStringFromInput(inputDict, "service_type", null, errorObject);
+        String fromPartyIdType = listener.getOptionalStringFromInput(inputDict, "from_party_id_type", null, errorObject);
+        String toPartyIdType = listener.getOptionalStringFromInput(inputDict, "to_party_id_type", null, errorObject);
+        
 
         List<byte[]> payloads = new ArrayList<byte[]>();
         if (inputDict.containsKey("payload")) {
@@ -120,9 +132,14 @@ public class EbmsSendMessageHandler extends MessageHandler implements SendMessag
             }
         }
 
-        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + ", from_party_id=" + fromPartyId +
-                                 ", to_party_id=" + toPartyId + ", conversation_id=" + conversationId +
-                                 ", number of payloads=" + payloads.size());
+        ApiPlugin.core.log.debug("Parameters: partnership_id=" + partnershipId + 
+                                ", from_party_id=" + fromPartyId + ", from_role=" + fromRole + 
+                                ", to_party_id=" + toPartyId + ", to_role=" + toRole + 
+                                ", conversation_id=" + conversationId +
+                                ", service_type=" + serviceType +
+                                ", from_party_id_type=" + fromPartyIdType +
+                                ", to_party_id_type=" + toPartyIdType +
+                                ", number of payloads=" + payloads.size());
 
         EbmsRequest ebmsRequest;
         String messageId = Generator.generateMessageID();
@@ -138,11 +155,20 @@ public class EbmsSendMessageHandler extends MessageHandler implements SendMessag
             MessageHeader msgHeader = ebxmlMessage.addMessageHeader();
 
             msgHeader.setCpaId(partnershipDVO.getCpaId());
+            msgHeader.setConversationId(conversationId);
             msgHeader.setService(partnershipDVO.getService());
             msgHeader.setAction(partnershipDVO.getAction());
-            msgHeader.addFromPartyId(fromPartyId);
-            msgHeader.addToPartyId(toPartyId);
-            msgHeader.setConversationId(conversationId);
+            if (serviceType != null && !serviceType.equals("")) {
+                msgHeader.setServiceType(serviceType);
+            } 
+            if (fromRole != "") { 
+                msgHeader.setFromRole(fromRole); 
+            }
+            msgHeader.addFromPartyId(fromPartyId, fromPartyIdType);
+            if (toRole != "") { 
+                msgHeader.setToRole(toRole); 
+            }
+            msgHeader.addToPartyId(toPartyId, toPartyIdType);
             msgHeader.setMessageId(messageId);
             msgHeader.setTimestamp(EbmsUtility.getCurrentUTCDateTime());
 
