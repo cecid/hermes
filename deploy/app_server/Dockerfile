@@ -34,20 +34,29 @@ RUN rm -rf /tmp/h/plugins/corvus-sfrm-admin
 RUN rm -rf /tmp/h/plugins/corvus-as2plus
 RUN rm -rf /tmp/h/plugins/corvus-as2plus-admin
 RUN find /tmp/h -name *.xml -exec sed -i 's/@h2\.home@/\/hermes_home/g' {} \;
+
+# as2 host
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2PageletAdaptor@/hk\.hku\.cecid\.edi\.as2\.admin\.listener\.MessageHistoryPageletAdaptor/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2DriverClass@/com\.mysql\.jdbc\.Driver/g' {} \;
-RUN find /tmp/h -name *.xml -exec sed -i 's/@as2ConnStr@/jdbc:mysql:\/\/db\/as2/g' {} \;
+#RUN find /tmp/h -name *.xml -exec sed -i 's/@as2ConnStr@/jdbc:mysql:\/\/db\/as2\?useSSL=true\&amp;enabledTLSProtocols=TLSv1.2;TLSv1.3;/g' {} \;
+# disabled the SSL connection as it was causing connection issue
+RUN find /tmp/h -name *.xml -exec sed -i 's/@as2ConnStr@/jdbc:mysql:\/\/db\/as2\?useSSL=false/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2user@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2pw@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2ValidationQuery@/SELECT now\(\)/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@as2DAOFile@/hk\/hku\/cecid\/edi\/as2\/conf\/as2.dao.xml/g' {} \;
+
+#ebms host
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsPageletAdaptor@/hk\.hku\.cecid\.ebms\.admin\.listener\.MessageHistoryPageletAdaptor/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsDriverClass@/com\.mysql\.jdbc\.Driver/g' {} \;
-RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsConnStr@/jdbc:mysql:\/\/db\/ebms/g' {} \;
+#RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsConnStr@/jdbc:mysql:\/\/db\/ebms\?useSSL=true\&amp;enabledTLSProtocols=TLSv1.2;TLSv1.3;/g' {} \;
+# disabled the SSL connection as it was causing connection issue
+RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsConnStr@/jdbc:mysql:\/\/db\/ebms\?useSSL=false/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsuser@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmspw@/corvus/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsValidationQuery@/SELECT now\(\)/g' {} \;
 RUN find /tmp/h -name *.xml -exec sed -i 's/@ebmsDAOFile@/hk\/hku\/cecid\/ebms\/spa\/conf\/ebms.mysql.dao.xml/g' {} \;
+
 RUN mv /tmp/h/plugins /hermes_home
 RUN mv /tmp/h/sample /hermes_home
 RUN mv /tmp/h/sql /hermes_home

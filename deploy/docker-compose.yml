@@ -1,16 +1,16 @@
 version: "2"
 services:
   db:
-    container_name: h2o_db
-    image: h2o/db:1.0
+    container_name: hermes_db
+    image: hermes/db:1.0
     build:
       context: ..
       dockerfile: deploy/db/Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: h2o_db_password
   app:
-    container_name: h2o_app
-    image: h2o/app:1.0
+    container_name: hermes_ui
+    image: hermes/app:1.0
     build:
       context: ..
       dockerfile: deploy/app_server/Dockerfile
@@ -18,6 +18,6 @@ services:
     links:
       - db
     expose:
-      - 8080
+      - 18080
     ports:
       - "18080:8080"
