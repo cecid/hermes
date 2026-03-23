@@ -1,6 +1,7 @@
 .vagrant
 *.log
 *.lck
+.claude/
 .vs/
 .vscode/
 **/.settings/
